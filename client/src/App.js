@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 
-import { clientURI } from '../../config/keys';
+import { clientURI } from './config/keys';
 
 // Axios Defaults
 axios.defaults.withCredentials = true;
