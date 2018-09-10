@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "description": "The POS that's not a POS",
   "main": "server.js",
+  "engines" : {
+    "node" : ">8.0.0"
+  },
   "scripts": {
     "client": "npm start --prefix client",
     "server": "nodemon server.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "client-install": "npm --prefix client",
-    "heroku-postbuild": "cross-env NPM_CONFIG_PRODUCTION=false npm --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "cross-env NPM_CONFIG_PRODUCTION=false npm run build --prefix client"
   },
   "repository": "git@github.com:Lambda-School-Labs/CS10-restaurant-pos.git",
   "author": "Team POS",
