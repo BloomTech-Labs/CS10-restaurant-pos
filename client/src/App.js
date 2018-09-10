@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 
+import { clientURI } from '../../config/keys';
+
 // Axios Defaults
 axios.defaults.withCredentials = true;
 
 class App extends Component {
   componentDidMount() {
     axios
-      .put('http://localhost:5000/api/1', { message: 'Sent' })
+      .put(`${clientURI}/api/1`, { message: 'Sent' })
       .then(res => {
         console.log(res.data);
       })
