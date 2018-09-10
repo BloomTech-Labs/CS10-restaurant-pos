@@ -4,10 +4,9 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 
 // Cors
-const origin = clientURI || 'http://localhost:3000';
 const cors = require('cors');
 
-const corsOptions = { origin: origin, credentials: true };
+const corsOptions = { origin: clientURI, credentials: true };
 
 // Initialize Server
 const server = express();
@@ -17,7 +16,7 @@ server.use(express.json());
 server.use(cors(corsOptions));
 
 // DB Config
-const db = require('./config/keys').mongoURI;
+const { mongoURI: db } = require('./config/keys');
 
 // Connect to MongDB
 mongoose
@@ -35,7 +34,7 @@ server.use(passport.initialize());
 const PORT = process.env.PORT || 5000;
 
 // Use Routes
-server.put('/api/:id', (req, res) => {
+server.post('/api', (req, res) => {
   console.log(req.body);
   res.status(200).json({ message: 'Success' });
 });

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 
-import { clientURI } from '../../config/keys';
+import { serverURI } from './config/keys';
 
 // Axios Defaults
 axios.defaults.withCredentials = true;
@@ -10,7 +10,7 @@ axios.defaults.withCredentials = true;
 class App extends Component {
   componentDidMount() {
     axios
-      .put(`${clientURI}/api/1`, { message: 'Sent' })
+      .post(`${serverURI}/api`, { message: 'Sent' })
       .then(res => {
         console.log(res.data);
       })
