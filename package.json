@@ -8,7 +8,7 @@
     "server": "nodemon server.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "client-install": "npm --prefix client",
-    "heroku-postbuild": "cross-env NPM_CONFIG_PRODUCTION=false (cd client && yarn) && npm run build"
+    "heroku-postbuild": "cross-env NPM_CONFIG_PRODUCTION=false cd client && yarn && npm run build"
   },
   "repository": "git@github.com:Lambda-School-Labs/CS10-restaurant-pos.git",
   "author": "Team POS",
