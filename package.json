@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "The POS that's not a POS",
   "main": "server.js",
+  "scripts": {
+    "client": "yarn start --prefix client",
+    "server": "nodemon server.js",
+    "dev": "concurrently \"yarn run server\" \"yarn run client\""
+  },
   "repository": "git@github.com:Lambda-School-Labs/CS10-restaurant-pos.git",
   "author": "Team POS",
   "license": "MIT",
