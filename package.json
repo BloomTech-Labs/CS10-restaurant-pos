@@ -1,0 +1,34 @@
+{
+  "name": "cs10-restaurant-pos",
+  "version": "1.0.0",
+  "description": "The POS that's not a POS",
+  "main": "server.js",
+  "scripts": {
+    "client": "npm start --prefix client",
+    "server": "nodemon server.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "client-install": "npm --prefix client",
+    "heroku-postbuild": "cross-env NPM_CONFIG_PRODUCTION=false npm --prefix client && npm run build --prefix client"
+  },
+  "repository": "git@github.com:Lambda-School-Labs/CS10-restaurant-pos.git",
+  "author": "Team POS",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^3.0.0",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "helmet": "^3.13.0",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.14",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^4.0.1",
+    "cross-env": "^5.2.0",
+    "dotenv": "^6.0.0",
+    "husky": "^0.14.3",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.18.4"
+  }
+}
