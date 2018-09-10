@@ -10,7 +10,7 @@ axios.defaults.withCredentials = true;
 class App extends Component {
   componentDidMount() {
     axios
-      .post(`${serverURI}/api`, { message: 'Sent' })
+      .post('/api', { message: 'Sent' })
       .then(res => {
         console.log(res.data);
       })
