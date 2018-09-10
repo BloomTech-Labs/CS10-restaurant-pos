@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const { mongoURI: db, clientURI } = require('./config/keys');
 const express = require('express');
 const mongoose = require('mongoose');
