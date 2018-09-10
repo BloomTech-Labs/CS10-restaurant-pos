@@ -6,7 +6,9 @@
   "scripts": {
     "client": "yarn start --prefix client",
     "server": "nodemon server.js",
-    "dev": "concurrently \"yarn run server\" \"yarn run client\""
+    "dev": "concurrently \"yarn run server\" \"yarn run client\"",
+    "client-install": "yarn --prefix client",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn --prefix client && yarn run build --prefix client"
   },
   "repository": "git@github.com:Lambda-School-Labs/CS10-restaurant-pos.git",
   "author": "Team POS",
@@ -22,6 +24,7 @@
   },
   "devDependencies": {
     "concurrently": "^4.0.1",
+    "cross-env": "^5.2.0",
     "husky": "^0.14.3",
     "morgan": "^1.9.0",
     "nodemon": "^1.18.4"
