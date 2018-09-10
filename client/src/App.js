@@ -2,17 +2,20 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 
+import serverURI from './config/URI';
+
 // Axios Defaults
 axios.defaults.withCredentials = true;
 
 class App extends Component {
   componentDidMount() {
+    console.log('serverURI in cdm', serverURI);
     axios
-      .put('http://localhost:5000/api/1', { message: 'Sent' })
-      .then(res => {
+      .post(`${serverURI}/api`, { message: 'Sent' })
+      .then((res) => {
         console.log(res.data);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   }
