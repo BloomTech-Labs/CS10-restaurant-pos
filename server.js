@@ -1,4 +1,4 @@
-const { mongoURI, clientURI } = require('./config/keys');
+const { mongoURI: db, clientURI } = require('./config/keys');
 const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
@@ -15,17 +15,14 @@ const server = express();
 server.use(express.json());
 server.use(cors(corsOptions));
 
-// DB Config
-const { mongoURI: db } = require('./config/keys');
-
 // Connect to MongDB
 mongoose
   .connect(
     db,
-    { useNewUrlParser: true },
+    { useNewUrlParser: true }
   )
   .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.error(err));
+  .catch((err) => console.error(err));
 
 // Passport Middleware
 server.use(passport.initialize());
@@ -47,7 +44,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-server.listen(PORT, err => {
+server.listen(PORT, (err) => {
   if (err) console.error(err);
   console.log(`Server running on port: ${PORT}`);
 });

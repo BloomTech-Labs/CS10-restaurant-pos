@@ -1,1 +1,1 @@
-export const serverURI = process.env.HEROKU_URI || 'http://localhost:5000';
+export const serverURI = process.env.HEROKU_URI || process.env.LOCAL_CLIENT;
