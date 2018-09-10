@@ -3,13 +3,13 @@ node_modules
 
 # testing
 /coverage
-/config/keys_dev.js
 
 # production
 /build
 .netlify
 
 # misc
+.env
 .DS_Store
 .env.local
 .env.development.local
