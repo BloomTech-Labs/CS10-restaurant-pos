@@ -6,6 +6,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
 
+// Import Routes
+const employees = require('./api/routes/employees');
+const items = require('./api/routes/items');
+const tables = require('./api/routes/tables');
+
 // Cors
 const cors = require('cors');
 
@@ -17,18 +22,22 @@ const server = express();
 // Middleware
 server.use(express.json());
 server.use(cors(corsOptions));
+server.use(express.urlencoded({ extended: false }));
 
 // Connect to MongDB
 mongoose
   .connect(
     db,
-    { useNewUrlParser: true }
+    { useNewUrlParser: true },
   )
   .then(() => console.log('MongoDB Connected'))
-  .catch((err) => console.error(err));
+  .catch(err => console.error(err));
 
 // Passport Middleware
 server.use(passport.initialize());
+
+// Passes passport to passport.js
+require('./config/passport.js')(passport);
 
 // Initialize PORT
 const PORT = process.env.PORT || 5000;
@@ -47,7 +56,20 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-server.listen(PORT, (err) => {
+// Routes
+server.use('/api/employees', employees);
+server.use(
+  '/api/items',
+  passport.authenticate('jwt', { session: false }),
+  items,
+);
+server.use(
+  '/api/tables',
+  passport.authenticate('jwt', { session: false }),
+  tables,
+);
+
+server.listen(PORT, err => {
   if (err) console.error(err);
   console.log(`Server running on port: ${PORT}`);
 });
