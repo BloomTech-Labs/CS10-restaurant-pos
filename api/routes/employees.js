@@ -10,3 +10,5 @@ const Employee = require('../models/Employee');
 // @desc    Tests employees' route
 // @access  Public
 router.get('/test', (req, res) => res.json({ msg: 'Employee Routes Work' }));
+
+module.exports = router;
