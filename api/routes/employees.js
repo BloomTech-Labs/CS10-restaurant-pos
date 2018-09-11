@@ -51,7 +51,25 @@ router.post('/login', (req, res) => {
       } else {
         // Check the password on the model
         if (employee.password === password) {
-          res.status(200).json(employee);
+          // Create a payload
+          const payload = {
+            id: employee.id,
+            pin: employee.pin,
+            status: {
+              admin: employee.status.admin,
+              manager: employee.status.manager,
+            },
+          };
+
+          // Sign the token
+          jwt.sign(
+            payload,
+            keys.secretOrKey,
+            { expiresIn: '1d' },
+            (err, token) => {
+              res.json({ success: true, token: 'Bearer ' + token });
+            },
+          );
         }
       }
     })
