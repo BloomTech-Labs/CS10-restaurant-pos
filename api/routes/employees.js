@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
+const passport = require('passport');
 
 // Require Employee Model
 const Employee = require('../models/Employee');
@@ -105,5 +106,20 @@ router.put('/update/:pin', (req, res) => {
       res.status(400).json(err);
     });
 });
+
+// @route   GET server/employees/current
+// @desc    Return current employee
+// @access  Private
+router.get(
+  '/current',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    res.json({
+      id: req.user.id,
+      pin: req.user.pin,
+      status: req.user.status,
+    });
+  },
+);
 
 module.exports = router;
