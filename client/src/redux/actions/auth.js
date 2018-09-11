@@ -1,4 +1,5 @@
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 
 // URIs
 
@@ -22,10 +23,11 @@ export const login = ({ pin, pass }, push) => {
     axios
       .post(`${serverURI}/login`, { pin, pass })
       .then((res) => {
-        // TODO: Finish this --------------------
-        const role = 'get the role from the jwt';
-        // TODO: Finish this --------------------
+        const { role } = jwt_decode(res.data);
+
         dispatch({ type: LOGIN_SUCCESS, jwt: res.data, role });
+
+        localStorage.setItem("jwt", res.data)
 
         if (role.admin || role.manager) {
           push('/servers');
