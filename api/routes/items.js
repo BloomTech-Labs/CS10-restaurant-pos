@@ -51,4 +51,20 @@ router.get('/:name', (req, res) => {
     });
 });
 
+// @route   PUT api/items/:name
+// @desc    Updates the food item in the database
+// @access  Private
+router.put('/:name', (req, res) => {
+  const { name } = req.params;
+  const updatedItem = req.body;
+
+  Item.findOneAndUpdate({ name }, updatedItem, { new: true })
+    .then(updatedItem => {
+      res.status(200).json(updatedItem);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
+});
+
 module.exports = router;
