@@ -6,8 +6,11 @@ import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './redux/reducers';
+
 import App from './App';
+import Landing from './Landing';
 import Login from './Login';
+import Register from './Register';
 import './index.css';
 
 // import registerServiceWorker from './registerServiceWorker';
@@ -24,7 +27,9 @@ ReactDOM.render(
   <Provider store={store}>
     <Router>
       <React.Fragment>
+        <Route exact path="/" component={RequireNotAuth(Landing)} />
         <Route path="/login" component={RequireNotAuth(Login)} />
+        <Route path="/register" component={RequireNotAuth(Register)} />
         <Authed />
       </React.Fragment>
     </Router>
