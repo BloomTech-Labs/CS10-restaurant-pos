@@ -41,9 +41,9 @@ router.get('/all', (req, res) => {
 // @route   GET api/items/:name
 // @desc    Retrieves the food item with the given name
 // @access  Private
-router.get('/:name', (req, res) => {
-  const { name } = req.params;
-  Item.findOne({ name })
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+  Item.findOne({ _id: id })
     .then(item => {
       res.status(200).json(item);
     })
@@ -55,12 +55,12 @@ router.get('/:name', (req, res) => {
 // @route   PUT api/items/:name
 // @desc    Updates the food item in the database
 // @access  Private
-router.put('/:name', (req, res) => {
-  const { name } = req.params;
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
   const updatedItem = req.body;
 
   // updates the item and sends back the updated document
-  Item.findOneAndUpdate({ name }, updatedItem, { new: true })
+  Item.findOneAndUpdate({ _id: id }, updatedItem, { new: true })
     .then(updatedItem => {
       res.status(200).json(updatedItem);
     })
@@ -72,10 +72,10 @@ router.put('/:name', (req, res) => {
 // @route   DELETE api/items/:name
 // @desc    Removes the food item from the database
 // @access  Private
-router.delete('/:name', (req, res) => {
-  const { name } = req.params;
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
 
-  Item.findOneAndRemove({ name })
+  Item.findOneAndRemove({ _id: id })
     .then(removedItem => {
       res
         .status(200)
