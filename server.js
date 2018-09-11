@@ -36,6 +36,9 @@ mongoose
 // Passport Middleware
 server.use(passport.initialize());
 
+// Passes passport to passport.js
+require('./config/passport.js')(passport);
+
 // Initialize PORT
 const PORT = process.env.PORT || 5000;
 
