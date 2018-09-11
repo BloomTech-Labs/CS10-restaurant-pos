@@ -20,6 +20,7 @@ const server = express();
 // Middleware
 server.use(express.json());
 server.use(cors(corsOptions));
+server.use(express.urlencoded({ extended: false }));
 
 // Connect to MongDB
 mongoose
