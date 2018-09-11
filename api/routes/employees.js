@@ -51,27 +51,31 @@ router.post('/login', (req, res) => {
         return res.status(404).json({ error: 'No employee found!' });
       } else {
         // Check the password on the model
-        if (employee.password === password) {
-          // Create a payload
-          const payload = {
-            id: employee.id,
-            pin: employee.pin,
-            status: {
-              admin: employee.status.admin,
-              manager: employee.status.manager,
-            },
-          };
+        employee.checkPassword(password).then(verified => {
+          if (verified) {
+            // Create a payload
+            const payload = {
+              id: employee.id,
+              pin: employee.pin,
+              status: {
+                admin: employee.status.admin,
+                manager: employee.status.manager,
+              },
+            };
 
-          // Sign the token
-          jwt.sign(
-            payload,
-            keys.secretOrKey,
-            { expiresIn: '1d' },
-            (err, token) => {
-              res.json({ success: true, token: 'Bearer ' + token });
-            },
-          );
-        }
+            // Sign the token
+            jwt.sign(
+              payload,
+              keys.secretOrKey,
+              { expiresIn: '1d' },
+              (err, token) => {
+                res.json({ success: true, token: 'Bearer ' + token });
+              },
+            );
+          } else {
+            res.status(401).json({ error: 'Invalid credentials!' });
+          }
+        });
       }
     })
     .catch(err => {

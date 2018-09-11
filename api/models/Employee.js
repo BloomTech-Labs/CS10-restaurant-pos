@@ -39,4 +39,19 @@ const Employee = new Schema({
   },
 });
 
+// Pre-Save Hook
+Employee.pre('save', function(next) {
+  if (!this.isModified('password')) return next();
+  bcrypt.hash(this.password, 10, (err, hash) => {
+    if (err) return next(err);
+    this.password = hash;
+    next();
+  });
+});
+
+// Check password
+Employee.methods.checkPassword = function(providedPass) {
+  return bcrypt.compare(providedPass, this.password);
+};
+
 module.exports = mongoose.model('Employee', Employee);
