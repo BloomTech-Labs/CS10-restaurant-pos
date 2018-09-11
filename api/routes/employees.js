@@ -37,7 +37,7 @@ router.post('/register', (req, res) => {
 });
 
 // @route   POST api/employees/login
-// @desc    Let's a user login
+// @desc    Lets a user login
 // @access  Public
 router.post('/login', (req, res) => {
   // Pull off the pin and pass from the request
@@ -52,6 +52,34 @@ router.post('/login', (req, res) => {
         // Check the password on the model
         if (employee.password === password) {
           res.status(200).json(employee);
+        }
+      }
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
+});
+
+// @route   PUT api/employees/update/:pin
+// @desc    Allow a user to change their password
+// @access  Private
+router.put('/update/:pin', (req, res) => {
+  // Pull off the pin, oldPassword, and newPassword from the request
+  const { oldPassword, newPassword } = req.body;
+  const { pin } = req.params;
+
+  // Locate the employee
+  Employee.findOne({ pin })
+    .then(employee => {
+      if (!employee) {
+        return res.status(404).json({ error: 'No employee found!' });
+      } else {
+        // Check the password on the model
+        if (employee.password === oldPassword) {
+          employee.password = newPassword;
+          employee.save().then(employee => {
+            res.status(200).json(employee);
+          });
         }
       }
     })
