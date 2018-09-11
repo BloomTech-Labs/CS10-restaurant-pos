@@ -8,6 +8,9 @@
     "jwt-decode": "^2.2.0",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
+    "react-redux": "^5.0.7",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0"
@@ -17,5 +20,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "redux-logger": "^3.0.6"
   }
 }
