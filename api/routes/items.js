@@ -68,4 +68,21 @@ router.put('/:name', (req, res) => {
     });
 });
 
+// @route   DELETE api/items/:name
+// @desc    Removes the food item from the database
+// @access  Private
+router.delete('/:name', (req, res) => {
+  const { name } = req.params;
+
+  Item.findOneAndRemove({ name })
+    .then(removedItem => {
+      res
+        .status(200)
+        .json({ removedItem, msg: 'Item deleted from the database.' });
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
+});
+
 module.exports = router;
