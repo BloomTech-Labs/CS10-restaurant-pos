@@ -5,15 +5,19 @@ const { ObjectId } = Schema.Types;
 const TableSchema = new Schema({
   server: {
     type: ObjectId,
-    ref: 'Employee'
+    ref: 'Employee',
   },
-  food: [{
-    type: ObjectId,
-    ref: 'Item'
-  }],
-  tableNumber: [{
-    type: Number
-  }]
+  food: [
+    {
+      type: ObjectId,
+      ref: 'Item',
+    },
+  ],
+  tableNumber: [
+    {
+      type: Number,
+    },
+  ],
 });
 
 module.exports = mongoose.model('Table', TableSchema);
