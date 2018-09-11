@@ -2,7 +2,7 @@ import { LOGIN } from '../actions';
 
 const initialState = {
   authenticated: false,
-  user: undefined,
+  jwt: localStorage.getItem('jwt'),
 }
 
 const AuthReducer = (auth = initialState, action) => {

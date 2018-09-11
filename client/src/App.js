@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import './App.css';
 import axios from 'axios';
+import { Route } from 'react-router-dom';
 
+import Landing from './Landing';
+
+// ---------------------------------------------------
 import serverURI from './config/URI';
 
 // Axios Defaults
 axios.defaults.withCredentials = true;
+axios.defaults.headers.common['Authorization'] =
+  'Bearer ' + localStorage.getItem('jwt');
 
 class App extends Component {
   componentDidMount() {
@@ -20,11 +25,13 @@ class App extends Component {
       });
   }
 
+  // ---------------------------------------------------
+
   render() {
     return (
-      <div className="App">
-        <h1>Hello POS</h1>
-      </div>
+      <React.Fragment>
+        <Route path="/" component={Landing} />
+      </React.Fragment>
     );
   }
 }

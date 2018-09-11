@@ -4,14 +4,14 @@ import { Redirect } from 'react-router-dom';
 // import { setId } from '../Redux/actions/index';
 
 export default (ComposedComponent) => {
-  class RequireAuthentication extends React.Component {
+  class RequireNotAuth extends React.Component {
     render() {
       return (
         <React.Fragment>
-          {this.props.jwt ? (
+          {!this.props.jwt ? (
             <ComposedComponent {...this.props} />
           ) : (
-            <Redirect to="/login" />
+            <Redirect to="/" />
           )}
         </React.Fragment>
       );
@@ -21,11 +21,11 @@ export default (ComposedComponent) => {
   const mapStateToProps = (state) => {
     return {
       jwt: state.auth.jwt,
-    };
-  };
+    }
+  }
 
   return connect(
-    mapStateToProps
+    mapStateToProps,
     // { setId }
-  )(RequireAuthentication);
+  )(RequireNotAuth);
 };
