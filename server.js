@@ -9,6 +9,7 @@ const passport = require('passport');
 // Import Routes
 const employees = require('./api/routes/employees');
 const items = require('./api/routes/items');
+const tables = require('./api/routes/tables');
 
 // Cors
 const cors = require('cors');
@@ -55,6 +56,7 @@ if (process.env.NODE_ENV === 'production') {
 // Routes
 server.use('/api/employees', employees);
 server.use('/api/items', items);
+server.use('/api/tables', tables);
 
 server.listen(PORT, err => {
   if (err) console.error(err);
