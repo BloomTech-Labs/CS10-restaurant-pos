@@ -13,7 +13,7 @@ const TableSchema = new Schema({
       ref: 'Item',
     },
   ],
-  tableNumber: [
+  tableNumbers: [
     {
       type: Number,
     },
