@@ -36,7 +36,19 @@ router.get('/all', (req, res) => {
       res.status(400).json(err);
     });
 });
+
+// @route   GET api/items/:name
+// @desc    Retrieves the food item with the given name
+// @access  Private
+router.get('/:name', (req, res) => {
+  const { name } = req.params;
+  Item.findOne({ name })
+    .then(item => {
+      res.status(200).json(item);
     })
-})
+    .catch(err => {
+      res.status(400).json(err);
+    });
+});
 
 module.exports = router;
