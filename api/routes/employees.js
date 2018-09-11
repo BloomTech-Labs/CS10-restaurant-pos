@@ -16,25 +16,30 @@ router.get('/test', (req, res) => res.json({ msg: 'Employee Routes Work' }));
 // @desc    Adds a new user to the DB
 // @access  Public
 router.post('/register', (req, res) => {
+  const { role } = req.body;
   // Create a new employee
   const newEmployee = new Employee({
     name: req.body.name,
     pin: req.body.pin,
-    password: req.body.password,
-    status: {
-      admin: req.body.status.admin,
-      manager: req.body.status.manager,
-    },
+    password: req.body.pass,
+    role: { ...role },
   });
 
-  newEmployee
-    .save()
-    .then(employee => {
-      res.status(200).json(employee);
-    })
-    .catch(err => {
-      res.status(400).json(err);
-    });
+  // Check if the DB is empty or not
+  Employee.find({}).then(employee => {
+    if (employee.length === 0) {
+      newEmployee.role.admin = true;
+    }
+
+    newEmployee
+      .save()
+      .then(employee => {
+        res.status(200).json(employee);
+      })
+      .catch(err => {
+        res.status(400).json(err);
+      });
+  });
 });
 
 // @route   POST api/employees/login
@@ -42,7 +47,7 @@ router.post('/register', (req, res) => {
 // @access  Public
 router.post('/login', (req, res) => {
   // Pull off the pin and pass from the request
-  const { pin, password } = req.body;
+  const { pin, pass } = req.body;
 
   // Find the employee in the DB
   Employee.findOne({ pin })
@@ -51,15 +56,15 @@ router.post('/login', (req, res) => {
         return res.status(404).json({ error: 'No employee found!' });
       } else {
         // Check the password on the model
-        employee.checkPassword(password).then(verified => {
+        employee.checkPassword(pass).then(verified => {
           if (verified) {
             // Create a payload
             const payload = {
               id: employee.id,
               pin: employee.pin,
-              status: {
-                admin: employee.status.admin,
-                manager: employee.status.manager,
+              role: {
+                admin: employee.role.admin,
+                manager: employee.role.manager,
               },
             };
 
@@ -69,7 +74,7 @@ router.post('/login', (req, res) => {
               keys.secretOrKey,
               { expiresIn: '1d' },
               (err, token) => {
-                res.json({ success: true, token: 'Bearer ' + token });
+                res.json({ token: 'Bearer ' + token });
               },
             );
           } else {
@@ -121,7 +126,7 @@ router.get(
     res.json({
       id: req.user.id,
       pin: req.user.pin,
-      status: req.user.status,
+      role: req.user.role,
     });
   },
 );

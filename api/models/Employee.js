@@ -18,7 +18,7 @@ const Employee = new Schema({
     min: 4,
     unique: true,
   },
-  status: {
+  role: {
     admin: {
       type: Boolean,
       default: false,
