@@ -58,8 +58,16 @@ if (process.env.NODE_ENV === 'production') {
 
 // Routes
 server.use('/api/employees', employees);
-server.use('/api/items', items);
-server.use('/api/tables', tables);
+server.use(
+  '/api/items',
+  passport.authenticate('jwt', { session: false }),
+  items,
+);
+server.use(
+  '/api/tables',
+  passport.authenticate('jwt', { session: false }),
+  tables,
+);
 
 server.listen(PORT, err => {
   if (err) console.error(err);
