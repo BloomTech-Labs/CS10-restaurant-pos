@@ -11,7 +11,7 @@ router.post('/add', (req, res) => {
   const { name, price, description } = req.body;
 
   // create the new Item
-  const newItem = new Item({name, price, description});
+  const newItem = new Item({ name, price, description });
 
   // save the new item to the database
   newItem
