@@ -58,6 +58,7 @@ router.put('/:name', (req, res) => {
   const { name } = req.params;
   const updatedItem = req.body;
 
+  // updates the item and sends back the updated document
   Item.findOneAndUpdate({ name }, updatedItem, { new: true })
     .then(updatedItem => {
       res.status(200).json(updatedItem);
