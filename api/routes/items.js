@@ -21,6 +21,21 @@ router.post('/add', (req, res) => {
     })
     .catch(err => {
       res.status(400).json(err);
+    });
+});
+
+// @route   GET api/items/all
+// @desc    Retrieves all the food items in the DB
+// @access  Private
+router.get('/all', (req, res) => {
+  Item.find({})
+    .then(items => {
+      res.status(200).json(items);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
+});
     })
 })
 
