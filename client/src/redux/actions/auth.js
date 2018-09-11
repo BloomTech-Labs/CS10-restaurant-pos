@@ -49,7 +49,7 @@ export const register = ({ firstName, lastName, pin, pass, confirmPass }) => {
     }
     dispatch({ type: PASSWORD_MATCH_SUCCESS });
     axios
-      .post(`${serverURI}/login`, { name: firstName + lastName, pin, pass })
+      .post(`${serverURI}/login`, { name: `${firstName} ${lastName}`, pin, pass })
       .then((res) => {
         dispatch({ type: LOGIN_SUCCESS, payload: res.data });
       })
