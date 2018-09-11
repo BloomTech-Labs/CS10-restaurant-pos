@@ -18,6 +18,10 @@ const TableSchema = new Schema({
       type: Number,
     },
   ],
+  active: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 module.exports = mongoose.model('Table', TableSchema);
