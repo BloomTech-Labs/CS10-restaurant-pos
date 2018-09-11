@@ -6,6 +6,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
 
+// Import Routes
+const employees = require('./api/routes/employees');
+
 // Cors
 const cors = require('cors');
 
@@ -22,10 +25,10 @@ server.use(cors(corsOptions));
 mongoose
   .connect(
     db,
-    { useNewUrlParser: true }
+    { useNewUrlParser: true },
   )
   .then(() => console.log('MongoDB Connected'))
-  .catch((err) => console.error(err));
+  .catch(err => console.error(err));
 
 // Passport Middleware
 server.use(passport.initialize());
@@ -47,7 +50,10 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-server.listen(PORT, (err) => {
+// Routes
+server.use('/api/employees', employees);
+
+server.listen(PORT, err => {
   if (err) console.error(err);
   console.log(`Server running on port: ${PORT}`);
 });
