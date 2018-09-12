@@ -38,8 +38,8 @@ router.get('/all', (req, res) => {
     });
 });
 
-// @route   GET api/items/:name
-// @desc    Retrieves the food item with the given name
+// @route   GET api/items/:id
+// @desc    Retrieves the food item with the given id
 // @access  Private
 router.get('/:id', (req, res) => {
   const { id } = req.params;
@@ -52,7 +52,7 @@ router.get('/:id', (req, res) => {
     });
 });
 
-// @route   PUT api/items/:name
+// @route   PUT api/items/:id
 // @desc    Updates the food item in the database
 // @access  Private
 router.put('/:id', (req, res) => {
@@ -69,7 +69,7 @@ router.put('/:id', (req, res) => {
     });
 });
 
-// @route   DELETE api/items/:name
+// @route   DELETE api/items/:id
 // @desc    Removes the food item from the database
 // @access  Private
 router.delete('/:id', (req, res) => {
