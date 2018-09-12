@@ -3,13 +3,18 @@
   "version": "1.0.0",
   "description": "The POS that's not a POS",
   "main": "server.js",
-  "engines" : { "node" : ">=10.0.0" },
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "scripts": {
     "client": "npm start --prefix client",
     "server": "nodemon server.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "client-install": "npm --prefix client",
-    "heroku-postbuild": "cross-env NPM_CONFIG_PRODUCTION=false npm i --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "cross-env NPM_CONFIG_PRODUCTION=false npm i --prefix client && npm run build --prefix client",
+    "lint": "eslint api/",
+    "test": "",
+    "precommit": "concurrently \"npm run lint\" \"cd client && npm run lint\" "
   },
   "repository": "git@github.com:Lambda-School-Labs/CS10-restaurant-pos.git",
   "author": "Team POS",
@@ -28,6 +33,14 @@
     "concurrently": "^4.0.1",
     "cross-env": "^5.2.0",
     "dotenv": "^6.0.0",
+    "eslint": "^5.5.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^21.22.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.11.1",
     "husky": "^0.14.3",
     "morgan": "^1.9.0",
     "nodemon": "^1.18.4"

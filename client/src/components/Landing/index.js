@@ -1,7 +1,9 @@
 import React from 'react';
 
 class Landing extends React.Component {
-  state = { key: "value" }
+  state = {
+    key: "value"
+  };
 
   render() {
     return (
