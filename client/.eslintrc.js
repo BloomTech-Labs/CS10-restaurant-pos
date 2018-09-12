@@ -11,7 +11,7 @@ module.exports = {
     node: true
   },
   rules: {
-    semi: 'off',
+    'semi': 'on',
     'arrow-parens': ['off'],
     'compat/compat': 'error',
     'comma-dangle': 'off',
@@ -54,5 +54,5 @@ module.exports = {
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
     'react/prefer-stateless-function': 'off'
   },
-  plugins: ['jest', 'flowtype', 'import', 'promise', 'compat', 'react'],
+  plugins: ['jest', 'promise', 'react'],
 };
