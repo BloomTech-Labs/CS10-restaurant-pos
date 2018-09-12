@@ -5,9 +5,15 @@ import {
   PASSWORD_MATCH_SUCCESS,
 } from '../actions/auth';
 
+import {
+  LOADING_TABLES_ERROR,
+  LOADING_TABLES_SUCCESS,
+} from '../actions/tables';
+
 const initialState = {
   loginError: false,
   passMatchError: false,
+  loadingTablesError: false,
 };
 
 const ErrorReducer = (errors = initialState, action) => {
@@ -20,6 +26,10 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, passMatchError: action.payload };
     case PASSWORD_MATCH_SUCCESS:
       return { ...errors, passMatchError: false };
+    case LOADING_TABLES_ERROR:
+      return { ...errors, loadingTablesError: true };
+    case LOADING_TABLES_SUCCESS:
+      return { ...errors, loadingTablesError: false };
     default:
       return errors;
   }
