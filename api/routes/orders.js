@@ -32,7 +32,7 @@ router.post('/add', (req, res) => {
     });
 });
 
-// @route   POST api/orders/all
+// @route   GET api/orders/all
 // @desc    View all orders
 // @access  Private
 router.get('/all', (req, res) => {
@@ -46,4 +46,5 @@ router.get('/all', (req, res) => {
       res.status(400).json({ message: 'Something went wrong!', err: err });
     });
 });
+
 module.exports = router;
