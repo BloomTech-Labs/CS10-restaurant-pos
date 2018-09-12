@@ -24,11 +24,6 @@
     "stylelint": "stylelint \"./**/*.js\"",
     "lint": "eslint ."
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint && npm test"
-    }
-  },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
     "eslint": "^5.5.0",
