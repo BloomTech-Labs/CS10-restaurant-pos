@@ -22,7 +22,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "stylelint": "stylelint \"./**/*.js\"",
-    "lint": "eslint ."
+    "lint": "eslint . && npm run stylelint"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
