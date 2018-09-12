@@ -12,7 +12,7 @@ module.exports = {
   },
   rules: {
     'semi': 2,
-    'compat/compat': 'error',
+    'compat/compat': 'warn',
     'arrow-parens': ['off'],
     'compat/compat': 'error',
     'comma-dangle': 'off',
@@ -34,6 +34,7 @@ module.exports = {
     'no-multi-assign': 'off',
     'no-plusplus': 'off',
     'no-loop-func': 'off',
+    'no-param-reassign': 'off',
     'promise/param-names': 'error',
     'promise/always-return': 'error',
     'promise/catch-or-return': 'error',
