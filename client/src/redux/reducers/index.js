@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+
 import AuthReducer from './auth';
 import ErrorReducer from './errors';
 import TablesReducer from './tables';
