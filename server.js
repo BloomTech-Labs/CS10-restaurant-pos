@@ -1,6 +1,3 @@
-const dotenv = require('dotenv');
-dotenv.config();
-
 const { mongoURI: db, clientURI } = require('./config/keys');
 const express = require('express');
 const mongoose = require('mongoose');
@@ -55,6 +52,9 @@ if (process.env.NODE_ENV === 'production') {
   server.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
+} else {
+  const dotenv = require('dotenv');
+  dotenv.config();
 }
 
 // Routes
