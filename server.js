@@ -1,6 +1,6 @@
 if (process.env.NODE_ENV !== 'production') {
-    const dotenv = require('dotenv');
-    dotenv.config();
+  const dotenv = require('dotenv');
+  dotenv.config();
 }
 
 const { mongoURI: db, clientURI } = require('./config/keys');
@@ -31,7 +31,7 @@ server.use(express.urlencoded({ extended: false }));
 mongoose
   .connect(
     db,
-    { useNewUrlParser: true },
+    { useNewUrlParser: true }
   )
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.error(err));
@@ -64,17 +64,17 @@ server.use('/api/employees', employees);
 server.use(
   '/api/items',
   passport.authenticate('jwt', { session: false }),
-  items,
+  items
 );
 server.use(
   '/api/tables',
   passport.authenticate('jwt', { session: false }),
-  tables,
+  tables
 );
 server.use(
   '/api/orders',
   passport.authenticate('jwt', { session: false }),
-  orders,
+  orders
 );
 
 server.listen(PORT, err => {
