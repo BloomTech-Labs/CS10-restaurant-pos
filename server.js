@@ -10,6 +10,7 @@ const passport = require('passport');
 const employees = require('./api/routes/employees');
 const items = require('./api/routes/items');
 const tables = require('./api/routes/tables');
+const orders = require('./api/routes/orders');
 
 // Cors
 const cors = require('cors');
@@ -67,6 +68,11 @@ server.use(
   '/api/tables',
   passport.authenticate('jwt', { session: false }),
   tables,
+);
+server.use(
+  '/api/orders',
+  passport.authenticate('jwt', { session: false }),
+  orders,
 );
 
 server.listen(PORT, err => {

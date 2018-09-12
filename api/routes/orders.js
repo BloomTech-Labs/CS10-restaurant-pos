@@ -7,7 +7,7 @@ const Order = require('../models/Order');
 
 // @route   POST api/orders/test
 // @desc    Test the orders routes
-// @access  Public
+// @access  Private
 router.get('/test', (req, res) => {
   res.status(200).json({ message: 'Orders Routes Work!' });
 });
