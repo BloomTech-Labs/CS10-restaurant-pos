@@ -74,6 +74,18 @@ router.get('/all', (req, res) => {
       res.status(400).json(err);
     });
 });
+
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+
+  Party.findOne({ _id: id })
+    .populate('server', ['name'])
+    .populate('food', ['name', 'price'])
+    .populate('tables')
+    .then(party => {
+      res.status(200).json(party);
+    })
+    .catch(err => {
       res.status(400).json(err);
     });
 });
