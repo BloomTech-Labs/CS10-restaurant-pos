@@ -17,10 +17,10 @@ router.post('/add', (req, res) => {
 
   newParty
     .save()
-    .then((addedParty) => {
+    .then(addedParty => {
       res.status(200).json(addedParty);
     })
-    .catch((err) => {
+    .catch(err => {
       res.status(400).json(err);
     });
 });
@@ -38,15 +38,11 @@ router.put('/update/:id', (req, res) => {
   if (food) updatedFields.food = food;
   if (tables) updatedFields.tables = tables;
 
-  Party.findOneAndUpdate(
-    { _id: id },
-    updatedFields,
-    { new: true }
-  )
-    .then((updatedParty) => {
+  Party.findOneAndUpdate({ _id: id }, updatedFields, { new: true })
+    .then(updatedParty => {
       res.status(200).json(updatedParty);
     })
-    .catch((err) => {
+    .catch(err => {
       res.status(400).json(err);
     });
 });
@@ -58,10 +54,14 @@ router.delete('/delete/:id', (req, res) => {
   const { id } = req.params;
 
   Party.findOneAndRemove({ _id: id })
-    .then((removedParty) => {
+    .then(removedParty => {
       res.status(200).json({ removedParty, msg: 'Party has been removed.' });
     })
-    .catch((err) => {
+    .catch(err => {
+      res.status(400).json(err);
+    });
+});
+
       res.status(400).json(err);
     });
 });
