@@ -7,7 +7,6 @@ import Register from './components/Register';
 import Servers from './components/Servers';
 import Tables from './components/Tables';
 import NotFound from './components/NotFound';
-
 import RequireNotAuth from './components/HOC/RequireNotAuth';
 import RequireAuth from './components/HOC/RequireAuth';
 

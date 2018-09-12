@@ -4,7 +4,6 @@ import {
   PASSWORD_MATCH_ERROR,
   PASSWORD_MATCH_SUCCESS,
 } from '../actions/auth';
-
 import {
   LOADING_TABLES_ERROR,
   LOADING_TABLES_SUCCESS,

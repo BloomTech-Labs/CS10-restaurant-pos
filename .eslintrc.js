@@ -15,6 +15,7 @@ module.exports = {
     'compat/compat': 'error',
     'comma-dangle': 'off',
     'consistent-return': 'off',
+    'func-names': 'off',
     'generator-star-spacing': 'off',
     'import/order': ['error', { 'newlines-between': 'always' }],
     'import/no-unresolved': 'error', // # hack until resolving import properly
@@ -25,12 +26,13 @@ module.exports = {
     'no-use-before-define': 'off',
     'no-multi-assign': 'off',
     'no-plusplus': 'off',
+    'no-param-reassign': 'off',
     'no-loop-func': 'off',
     'promise/param-names': 'error',
     'promise/always-return': 'error',
     'promise/catch-or-return': 'error',
     'promise/no-native': 'off',
-    'promise/always-return': 'off',
+    'promise/always-return': 'off'
   },
-  plugins: ['jest', 'promise', 'import'],
+  plugins: ['jest', 'promise', 'import', 'compat'],
 };

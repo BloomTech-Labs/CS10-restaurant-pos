@@ -7,10 +7,10 @@ export const LOADING_TABLES_SUCCESS = 'LOADING_TABLES_SUCCESS';
 export const LOADING_TABLES_ERROR = 'LOADING_TABLES_ERROR';
 
 axios.defaults.withCredentials = true;
-axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwt');
+axios.defaults.headers.common.Authorization = localStorage.getItem('jwt');
 
-export const getTables = () => {
-  return (dispatch) => {
+export const getTables = () => (
+  (dispatch) => {
     dispatch({ type: LOADING_TABLES });
     axios
       .get(`${serverURI}/api/tables/all`)
@@ -21,5 +21,5 @@ export const getTables = () => {
         console.error(err);
         dispatch({ type: LOADING_TABLES_ERROR, payload: err });
       });
-  };
-}
+  }
+);
