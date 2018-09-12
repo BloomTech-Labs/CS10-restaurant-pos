@@ -12,7 +12,13 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "client-install": "npm --prefix client",
     "heroku-postbuild": "cross-env NPM_CONFIG_PRODUCTION=false npm i --prefix client && npm run build --prefix client",
-    "lint": "eslint api/"
+    "lint": "eslint api/",
+    "test": ""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm test"
+    }
   },
   "repository": "git@github.com:Lambda-School-Labs/CS10-restaurant-pos.git",
   "author": "Team POS",
