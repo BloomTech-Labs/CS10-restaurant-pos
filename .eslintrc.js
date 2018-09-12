@@ -26,6 +26,7 @@ module.exports = {
     'no-use-before-define': 'off',
     'no-multi-assign': 'off',
     'no-plusplus': 'off',
+    'no-param-reassign': 'off',
     'no-loop-func': 'off',
     'promise/param-names': 'error',
     'promise/always-return': 'error',
