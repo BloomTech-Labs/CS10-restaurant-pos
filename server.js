@@ -13,7 +13,7 @@ const cors = require('cors');
 const { mongoURI: db, clientURI } = require('./config/keys');
 const employees = require('./api/routes/employees');
 const items = require('./api/routes/items');
-const tables = require('./api/routes/tables');
+const party = require('./api/routes/party');
 const orders = require('./api/routes/orders');
 
 const corsOptions = { origin: clientURI, credentials: true };
@@ -66,9 +66,9 @@ server.use(
   items
 );
 server.use(
-  '/api/tables',
+  '/api/party',
   passport.authenticate('jwt', { session: false }),
-  tables
+  party
 );
 server.use(
   '/api/orders',
