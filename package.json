@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "The POS that's not a POS",
   "main": "server.js",
+  "engines" : { "node" : ">=10.0.0" },
   "scripts": {
     "client": "npm start --prefix client",
     "server": "nodemon server.js",
