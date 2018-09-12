@@ -27,6 +27,10 @@ const Order = new Schema({
   last4: {
     type: String,
   },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model('Order', Order);
