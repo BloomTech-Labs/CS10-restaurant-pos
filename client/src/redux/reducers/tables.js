@@ -10,10 +10,10 @@ const initialState = {
 
 const TablesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOADING_TABLES_SUCCESS:
+    case LOADING_TABLES:
       return { ...state, loading: true };
 
-    case LOADED_TABLES:
+    case LOADING_TABLES_SUCCESS:
       return { ...state, loading: false, tables: action.payload };
 
     default:
