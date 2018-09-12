@@ -1,6 +1,6 @@
 import {
   LOADING_TABLES,
-  LOADED_TABLES,
+  LOADING_TABLES_SUCCESS,
 } from '../actions/tables';
 
 const initialState = {
@@ -10,7 +10,7 @@ const initialState = {
 
 const TablesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOADING_TABLES:
+    case LOADING_TABLES_SUCCESS:
       return { ...state, loading: true };
 
     case LOADED_TABLES:
