@@ -469,3 +469,41 @@ Response:
   }
 ]
 ```
+
+### Get a Specific Order
+
+GET `/api/orders/:id`
+
+Requires Authorization
+
+Retrieves a specific order from the database by the id provided.
+
+Response:
+
+```
+{
+  "food": [
+    {
+      "_id": "5b956483ed2e4d86346d6c82",
+      "name": "Shrimp Tempura",
+      "price": 5.99
+    },
+    {
+      "_id": "5b9564a0ed2e4d86346d6c83",
+      "name": "Sweet Potato Roll",
+      "price": 4.99
+    }
+  ],
+  "_id": "5b9945ad15c2eab76ccc78b1",
+  "table": "5b983e0726d91bbaec2fea1b",
+  "server": {
+    "_id": "5b993879366d2671bcba0e02",
+    "name": "Rigby Bird"
+  },
+  "lastName": "Last Name",
+  "firstName": "first name",
+  "last4": "1234",
+  "date": "2018-09-12T16:58:21.473Z",
+  "__v": 0
+}
+```

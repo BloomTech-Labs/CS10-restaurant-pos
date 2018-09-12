@@ -15,8 +15,8 @@ class TablesContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  // tables: state.,
-});
+// const mapStateToProps = (state) => ({
+//   // tables: state.,
+// });
 
-export default connect(mapStateToProps)(TablesContainer);
+export default connect()(TablesContainer);

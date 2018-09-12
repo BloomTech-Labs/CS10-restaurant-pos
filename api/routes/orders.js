@@ -47,4 +47,23 @@ router.get('/all', (req, res) => {
     });
 });
 
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+
+  Order.findOne({ _id: id })
+    .populate('server', ['name'])
+    .populate('food', ['name', 'price'])
+    .then(order => {
+      if (!order) {
+        res
+          .status(404)
+          .json({ message: 'No order with the specified ID exists.' });
+      }
+      res.status(200).json({ order });
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
+});
+
 module.exports = router;
