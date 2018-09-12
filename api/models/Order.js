@@ -7,15 +7,18 @@ const Order = new Schema({
   table: {
     type: ObjectId,
     ref: 'Table',
+    required: true,
   },
   server: {
     type: ObjectId,
     ref: 'Employee',
+    required: true,
   },
   food: [
     {
       type: ObjectId,
       ref: 'Item',
+      required: true,
     },
   ],
   firstName: {
