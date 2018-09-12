@@ -62,6 +62,18 @@ router.delete('/delete/:id', (req, res) => {
     });
 });
 
+router.get('/all', (req, res) => {
+  Party.find({})
+    .populate('server', ['name'])
+    .populate('food', ['name', 'price'])
+    .populate('tables')
+    .then(parties => {
+      res.status(200).json(parties);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
+});
       res.status(400).json(err);
     });
 });
