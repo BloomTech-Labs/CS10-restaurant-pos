@@ -77,6 +77,7 @@ Response:
 ### Change Password
 
 PUT `/api/employees/update/:pin`
+
 Requires Authorization
 
 Changes the password for the user
@@ -117,6 +118,7 @@ Response:
 ### Add Item
 
 POST `/api/items/add`
+
 Requires Authorization
 
 Adds a new food item to the database.
@@ -152,6 +154,7 @@ Response:
 ### Get All Items
 
 GET `/api/items/all`
+
 Requires Authorization
 
 Retrieves all of the food items from the database.
@@ -180,6 +183,7 @@ Response:
 ### Get A Specific Item
 
 GET `/api/items/:id`
+
 Requires Authorization
 
 Retrieves the food by the id specified in the parameters.
@@ -239,6 +243,7 @@ Response:
 ### Delete Item
 
 DELETE `/api/items/:id`
+
 Requires Authorization
 
 Deletes an item from the database.
@@ -262,6 +267,7 @@ Response:
 
 ### Add a New Table
 POST `/api/tables/add`
+
 Requires Authorization
 
 Adds a new table to the database
@@ -296,6 +302,7 @@ Response:
 ### Update a Table
 
 PUT `/api/tables/update/:id`
+
 Requires Authorization
 
 Updates the table information
@@ -340,6 +347,7 @@ Response:
 ### Delete a Table
 
 DELETE `/api/tables/delete/:id`
+
 Requires Authorization
 
 Deletes a table from the database.
@@ -363,4 +371,101 @@ Response:
   },
   "msg": "Table has been removed."
 }
+```
+
+## Order Routes
+
+### Add a New Order
+
+POST `/api/orders/add`
+
+Requires Authorization
+
+Adds a new order to the selected table.
+
+Request body should look like this:
+
+```
+{
+  "table": "5b983e0726d91bbaec2fea1b",
+  "server": "5b993879366d2671bcba0e02",
+  "food": [
+    "5b956483ed2e4d86346d6c82",
+    "5b9564a0ed2e4d86346d6c83"
+  ],
+  "firstName": "First",
+  "lastName": "Last",
+  "last4": "1234"
+}
+```
+
+`table`: Table ObjectId, required
+
+`server`: Employee ObjectId, required
+
+`food`: Should be an array of Item ObjectIds, required
+
+`firstName`: String, optional
+
+`lastName`: String, optional
+
+`last4`: String, optional
+
+Response:
+
+```
+{
+  "food": [
+      "5b956483ed2e4d86346d6c82",
+      "5b9564a0ed2e4d86346d6c83"
+  ],
+  "_id": "5b9945ad15c2eab76ccc78b1",
+  "table": "5b983e0726d91bbaec2fea1b",
+  "server": "5b993879366d2671bcba0e02",
+  "lastName": "Last Name",
+  "firstName": "first name",
+  "last4": "1234",
+  "date": "2018-09-12T16:58:21.473Z",
+  "__v": 0
+}
+```
+
+### Get All Orders
+
+GET `/api/orders/all`
+
+Requires Authorization
+
+Retrieves all of the orders from the database.
+
+Response:
+
+```
+[
+  {
+    "food": [
+      {
+        "_id": "5b956483ed2e4d86346d6c82",
+        "name": "Shrimp Tempura",
+        "price": 5.99
+      },
+      {
+        "_id": "5b9564a0ed2e4d86346d6c83",
+        "name": "Sweet Potato Roll",
+        "price": 4.99
+      }
+    ],
+    "_id": "5b9945ad15c2eab76ccc78b1",
+    "table": "5b983e0726d91bbaec2fea1b",
+    "server": {
+      "_id": "5b993879366d2671bcba0e02",
+      "name": "Rigby Bird"
+    },
+    "lastName": "Last Name",
+    "firstName": "first name",
+    "last4": "1234",
+    "date": "2018-09-12T16:58:21.473Z",
+    "__v": 0
+  }
+]
 ```
