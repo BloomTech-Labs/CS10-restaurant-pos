@@ -28,6 +28,7 @@ module.exports = {
     'jsx-a11y/label-has-for': 0,
     'jsx-a11y/no-autofocus': 0,
     'linebreak-style': 'off',
+    'object-curly-newline': 'off',
     'no-console': 'off',
     'no-use-before-define': 'off',
     'no-multi-assign': 'off',
