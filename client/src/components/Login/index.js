@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import { login } from '../../redux/actions/auth';
 
 class Login extends React.Component {
@@ -18,9 +20,9 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <Link to="/register">Don't have an account? Register here</Link>
+        <Link to="/register">Don&apos;t have an account? Register here</Link>
         <form onSubmit={this.handleSubmit}>
-        <input
+          <input
             placeholder="pin"
             type="text"
             onChange={this.handleChange}
@@ -46,6 +48,16 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  login: PropTypes.func,
+  history: PropTypes.objectOf(PropTypes.any),
+};
+
+Login.defaultProps = {
+  login: () => {},
+  history: {}
+};
 
 
 export default connect(
