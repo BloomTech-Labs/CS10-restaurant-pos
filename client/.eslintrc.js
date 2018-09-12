@@ -11,7 +11,7 @@ module.exports = {
     node: true
   },
   rules: {
-    'semi': 'on',
+    'semi': 2,
     'arrow-parens': ['off'],
     'compat/compat': 'error',
     'comma-dangle': 'off',
@@ -36,6 +36,7 @@ module.exports = {
     'promise/always-return': 'error',
     'promise/catch-or-return': 'error',
     'promise/no-native': 'off',
+    'promise/always-return': 'off',
     'react/no-array-index-key': 0,
     'react/sort-comp': [
       'error',
@@ -54,5 +55,5 @@ module.exports = {
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
     'react/prefer-stateless-function': 'off'
   },
-  plugins: ['jest', 'promise', 'react'],
+  plugins: ['jest', 'promise', 'import', 'react'],
 };
