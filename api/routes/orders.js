@@ -32,4 +32,18 @@ router.post('/add', (req, res) => {
     });
 });
 
+// @route   POST api/orders/all
+// @desc    View all orders
+// @access  Private
+router.get('/all', (req, res) => {
+  Order.find({})
+    .populate('server', ['name'])
+    .populate('food', ['name', 'price'])
+    .then(order => {
+      res.status(200).json(order);
+    })
+    .catch(err => {
+      res.status(400).json({ message: 'Something went wrong!', err: err });
+    });
+});
 module.exports = router;
