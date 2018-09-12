@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 const bcrypt = require('bcryptjs');
+
+const { Schema } = mongoose;
 const { ObjectId } = Schema.Types;
 
 const Employee = new Schema({
@@ -40,7 +41,7 @@ const Employee = new Schema({
 });
 
 // Pre-Save Hook
-Employee.pre('save', function(next) {
+Employee.pre('save', function (next) {
   if (!this.isModified('password')) return next();
   bcrypt.hash(this.password, 10, (err, hash) => {
     if (err) return next(err);
@@ -50,7 +51,7 @@ Employee.pre('save', function(next) {
 });
 
 // Check password
-Employee.methods.checkPassword = function(providedPass) {
+Employee.methods.checkPassword = function (providedPass) {
   return bcrypt.compare(providedPass, this.password);
 };
 

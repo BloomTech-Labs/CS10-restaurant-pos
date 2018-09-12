@@ -1,10 +1,8 @@
-// https://github.com/themikenicholson/passport-jwt
+// 1. https://github.com/themikenicholson/passport-jwt
+// 2. Extracts the user data from the given payload
+// 3. To search for the user that comes with the payload
 const JwtStrategy = require('passport-jwt').Strategy;
-
-// Extracts the user data from the given payload
-const ExtractJwt = require('passport-jwt').ExtractJwt;
-
-// To search for the user that comes with the payload
+const JwtExtract = require('passport-jwt').ExtractJwt;
 const mongoose = require('mongoose');
 
 // Employee model
@@ -16,26 +14,24 @@ const keys = require('./keys');
 // Empty object for our options
 const opts = {};
 
-/* 
-Options is an object literal containing options to control how the token is extracted from the request or verified.
-*/
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+// Options is an object literal containing options to control
+// how the token is extracted from the request or verified.
+opts.jwtFromRequest = JwtExtract.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = keys.secretOrKey;
 
-/* Documentation
-https://www.npmjs.com/package/passport-jwt 
-*/
-module.exports = passport => {
+// Documentation
+// https://www.npmjs.com/package/passport-jwt
+module.exports = (passport) => {
   passport.use(
-    new JwtStrategy(opts, (jwt_payload, done) => {
-      Employee.findById(jwt_payload.id)
-        .then(user => {
+    new JwtStrategy(opts, (jwtPayload, done) => {
+      Employee.findById(jwtPayload.id)
+        .then((user) => {
           if (user) {
             return done(null, user);
           }
           return done(null, false);
         })
-        .catch(err => console.log(err));
-    }),
+        .catch((err) => console.log(err));
+    })
   );
 };

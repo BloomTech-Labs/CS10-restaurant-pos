@@ -1,6 +1,6 @@
 const express = require('express');
+
 const router = express.Router();
-const passport = require('passport');
 
 // Require Item Model
 const Item = require('../models/Item');
@@ -17,10 +17,10 @@ router.post('/add', (req, res) => {
   // save the new item to the database
   newItem
     .save()
-    .then(item => {
+    .then((item) => {
       res.status(200).json(item);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(400).json(err);
     });
 });
@@ -30,10 +30,10 @@ router.post('/add', (req, res) => {
 // @access  Private
 router.get('/all', (req, res) => {
   Item.find({})
-    .then(items => {
+    .then((items) => {
       res.status(200).json(items);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(400).json(err);
     });
 });
@@ -44,10 +44,10 @@ router.get('/all', (req, res) => {
 router.get('/:id', (req, res) => {
   const { id } = req.params;
   Item.findOne({ _id: id })
-    .then(item => {
+    .then((item) => {
       res.status(200).json(item);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(400).json(err);
     });
 });
@@ -57,14 +57,14 @@ router.get('/:id', (req, res) => {
 // @access  Private
 router.put('/:id', (req, res) => {
   const { id } = req.params;
-  const updatedItem = req.body;
+  const itemToUpdate = req.body;
 
   // updates the item and sends back the updated document
-  Item.findOneAndUpdate({ _id: id }, updatedItem, { new: true })
-    .then(updatedItem => {
+  Item.findOneAndUpdate({ _id: id }, itemToUpdate, { new: true })
+    .then((updatedItem) => {
       res.status(200).json(updatedItem);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(400).json(err);
     });
 });
@@ -76,12 +76,12 @@ router.delete('/:id', (req, res) => {
   const { id } = req.params;
 
   Item.findOneAndRemove({ _id: id })
-    .then(removedItem => {
+    .then((removedItem) => {
       res
         .status(200)
         .json({ removedItem, msg: 'Item deleted from the database.' });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(400).json(err);
     });
 });
