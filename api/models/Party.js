@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const { ObjectId } = Schema.Types;
 
-const TableSchema = new Schema({
+const PartySchema = new Schema({
   server: {
     type: ObjectId,
     ref: 'Employee',
@@ -14,15 +14,12 @@ const TableSchema = new Schema({
       ref: 'Item',
     },
   ],
-  tableNumbers: [
+  tables: [
     {
-      type: Number,
+      type: ObjectId,
+      ref: 'Table',
     },
-  ],
-  active: {
-    type: Boolean,
-    default: true,
-  },
+  ]
 });
 
-module.exports = mongoose.model('Table', TableSchema);
+module.exports = mongoose.model('Party', PartySchema);
