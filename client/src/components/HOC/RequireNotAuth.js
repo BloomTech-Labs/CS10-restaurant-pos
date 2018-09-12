@@ -18,11 +18,9 @@ export default (ComposedComponent) => {
     }
   }
 
-  const mapStateToProps = (state) => {
-    return {
-      jwt: state.auth.jwt,
-    }
-  }
+  const mapStateToProps = (state) => ({
+    jwt: state.auth.jwt,
+  });
 
   return connect(
     mapStateToProps,

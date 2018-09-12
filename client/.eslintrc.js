@@ -54,7 +54,8 @@ module.exports = {
     'react/jsx-no-bind': 'off',
     'react/jsx-one-expression-per-line': 'off',
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
-    'react/prefer-stateless-function': 'off'
+    'react/prefer-stateless-function': 'off',
+    'react/destructuring-assignment': 'off'
   },
   plugins: ['jest', 'promise', 'import', 'react', 'compat'],
 };
