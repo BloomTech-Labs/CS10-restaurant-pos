@@ -12,6 +12,7 @@ module.exports = {
   },
   rules: {
     'semi': 2,
+    'compat/compat': 'error',
     'arrow-parens': ['off'],
     'compat/compat': 'error',
     'comma-dangle': 'off',
@@ -55,5 +56,5 @@ module.exports = {
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
     'react/prefer-stateless-function': 'off'
   },
-  plugins: ['jest', 'promise', 'import', 'react'],
+  plugins: ['jest', 'promise', 'import', 'react', 'compat'],
 };

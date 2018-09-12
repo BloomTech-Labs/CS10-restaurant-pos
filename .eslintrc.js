@@ -32,5 +32,5 @@ module.exports = {
     'promise/no-native': 'off',
     'promise/always-return': 'off',
   },
-  plugins: ['jest', 'promise', 'import'],
+  plugins: ['jest', 'promise', 'import', 'compat'],
 };
