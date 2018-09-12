@@ -1,21 +1,20 @@
 if (process.env.NODE_ENV !== 'production') {
-    const dotenv = require('dotenv');
-    dotenv.config();
+  const dotenv = require('dotenv'); // eslint-disable-line global-require
+  dotenv.config();
 }
 
-const { mongoURI: db, clientURI } = require('./config/keys');
+const path = require('path');
+
 const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const cors = require('cors');
 
-// Import Routes
+const { mongoURI: db, clientURI } = require('./config/keys');
 const employees = require('./api/routes/employees');
 const items = require('./api/routes/items');
 const tables = require('./api/routes/tables');
 const orders = require('./api/routes/orders');
-
-// Cors
-const cors = require('cors');
 
 const corsOptions = { origin: clientURI, credentials: true };
 
@@ -31,10 +30,10 @@ server.use(express.urlencoded({ extended: false }));
 mongoose
   .connect(
     db,
-    { useNewUrlParser: true },
+    { useNewUrlParser: true }
   )
   .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.error(err));
+  .catch((err) => console.error(err));
 
 // Passport Middleware
 server.use(passport.initialize());
@@ -64,20 +63,20 @@ server.use('/api/employees', employees);
 server.use(
   '/api/items',
   passport.authenticate('jwt', { session: false }),
-  items,
+  items
 );
 server.use(
   '/api/tables',
   passport.authenticate('jwt', { session: false }),
-  tables,
+  tables
 );
 server.use(
   '/api/orders',
   passport.authenticate('jwt', { session: false }),
-  orders,
+  orders
 );
 
-server.listen(PORT, err => {
+server.listen(PORT, (err) => {
   if (err) console.error(err);
   console.log(`Server running on port: ${PORT}`);
 });

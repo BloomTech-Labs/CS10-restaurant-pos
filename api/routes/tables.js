@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 
 // Import Table Model
@@ -16,10 +17,10 @@ router.post('/add', (req, res) => {
 
   newTable
     .save()
-    .then(table => {
+    .then((table) => {
       res.status(200).json(table);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(400).json(err);
     });
 });
@@ -31,11 +32,15 @@ router.put('/update/:id', (req, res) => {
   const { server, food, tableNumbers } = req.body;
   const { id } = req.params;
 
-  Table.findOneAndUpdate({ _id: id }, { server, food, tableNumbers }, { new: true })
-    .then(updatedTable => {
+  Table.findOneAndUpdate(
+    { _id: id },
+    { server, food, tableNumbers },
+    { new: true }
+  )
+    .then((updatedTable) => {
       res.status(200).json(updatedTable);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(400).json(err);
     });
 });
@@ -47,12 +52,12 @@ router.delete('/delete/:id', (req, res) => {
   const { id } = req.params;
 
   Table.findOneAndRemove({ _id: id })
-  .then(removedTable => {
-    res.status(200).json({removedTable, msg: 'Table has been removed.'})
-  })
-  .catch(err => {
-    res.status(400).json(err);
-  })
-})
+    .then((removedTable) => {
+      res.status(200).json({ removedTable, msg: 'Table has been removed.' });
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+});
 
 module.exports = router;

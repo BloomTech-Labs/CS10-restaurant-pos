@@ -1,6 +1,6 @@
 const express = require('express');
+
 const router = express.Router();
-const passport = require('passport');
 
 // Require Order Model
 const Order = require('../models/Order');
@@ -24,11 +24,11 @@ router.post('/add', (req, res) => {
   // Assign Refs
   newOrder
     .save()
-    .then(order => {
+    .then((order) => {
       res.status(200).json(order);
     })
-    .catch(err => {
-      res.status(400).json({ message: 'Something went wrong!', err: err });
+    .catch((err) => {
+      res.status(400).json({ message: 'Something went wrong!', err });
     });
 });
 
@@ -39,11 +39,11 @@ router.get('/all', (req, res) => {
   Order.find({})
     .populate('server', ['name'])
     .populate('food', ['name', 'price'])
-    .then(order => {
+    .then((order) => {
       res.status(200).json(order);
     })
-    .catch(err => {
-      res.status(400).json({ message: 'Something went wrong!', err: err });
+    .catch((err) => {
+      res.status(400).json({ message: 'Something went wrong!', err });
     });
 });
 
