@@ -512,7 +512,9 @@ Request body should look like this:
 }
 ```
 
-`tableNumbers`: Should be an array with the table numbers.
+`tables`: Should be an array with the table numbers.
+
+**NOTE** Make sure to include all of the combined tables in the array. This endpoint replaces the whole `tables` field!
 
 `food`: Should be an array of Item ObjectIds
 
@@ -523,12 +525,10 @@ Response:
 ```
 {
   "food": [
-      "5b956483ed2e4d86346d6c82",
-      "5b9564a0ed2e4d86346d6c83"
+    "5b956483ed2e4d86346d6c82",
+    "5b9564a0ed2e4d86346d6c83"
   ],
-  "tableNumbers": [
-      1
-  ],
+  "tables": ["5b99a5d5603385aece3e367a"],
   "active": true,
   "_id": "5b9854d75581035b36fd13e9",
   "__v": 0,
@@ -553,9 +553,7 @@ Response:
       "5b956483ed2e4d86346d6c82",
       "5b9564a0ed2e4d86346d6c83"
     ],
-    "tableNumbers": [
-        1
-    ],
+    "tables": ["5b99a5d5603385aece3e367a"],
     "active": true,
     "_id": "5b9854d75581035b36fd13e9",
     "__v": 0,
