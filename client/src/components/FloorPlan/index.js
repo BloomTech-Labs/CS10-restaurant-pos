@@ -7,8 +7,12 @@ class FloorPlan extends React.Component {
     super(props);
 
     this.pixi = React.createRef();
-    this.app = new PIXI.Application({ width: 600, height: 600, transparent: false });
-    this.tables = [];
+    this.app = new PIXI.Application({
+      width: window.innerHeight - 150,
+      height: window.innerHeight - 150,
+      transparent: false
+    });
+    this.tables = []; // TODO: investigate cleaner solutions
   }
 
   componentDidMount() {
@@ -19,28 +23,29 @@ class FloorPlan extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.tables.length !== prevProps.tables.length) {
-      this.app.stage.removeChildren();
-      this.tables = [];
-      this.props.tables.forEach((table, i) => {
-        const tableCopy = { ...table };
-        tableCopy.localPosition = i;
-        this.tables.push(tableCopy);
-        this.circleCreator(tableCopy);
+      this.clear();
+
+      this.props.tables.forEach((table) => {
+        // table.localPosition = i;
+        this.tables.push(table);
+        this.circleCreator(table);
       });
     }
   }
 
+  clear = () => {
+    this.app.stage.removeChildren();
+    this.tables = [];
+  }
+
   circleCreator = (table) => {
     const circle = new PIXI.Graphics();
-    console.log(circle);
     circle.interactive = true;
     circle.beginFill(0xffffff);
     circle.drawCircle(0, 0, 30);
     circle.endFill();
     circle.x = table.x;
     circle.y = table.y;
-    console.log(table);
-    circle.tableInfo = table;
     this.app.stage.addChild(circle);
 
     const onDragStart = event => {
@@ -125,7 +130,7 @@ FloorPlan.propTypes = {
 
 FloorPlan.defaultProps = {
   tables: [],
-  moveTable: () => {}
+  moveTable: () => {},
 };
 
 export default FloorPlan;
