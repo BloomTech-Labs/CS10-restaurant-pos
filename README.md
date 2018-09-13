@@ -1,5 +1,5 @@
-
 # Table of Contents
+
 - [Table of Contents](#table-of-contents)
 - [Scripts](#scripts)
   - [Linting](#linting)
@@ -23,6 +23,7 @@
     - [Update a Party](#update-a-party)
     - [Delete a Party](#delete-a-party)
   - [Table Routes](#table-routes)
+    - [Get All Tables](#get-all-tables)
     - [Add Table](#add-table)
   - [Order Routes](#order-routes)
     - [Add a New Order](#add-a-new-order)
@@ -32,6 +33,7 @@
 # Scripts
 
 ## Linting
+
 `npm run lint-all`: when at the root, lints front/back -end
 
 `npm run lint`: lint the backend or frontend depending on location
@@ -43,7 +45,6 @@ When committing, `npm run lint-all` will automatically be run.
 `npm run client`: Runs only the front-end client.
 `npm run server`: Runs only the back-end server.
 `npm run dev`: Runs both the front and back ends.
-
 
 # Environment Variables
 
@@ -83,7 +84,6 @@ Request body should look like this:
 
 `role`: Object, optional
 
-
 Response includes a Bearer token for authorization.
 
 Response:
@@ -93,7 +93,6 @@ Response:
   "token": "Bearer (token)"
 }
 ```
-
 
 ### Login
 
@@ -145,8 +144,6 @@ Request body should look like this:
 
 `newPassword`: String, required
 
-
-
 Response:
 
 ```
@@ -165,7 +162,6 @@ Response:
 
 ## Item Routes
 
-
 ### Get All Items
 
 GET `/api/items/all`
@@ -175,6 +171,7 @@ GET `/api/items/all`
 Retrieves all of the food items from the database.
 
 Each element in the response array includes and item's:
+
 - name
 - description
 - price
@@ -209,6 +206,7 @@ GET `/api/items/:id`
 Retrieves the food by the id specified in the parameters.
 
 Response includes the item's:
+
 - name
 - price
 - description
@@ -252,6 +250,7 @@ Request body should look like this:
 `price`: Number, required
 
 Response includes the added item's:
+
 - name
 - price
 - description
@@ -292,15 +291,15 @@ Request body should look like this:
 
 `price`: Number
 
-
 You only need one field!
 
 Response includes the updated item's:
+
 - name
 - price
 - description
 
-Response:
+Response:khttps://zoom.us/j/762844869https://zoom.us/j/762844869
 
 ```
 {
@@ -321,6 +320,7 @@ DELETE `/api/items/:id`
 Deletes an item from the database.
 
 Response includes a success message and the deleted item's:
+
 - name
 - price
 - description
@@ -351,6 +351,7 @@ GET `/api/party/all`
 Retrieves all parties from the database.
 
 Each element in the response array includes:
+
 - Items list (name and price)
 - Table info (x/y coordinates and active status)
 - Server info (name)
@@ -409,6 +410,7 @@ GET `/api/party/:id`
 Retrieves a specific party from the database by its id.
 
 Response includes the specified party's:
+
 - Items list (name and price)
 - Table info (x/y coordinates and active status)
 - Server info (name)
@@ -464,6 +466,7 @@ Request body should look like this:
 `tables` is an array so that if tables are combined, all tables are represented in the array. In most cases there will be only one table id.
 
 Response includes the party's:
+
 - Items list (name, price)
 - tables list
 - server name
@@ -484,7 +487,6 @@ Response:
   "__v": 0
 }
 ```
-
 
 ### Update a Party
 
@@ -560,6 +562,35 @@ Response:
 
 ## Table Routes
 
+### Get All Tables
+
+GET`/api/tables/all`
+
+**Requires Authorization**
+
+Get all tables.
+
+Response:
+
+```
+[
+  {
+    "active": false,
+    "_id": "5b9ab81aef8a6528509439dc",
+    "x": 1,
+    "y": 2,
+    "__v": 0
+  },
+  {
+    "active": false,
+    "_id": "5b9ab84cef8a6528509439dd",
+    "x": 2,
+    "y": 4,
+    "__v": 0
+  }
+]
+```
+
 ### Add Table
 
 POST `/api/tables/add`
@@ -582,6 +613,7 @@ Request body should look like this:
 `y`: Number
 
 Response includes the added item's:
+
 - x coordinate
 - y coordinate
 - active status (defaults to true)
