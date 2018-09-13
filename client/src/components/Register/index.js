@@ -10,7 +10,6 @@ class Register extends React.Component {
   state = {
     firstName: '',
     lastName: '',
-    pin: '',
     pass: '',
     confirmPass: '',
   };
@@ -43,15 +42,6 @@ class Register extends React.Component {
             name="lastName"
             maxLength="30"
             value={this.state.lastName}
-          />
-          <input
-            placeholder="pin"
-            type="text"
-            onChange={this.handleChange}
-            name="pin"
-            minLength="6"
-            maxLength="6"
-            value={this.state.pin}
           />
           <input
             placeholder="password"
