@@ -1,12 +1,18 @@
 import React from 'react';
 import * as PIXI from 'pixi.js';
+import PropTypes from 'prop-types';
 
 class FloorPlan extends React.Component {
   constructor(props) {
     super(props);
 
     this.pixi = React.createRef();
-    this.app = new PIXI.Application({ width: 600, height: 600, transparent: false });
+    this.app = new PIXI.Application({
+      width: window.innerHeight - 150,
+      height: window.innerHeight - 150,
+      transparent: false
+    });
+    this.tables = []; // TODO: investigate cleaner solutions
   }
 
   componentDidMount() {
@@ -15,17 +21,32 @@ class FloorPlan extends React.Component {
     this.setup();
   }
 
-  circleCreator = (x, y) => {
+  componentDidUpdate(prevProps) {
+    if (this.props.tables.length !== prevProps.tables.length) {
+      this.clear();
+
+      this.props.tables.forEach((table) => {
+        // table.localPosition = i;
+        this.tables.push(table);
+        this.circleCreator(table);
+      });
+    }
+  }
+
+  clear = () => {
+    this.app.stage.removeChildren();
+    this.tables = [];
+  }
+
+  circleCreator = (table) => {
     const circle = new PIXI.Graphics();
     circle.interactive = true;
     circle.beginFill(0xffffff);
-    circle.drawCircle(0, 0, 10);
+    circle.drawCircle(0, 0, 30);
     circle.endFill();
-    circle.x = x;
-    circle.y = y;
+    circle.x = table.x;
+    circle.y = table.y;
     this.app.stage.addChild(circle);
-
-    console.log(circle);
 
     const onDragStart = event => {
       // store a reference to the data
@@ -37,6 +58,11 @@ class FloorPlan extends React.Component {
     };
 
     const onDragEnd = () => {
+      table.x = circle.x;
+      table.y = circle.y;
+
+      this.props.moveTable(this.tables);
+
       circle.alpha = 1;
 
       circle.dragging = false;
@@ -48,7 +74,6 @@ class FloorPlan extends React.Component {
     const onDragMove = () => {
       if (circle.dragging) {
         const newPosition = circle.data.getLocalPosition(circle.parent);
-        console.log(newPosition);
         circle.x = newPosition.x;
         circle.y = newPosition.y;
       }
@@ -67,10 +92,6 @@ class FloorPlan extends React.Component {
   };
 
   setup = () => {
-    for (let i = 0; i < 10; i++) {
-      this.circleCreator(i * 10, i * 10);
-    }
-
     const animate = () => {
       this.app.render(this.app.stage);
       requestAnimationFrame(animate);
@@ -82,11 +103,11 @@ class FloorPlan extends React.Component {
       let w;
       let h;
       if (window.innerWidth / window.innerHeight >= 1) {
-        w = window.innerHeight * 1;
-        h = window.innerHeight;
+        w = window.innerHeight * 1 - 160;
+        h = window.innerHeight - 160;
       } else {
-        w = window.innerWidth;
-        h = window.innerWidth / 1;
+        w = window.innerWidth - 160;
+        h = window.innerWidth / 1 - 160;
       }
       this.app.view.style.width = `${w}px`;
       this.app.view.style.height = `${h}px`;
@@ -101,5 +122,15 @@ class FloorPlan extends React.Component {
     return <div ref={this.pixi} />;
   }
 }
+
+FloorPlan.propTypes = {
+  tables: PropTypes.arrayOf(PropTypes.object),
+  moveTable: PropTypes.func,
+};
+
+FloorPlan.defaultProps = {
+  tables: [],
+  moveTable: () => {},
+};
 
 export default FloorPlan;
