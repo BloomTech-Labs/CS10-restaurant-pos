@@ -12,7 +12,7 @@ const verifyFields = (fields, obj, res) => {
     }
   });
 
-  if (missingFields) {
+  if (missingFields.length > 0) {
     res.status(422).json({ msg: `Fields missing: ${missingFields}` });
   }
 };
