@@ -16,8 +16,8 @@ const Employee = new Schema({
   pin: {
     type: String,
     required: true,
-    min: 6,
-    max: 6,
+    min: 4,
+    max: 4,
     unique: true,
   },
   role: {
