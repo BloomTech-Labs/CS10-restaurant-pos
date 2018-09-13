@@ -16,14 +16,16 @@ class FloorPlan extends React.Component {
     this.setup();
   }
 
-  circleCreator = (x, y) => {
+  circleCreator = (x, y, tableInfo) => {
     const circle = new PIXI.Graphics();
+    console.log(circle);
     circle.interactive = true;
     circle.beginFill(0xffffff);
     circle.drawCircle(0, 0, 30);
     circle.endFill();
     circle.x = x;
     circle.y = y;
+    circle.tableInfo = tableInfo;
     this.app.stage.addChild(circle);
 
     console.log(circle);

@@ -5,6 +5,7 @@ import serverURI from '../../config/URI';
 export const LOADING_TABLES = 'LOADING_TABLES';
 export const LOADING_TABLES_SUCCESS = 'LOADING_TABLES_SUCCESS';
 export const LOADING_TABLES_ERROR = 'LOADING_TABLES_ERROR';
+export const MOVE_TABLE = 'MOVE_TABLE';
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common.Authorization = localStorage.getItem('jwt');
@@ -23,3 +24,8 @@ export const getTables = () => (
       });
   }
 );
+
+export const moveTable = (x, y) => ({
+  type: MOVE_TABLE,
+  payload: { x, y }
+});

@@ -13,6 +13,9 @@ const TablesReducer = (state = initialState, action) => {
     case LOADING_TABLES_SUCCESS:
       return { ...state, loading: false, tableList: action.payload };
 
+      // case MOVE_TABLE:
+      //   return { ...state, tableList}
+
     default:
       return state;
   }

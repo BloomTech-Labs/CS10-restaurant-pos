@@ -32,7 +32,7 @@ class TablesPage extends Component {
           </s.Form>
         </s.Menu>
         <s.Editor>
-          <FloorPlan numOfTables={this.state.numOfTables}/>
+          <FloorPlan numOfTables={this.state.numOfTables} />
         </s.Editor>
       </s.Container>
     );
