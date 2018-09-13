@@ -8,6 +8,7 @@ class FloorPlan extends React.Component {
 
     this.pixi = React.createRef();
     this.app = new PIXI.Application({ width: 600, height: 600, transparent: false });
+    this.tables = [];
   }
 
   componentDidMount() {
@@ -16,19 +17,26 @@ class FloorPlan extends React.Component {
     this.setup();
   }
 
-  circleCreator = (x, y, tableInfo) => {
+  componentDidUpdate(prevProps) {
+    if (this.props.tables.length !== prevProps.tables.length) {
+      this.app.stage.removeChildren();
+      this.props.tables.forEach((table) => {
+        this.circleCreator(table);
+      });
+    }
+  }
+
+  circleCreator = (table) => {
     const circle = new PIXI.Graphics();
     console.log(circle);
     circle.interactive = true;
     circle.beginFill(0xffffff);
     circle.drawCircle(0, 0, 30);
     circle.endFill();
-    circle.x = x;
-    circle.y = y;
-    circle.tableInfo = tableInfo;
+    circle.x = table.x;
+    circle.y = table.y;
+    circle.tableInfo = table;
     this.app.stage.addChild(circle);
-
-    console.log(circle);
 
     const onDragStart = event => {
       // store a reference to the data
@@ -69,10 +77,6 @@ class FloorPlan extends React.Component {
   };
 
   setup = () => {
-    for (let i = 0; i < this.props.numOfTables; i++) {
-      this.circleCreator(i * 10, i * 10);
-    }
-
     const animate = () => {
       this.app.render(this.app.stage);
       requestAnimationFrame(animate);
@@ -105,11 +109,11 @@ class FloorPlan extends React.Component {
 }
 
 FloorPlan.propTypes = {
-  numOfTables: PropTypes.number,
+  tables: PropTypes.arrayOf(PropTypes.object),
 };
 
 FloorPlan.defaultProps = {
-  numOfTables: 5,
+  tables: [],
 };
 
 export default FloorPlan;
