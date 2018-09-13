@@ -11,3 +11,5 @@ const router = express.Router();
 // @desc    Tests subscription routes
 // @access  Public
 router.get('/test', (req, res) => res.json({ msg: 'Subscription Routes Work' }));
+
+module.exports = router;
