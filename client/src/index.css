@@ -3,6 +3,10 @@
    License: none (public domain)
 */
 
+* {
+  box-sizing: border-box;
+}
+
 html,
 body,
 div,
@@ -126,4 +130,18 @@ q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
 }

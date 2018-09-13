@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 
 import { login } from '../../redux/actions/auth';
 
+import * as s from './styles';
+
 class Login extends React.Component {
   state = { pin: '', pass: '' };
 
@@ -19,9 +21,9 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div>
+      <s.Container>
         <Link to="/register">Don&apos;t have an account? Register here</Link>
-        <form onSubmit={this.handleSubmit}>
+        <s.Form onSubmit={this.handleSubmit}>
           <input
             placeholder="pin"
             type="text"
@@ -43,8 +45,8 @@ class Login extends React.Component {
             value={this.state.pass}
           />
           <button type="submit">Submit</button>
-        </form>
-      </div>
+        </s.Form>
+      </s.Container>
     );
   }
 }

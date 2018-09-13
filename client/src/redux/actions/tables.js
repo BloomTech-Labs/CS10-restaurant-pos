@@ -5,6 +5,8 @@ import serverURI from '../../config/URI';
 export const LOADING_TABLES = 'LOADING_TABLES';
 export const LOADING_TABLES_SUCCESS = 'LOADING_TABLES_SUCCESS';
 export const LOADING_TABLES_ERROR = 'LOADING_TABLES_ERROR';
+export const MOVE_TABLE = 'MOVE_TABLE';
+export const ADD_TABLE = 'ADD_TABLE';
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common.Authorization = localStorage.getItem('jwt');
@@ -23,3 +25,17 @@ export const getTables = () => (
       });
   }
 );
+
+export const addTable = () => ({
+  type: ADD_TABLE,
+  payload: {
+    active: false,
+    x: 10,
+    y: 10
+  }
+});
+
+export const moveTable = (tables) => ({
+  type: MOVE_TABLE,
+  payload: tables
+});
