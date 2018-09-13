@@ -559,6 +559,46 @@ Response:
     "__v": 0,
     "server": "5b98371f09563dc8dca06af3"
   },
-  "msg": "Table has been removed."
+  "msg": "Party has been removed."
+}
+```
+
+## Table Routes
+
+### Add Item
+
+POST `/api/tables/add`
+
+**Requires Authorization**
+
+Adds a new table to the database with the given coordinates.
+
+Request body should look like this:
+
+```
+{
+  "x": 12,
+  "y": 45
+}
+```
+
+`x`: Number
+
+`y`: Number
+
+Response includes the added item's:
+- x coordinate
+- y coordinate
+- active status (defaults to true)
+
+Response:
+
+```
+{
+  "_id": "5b99a5d5603385aece3e367a",
+  "active": false,
+  "x": 0,
+  "y": 0,
+  "__v": 0
 }
 ```
