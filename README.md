@@ -23,7 +23,11 @@
     - [Update a Party](#update-a-party)
     - [Delete a Party](#delete-a-party)
   - [Table Routes](#table-routes)
-    - [Add Item](#add-item-1)
+    - [Add Table](#add-table)
+  - [Order Routes](#order-routes)
+    - [Add a New Order](#add-a-new-order)
+    - [Get All Orders](#get-all-orders)
+    - [Get a Specific Order](#get-a-specific-order)
 
 # Scripts
 
@@ -565,7 +569,7 @@ Response:
 
 ## Table Routes
 
-### Add Item
+### Add Table
 
 POST `/api/tables/add`
 
