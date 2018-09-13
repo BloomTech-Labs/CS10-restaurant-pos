@@ -62,6 +62,9 @@ router.delete('/delete/:id', (req, res) => {
     });
 });
 
+// @route   GET api/party/all
+// @desc    Retrieves all parties from the database
+// @access  Private
 router.get('/all', (req, res) => {
   Party.find({})
     .populate('server', ['name'])
@@ -75,6 +78,9 @@ router.get('/all', (req, res) => {
     });
 });
 
+// @route   GET api/party/:id
+// @desc    Retrieves a specific party from the database by id
+// @access  Private
 router.get('/:id', (req, res) => {
   const { id } = req.params;
 
