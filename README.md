@@ -173,41 +173,6 @@ Response:
 
 ## Item Routes
 
-### Add Item
-
-POST `/api/items/add`
-
-**Requires Authorization**
-
-Adds a new food item to the database.
-
-Request body should look like this:
-
-```
-{
-  "name": "burger",
-  "description": "It's a burger.",
-  "price": "11.99"
-}
-```
-
-`name`: String, required, must be unique
-
-`description`: String
-
-`price`: Number, required
-
-Response:
-
-```
-{
-  "_id": "5b984988b345de51f0587d2e",
-  "name": "burger",
-  "price": 11.99,
-  "description": "It's a burger.",
-  "__v": 0
-}
-```
 
 ### Get All Items
 
@@ -268,6 +233,47 @@ Response:
     "__v": 0
   }
 ]
+```
+
+### Add Item
+
+POST `/api/items/add`
+
+**Requires Authorization**
+
+Adds a new food item to the database.
+
+Request body should look like this:
+
+```
+{
+  "name": "burger",
+  "description": "It's a burger.",
+  "price": "11.99"
+}
+```
+
+`name`: String, required, must be unique
+
+`description`: String
+
+`price`: Number, required
+
+Response includes the added item's:
+- name
+- price
+- description
+
+Response:
+
+```
+{
+  "_id": "5b984988b345de51f0587d2e",
+  "name": "burger",
+  "price": 11.99,
+  "description": "It's a burger.",
+  "__v": 0
+}
 ```
 
 ### Update Item
