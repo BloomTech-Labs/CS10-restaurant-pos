@@ -151,8 +151,8 @@ Response:
 ```
 {
   "role": {
-      "admin": false,
-      "manager": true
+    "admin": false,
+    "manager": true
   },
   "_id": "5b9843deff3deb4f8166935f",
   "name": "First Last",
@@ -313,25 +313,29 @@ Response:
 }
 ```
 
-## Table Routes
+## Party Routes
 
-### Add a New Table
-POST `/api/tables/add`
-Requires Authorization
+### Add a New Party
+POST `/api/party/add`
 
-Adds a new table to the database
+**Requires Authorization**
+
+Adds a new party to the database
 
 Request body should look like this:
 
 ```
 {
-  "tableNumbers": ["1"]
+  "tables": ["5b99a5d5603385aece3e367a"],
+  "server": "5b993879366d2671bcba0e02"
 }
 ```
 
-`tableNumbers`: Should be an array with the table numbers.
+`tables`: Should be an array of Table ObjectIds.
 
-`tableNumbers` is an array so that if tables are combined, all tables are represented in the array. In most cases there will be only one table number.
+`server`: Employee ObjectId, optional
+
+`tables` is an array so that if tables are combined, all tables are represented in the array. In most cases there will be only one table id.
 
 Response:
 
