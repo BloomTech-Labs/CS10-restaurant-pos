@@ -53,7 +53,7 @@ router.get('/:id', (req, res) => {
 // @route   PUT api/tables/update/:id
 // @desc    Update a table by its ID
 // @access  Private
-router.put('/:id', (req, res) => {
+router.put('/update/:id', (req, res) => {
   const { id } = req.params;
   const tableToUpdate = req.body;
 
@@ -69,11 +69,14 @@ router.put('/:id', (req, res) => {
 // @route   PUT api/tables/deactivate/:id
 // @desc    Deactivate a table by its ID
 // @access  Private
+// router.put('/deactivate/:id', (req, res) => {
+//   const { id } = req.params;
+// });
 
 // @route   DELETE api/tables/delete/:id
 // @desc    Delete a table by its ID
 // @access  Private
-router.delete('/:id', (req, res) => {
+router.delete('/delete/:id', (req, res) => {
   const { id } = req.params;
 
   Table.findOneAndRemove({ _id: id })
