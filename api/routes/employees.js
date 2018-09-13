@@ -1,11 +1,11 @@
 const express = require('express');
-const router = express.Router();
 const jwt = require('jsonwebtoken');
-const keys = require('../../config/keys');
 const passport = require('passport');
 
-// Require Employee Model
+const keys = require('../../config/keys');
 const Employee = require('../models/Employee');
+
+const router = express.Router();
 
 // @route   GET api/employees/test
 // @desc    Tests employees' route
@@ -26,37 +26,40 @@ router.post('/register', (req, res) => {
   });
 
   // Check if the DB is empty or not
-  Employee.find({}).then(employee => {
-    if (employee.length === 0) {
-      newEmployee.role.admin = true;
-    }
-
-    newEmployee
-      .save()
-      .then(employee => {
-        res.status(200).json(employee);
-      })
-      .catch(err => {
-        res.status(400).json(err);
-      });
-  });
+  Employee.find({})
+    .then((employee) => {
+      if (employee.length === 0) {
+        newEmployee.role.admin = true;
+      }
+      newEmployee
+        .save()
+        .then((employeeInfo) => {
+          res.status(200).json(employeeInfo);
+        })
+        .catch((err) => {
+          res.status(400).json(err);
+        });
+    })
+    .catch((err) => {
+      res.status(400).json(err); // ! I added this catch. Should it be status 500?
+    });
 });
-
 // @route   POST api/employees/login
 // @desc    Lets a user login
 // @access  Public
 router.post('/login', (req, res) => {
   // Pull off the pin and pass from the request
   const { pin, pass } = req.body;
-
   // Find the employee in the DB
   Employee.findOne({ pin })
-    .then(employee => {
+    .then((employee) => {
       if (!employee) {
         return res.status(404).json({ error: 'No employee found!' });
-      } else {
-        // Check the password on the model
-        employee.checkPassword(pass).then(verified => {
+      }
+      // Check the password on the model
+      employee
+        .checkPassword(pass)
+        .then((verified) => {
           if (verified) {
             // Create a payload
             const payload = {
@@ -67,27 +70,27 @@ router.post('/login', (req, res) => {
                 manager: employee.role.manager,
               },
             };
-
             // Sign the token
             jwt.sign(
               payload,
               keys.secretOrKey,
               { expiresIn: '1d' },
               (err, token) => {
-                res.json({ token: 'Bearer ' + token });
-              },
+                res.json({ token: `Bearer ${token}` });
+              }
             );
           } else {
             res.status(401).json({ error: 'Invalid credentials!' });
           }
+        })
+        .catch((err) => {
+          res.status(400).json(err); // ! I added this catch. Should it be status 500?
         });
-      }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(400).json(err);
     });
 });
-
 // @route   PUT api/employees/update/:pin
 // @desc    Allow a user to change their password
 // @access  Private
@@ -98,42 +101,39 @@ router.put(
     // Pull off the pin, oldPassword, and newPassword from the request
     const { oldPassword, newPassword } = req.body;
     const { pin } = req.params;
-
     // Locate the employee
     Employee.findOne({ pin })
-      .then(employee => {
+      .then((employee) => {
         if (!employee) {
           return res.status(404).json({ error: 'No employee found!' });
-        } else {
-          // Check the password on the model
-          employee
-            .checkPassword(oldPassword)
-            .then(verified => {
-              if (verified) {
-                employee.password = newPassword;
-                employee
-                  .save()
-                  .then(employee => {
-                    res.status(200).json(employee);
-                  })
-                  .catch(err => {
-                    res.status(400).json(err);
-                  });
-              } else {
-                res.status().json({ error: 'Invalid credentials!' });
-              }
-            })
-            .catch(err => {
-              res.status(400).json(err);
-            });
         }
+        // Check the password on the model
+        employee
+          .checkPassword(oldPassword)
+          .then((verified) => {
+            if (verified) {
+              employee.password = newPassword;
+              employee
+                .save()
+                .then((employeeInfo) => {
+                  res.status(200).json(employeeInfo);
+                })
+                .catch((err) => {
+                  res.status(400).json(err);
+                });
+            } else {
+              res.status().json({ error: 'Invalid credentials!' });
+            }
+          })
+          .catch((err) => {
+            res.status(400).json(err);
+          });
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(400).json(err);
       });
-  },
+  }
 );
-
 // @route   GET server/employees/current
 // @desc    Return current employee
 // @access  Private
@@ -146,7 +146,6 @@ router.get(
       pin: req.user.pin,
       role: req.user.role,
     });
-  },
+  }
 );
-
 module.exports = router;
