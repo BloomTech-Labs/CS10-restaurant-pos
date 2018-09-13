@@ -1,27 +1,17 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-const { ObjectId } = Schema.Types;
 
 const TableSchema = new Schema({
-  server: {
-    type: ObjectId,
-    ref: 'Employee',
+  x: {
+    type: Number,
   },
-  food: [
-    {
-      type: ObjectId,
-      ref: 'Item',
-    },
-  ],
-  tableNumbers: [
-    {
-      type: Number,
-    },
-  ],
+  y: {
+    type: Number,
+  },
   active: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 });
 
