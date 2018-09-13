@@ -1,3 +1,4 @@
+/* eslint-disable */ // ! Added for testing ---
 import React from 'react';
 // ! Added for testing ------------------------
 import { connect } from 'react-redux';
@@ -14,7 +15,7 @@ import {
 class Landing extends React.Component {
   // ! Added for testing ------------------------
   componentDidMount() {
-    this.props.getParties(); // eslint-disable-line
+    this.props.getParties();
   }
   // ! ------------------------------------------
 
@@ -22,6 +23,12 @@ class Landing extends React.Component {
     return (
       <div className="App">
         <h1>Landing</h1>
+        {this.props.partyList
+          ? this.props.partyList.map((each) => {
+            console.log(each);
+            return <div>Each party goes here</div>;
+          })
+          : null}
       </div>
     );
   }
