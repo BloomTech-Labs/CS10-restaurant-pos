@@ -8,8 +8,14 @@ import * as s from './styles';
 
 
 class TablesPage extends Component {
-  componentDidMount() {
+  state = {
+    numOfTables: 5,
+  }
 
+  addTable = () => {
+    this.setState((prev) => ({
+      numOfTables: prev.numOfTables + 1,
+    }));
   }
 
   render() {
@@ -17,9 +23,16 @@ class TablesPage extends Component {
       <s.Container>
         <s.Menu>
           <h1>Tables</h1>
+          <p>{this.state.numOfTables}</p>
+          <button type="button" onClick={this.addTable}>Add Table</button>
+          <s.Form action="">
+            <input type="text" placeholder="1080" />
+            <input type="text" placeholder="1920" />
+            <button type="submit">Save</button>
+          </s.Form>
         </s.Menu>
         <s.Editor>
-          <FloorPlan />
+          <FloorPlan numOfTables={this.state.numOfTables}/>
         </s.Editor>
       </s.Container>
     );

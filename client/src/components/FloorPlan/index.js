@@ -1,5 +1,6 @@
 import React from 'react';
 import * as PIXI from 'pixi.js';
+import PropTypes from 'prop-types';
 
 class FloorPlan extends React.Component {
   constructor(props) {
@@ -66,7 +67,7 @@ class FloorPlan extends React.Component {
   };
 
   setup = () => {
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < this.props.numOfTables; i++) {
       this.circleCreator(i * 10, i * 10);
     }
 
@@ -100,5 +101,13 @@ class FloorPlan extends React.Component {
     return <div ref={this.pixi} />;
   }
 }
+
+FloorPlan.propTypes = {
+  numOfTables: PropTypes.number,
+};
+
+FloorPlan.defaultProps = {
+  numOfTables: 5,
+};
 
 export default FloorPlan;
