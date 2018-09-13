@@ -47,6 +47,9 @@ router.get('/all', (req, res) => {
     });
 });
 
+// @route   GET api/orders/:id
+// @desc    Get an order by id
+// @access  Private
 router.get('/:id', (req, res) => {
   const { id } = req.params;
 
