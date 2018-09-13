@@ -15,6 +15,7 @@ const employees = require('./api/routes/employees');
 const items = require('./api/routes/items');
 const party = require('./api/routes/party');
 const orders = require('./api/routes/orders');
+const tables = require('./api/routes/tables');
 
 const corsOptions = { origin: clientURI, credentials: true };
 
@@ -74,6 +75,11 @@ server.use(
   '/api/orders',
   passport.authenticate('jwt', { session: false }),
   orders
+);
+server.use(
+  '/api/tables',
+  passport.authenticate('jwt', { session: false }),
+  tables
 );
 
 server.listen(PORT, (err) => {
