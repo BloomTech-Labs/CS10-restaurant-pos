@@ -11,15 +11,19 @@
     - [Login](#login)
     - [Change Password](#change-password)
   - [Item Routes](#item-routes)
-    - [Add Item](#add-item)
     - [Get All Items](#get-all-items)
     - [Get A Specific Item](#get-a-specific-item)
+    - [Add Item](#add-item)
     - [Update Item](#update-item)
     - [Delete Item](#delete-item)
   - [Party Routes](#party-routes)
+    - [Get All Parties](#get-all-parties)
+    - [Get a Specific Party](#get-a-specific-party)
     - [Add a New Party](#add-a-new-party)
-    - [Update a Table](#update-a-table)
-    - [Delete a Table](#delete-a-table)
+    - [Update a Party](#update-a-party)
+    - [Delete a Party](#delete-a-party)
+  - [Table Routes](#table-routes)
+    - [Add Item](#add-item-1)
 
 # Scripts
 
