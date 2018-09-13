@@ -14,6 +14,9 @@ export const ADDING_PARTY_ERROR = 'ADDING_PARTY_ERROR';
 export const UPDATING_PARTY = 'UPDATING_PARTY';
 export const UPDATING_PARTY_SUCCESS = 'UPDATING_PARTY_SUCCESS';
 export const UPDATING_PARTY_ERROR = 'UPDATING_PARTY_ERROR';
+export const DELETING_PARTY = 'DELETING_PARTY';
+export const DELETING_PARTY_SUCCESS = 'DELETING_PARTY_SUCCESS';
+export const DELETING_PARTY_ERROR = 'DELETING_PARTY_ERROR';
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common.Authorization = localStorage.getItem('jwt');
@@ -62,11 +65,25 @@ export const addParty = (party) => (dispatch) => {
 export const updateParty = (id, updatedInfo) => (dispatch) => {
   dispatch({ type: UPDATING_PARTY });
   axios
-    .post(`${serverURI}/api/party/update/${id}`, updatedInfo)
+    .put(`${serverURI}/api/party/update/${id}`, updatedInfo)
     .then((res) => {
       dispatch({ type: UPDATING_PARTY_SUCCESS, payload: res.data });
     })
     .catch((err) => {
       dispatch({ type: UPDATING_PARTY_ERROR, payload: err });
+    });
+};
+
+// Deletes a Party: it must send in an id for deletion
+// Recieves: { removedParty, msg: 'Party has been removed.' }
+export const deleteParty = (id) => (dispatch) => {
+  dispatch({ type: DELETING_PARTY });
+  axios
+    .delete(`${serverURI}/api/party/delete/${id}`)
+    .then((res) => {
+      dispatch({ type: DELETING_PARTY_SUCCESS, payload: res.data });
+    })
+    .catch((err) => {
+      dispatch({ type: DELETING_PARTY_ERROR, payload: err });
     });
 };
