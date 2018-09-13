@@ -53,6 +53,18 @@ router.get('/:id', (req, res) => {
 // @route   PUT api/tables/update/:id
 // @desc    Update a table by its ID
 // @access  Private
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const tableToUpdate = req.body;
+
+  Table.findOneAndUpdate({ _id: id }, tableToUpdate, { new: true })
+    .then((updatedTable) => {
+      res.status(200).json(updatedTable);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+});
 
 // @route   PUT api/tables/deactivate/:id
 // @desc    Deactivate a table by its ID
