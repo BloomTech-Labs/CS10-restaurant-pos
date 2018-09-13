@@ -83,6 +83,11 @@ Request body should look like this:
 `role`: Object, optional
 
 
+Response includes the new employee's:
+- role information (admin and manager status)
+- name
+- pin
+
 Response:
 
 ```
@@ -212,6 +217,11 @@ GET `/api/items/all`
 
 Retrieves all of the food items from the database.
 
+Each element in the response array includes and item's:
+- name
+- description
+- price
+
 Response:
 
 ```
@@ -240,6 +250,11 @@ GET `/api/items/:id`
 **Requires Authorization**
 
 Retrieves the food by the id specified in the parameters.
+
+Response includes the item's:
+- name
+- price
+- description
 
 Response:
 
@@ -282,6 +297,11 @@ Request body should look like this:
 
 You only need one field!
 
+Response includes the updated item's:
+- name
+- price
+- description
+
 Response:
 
 ```
@@ -301,6 +321,11 @@ DELETE `/api/items/:id`
 **Requires Authorization**
 
 Deletes an item from the database.
+
+Response includes a success message and the deleted item's:
+- name
+- price
+- description
 
 Response:
 
@@ -341,33 +366,39 @@ Request body should look like this:
 
 `tables` is an array so that if tables are combined, all tables are represented in the array. In most cases there will be only one table id.
 
+Response includes the party's:
+- Items list (name, price)
+- tables list
+- server id
+
 Response:
 
 ```
 {
   "food": [],
-  "tableNumbers": [
-      1
+  "tables": [
+    "5b99a5d5603385aece3e367a"
   ],
-  "active": true,
-  "_id": "5b9854d75581035b36fd13e9",
+  "_id": "5b99cfe927dac3c57eda73e6",
+  "server": "5b993879366d2671bcba0e02",
   "__v": 0
 }
 ```
 
 
-### Update a Table
+### Update a Party
 
-PUT `/api/tables/update/:id`
-Requires Authorization
+PUT `/api/party/update/:id`
 
-Updates the table information
+**Requires Authorization**
+
+Updates the party information
 
 Request body should look like this:
 
 ```
 {
-  "tableNumbers": ["1", "3"],
+  "tables": ["5b99a5d5603385aece3e367a"],
   "food": [
     "5b956483ed2e4d86346d6c82",
     "5b9564a0ed2e4d86346d6c83"
