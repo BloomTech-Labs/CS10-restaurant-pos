@@ -58,10 +58,10 @@ router.get('/:id', (req, res) => {
     });
 });
 
-// @route   PUT api/items/:id
+// @route   PUT api/items/update/:id
 // @desc    Updates the food item in the database
 // @access  Private
-router.put('/:id', (req, res) => {
+router.put('/update/:id', (req, res) => {
   const { id } = req.params;
   const itemToUpdate = req.body;
 
@@ -75,10 +75,10 @@ router.put('/:id', (req, res) => {
     });
 });
 
-// @route   DELETE api/items/:id
+// @route   DELETE api/items/delete/:id
 // @desc    Removes the food item from the database
 // @access  Private
-router.delete('/:id', (req, res) => {
+router.delete('/delete/:id', (req, res) => {
   const { id } = req.params;
 
   Item.findOneAndRemove({ _id: id })
