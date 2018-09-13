@@ -38,6 +38,17 @@ router.get('/all', (req, res) => [
 // @route   GET api/tables/:id
 // @desc    Get a table by the ID
 // @access  Private
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+
+  Table.findOne({ _id: id })
+    .then((table) => {
+      res.status(200).json(table);
+    })
+    .catch((err) => {
+      res.status(200).json(err);
+    });
+});
 
 // @route   PUT api/tables/update/:id
 // @desc    Update a table by its ID
