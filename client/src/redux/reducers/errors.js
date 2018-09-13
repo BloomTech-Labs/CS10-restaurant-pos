@@ -43,27 +43,27 @@ const ErrorReducer = (errors = initialState, action) => {
     case PASSWORD_MATCH_SUCCESS:
       return { ...errors, passMatchError: false };
     case LOADING_TABLES_ERROR:
-      return { ...errors, loadingTablesError: true };
+      return { ...errors, loadingTablesError: action.payload };
     case LOADING_TABLES_SUCCESS:
       return { ...errors, loadingTablesError: false };
     case LOADING_PARTIES_ERROR:
-      return { ...errors, loadingPartiesError: true };
+      return { ...errors, loadingPartiesError: action.payload };
     case LOADING_PARTIES_SUCCESS:
       return { ...errors, loadingPartiesError: false };
     case LOADING_PARTY_ERROR:
-      return { ...errors, loadingPartyError: true };
+      return { ...errors, loadingPartyError: action.payload };
     case LOADING_PARTY_SUCCESS:
       return { ...errors, loadingPartyError: false };
     case ADDING_PARTY_ERROR:
-      return { ...errors, addingPartyError: true };
+      return { ...errors, addingPartyError: action.payload };
     case ADDING_PARTY_SUCCESS:
       return { ...errors, addingPartyError: false };
     case UPDATING_PARTY_ERROR:
-      return { ...errors, updatingPartyError: true };
+      return { ...errors, updatingPartyError: action.payload };
     case UPDATING_PARTY_SUCCESS:
       return { ...errors, updatingPartyError: false };
     case DELETING_PARTY_ERROR:
-      return { ...errors, deletingPartyError: true };
+      return { ...errors, deletingPartyError: action.payload };
     case DELETING_PARTY_SUCCESS:
       return { ...errors, deletingPartyError: false };
     default:

@@ -14,21 +14,74 @@ import {
 
 class Landing extends React.Component {
   // ! Added for testing ------------------------
+  state = { displayFlag: false };
   componentDidMount() {
     this.props.getParties();
   }
+
+  displayParty = () => {
+    this.props.getParty(this.props.partyList[0]._id);
+    this.setState({ displayFlag: true });
+  };
+
   // ! ------------------------------------------
 
   render() {
     return (
       <div className="App">
         <h1>Landing</h1>
+        <br />
         {this.props.partyList
-          ? this.props.partyList.map((each) => {
-            console.log(each);
-            return <div>Each party goes here</div>;
-          })
+          ? this.props.partyList.map((each, i) => {
+              console.log(each);
+              return (
+                <div key={each._id}>
+                  _id of Party {i}: {each._id}
+                  <div>
+                    <div>This party is served by {each.server.name}</div>
+                    <div>It contains:</div>
+                    <div>
+                      {each.tables.length} table(s) and {each.food.length} food
+                      orders
+                    </div>
+                  </div>
+                  <button onClick={() => this.props.deleteParty(each._id)}>
+                    Click here to delete this party
+                  </button>
+                  <br />
+                  <button
+                    onClick={() =>
+                      this.props.updateParty(each._id, {
+                        server: '5b99c12dd78c33ba9c717ff0',
+                      })
+                    }
+                  >
+                    Click here to change the server to First Last
+                  </button>
+                  <br />
+                  <br />
+                </div>
+              );
+            })
           : null}
+        <br />
+        <button
+          onClick={() =>
+            this.props.addParty({
+              tables: ['5b99a5d5603385aece3e367a'],
+              server: '5b993879366d2671bcba0e02',
+            })
+          }
+        >
+          Click here to add a party served by Rigby
+        </button>
+        <br />
+        <br />
+        <button onClick={this.displayParty}>
+          Click here to `get` and display the first party's _id
+        </button>
+        <br />
+        {this.state.displayFlag && this.props.party._id}
       </div>
     );
   }
