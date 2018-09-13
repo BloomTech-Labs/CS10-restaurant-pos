@@ -20,8 +20,12 @@ class FloorPlan extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.tables.length !== prevProps.tables.length) {
       this.app.stage.removeChildren();
-      this.props.tables.forEach((table) => {
-        this.circleCreator(table);
+      this.tables = [];
+      this.props.tables.forEach((table, i) => {
+        const tableCopy = { ...table };
+        tableCopy.localPosition = i;
+        this.tables.push(tableCopy);
+        this.circleCreator(tableCopy);
       });
     }
   }
@@ -35,6 +39,7 @@ class FloorPlan extends React.Component {
     circle.endFill();
     circle.x = table.x;
     circle.y = table.y;
+    console.log(table);
     circle.tableInfo = table;
     this.app.stage.addChild(circle);
 
@@ -48,6 +53,11 @@ class FloorPlan extends React.Component {
     };
 
     const onDragEnd = () => {
+      table.x = circle.x;
+      table.y = circle.y;
+
+      this.props.moveTable(this.tables);
+
       circle.alpha = 1;
 
       circle.dragging = false;
@@ -110,10 +120,12 @@ class FloorPlan extends React.Component {
 
 FloorPlan.propTypes = {
   tables: PropTypes.arrayOf(PropTypes.object),
+  moveTable: PropTypes.func,
 };
 
 FloorPlan.defaultProps = {
   tables: [],
+  moveTable: () => {}
 };
 
 export default FloorPlan;

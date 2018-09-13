@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getTables, addTable } from '../../redux/actions/tables';
+import { getTables, addTable, moveTable } from '../../redux/actions/tables';
 import FloorPlan from '../FloorPlan';
 
 import * as s from './styles';
@@ -27,7 +27,7 @@ class TablesPage extends Component {
           </s.Form>
         </s.Menu>
         <s.Editor>
-          <FloorPlan tables={this.props.tables} />
+          <FloorPlan moveTable={this.props.moveTable} tables={this.props.tables} />
         </s.Editor>
       </s.Container>
     );
@@ -38,16 +38,18 @@ TablesPage.propTypes = {
   tables: PropTypes.arrayOf(PropTypes.object),
   getTables: PropTypes.func,
   addTable: PropTypes.func,
+  moveTable: PropTypes.func,
 };
 
 TablesPage.defaultProps = {
   tables: [],
   getTables: () => {},
   addTable: () => {},
+  moveTable: () => {},
 };
 
 const mapStateToProps = (state) => ({
   tables: state.tables.tableList,
 });
 
-export default connect(mapStateToProps, { getTables, addTable })(TablesPage);
+export default connect(mapStateToProps, { getTables, addTable, moveTable })(TablesPage);

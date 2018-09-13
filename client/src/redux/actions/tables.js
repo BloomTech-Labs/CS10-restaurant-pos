@@ -35,7 +35,7 @@ export const addTable = () => ({
   }
 });
 
-export const moveTable = (x, y) => ({
+export const moveTable = (tables) => ({
   type: MOVE_TABLE,
-  payload: { x, y }
+  payload: tables
 });
