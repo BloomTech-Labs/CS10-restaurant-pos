@@ -40,7 +40,7 @@ class Register extends React.Component {
             type="text"
             onChange={this.handleChange}
             name="lastName"
-            maxLength="30"
+            maxLength="30" // TODO: Look into max pass length
             value={this.state.lastName}
           />
           <input
