@@ -1,5 +1,4 @@
 const express = require('express');
-// const jwt = require('jsonwebtoken');
 
 const stripe = require('../../config/keys').stripeSecretKey;
 const Employee = require('../models/Employee');
