@@ -1,3 +1,26 @@
+
+# Table of Contents
+- [Table of Contents](#table-of-contents)
+- [Scripts](#scripts)
+  - [Linting](#linting)
+  - [Running](#running)
+- [Environment Variables](#environment-variables)
+- [Backend Endpoints](#backend-endpoints)
+  - [Employee Routes](#employee-routes)
+    - [Register](#register)
+    - [Login](#login)
+    - [Change Password](#change-password)
+  - [Item Routes](#item-routes)
+    - [Add Item](#add-item)
+    - [Get All Items](#get-all-items)
+    - [Get A Specific Item](#get-a-specific-item)
+    - [Update Item](#update-item)
+    - [Delete Item](#delete-item)
+  - [Party Routes](#party-routes)
+    - [Add a New Party](#add-a-new-party)
+    - [Update a Table](#update-a-table)
+    - [Delete a Table](#delete-a-table)
+
 # Scripts
 
 ## Linting
