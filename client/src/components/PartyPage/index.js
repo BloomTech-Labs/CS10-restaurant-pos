@@ -23,12 +23,12 @@ class PartyPage extends React.Component {
 PartyPage.propTypes = {
   getItems: PropTypes.func,
   items: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects
-}
+};
 
 PartyPage.defaultProps = {
   getItems: () => {},
   items: []
-}
+};
 
 const mapStateToProps = (state) => ({
   items: state.items.itemList
