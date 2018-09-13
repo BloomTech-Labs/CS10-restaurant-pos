@@ -3,9 +3,12 @@ import {
   LOADING_PARTIES_SUCCESS,
   LOADING_PARTY,
   LOADING_PARTY_SUCCESS,
+  ADDING_PARTY,
+  ADDING_PARTY_SUCCESS,
 } from '../actions/party';
 
 const initialState = {
+  party: {},
   partyList: [],
   loading: false,
 };
@@ -19,7 +22,15 @@ const PartyReducer = (state = initialState, action) => {
     case LOADING_PARTY:
       return { ...state, loading: true };
     case LOADING_PARTY_SUCCESS:
-      return { ...state, loading: false, partyList: action.payload };
+      // TODO: Determine if we want lines 27 & 33 to both
+      // TODO: store their data inside of the party key
+      return { ...state, loading: false, party: action.payload };
+    case ADDING_PARTY:
+      return { ...state, loading: true };
+    case ADDING_PARTY_SUCCESS:
+      // TODO: Determine if we want lines 27 & 33 to both
+      // TODO: store their data inside of the party key
+      return { ...state, loading: false, party: action.payload };
     default:
       return state;
   }

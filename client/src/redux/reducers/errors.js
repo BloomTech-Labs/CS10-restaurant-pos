@@ -13,6 +13,8 @@ import {
   LOADING_PARTIES_SUCCESS,
   LOADING_PARTY_ERROR,
   LOADING_PARTY_SUCCESS,
+  ADDING_PARTY_ERROR,
+  ADDING_PARTY_SUCCESS,
 } from '../actions/party';
 
 const initialState = {
@@ -21,6 +23,7 @@ const initialState = {
   loadingTablesError: false,
   loadingPartiesError: false,
   loadingPartyError: false,
+  addingPartyError: false,
 };
 
 const ErrorReducer = (errors = initialState, action) => {
@@ -45,6 +48,10 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, loadingPartyError: true };
     case LOADING_PARTY_SUCCESS:
       return { ...errors, loadingPartyError: false };
+    case ADDING_PARTY_ERROR:
+      return { ...errors, addingPartyError: true };
+    case ADDING_PARTY_SUCCESS:
+      return { ...errors, addingPartyError: false };
     default:
       return errors;
   }
