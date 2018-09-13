@@ -10,7 +10,7 @@ import {
 } from '../actions/tables';
 import {
   LOADING_PARTY_ERROR,
-  LOADING_PARTY_SUCCESS,
+  LOADING_PARTY_SUCCESS
 } from '../actions/party';
 
 const initialState = {
