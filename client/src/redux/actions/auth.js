@@ -35,7 +35,7 @@ export const login = ({ pin, pass }, push) => (
         }
       })
       .catch((err) => {
-        console.error(err);
+        dispatch({ type: LOGIN_FAILURE, payload: err });
       });
   }
 );

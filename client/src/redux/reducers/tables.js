@@ -1,10 +1,7 @@
-import {
-  LOADING_TABLES,
-  LOADING_TABLES_SUCCESS,
-} from '../actions/tables';
+import { LOADING_TABLES, LOADING_TABLES_SUCCESS } from '../actions/tables';
 
 const initialState = {
-  tables: [],
+  tableList: [],
   loading: false,
 };
 
@@ -14,7 +11,7 @@ const TablesReducer = (state = initialState, action) => {
       return { ...state, loading: true };
 
     case LOADING_TABLES_SUCCESS:
-      return { ...state, loading: false, tables: action.payload };
+      return { ...state, loading: false, tableList: action.payload };
 
     default:
       return state;
