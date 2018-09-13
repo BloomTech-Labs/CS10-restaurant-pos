@@ -8,11 +8,16 @@ import {
   LOADING_TABLES_ERROR,
   LOADING_TABLES_SUCCESS,
 } from '../actions/tables';
+import {
+  LOADING_PARTY_ERROR,
+  LOADING_PARTY_SUCCESS,
+} from '../actions/party';
 
 const initialState = {
   loginError: false,
   passMatchError: false,
   loadingTablesError: false,
+  loadingParyError: false,
 };
 
 const ErrorReducer = (errors = initialState, action) => {
@@ -29,6 +34,10 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, loadingTablesError: true };
     case LOADING_TABLES_SUCCESS:
       return { ...errors, loadingTablesError: false };
+    case LOADING_PARTY_ERROR:
+      return { ...errors, loadingPartyError: true };
+    case LOADING_PARTY_SUCCESS:
+      return { ...errors, loadingPartyError: false };
     default:
       return errors;
   }
