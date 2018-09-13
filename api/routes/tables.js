@@ -73,5 +73,16 @@ router.put('/:id', (req, res) => {
 // @route   DELETE api/tables/delete/:id
 // @desc    Delete a table by its ID
 // @access  Private
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+
+  Table.findOneAndRemove({ _id: id })
+    .then((removedTable) => {
+      res.status(200).json({ removedTable, msg: 'Table deleted from the database.' });
+    })
+    .catch((err) => {
+      res.status(400).catch(err);
+    });
+});
 
 module.exports = router;
