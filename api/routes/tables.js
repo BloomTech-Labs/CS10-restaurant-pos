@@ -4,6 +4,7 @@ const router = express.Router();
 
 // Import Table Model
 const Table = require('../models/Table');
+const Party = require('../models/Party');
 
 // @route   POST api/tables/add
 // @desc    Adds a new table to the database
@@ -69,9 +70,41 @@ router.put('/update/:id', (req, res) => {
 // @route   PUT api/tables/deactivate/:id
 // @desc    Deactivate a table by its ID
 // @access  Private
-// router.put('/deactivate/:id', (req, res) => {
-//   const { id } = req.params;
-// });
+router.put('/deactivate/:id', async (req, res) => {
+  const { id } = req.params;
+
+  // Deactivates a Table
+  const updatedTable = await Table.findOneAndUpdate({ _id: id }, { active: false });
+
+  // Locate all parties
+  const party = await Party.findOne({ tables: id });
+
+  // Filter allParties to remove inactive Tables
+  party.tables = party.tables.filter((table) => String(table) !== id);
+
+  // Save the parties
+  party
+    .save()
+    .then((updatedParty) => {
+      updatedParty
+        .populate('server', ['name'])
+        .populate('tables')
+        .execPopulate()
+        .then((populatedParty) => {
+          res.status(200).json({
+            populatedParty,
+            msg: 'Table has been deactivated and removed from the party.',
+            updatedTable
+          });
+        })
+        .catch((err) => {
+          res.status(400).json(err);
+        });
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+});
 
 // @route   DELETE api/tables/delete/:id
 // @desc    Delete a table by its ID
