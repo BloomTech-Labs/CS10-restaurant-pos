@@ -9,14 +9,13 @@ export const Container = styled.div`
 
 export const Editor = styled.div`
   ${flexCenterMixin}
-  min-height: 100%;
   flex-grow: 6;
+  padding: 50px;
 `;
 
 export const Menu = styled.div`
-  ${flexCenterMixin}
-  border: 1px solid green;
+  display: flex;
+  justify-content: center;
+  border-right: 2px solid grey;
   width: 300px;
-  background: black;
-  min-height: 100%;
 `;

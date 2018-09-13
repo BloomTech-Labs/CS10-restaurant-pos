@@ -81,11 +81,11 @@ class FloorPlan extends React.Component {
       let w;
       let h;
       if (window.innerWidth / window.innerHeight >= 1) {
-        w = window.innerHeight * 1;
-        h = window.innerHeight;
+        w = window.innerHeight * 1 - 160;
+        h = window.innerHeight - 160;
       } else {
-        w = window.innerWidth;
-        h = window.innerWidth / 1;
+        w = window.innerWidth - 160;
+        h = window.innerWidth / 1 - 160;
       }
       this.app.view.style.width = `${w}px`;
       this.app.view.style.height = `${h}px`;
