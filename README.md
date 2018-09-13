@@ -24,6 +24,7 @@
     - [Delete a Party](#delete-a-party)
   - [Table Routes](#table-routes)
     - [Get All Tables](#get-all-tables)
+    - [Get Table by ID](#get-table-by-id)
     - [Add Table](#add-table)
   - [Order Routes](#order-routes)
     - [Add a New Order](#add-a-new-order)
@@ -589,6 +590,26 @@ Response:
     "__v": 0
   }
 ]
+```
+
+### Get Table by ID
+
+GET`/api/tables/:id`
+
+**Requires Authorization**
+
+Get a table by it's ID.
+
+Response:
+
+```
+{
+  "active": false,
+  "_id": "5b9ab84cef8a6528509439dd",
+  "x": 2,
+  "y": 4,
+  "__v": 0
+}
 ```
 
 ### Add Table
