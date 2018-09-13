@@ -28,7 +28,8 @@
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.14",
     "passport": "^0.4.0",
-    "passport-jwt": "^4.0.0"
+    "passport-jwt": "^4.0.0",
+    "pixi.js": "^4.8.2"
   },
   "devDependencies": {
     "concurrently": "^4.0.1",
