@@ -8,14 +8,13 @@ import {
   UPDATING_PARTY,
   UPDATING_PARTY_SUCCESS,
   DELETING_PARTY,
-  DELETING_PARTY_SUCCESS,
+  DELETING_PARTY_SUCCESS
 } from '../actions/party';
 
 const initialState = {
-  party: {},
+  fetchedParty: {},
   partyList: [],
-  loading: false,
-  deletedPayload: false, // TODO: Do we want to keep this payload?
+  loading: false
 };
 
 const PartyReducer = (state = initialState, action) => {
@@ -27,25 +26,34 @@ const PartyReducer = (state = initialState, action) => {
     case LOADING_PARTY:
       return { ...state, loading: true };
     case LOADING_PARTY_SUCCESS:
-      // TODO: Determine if we want lines 32, 38, & 44
-      // TODO: to both store their data inside of the party key
-      return { ...state, loading: false, party: action.payload };
+      return { ...state, loading: false, fetchedParty: action.payload };
     case ADDING_PARTY:
       return { ...state, loading: true };
     case ADDING_PARTY_SUCCESS:
-      // TODO: Determine if we want lines 32, 38, & 44
-      // TODO: to both store their data inside of the party key
-      return { ...state, loading: false, party: action.payload };
+      return {
+        ...state,
+        loading: false,
+        partyList: [...state.partyList, action.payload]
+      };
     case UPDATING_PARTY:
       return { ...state, loading: true };
     case UPDATING_PARTY_SUCCESS:
-      // TODO: Determine if we want lines 32, 38, & 44
-      // TODO: to both store their data inside of the party key
-      return { ...state, loading: false, party: action.payload };
+      return {
+        ...state,
+        loading: false,
+        partyList: state.partyList.map((party) => {
+          if (party._id === action.payload._id) return action.payload;
+          return party;
+        })
+      };
     case DELETING_PARTY:
       return { ...state, loading: true };
     case DELETING_PARTY_SUCCESS:
-      return { ...state, loading: false, deletedPayload: action.payload };
+      return {
+        ...state,
+        loading: false,
+        partyList: state.partyList.filter((party) => party._id !== action.payload.removedParty._id)
+      };
     default:
       return state;
   }

@@ -16,25 +16,56 @@ router.get('/test', (req, res) => res.json({ msg: 'Employee Routes Work' }));
 // @desc    Adds a new user to the DB
 // @access  Public
 router.post('/register', (req, res) => {
-  const { role } = req.body;
+  const {
+    pass: password,
+    role,
+    name
+  } = req.body;
+
+  let pin = '';
+
+  for (let i = 0; i < 4; i++) {
+    pin += Math.floor(Math.random() * 10);
+  }
+
   // Create a new employee
   const newEmployee = new Employee({
-    name: req.body.name,
-    pin: req.body.pin,
-    password: req.body.pass,
-    role: { ...role },
+    name,
+    password,
+    role,
+    pin
   });
 
   // Check if the DB is empty or not
   Employee.find({})
-    .then((employee) => {
-      if (employee.length === 0) {
+    .then((employees) => {
+      // make first employee admin by default
+      if (employees.length === 0) {
         newEmployee.role.admin = true;
       }
+
       newEmployee
         .save()
         .then((employeeInfo) => {
-          res.status(200).json(employeeInfo);
+          // Make a payload for the JWT with the new employee info
+          const payload = {
+            id: employeeInfo.id,
+            pin: employeeInfo.pin,
+            role: {
+              admin: employeeInfo.role.admin,
+              manager: employeeInfo.role.manager,
+            },
+          };
+
+          // Sign the token
+          jwt.sign(
+            payload,
+            keys.secretOrKey,
+            { expiresIn: '1d' },
+            (err, token) => {
+              res.status(201).json({ token: `Bearer ${token}` });
+            }
+          );
         })
         .catch((err) => {
           res.status(400).json(err);
