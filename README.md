@@ -39,7 +39,7 @@ When committing, `npm run lint-all` will automatically be run.
 
 # Environment Variables
 
-HEROKU_URI: URL of website, front/back -end deployed to the same
+HEROKU_URI: URL of website (front and back end are deployed here)
 
 MONGO_URI: URL for the database
 
@@ -126,7 +126,8 @@ Response:
 ### Change Password
 
 PUT `/api/employees/update/:pin`
-Requires Authorization
+
+**Requires Authorization**
 
 Changes the password for the user
 
@@ -166,7 +167,8 @@ Response:
 ### Add Item
 
 POST `/api/items/add`
-Requires Authorization
+
+**Requires Authorization**
 
 Adds a new food item to the database.
 
@@ -201,7 +203,8 @@ Response:
 ### Get All Items
 
 GET `/api/items/all`
-Requires Authorization
+
+**Requires Authorization**
 
 Retrieves all of the food items from the database.
 
@@ -229,7 +232,8 @@ Response:
 ### Get A Specific Item
 
 GET `/api/items/:id`
-Requires Authorization
+
+**Requires Authorization**
 
 Retrieves the food by the id specified in the parameters.
 
@@ -250,7 +254,8 @@ Response:
 ### Update Item
 
 PUT `/api/items/:id`
-Requires Authorization
+
+**Requires Authorization**
 
 Updates information for an existing food item.
 
@@ -288,7 +293,8 @@ Response:
 ### Delete Item
 
 DELETE `/api/items/:id`
-Requires Authorization
+
+**Requires Authorization**
 
 Deletes an item from the database.
 
