@@ -17,6 +17,7 @@ const Employee = new Schema({
     type: String,
     required: true,
     min: 4,
+    max: 4,
     unique: true,
   },
   role: {
