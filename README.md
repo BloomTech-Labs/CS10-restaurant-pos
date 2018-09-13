@@ -71,7 +71,6 @@ Request body should look like this:
 ```
 {
   "name": "First Last",
-  "pin": "1234",
   "pass": "asdfghjkl",
   "role": {
     "manager": "true"
@@ -81,31 +80,17 @@ Request body should look like this:
 
 `name`: String, required
 
-`pin`: String, required, min 4 characters, must be unique
-
-`pass`: String, required
+`pass`: String, required, min 8 characters
 
 `role`: Object, optional
 
-Response includes the new employee's:
-
-- role information (admin and manager status)
-- name
-- pin
+Response includes a Bearer token for authorization.
 
 Response:
 
 ```
 {
-  "role": {
-      "admin": false,
-      "manager": true
-  },
-  "_id": "5b9843deff3deb4f8166935f",
-  "name": "First Last",
-  "pin": "1234",
-  "password": hashed password,
-  "__v": 0
+  "token": "Bearer (token)"
 }
 ```
 
@@ -127,6 +112,8 @@ Request body should look like this:
 `pin`: String, required, min 4 characters
 
 `pass`: String, required
+
+Response includes a Bearer token for authorization.
 
 Response:
 
@@ -482,7 +469,7 @@ Response includes the party's:
 
 - Items list (name, price)
 - tables list
-- server id
+- server name
 
 Response:
 
@@ -492,8 +479,11 @@ Response:
   "tables": [
     "5b99a5d5603385aece3e367a"
   ],
-  "_id": "5b99cfe927dac3c57eda73e6",
-  "server": "5b993879366d2671bcba0e02",
+  "_id": "5b9a9ccdf825ebe79e0c03c8",
+  "server": {
+    "_id": "5b9a8a1f8e08cedb09ea9fef",
+    "name": "First Last"
+  },
   "__v": 0
 }
 ```

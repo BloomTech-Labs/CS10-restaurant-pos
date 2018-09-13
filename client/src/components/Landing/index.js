@@ -89,7 +89,7 @@ class Landing extends React.Component {
 
 // ! Added for testing ------------------------
 const mapStateToProps = (state) => ({
-  party: state.party.party,
+  party: state.party.fetchedParty,
   partyList: state.party.partyList,
   loading: state.party.loading,
   deletedPayload: state.party.deletedPayload,

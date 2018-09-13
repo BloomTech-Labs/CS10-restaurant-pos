@@ -9,7 +9,6 @@ const Party = require('../models/Party');
 // @desc    Adds a new party to the database
 // @access  Private
 router.post('/add', (req, res) => {
-  // ? Does this comment need to change to refer to Parties instead?
   // tables SHOULD BE AN ARRAY of Table ObjectIds!
   const { tables, server } = req.body;
 
@@ -18,10 +17,16 @@ router.post('/add', (req, res) => {
 
   newParty
     .save()
-    .then(addedParty => {
-      res.status(200).json(addedParty);
+    .then((addedParty) => {
+      addedParty
+        .populate('server', ['name'])
+        .execPopulate()
+        .then((party) => {
+          res.status(200).json(party);
+        })
+        .catch((err) => res.status(500).json(err));
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(400).json(err);
     });
 });
@@ -40,10 +45,10 @@ router.put('/update/:id', (req, res) => {
   if (tables) updatedFields.tables = tables;
 
   Party.findOneAndUpdate({ _id: id }, updatedFields, { new: true })
-    .then(updatedParty => {
+    .then((updatedParty) => {
       res.status(200).json(updatedParty);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(400).json(err);
     });
 });
@@ -55,10 +60,10 @@ router.delete('/delete/:id', (req, res) => {
   const { id } = req.params;
 
   Party.findOneAndRemove({ _id: id })
-    .then(removedParty => {
+    .then((removedParty) => {
       res.status(200).json({ removedParty, msg: 'Party has been removed.' });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(400).json(err);
     });
 });
@@ -71,10 +76,10 @@ router.get('/all', (req, res) => {
     .populate('server', ['name'])
     .populate('food', ['name', 'price'])
     .populate('tables')
-    .then(parties => {
+    .then((parties) => {
       res.status(200).json(parties);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(400).json(err);
     });
 });
@@ -89,10 +94,10 @@ router.get('/:id', (req, res) => {
     .populate('server', ['name'])
     .populate('food', ['name', 'price'])
     .populate('tables')
-    .then(party => {
+    .then((party) => {
       res.status(200).json(party);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(400).json(err);
     });
 });
