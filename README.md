@@ -26,6 +26,7 @@
     - [Get All Tables](#get-all-tables)
     - [Get Table by ID](#get-table-by-id)
     - [Add Table](#add-table)
+    - [Update Table](#update-table)
   - [Order Routes](#order-routes)
     - [Add a New Order](#add-a-new-order)
     - [Get All Orders](#get-all-orders)
@@ -598,7 +599,7 @@ GET`/api/tables/:id`
 
 **Requires Authorization**
 
-Get a table by it's ID.
+Get a table by it's ID. The ID will be pulled off of the request parameters.
 
 Response:
 
@@ -647,6 +648,45 @@ Response:
   "active": false,
   "x": 0,
   "y": 0,
+  "__v": 0
+}
+```
+
+### Update Table
+
+PUT `api/tables/update/:id`
+
+**Requires Authorization**
+
+Updates a table by it's ID. The ID will be pulled off of the request parameters.
+
+Request body should look like this:
+
+```
+{
+ "x": 15,
+ "y": 16
+}
+```
+
+`x`: Number
+
+`y`: Number
+
+Response includes the added item's:
+
+- x coordinate
+- y coordinate
+- active status (defaults to true)
+
+Response:
+
+```
+{
+  "active": false,
+  "_id": "5b9ab84cef8a6528509439dd",
+  "x": 15,
+  "y": 16,
   "__v": 0
 }
 ```
