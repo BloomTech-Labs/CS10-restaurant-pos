@@ -9,6 +9,7 @@ export const Navbar = styled.nav`
   align-items: center;
   height: 50px;
   background: red;
+  /* flex-basis: 50px; */
 `;
 
 export const StyledLink = styled(Link)`

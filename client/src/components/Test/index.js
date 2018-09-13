@@ -3,6 +3,8 @@ import React from 'react';
 // ! Added for testing ------------------------
 import { connect } from 'react-redux';
 
+import * as s from './styles';
+
 import {
   getParties,
   getParty,
@@ -28,7 +30,7 @@ class Test extends React.Component {
 
   render() {
     return (
-      <div className="App">
+      <s.Container>
         <h1>Test</h1>
         <br />
         {this.props.partyList
@@ -82,7 +84,7 @@ class Test extends React.Component {
         </button>
         <br />
         {this.state.displayFlag && this.props.party._id}
-      </div>
+      </s.Container>
     );
   }
 }
@@ -90,6 +92,7 @@ class Test extends React.Component {
 // ! Added for testing ------------------------
 const mapStateToProps = (state) => ({
   party: state.party.fetchedParty,
+  partyList: state.party.partyList,
   loading: state.party.loading,
   deletedPayload: state.party.deletedPayload,
 });

@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 
 import FloorPlan from '../FloorPlan';
 
+import * as s from './styles';
+
+
 class TablesPage extends Component {
   componentDidMount() {
 
@@ -11,10 +14,14 @@ class TablesPage extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Tables</h1>
-        <FloorPlan />
-      </div>
+      <s.Container>
+        <s.Menu>
+          <h1>Tables</h1>
+        </s.Menu>
+        <s.Editor>
+          <FloorPlan />
+        </s.Editor>
+      </s.Container>
     );
   }
 }

@@ -19,7 +19,7 @@ class FloorPlan extends React.Component {
     const circle = new PIXI.Graphics();
     circle.interactive = true;
     circle.beginFill(0xffffff);
-    circle.drawCircle(0, 0, 10);
+    circle.drawCircle(0, 0, 30);
     circle.endFill();
     circle.x = x;
     circle.y = y;
@@ -48,7 +48,6 @@ class FloorPlan extends React.Component {
     const onDragMove = () => {
       if (circle.dragging) {
         const newPosition = circle.data.getLocalPosition(circle.parent);
-        console.log(newPosition);
         circle.x = newPosition.x;
         circle.y = newPosition.y;
       }

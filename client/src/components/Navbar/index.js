@@ -9,6 +9,7 @@ class Navbar extends React.Component {
         <s.StyledLink to="/login">Login</s.StyledLink>
         <s.StyledLink to="/register">Register</s.StyledLink>
         <s.StyledLink to="/test">TEST PAGE</s.StyledLink>
+        <s.StyledLink to="/tables">Tables</s.StyledLink>
       </s.Navbar>
     );
   }
