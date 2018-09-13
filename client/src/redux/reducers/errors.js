@@ -15,6 +15,8 @@ import {
   LOADING_PARTY_SUCCESS,
   ADDING_PARTY_ERROR,
   ADDING_PARTY_SUCCESS,
+  UPDATING_PARTY_ERROR,
+  UPDATING_PARTY_SUCCESS,
 } from '../actions/party';
 
 const initialState = {
@@ -24,6 +26,7 @@ const initialState = {
   loadingPartiesError: false,
   loadingPartyError: false,
   addingPartyError: false,
+  updatingPartyError: false,
 };
 
 const ErrorReducer = (errors = initialState, action) => {
@@ -52,6 +55,10 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, addingPartyError: true };
     case ADDING_PARTY_SUCCESS:
       return { ...errors, addingPartyError: false };
+    case UPDATING_PARTY_ERROR:
+      return { ...errors, updatingPartyError: true };
+    case UPDATING_PARTY_SUCCESS:
+      return { ...errors, updatingPartyError: false };
     default:
       return errors;
   }

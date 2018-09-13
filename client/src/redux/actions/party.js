@@ -11,6 +11,9 @@ export const LOADING_PARTY_ERROR = 'LOADING_PARTY_ERROR';
 export const ADDING_PARTY = 'ADDING_PARTY';
 export const ADDING_PARTY_SUCCESS = 'ADDING_PARTY_SUCCESS';
 export const ADDING_PARTY_ERROR = 'ADDING_PARTY_ERROR';
+export const UPDATING_PARTY = 'UPDATING_PARTY';
+export const UPDATING_PARTY_SUCCESS = 'UPDATING_PARTY_SUCCESS';
+export const UPDATING_PARTY_ERROR = 'UPDATING_PARTY_ERROR';
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common.Authorization = localStorage.getItem('jwt');
@@ -51,5 +54,19 @@ export const addParty = (party) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: ADDING_PARTY_ERROR, payload: err });
+    });
+};
+
+// Edits a Party: it must send in an id and an object
+// containing what it wants to change (server, food, tables)
+export const updateParty = (id, updatedInfo) => (dispatch) => {
+  dispatch({ type: UPDATING_PARTY });
+  axios
+    .post(`${serverURI}/api/party/update/${id}`, updatedInfo)
+    .then((res) => {
+      dispatch({ type: UPDATING_PARTY_SUCCESS, payload: res.data });
+    })
+    .catch((err) => {
+      dispatch({ type: UPDATING_PARTY_ERROR, payload: err });
     });
 };
