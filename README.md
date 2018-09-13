@@ -350,7 +350,106 @@ Response:
 
 ## Party Routes
 
+### Get All Parties
+
+GET `/api/party/all`
+
+**Requires Authorization**
+
+Retrieves all parties from the database.
+
+Each element in the response array includes:
+- Items list (name and price)
+- Table info (x/y coordinates and active status)
+- Server info (name)
+
+Response:
+
+```
+[
+  {
+    "food": [],
+    "tables": [
+      {
+        "active": false,
+        "_id": "5b99a5d5603385aece3e367a",
+        "x": 0,
+        "y": 0,
+        "__v": 0
+      }
+    ],
+    "_id": "5b99a5fc603385aece3e367b",
+    "__v": 0
+  },
+  {
+    "food": [
+      {
+        "_id": "5b956483ed2e4d86346d6c82",
+        "name": "Shrimp Tempura",
+        "price": 5.99,
+      }
+    ],
+    "tables": [
+      {
+        "active": false,
+        "_id": "5b99a5d5603385aece3e367a",
+        "x": 0,
+        "y": 0,
+        "__v": 0
+      }
+    ],
+    "_id": "5b99cfe927dac3c57eda73e6",
+    "server": {
+      "_id": "5b993879366d2671bcba0e02",
+      "name": "Rigby Bird"
+    },
+    "__v": 0
+  }
+]
+```
+
+### Get a Specific Party
+
+GET `/api/party/:id`
+
+**Requires Authorization**
+
+Retrieves a specific party from the database by its id.
+
+Response includes the specified party's:
+- Items list (name and price)
+- Table info (x/y coordinates and active status)
+- Server info (name)
+
+Response:
+
+```
+[
+  {
+    "food": [
+      {
+        "_id": "5b956483ed2e4d86346d6c82",
+        "name": "Shrimp Tempura",
+        "price": 5.99,
+      }
+    ],
+    "tables": [
+      {
+        "active": false,
+        "_id": "5b99a5d5603385aece3e367a",
+        "x": 0,
+        "y": 0,
+        "__v": 0
+      }
+    ],
+    "_id": "5b99a5fc603385aece3e367b",
+    "__v": 0
+  }
+]
+```
+
 ### Add a New Party
+
 POST `/api/party/add`
 
 **Requires Authorization**
