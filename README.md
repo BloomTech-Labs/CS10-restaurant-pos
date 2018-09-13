@@ -1,3 +1,60 @@
+
+# Table of Contents
+- [Table of Contents](#table-of-contents)
+- [Scripts](#scripts)
+  - [Linting](#linting)
+  - [Running](#running)
+- [Environment Variables](#environment-variables)
+- [Backend Endpoints](#backend-endpoints)
+  - [Employee Routes](#employee-routes)
+    - [Register](#register)
+    - [Login](#login)
+    - [Change Password](#change-password)
+  - [Item Routes](#item-routes)
+    - [Get All Items](#get-all-items)
+    - [Get A Specific Item](#get-a-specific-item)
+    - [Add Item](#add-item)
+    - [Update Item](#update-item)
+    - [Delete Item](#delete-item)
+  - [Party Routes](#party-routes)
+    - [Get All Parties](#get-all-parties)
+    - [Get a Specific Party](#get-a-specific-party)
+    - [Add a New Party](#add-a-new-party)
+    - [Update a Party](#update-a-party)
+    - [Delete a Party](#delete-a-party)
+  - [Table Routes](#table-routes)
+    - [Add Table](#add-table)
+  - [Order Routes](#order-routes)
+    - [Add a New Order](#add-a-new-order)
+    - [Get All Orders](#get-all-orders)
+    - [Get a Specific Order](#get-a-specific-order)
+
+# Scripts
+
+## Linting
+`npm run lint-all`: when at the root, lints front/back -end
+
+`npm run lint`: lint the backend or frontend depending on location
+
+When committing, `npm run lint-all` will automatically be run.
+
+## Running
+
+`npm run client`: Runs only the front-end client.
+`npm run server`: Runs only the back-end server.
+`npm run dev`: Runs both the front and back ends.
+
+
+# Environment Variables
+
+HEROKU_URI: URL of website (front and back end are deployed here)
+
+MONGO_URI: URL for the database
+
+NODE_MODULES_CACHE: false
+
+SECRET_OR_KEY: secret key for bcryptjs
+
 # Backend Endpoints
 
 ## Employee Routes
@@ -29,6 +86,11 @@ Request body should look like this:
 
 `role`: Object, optional
 
+
+Response includes the new employee's:
+- role information (admin and manager status)
+- name
+- pin
 
 Response:
 
@@ -78,7 +140,7 @@ Response:
 
 PUT `/api/employees/update/:pin`
 
-Requires Authorization
+**Requires Authorization**
 
 Changes the password for the user
 
@@ -102,8 +164,8 @@ Response:
 ```
 {
   "role": {
-      "admin": false,
-      "manager": true
+    "admin": false,
+    "manager": true
   },
   "_id": "5b9843deff3deb4f8166935f",
   "name": "First Last",
@@ -115,49 +177,19 @@ Response:
 
 ## Item Routes
 
-### Add Item
-
-POST `/api/items/add`
-
-Requires Authorization
-
-Adds a new food item to the database.
-
-Request body should look like this:
-
-```
-{
-  "name": "burger",
-  "description": "It's a burger.",
-  "price": "11.99"
-}
-```
-
-`name`: String, required, must be unique
-
-`description`: String
-
-`price`: Number, required
-
-Response:
-
-```
-{
-  "_id": "5b984988b345de51f0587d2e",
-  "name": "burger",
-  "price": 11.99,
-  "description": "It's a burger.",
-  "__v": 0
-}
-```
 
 ### Get All Items
 
 GET `/api/items/all`
 
-Requires Authorization
+**Requires Authorization**
 
 Retrieves all of the food items from the database.
+
+Each element in the response array includes and item's:
+- name
+- description
+- price
 
 Response:
 
@@ -184,9 +216,14 @@ Response:
 
 GET `/api/items/:id`
 
-Requires Authorization
+**Requires Authorization**
 
 Retrieves the food by the id specified in the parameters.
+
+Response includes the item's:
+- name
+- price
+- description
 
 Response:
 
@@ -202,10 +239,52 @@ Response:
 ]
 ```
 
+### Add Item
+
+POST `/api/items/add`
+
+**Requires Authorization**
+
+Adds a new food item to the database.
+
+Request body should look like this:
+
+```
+{
+  "name": "burger",
+  "description": "It's a burger.",
+  "price": "11.99"
+}
+```
+
+`name`: String, required, must be unique
+
+`description`: String
+
+`price`: Number, required
+
+Response includes the added item's:
+- name
+- price
+- description
+
+Response:
+
+```
+{
+  "_id": "5b984988b345de51f0587d2e",
+  "name": "burger",
+  "price": 11.99,
+  "description": "It's a burger.",
+  "__v": 0
+}
+```
+
 ### Update Item
 
 PUT `/api/items/:id`
-Requires Authorization
+
+**Requires Authorization**
 
 Updates information for an existing food item.
 
@@ -228,6 +307,11 @@ Request body should look like this:
 
 You only need one field!
 
+Response includes the updated item's:
+- name
+- price
+- description
+
 Response:
 
 ```
@@ -244,9 +328,14 @@ Response:
 
 DELETE `/api/items/:id`
 
-Requires Authorization
+**Requires Authorization**
 
 Deletes an item from the database.
+
+Response includes a success message and the deleted item's:
+- name
+- price
+- description
 
 Response:
 
@@ -263,55 +352,162 @@ Response:
 }
 ```
 
-## Table Routes
+## Party Routes
 
-### Add a New Table
-POST `/api/tables/add`
+### Get All Parties
 
-Requires Authorization
+GET `/api/party/all`
 
-Adds a new table to the database
+**Requires Authorization**
+
+Retrieves all parties from the database.
+
+Each element in the response array includes:
+- Items list (name and price)
+- Table info (x/y coordinates and active status)
+- Server info (name)
+
+Response:
+
+```
+[
+  {
+    "food": [],
+    "tables": [
+      {
+        "active": false,
+        "_id": "5b99a5d5603385aece3e367a",
+        "x": 0,
+        "y": 0,
+        "__v": 0
+      }
+    ],
+    "_id": "5b99a5fc603385aece3e367b",
+    "__v": 0
+  },
+  {
+    "food": [
+      {
+        "_id": "5b956483ed2e4d86346d6c82",
+        "name": "Shrimp Tempura",
+        "price": 5.99,
+      }
+    ],
+    "tables": [
+      {
+        "active": false,
+        "_id": "5b99a5d5603385aece3e367a",
+        "x": 0,
+        "y": 0,
+        "__v": 0
+      }
+    ],
+    "_id": "5b99cfe927dac3c57eda73e6",
+    "server": {
+      "_id": "5b993879366d2671bcba0e02",
+      "name": "Rigby Bird"
+    },
+    "__v": 0
+  }
+]
+```
+
+### Get a Specific Party
+
+GET `/api/party/:id`
+
+**Requires Authorization**
+
+Retrieves a specific party from the database by its id.
+
+Response includes the specified party's:
+- Items list (name and price)
+- Table info (x/y coordinates and active status)
+- Server info (name)
+
+Response:
+
+```
+[
+  {
+    "food": [
+      {
+        "_id": "5b956483ed2e4d86346d6c82",
+        "name": "Shrimp Tempura",
+        "price": 5.99,
+      }
+    ],
+    "tables": [
+      {
+        "active": false,
+        "_id": "5b99a5d5603385aece3e367a",
+        "x": 0,
+        "y": 0,
+        "__v": 0
+      }
+    ],
+    "_id": "5b99a5fc603385aece3e367b",
+    "__v": 0
+  }
+]
+```
+
+### Add a New Party
+
+POST `/api/party/add`
+
+**Requires Authorization**
+
+Adds a new party to the database
 
 Request body should look like this:
 
 ```
 {
-  "tableNumbers": ["1"]
+  "tables": ["5b99a5d5603385aece3e367a"],
+  "server": "5b993879366d2671bcba0e02"
 }
 ```
 
-`tableNumbers`: Should be an array with the table numbers.
+`tables`: Should be an array of Table ObjectIds.
 
-`tableNumbers` is an array so that if tables are combined, all tables are represented in the array. In most cases there will be only one table number.
+`server`: Employee ObjectId, optional
+
+`tables` is an array so that if tables are combined, all tables are represented in the array. In most cases there will be only one table id.
+
+Response includes the party's:
+- Items list (name, price)
+- tables list
+- server id
 
 Response:
 
 ```
 {
   "food": [],
-  "tableNumbers": [
-      1
+  "tables": [
+    "5b99a5d5603385aece3e367a"
   ],
-  "active": true,
-  "_id": "5b9854d75581035b36fd13e9",
+  "_id": "5b99cfe927dac3c57eda73e6",
+  "server": "5b993879366d2671bcba0e02",
   "__v": 0
 }
 ```
 
 
-### Update a Table
+### Update a Party
 
-PUT `/api/tables/update/:id`
+PUT `/api/party/update/:id`
 
-Requires Authorization
+**Requires Authorization**
 
-Updates the table information
+Updates the party information
 
 Request body should look like this:
 
 ```
 {
-  "tableNumbers": ["1", "3"],
+  "tables": ["5b99a5d5603385aece3e367a"],
   "food": [
     "5b956483ed2e4d86346d6c82",
     "5b9564a0ed2e4d86346d6c83"
@@ -320,7 +516,9 @@ Request body should look like this:
 }
 ```
 
-`tableNumbers`: Should be an array with the table numbers.
+`tables`: Should be an array with the table numbers.
+
+**NOTE** Make sure to include all of the combined tables in the array. This endpoint replaces the whole `tables` field!
 
 `food`: Should be an array of Item ObjectIds
 
@@ -331,12 +529,10 @@ Response:
 ```
 {
   "food": [
-      "5b956483ed2e4d86346d6c82",
-      "5b9564a0ed2e4d86346d6c83"
+    "5b956483ed2e4d86346d6c82",
+    "5b9564a0ed2e4d86346d6c83"
   ],
-  "tableNumbers": [
-      1
-  ],
+  "tables": ["5b99a5d5603385aece3e367a"],
   "active": true,
   "_id": "5b9854d75581035b36fd13e9",
   "__v": 0,
@@ -344,32 +540,70 @@ Response:
 }
 ```
 
-### Delete a Table
+### Delete a Party
 
-DELETE `/api/tables/delete/:id`
+DELETE `/api/party/delete/:id`
 
-Requires Authorization
+**Requires Authorization**
 
-Deletes a table from the database.
+Deletes a party from the database.
 
 Response:
 
 ```
 {
-  "removedTable": {
-      "food": [
-          "5b956483ed2e4d86346d6c82",
-          "5b9564a0ed2e4d86346d6c83"
-      ],
-      "tableNumbers": [
-          1
-      ],
-      "active": true,
-      "_id": "5b9854d75581035b36fd13e9",
-      "__v": 0,
-      "server": "5b98371f09563dc8dca06af3"
+  "removedParty": {
+    "food": [
+      "5b956483ed2e4d86346d6c82",
+      "5b9564a0ed2e4d86346d6c83"
+    ],
+    "tables": ["5b99a5d5603385aece3e367a"],
+    "active": true,
+    "_id": "5b9854d75581035b36fd13e9",
+    "__v": 0,
+    "server": "5b98371f09563dc8dca06af3"
   },
-  "msg": "Table has been removed."
+  "msg": "Party has been removed."
+}
+```
+
+## Table Routes
+
+### Add Table
+
+POST `/api/tables/add`
+
+**Requires Authorization**
+
+Adds a new table to the database with the given coordinates.
+
+Request body should look like this:
+
+```
+{
+  "x": 12,
+  "y": 45
+}
+```
+
+`x`: Number
+
+`y`: Number
+
+Response includes the added item's:
+- x coordinate
+- y coordinate
+- active status (defaults to true)
+
+Response:
+
+```
+{
+  "_id": "5b99a5d5603385aece3e367a",
+  "active": false,
+  "x": 0,
+  "y": 0,
+  "__v": 0
 }
 ```
 
