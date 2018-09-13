@@ -8,13 +8,13 @@ import {
   UPDATING_PARTY,
   UPDATING_PARTY_SUCCESS,
   DELETING_PARTY,
-  DELETING_PARTY_SUCCESS,
+  DELETING_PARTY_SUCCESS
 } from '../actions/party';
 
 const initialState = {
   fetchedParty: {},
   partyList: [],
-  loading: false,
+  loading: false
 };
 
 const PartyReducer = (state = initialState, action) => {
@@ -33,7 +33,7 @@ const PartyReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        partyList: [...state.partyList, action.payload],
+        partyList: [...state.partyList, action.payload]
       };
     case UPDATING_PARTY:
       return { ...state, loading: true };
@@ -44,7 +44,7 @@ const PartyReducer = (state = initialState, action) => {
         partyList: state.partyList.map((party) => {
           if (party._id === action.payload._id) return action.payload;
           return party;
-        }),
+        })
       };
     case DELETING_PARTY:
       return { ...state, loading: true };
@@ -52,9 +52,7 @@ const PartyReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        partyList: state.partyList.filter(
-          (party) => party._id !== action.payload.removedParty._id
-        ),
+        partyList: state.partyList.filter((party) => party._id !== action.payload.removedParty._id)
       };
     default:
       return state;
