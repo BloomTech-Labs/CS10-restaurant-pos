@@ -22,6 +22,7 @@ module.exports = {
     'import/no-unresolved': 'error', // # hack until resolving import properly
     'import/extensions': 'error', // # hack until resolving import properly
     'import/no-extraneous-dependencies': 'off',
+    'import/prefer-default-export': 'off',
     'jsx-a11y/anchor-is-valid': 'off',
     'jsx-a11y/click-events-have-key-events': 0,
     'jsx-a11y/no-static-element-interactions': 0,
