@@ -1,15 +1,20 @@
 const express = require('express');
 
-const router = express.Router();
 
 // Require Item Model
 const Item = require('../models/Item');
+// verifyFields verifies that all required fields are provided
+const verifyFields = require('../validation/verifyFields');
+
+const router = express.Router();
 
 // @route   POST api/items/add
 // @desc    Adds a new food item
 // @access  Private
 router.post('/add', (req, res) => {
   const { name, price, description } = req.body;
+
+  verifyFields(['name', 'price'], req.body, res);
 
   // create the new Item
   const newItem = new Item({ name, price, description });
@@ -18,10 +23,10 @@ router.post('/add', (req, res) => {
   newItem
     .save()
     .then((item) => {
-      res.status(200).json(item);
+      res.status(201).json(item);
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res.status(500).json({ err, msg: 'Error saving the item to the database.' });
     });
 });
 
@@ -34,7 +39,7 @@ router.get('/all', (req, res) => {
       res.status(200).json(items);
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res.status(500).json({ err, msg: 'Error communicating with the database.' });
     });
 });
 
@@ -43,12 +48,13 @@ router.get('/all', (req, res) => {
 // @access  Private
 router.get('/:id', (req, res) => {
   const { id } = req.params;
+
   Item.findOne({ _id: id })
     .then((item) => {
       res.status(200).json(item);
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res.status(500).json({ err, msg: 'Error communication with the database.' });
     });
 });
 
@@ -65,7 +71,7 @@ router.put('/:id', (req, res) => {
       res.status(200).json(updatedItem);
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res.status(500).json({ err, msg: 'Error communicating with the database.' });
     });
 });
 
@@ -82,7 +88,7 @@ router.delete('/:id', (req, res) => {
         .json({ removedItem, msg: 'Item deleted from the database.' });
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res.status(500).json({ err, msg: 'Error communicating with the database.' });
     });
 });
 
