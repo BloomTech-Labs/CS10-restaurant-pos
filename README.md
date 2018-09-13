@@ -437,18 +437,19 @@ Response:
 }
 ```
 
-### Delete a Table
+### Delete a Party
 
-DELETE `/api/tables/delete/:id`
-Requires Authorization
+DELETE `/api/party/delete/:id`
 
-Deletes a table from the database.
+**Requires Authorization**
+
+Deletes a party from the database.
 
 Response:
 
 ```
 {
-  "removedTable": {
+  "removedParty": {
     "food": [
       "5b956483ed2e4d86346d6c82",
       "5b9564a0ed2e4d86346d6c83"
