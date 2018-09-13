@@ -13,6 +13,7 @@ module.exports = {
   rules: {
     'semi': 2,
     'compat/compat': 'warn',
+    'array-bracket-spacing': 0,
     'arrow-parens': ['off'],
     'compat/compat': 'error',
     'comma-dangle': 'off',
@@ -30,6 +31,7 @@ module.exports = {
     'linebreak-style': 'off',
     'object-curly-newline': 'off',
     'no-console': 'off',
+    'no-underscore-dangle': "off",
     'no-use-before-define': 'off',
     'no-multi-assign': 'off',
     'no-plusplus': 'off',
