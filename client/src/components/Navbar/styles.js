@@ -14,9 +14,5 @@ export const Navbar = styled.nav`
 export const StyledLink = styled(Link)`
   color: white;
   text-decoration: none;
-  margin-right: 10px;
-
-  &:last-child {
-    margin-right: 0;
-  }
+  margin-left: 10px;
 `;
