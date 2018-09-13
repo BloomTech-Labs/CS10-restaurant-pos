@@ -80,31 +80,20 @@ Request body should look like this:
 
 `name`: String, required
 
-`pin`: String, required, min 4 characters, must be unique
+`pin`: String, required, must be 6 characters, must be unique
 
-`pass`: String, required
+`pass`: String, required, min 8 characters
 
 `role`: Object, optional
 
 
-Response includes the new employee's:
-- role information (admin and manager status)
-- name
-- pin
+Response includes a Bearer token for authorization.
 
 Response:
 
 ```
 {
-  "role": {
-      "admin": false,
-      "manager": true
-  },
-  "_id": "5b9843deff3deb4f8166935f",
-  "name": "First Last",
-  "pin": "1234",
-  "password": hashed password,
-  "__v": 0
+  "token": "Bearer (token)"
 }
 ```
 
@@ -127,6 +116,8 @@ Request body should look like this:
 `pin`: String, required, min 4 characters
 
 `pass`: String, required
+
+Response includes a Bearer token for authorization.
 
 Response:
 
