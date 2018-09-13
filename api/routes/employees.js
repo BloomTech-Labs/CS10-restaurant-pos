@@ -41,7 +41,7 @@ router.post('/register', (req, res) => {
         });
     })
     .catch((err) => {
-      res.status(400).json(err); // ! I added this catch. Should it be status 500?
+      res.status(400).json(err); // ? I added this catch. Should it be status 500?
     });
 });
 // @route   POST api/employees/login
@@ -84,7 +84,7 @@ router.post('/login', (req, res) => {
           }
         })
         .catch((err) => {
-          res.status(400).json(err); // ! I added this catch. Should it be status 500?
+          res.status(400).json(err); // ? I added this catch. Should it be status 500?
         });
     })
     .catch((err) => {

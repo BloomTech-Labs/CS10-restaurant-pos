@@ -9,8 +9,8 @@ const Party = require('../models/Party');
 // @desc    Adds a new party to the database
 // @access  Private
 router.post('/add', (req, res) => {
-  // ! Does this comment need to change to refer to Parties instead?
-  // ! Is this comment placed correctly? It seems to be refering to the req.body
+  // ? Does this comment need to change to refer to Parties instead?
+  // ? Is this comment placed correctly? It seems to be refering to the req.body
   // tables SHOULD BE AN ARRAY of Table ObjectIds!
   const { tables, server } = req.body;
 
