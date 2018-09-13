@@ -19,16 +19,21 @@ router.post('/register', (req, res) => {
   const {
     pass: password,
     role,
-    name,
-    pin
+    name
   } = req.body;
+
+  let pin = '';
+
+  for (let i = 0; i < 4; i++) {
+    pin += Math.floor(Math.random() * 10);
+  }
 
   // Create a new employee
   const newEmployee = new Employee({
     name,
-    pin,
     password,
     role,
+    pin
   });
 
   // Check if the DB is empty or not
