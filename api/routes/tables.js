@@ -7,19 +7,20 @@ const Table = require('../models/Table');
 const Party = require('../models/Party');
 
 // @route   POST api/tables/add
-// @desc    Adds a new table to the database
+// @desc    Adds new tables to the database
 // @access  Private
 router.post('/add', (req, res) => {
-  const { x, y } = req.body;
-  const newTable = new Table({ x, y });
+  // tables should be an array of table objects
+  const { tables } = req.body;
 
-  newTable
-    .save()
-    .then((addedTable) => {
-      res.status(200).json(addedTable);
+  Table.insertMany(tables)
+    .then((insertedTables) => {
+      res.status(201).json(insertedTables);
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res
+        .status(500)
+        .json({ err, msg: 'Error communicating with the database.' });
     });
 });
 
