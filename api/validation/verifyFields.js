@@ -7,7 +7,7 @@ const verifyFields = (fields, obj, res) => {
   // check each field name to see if it exists in the request body
   fields.forEach(fieldName => {
     // if field is not defined, push the field name to the missing fields array
-    if (!Object.prototype.hasOwnProperty.call(obj, fieldName)) {
+    if (!Object.prototype.hasOwnProperty.call(obj, fieldName) || obj[fieldName] === '') {
       missingFields.push(fieldName);
     }
   });
