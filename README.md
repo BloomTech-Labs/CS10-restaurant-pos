@@ -27,6 +27,8 @@
     - [Get Table by ID](#get-table-by-id)
     - [Add Table](#add-table)
     - [Update Table](#update-table)
+    - [Deactivate Table](#deactivate-table)
+    - [Delete Table](#delete-table)
   - [Order Routes](#order-routes)
     - [Add a New Order](#add-a-new-order)
     - [Get All Orders](#get-all-orders)
@@ -688,6 +690,56 @@ Response:
   "x": 15,
   "y": 16,
   "__v": 0
+}
+```
+
+### Deactivate Table
+
+PUT `api/tables/deactivate/:id`
+
+**Requires Authorization**
+
+Deactivates a table by it's ID and removes the table from any connected party. The response will contain the aforementioned party and the newly updated table. The ID will be pulled off of the request parameters. No request body is required for this route.
+
+Response:
+
+```
+{
+  "populatedParty": {
+    "food": [],
+    "tables": [],
+    "_id": "5b9ac52a39325b3af4e974be",
+      "server": {
+         "_id": "5b9a9b556524cfe684c945ca",
+         "name": "first last"
+    },
+      "__v": 2
+    },
+    "msg": "Table has been deactivated and removed from the party.",
+    "updatedTable": {
+      "active": false,
+      "_id": "5b9ab81aef8a6528509439dc",
+      "x": 1,
+      "y": 2,
+      "__v": 0
+  }
+}
+```
+
+### Delete Table
+
+Delete `api/tables/delete/:id`
+
+**Requires Authorization**
+
+Deletes a table by it's ID. The ID will be pulled off of the request parameters. No request body is required for this route.
+
+Response:
+
+```
+{
+  "removedTable": null,
+  "msg": "Table deleted from the database."
 }
 ```
 
