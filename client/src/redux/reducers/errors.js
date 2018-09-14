@@ -2,13 +2,15 @@ import {
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
   PASSWORD_MATCH_ERROR,
-  PASSWORD_MATCH_SUCCESS,
+  PASSWORD_MATCH_SUCCESS
 } from '../actions/auth';
 import {
   LOADING_TABLES_ERROR,
   LOADING_TABLES_SUCCESS,
   SAVING_TABLES_ERROR,
   SAVING_TABLES_SUCCESS,
+  DEACTIVATING_TABLE_ERROR,
+  DEACTIVATING_TABLE_SUCCESS
 } from '../actions/tables';
 import {
   LOADING_PARTIES_ERROR,
@@ -20,24 +22,22 @@ import {
   UPDATING_PARTY_ERROR,
   UPDATING_PARTY_SUCCESS,
   DELETING_PARTY_ERROR,
-  DELETING_PARTY_SUCCESS,
+  DELETING_PARTY_SUCCESS
 } from '../actions/party';
-import {
-  LOADING_ITEMS_ERROR,
-  LOADING_ITEMS_SUCCESS
-} from '../actions/items';
+import { LOADING_ITEMS_ERROR, LOADING_ITEMS_SUCCESS } from '../actions/items';
 
 const initialState = {
   loginError: false,
   passMatchError: false,
   loadingTablesError: false,
   savingTablesError: false,
+  deactivatingTablesError: false,
   loadingPartiesError: false,
   loadingPartyError: false,
   addingPartyError: false,
   updatingPartyError: false,
   deletingPartyError: false,
-  loadingItemsError: false,
+  loadingItemsError: false
 };
 
 const ErrorReducer = (errors = initialState, action) => {
@@ -59,6 +59,10 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, savingTablesError: action.payload };
     case SAVING_TABLES_SUCCESS:
       return { ...errors, savingTablesError: false };
+    case DEACTIVATING_TABLE_ERROR:
+      return { ...errors, deactivatingTablesError: action.payload };
+    case DEACTIVATING_TABLE_SUCCESS:
+      return { ...errors, deactivatingTablesError: false };
 
     case LOADING_PARTIES_ERROR:
       return { ...errors, loadingPartiesError: action.payload };

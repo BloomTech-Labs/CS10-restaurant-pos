@@ -10,23 +10,24 @@ export const ADD_TABLE = 'ADD_TABLE';
 export const SAVING_TABLES = 'SAVING_TABLES';
 export const SAVING_TABLES_SUCCESS = 'SAVING_TABLES_SUCCESS';
 export const SAVING_TABLES_ERROR = 'SAVING_TABLES_ERROR';
+export const DEACTIVATING_TABLE = 'DEACTIVATING_TABLE';
+export const DEACTIVATING_TABLE_SUCCESS = 'DEACTIVATING_TABLE_SUCCESS';
+export const DEACTIVATING_TABLE_ERROR = 'DEACTIVATING_TABLE_ERROR';
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common.Authorization = localStorage.getItem('jwt');
 
-export const getTables = () => (
-  (dispatch) => {
-    dispatch({ type: LOADING_TABLES });
-    axios
-      .get(`${serverURI}/api/tables/all`)
-      .then((res) => {
-        dispatch({ type: LOADING_TABLES_SUCCESS, payload: res.data });
-      })
-      .catch((err) => {
-        dispatch({ type: LOADING_TABLES_ERROR, payload: err });
-      });
-  }
-);
+export const getTables = () => (dispatch) => {
+  dispatch({ type: LOADING_TABLES });
+  axios
+    .get(`${serverURI}/api/tables/all`)
+    .then((res) => {
+      dispatch({ type: LOADING_TABLES_SUCCESS, payload: res.data });
+    })
+    .catch((err) => {
+      dispatch({ type: LOADING_TABLES_ERROR, payload: err });
+    });
+};
 
 export const addTable = () => ({
   type: ADD_TABLE,
@@ -42,16 +43,26 @@ export const moveTable = (tables) => ({
   payload: tables
 });
 
-export const saveTables = (tables) => (
-  (dispatch) => {
-    dispatch({ type: SAVING_TABLES });
-    axios
-      .post(`${serverURI}/api/tables/add`, tables)
-      .then((res) => {
-        dispatch({ type: SAVING_TABLES_SUCCESS, payload: res.data });
-      })
-      .catch((err) => {
-        dispatch({ type: SAVING_TABLES_ERROR, payload: err });
-      });
-  }
-);
+export const saveTables = (tables) => (dispatch) => {
+  dispatch({ type: SAVING_TABLES });
+  axios
+    .post(`${serverURI}/api/tables/add`, tables)
+    .then((res) => {
+      dispatch({ type: SAVING_TABLES_SUCCESS, payload: res.data });
+    })
+    .catch((err) => {
+      dispatch({ type: SAVING_TABLES_ERROR, payload: err });
+    });
+};
+
+export const deactivateTable = (id) => (dispatch) => {
+  dispatch({ type: DEACTIVATING_TABLE });
+  axios
+    .put(`${serverURI}/api/tables/deactivate/${id}`)
+    .then((res) => {
+      dispatch({ type: DEACTIVATING_TABLE_SUCCESS, payload: res.data });
+    })
+    .catch((err) => {
+      dispatch({ type: DEACTIVATING_TABLE_ERROR, payload: err });
+    });
+};

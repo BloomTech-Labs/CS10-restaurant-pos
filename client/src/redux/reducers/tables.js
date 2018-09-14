@@ -4,7 +4,9 @@ import {
   ADD_TABLE,
   MOVE_TABLE,
   SAVING_TABLES,
-  SAVING_TABLES_SUCCESS
+  SAVING_TABLES_SUCCESS,
+  DEACTIVATING_TABLE,
+  DEACTIVATING_TABLE_SUCCESS
 } from '../actions/tables';
 
 const initialState = {
@@ -31,6 +33,20 @@ const TablesReducer = (state = initialState, action) => {
 
     case SAVING_TABLES_SUCCESS:
       return { ...state, loading: false, tableList: action.payload };
+
+    case DEACTIVATING_TABLE:
+      return { ...state, loading: true };
+
+    case DEACTIVATING_TABLE_SUCCESS:
+      const { updatedTable } = action.payload; // eslint-disable-line no-case-declarations
+      return {
+        ...state,
+        loading: false,
+        tableList: state.tableList.map((table) => {
+          if (table._id === updatedTable._id) return updatedTable;
+          return table;
+        })
+      };
 
     default:
       return state;
