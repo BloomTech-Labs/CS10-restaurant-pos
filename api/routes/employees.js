@@ -22,7 +22,8 @@ router.post('/register', (req, res) => {
   const {
     pass: password,
     role,
-    name
+    name,
+    administrator
   } = req.body;
 
   verifyFields(['name', 'pass'], req.body, res);
@@ -38,7 +39,8 @@ router.post('/register', (req, res) => {
     name,
     password,
     role,
-    pin
+    pin,
+    administrator
   });
 
   // Check if the DB is empty or not
@@ -47,6 +49,18 @@ router.post('/register', (req, res) => {
       // make first employee admin by default
       if (employees.length === 0) {
         newEmployee.role.admin = true;
+      } else {
+        // if there is at least one employee in the database, check if current user has
+        // permissions to add new server
+        try {
+          const currentUser = jwt.verify(req.headers.authorization.slice(7), keys.secretOrKey);
+
+          if (!currentUser.role.admin && !currentUser.role.manager) {
+            return res.status(401).json({ msg: 'You are not authorized to do this.' });
+          }
+        } catch (err) {
+          return res.status(500).json({ err, msg: 'Error verifying the token.' });
+        }
       }
 
       newEmployee
@@ -60,6 +74,7 @@ router.post('/register', (req, res) => {
               admin: employeeInfo.role.admin,
               manager: employeeInfo.role.manager,
             },
+            administrator: employeeInfo.administrator
           };
 
           // Sign the token
@@ -109,6 +124,7 @@ router.post('/login', (req, res) => {
                 admin: employee.role.admin,
                 manager: employee.role.manager,
               },
+              administrator: employee.administrator
             };
 
             // Sign the token
@@ -147,6 +163,11 @@ router.put(
     // Pull off the pin, oldPassword, and newPassword from the request
     const { oldPassword, newPassword } = req.body;
     const { pin } = req.params;
+    const { user } = req;
+
+    if (!user.role.admin && !user.role.manager && user.pin !== pin) {
+      return res.status(401).json({ msg: 'You are not authorized to do this.' });
+    }
 
     verifyFields(['oldPassword', 'newPassword'], req.body, res);
 
