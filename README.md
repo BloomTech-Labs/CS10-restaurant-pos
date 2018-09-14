@@ -24,7 +24,11 @@
     - [Delete a Party](#delete-a-party)
   - [Table Routes](#table-routes)
     - [Get All Tables](#get-all-tables)
+    - [Get A Specific Table](#get-a-specific-table)
     - [Add Table](#add-table)
+    - [Update Table](#update-table)
+    - [Deactivate Table](#deactivate-table)
+    - [Delete Table](#delete-table)
   - [Order Routes](#order-routes)
     - [Add a New Order](#add-a-new-order)
     - [Get All Orders](#get-all-orders)
@@ -64,7 +68,7 @@ SECRET_OR_KEY: secret key for bcryptjs
 
 POST `/api/employees/register`
 
-Registers a new user. If the user is the first in the database, it will automatically be made into an admin account.
+Registers a new user. If the user is the first in the database, it will automatically be made into an admin account. Only administrators and managers can register a new employee.
 
 Request body should look like this:
 
@@ -74,7 +78,8 @@ Request body should look like this:
   "pass": "asdfghjkl",
   "role": {
     "manager": "true"
-  }
+  },
+  "administrator": "5b98371f09563dc8dca06af3"
 }
 ```
 
@@ -83,6 +88,8 @@ Request body should look like this:
 `pass`: String, required, min 8 characters
 
 `role`: Object, optional
+
+`administrator`: Admin's Employee ObjectId, required for all employees that are not the administrator.
 
 Response includes a Bearer token for authorization.
 
@@ -129,7 +136,7 @@ PUT `/api/employees/update/:pin`
 
 **Requires Authorization**
 
-Changes the password for the user
+Changes the password for the user. The pin in the params must match the pin of the current user, unless the current user is a manager or admin.
 
 Request body should look like this:
 
@@ -144,19 +151,13 @@ Request body should look like this:
 
 `newPassword`: String, required
 
+Response will be a success message.
+
 Response:
 
 ```
 {
-  "role": {
-    "admin": false,
-    "manager": true
-  },
-  "_id": "5b9843deff3deb4f8166935f",
-  "name": "First Last",
-  "pin": "1234",
-  "password": "(hashed password)",
-  "__v": 0
+  "msg": "Succesfully changed the password."
 }
 ```
 
@@ -269,7 +270,7 @@ Response:
 
 ### Update Item
 
-PUT `/api/items/:id`
+PUT `/api/items/update/:id`
 
 **Requires Authorization**
 
@@ -313,7 +314,7 @@ Response:khttps://zoom.us/j/762844869https://zoom.us/j/762844869
 
 ### Delete Item
 
-DELETE `/api/items/:id`
+DELETE `/api/items/delete/:id`
 
 **Requires Authorization**
 
@@ -591,6 +592,26 @@ Response:
 ]
 ```
 
+### Get A Specific Table
+
+GET`/api/tables/:id`
+
+**Requires Authorization**
+
+Get a table by it's ID. The ID will be pulled off of the request parameters.
+
+Response:
+
+```
+{
+  "active": false,
+  "_id": "5b9ab84cef8a6528509439dd",
+  "x": 2,
+  "y": 4,
+  "__v": 0
+}
+```
+
 ### Add Table
 
 POST `/api/tables/add`
@@ -627,6 +648,95 @@ Response:
   "x": 0,
   "y": 0,
   "__v": 0
+}
+```
+
+### Update Table
+
+PUT `api/tables/update/:id`
+
+**Requires Authorization**
+
+Updates a table by it's ID. The ID will be pulled off of the request parameters.
+
+Request body should look like this:
+
+```
+{
+ "x": 15,
+ "y": 16
+}
+```
+
+`x`: Number
+
+`y`: Number
+
+Response includes the added item's:
+
+- x coordinate
+- y coordinate
+- active status (defaults to true)
+
+Response:
+
+```
+{
+  "active": false,
+  "_id": "5b9ab84cef8a6528509439dd",
+  "x": 15,
+  "y": 16,
+  "__v": 0
+}
+```
+
+### Deactivate Table
+
+PUT `api/tables/deactivate/:id`
+
+**Requires Authorization**
+
+Deactivates a table by it's ID and removes the table from any connected party. The response will contain the aforementioned party and the newly updated table. The ID will be pulled off of the request parameters. No request body is required for this route.
+
+Response:
+
+```
+{
+  "populatedParty": {
+    "food": [],
+    "tables": [],
+    "_id": "5b9ac52a39325b3af4e974be",
+      "server": {
+         "_id": "5b9a9b556524cfe684c945ca",
+         "name": "first last"
+    },
+      "__v": 2
+    },
+    "msg": "Table has been deactivated and removed from the party.",
+    "updatedTable": {
+      "active": false,
+      "_id": "5b9ab81aef8a6528509439dc",
+      "x": 1,
+      "y": 2,
+      "__v": 0
+  }
+}
+```
+
+### Delete Table
+
+Delete `api/tables/delete/:id`
+
+**Requires Authorization**
+
+Deletes a table by it's ID. The ID will be pulled off of the request parameters. No request body is required for this route.
+
+Response:
+
+```
+{
+  "removedTable": null,
+  "msg": "Table deleted from the database."
 }
 ```
 
