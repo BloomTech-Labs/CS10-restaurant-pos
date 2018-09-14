@@ -270,7 +270,7 @@ Response:
 
 ### Update Item
 
-PUT `/api/items/:id`
+PUT `/api/items/update/:id`
 
 **Requires Authorization**
 
@@ -314,7 +314,7 @@ Response:khttps://zoom.us/j/762844869https://zoom.us/j/762844869
 
 ### Delete Item
 
-DELETE `/api/items/:id`
+DELETE `/api/items/delete/:id`
 
 **Requires Authorization**
 
