@@ -8,6 +8,11 @@ const Party = require('../models/Party');
 // @route   POST api/party/add
 // @desc    Adds a new party to the database
 // @access  Private
+// TODO: I think this route needs to also look at
+// TODO: all the tables that are in the list and mark
+// TODO: them as active. We could do multiple requests
+// TODO: from our end to make that happen, but I think
+// TODO: that that's a less ideal design pattern. wdy think?
 router.post('/add', (req, res) => {
   // tables SHOULD BE AN ARRAY of Table ObjectIds!
   const { tables, server } = req.body;
