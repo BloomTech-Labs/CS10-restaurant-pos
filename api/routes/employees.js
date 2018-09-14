@@ -22,7 +22,8 @@ router.post('/register', (req, res) => {
   const {
     pass: password,
     role,
-    name
+    name,
+    administrator
   } = req.body;
 
   verifyFields(['name', 'pass'], req.body, res);
@@ -38,7 +39,8 @@ router.post('/register', (req, res) => {
     name,
     password,
     role,
-    pin
+    pin,
+    administrator
   });
 
   // Check if the DB is empty or not
