@@ -13,7 +13,7 @@ export const Container = styled.div`
 
 export const Boxes = styled.div`
   border: 2px solid red;
-  ${flexCenterMixin}
+  ${flexCenterMixin};
   flex-direction: column;
   justify-content: space-between;
   height: 150px;
