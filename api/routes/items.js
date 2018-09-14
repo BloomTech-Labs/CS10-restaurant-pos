@@ -13,7 +13,12 @@ const router = express.Router();
 // @desc    Adds a new food item
 // @access  Private
 router.post('/add', (req, res) => {
-  const { name, price, description } = req.body;
+  const {
+    name,
+    price,
+    description,
+    category
+  } = req.body;
 
   // Validate Fields
   verifyFields(['name', 'price'], req.body, res);
@@ -22,7 +27,12 @@ router.post('/add', (req, res) => {
   verifyRole(req.user, res);
 
   // create the new Item
-  const newItem = new Item({ name, price, description });
+  const newItem = new Item({
+    name,
+    price,
+    description,
+    category
+  });
 
   // save the new item to the database
   newItem
