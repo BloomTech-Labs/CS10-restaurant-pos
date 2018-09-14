@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import TablesPageTitle from '../TablesPageTitle';
 import ItemSelector from '../ItemSelector';
 import OrderScratchPad from '../OrderScratchPad';
 import { getItems } from '../../redux/actions/items';
@@ -37,15 +38,7 @@ class PartyPage extends React.Component {
   render() {
     return (
       <s.Container>
-        <s.Title>
-          <span>Table:&nbsp;</span>
-          {this.props.tables.map((table, i) => {
-            if (this.props.tables.length - 1 !== i) {
-              return <span key={table.number}>{table.number},&nbsp;</span>;
-            }
-            return <span key={table.number}>{table.number}</span>;
-          })}
-        </s.Title>
+        <TablesPageTitle tables={this.props.tables} />
         <s.Food> {/* // TODO: figure out how to name things */}
           <ItemSelector items={this.props.items} addItemToOrder={this.addItemToOrder} />
           <OrderScratchPad
@@ -68,7 +61,7 @@ PartyPage.propTypes = {
 PartyPage.defaultProps = {
   getItems: () => {},
   items: [],
-  tables: [{ number: 1 }, { number: 6 }, { number: 3 }, { number: 3 }, { number: 3 } ],
+  tables: [{ number: 1 }, { number: 6 }, { number: 3 }, { number: 3 } ],
 };
 
 const mapStateToProps = state => ({
