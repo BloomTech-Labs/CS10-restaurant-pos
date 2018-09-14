@@ -11,6 +11,7 @@ import * as s from './styles';
 class PartyPage extends React.Component {
   state = {
     order: [],
+    subTotal: 0,
     localRef: 0 // eslint-disable-line react/no-unused-state
   };
 
@@ -21,13 +22,15 @@ class PartyPage extends React.Component {
   addItemToOrder = (item) => {
     this.setState((prev) => ({
       order: [...prev.order, { ...item, localRef: prev.localRef }],
-      localRef: prev.localRef + 1
+      localRef: prev.localRef + 1,
+      subTotal: Number((prev.subTotal + item.price).toFixed(2)),
     }));
   };
 
   removeItemFromOrder = (item) => {
     this.setState((prev) => ({
-      order: prev.order.filter((orderItem) => orderItem.localRef !== item.localRef)
+      order: prev.order.filter((orderItem) => orderItem.localRef !== item.localRef),
+      subTotal: Number((prev.subTotal - item.price).toFixed(2)),
     }));
   };
 
@@ -38,6 +41,7 @@ class PartyPage extends React.Component {
           <ItemSelector items={this.props.items} addItemToOrder={this.addItemToOrder} />
           <OrderScratchPad
             order={this.state.order}
+            subTotal={this.state.subTotal}
             removeItemFromOrder={this.removeItemFromOrder}
           />
         </s.Content>

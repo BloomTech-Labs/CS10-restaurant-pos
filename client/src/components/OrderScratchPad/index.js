@@ -8,13 +8,20 @@ class OrderScratchPad extends React.Component {
   render() {
     return (
       <s.Container>
-        {this.props.order.map(item => (
-          <s.Boxes key={shortid.generate()}>
-            <s.DeleteButton onClick={() => this.props.removeItemFromOrder(item)}>X</s.DeleteButton>
-            <span>{item.name}</span>
-            <span>{item.price}</span>
-          </s.Boxes>
-        ))}
+        <s.Scroll>
+          {this.props.order.map(item => (
+            <s.Items key={shortid.generate()}>
+              <s.DeleteButton onClick={() => this.props.removeItemFromOrder(item)}>X</s.DeleteButton>
+              <span>{item.name}</span>
+              <span>{item.price}</span>
+            </s.Items>
+          ))}
+        </s.Scroll>
+        <s.SubTotal>
+          <div>
+            {this.props.subTotal}
+          </div>
+        </s.SubTotal>
       </s.Container>
     );
   }
@@ -22,11 +29,13 @@ class OrderScratchPad extends React.Component {
 
 OrderScratchPad.propTypes = {
   order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape later
-  removeItemFromOrder: PropTypes.func
+  subTotal: PropTypes.number,
+  removeItemFromOrder: PropTypes.func,
 };
 
 OrderScratchPad.defaultProps = {
   order: [],
+  subTotal: 0,
   removeItemFromOrder: () => {}
 };
 export default OrderScratchPad;
