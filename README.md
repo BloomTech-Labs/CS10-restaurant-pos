@@ -68,7 +68,7 @@ SECRET_OR_KEY: secret key for bcryptjs
 
 POST `/api/employees/register`
 
-Registers a new user. If the user is the first in the database, it will automatically be made into an admin account.
+Registers a new user. If the user is the first in the database, it will automatically be made into an admin account. Only administrators and managers can register a new employee.
 
 Request body should look like this:
 
@@ -78,7 +78,8 @@ Request body should look like this:
   "pass": "asdfghjkl",
   "role": {
     "manager": "true"
-  }
+  },
+  "administrator": "5b98371f09563dc8dca06af3"
 }
 ```
 
@@ -87,6 +88,8 @@ Request body should look like this:
 `pass`: String, required, min 8 characters
 
 `role`: Object, optional
+
+`administrator`: Admin's Employee ObjectId, required for all employees that are not the administrator.
 
 Response includes a Bearer token for authorization.
 
@@ -133,7 +136,7 @@ PUT `/api/employees/update/:pin`
 
 **Requires Authorization**
 
-Changes the password for the user
+Changes the password for the user. The pin in the params must match the pin of the current user, unless the current user is a manager or admin.
 
 Request body should look like this:
 
@@ -148,19 +151,13 @@ Request body should look like this:
 
 `newPassword`: String, required
 
+Response will be a success message.
+
 Response:
 
 ```
 {
-  "role": {
-    "admin": false,
-    "manager": true
-  },
-  "_id": "5b9843deff3deb4f8166935f",
-  "name": "First Last",
-  "pin": "1234",
-  "password": "(hashed password)",
-  "__v": 0
+  "msg": "Succesfully changed the password."
 }
 ```
 
