@@ -51,14 +51,14 @@ router.post('/register', (req, res) => {
         // if there is at least one employee in the database, check if current user has
         // permissions to add new server
         try {
+          // Check to see if token exists
+          if (!req.headers.authorization) {
+            return res.status(401).json({ msg: 'You are not authorized to do this.' });
+          }
           const currentUser = jwt.verify(req.headers.authorization.slice(7), keys.secretOrKey);
 
           // Verify roles
           verifyRole(currentUser, res);
-
-          // if (!currentUser.role.admin && !currentUser.role.manager) {
-          //   return res.status(401).json({ msg: 'You are not authorized to do this.' });
-          // }
         } catch (err) {
           return res.status(500).json({ err, msg: 'Error verifying the token.' });
         }
@@ -91,6 +91,7 @@ router.post('/register', (req, res) => {
       res.status(500).json({ err, msg: 'Error communicating with the database.' });
     });
 });
+
 // @route   POST api/employees/login
 // @desc    Lets a user login
 // @access  Public
@@ -153,6 +154,7 @@ router.put('/update/:pin', passport.authenticate('jwt', { session: false }), (re
   const { pin } = req.params;
   const { user } = req;
 
+  // Validate a users role and pin
   if (!user.role.admin && !user.role.manager && user.pin !== pin) {
     return res.status(401).json({ msg: 'You are not authorized to do this.' });
   }
@@ -193,6 +195,7 @@ router.put('/update/:pin', passport.authenticate('jwt', { session: false }), (re
       res.status(500).json({ err, msg: 'Error communicating with the database.' });
     });
 });
+
 // @route   GET server/employees/current
 // @desc    Return current employee
 // @access  Private
