@@ -13,7 +13,6 @@ export const Container = styled.div`
 export const Title = styled.div`
   ${flexCenterMixin};
   font-size: 2rem;
-  }
 `;
 
 export const Food = styled.div`
