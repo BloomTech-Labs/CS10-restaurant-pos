@@ -5,22 +5,32 @@ const router = express.Router();
 // Import Table Model
 const Table = require('../models/Table');
 const Party = require('../models/Party');
+const verifyFields = require('../validation/verifyFields');
 
 // @route   POST api/tables/add
 // @desc    Adds new tables to the database
 // @access  Private
 router.post('/add', (req, res) => {
-  // tables should be an array of table objects
-  const { tables } = req.body;
+  // only managers or admins are allowed to add tables!
+  if (!req.user.role.admin && !req.user.role.manager) {
+    return res.status(401).json({ msg: 'You are not authorized to do this.' });
+  }
 
-  Table.insertMany(tables)
-    .then((insertedTables) => {
-      res.status(201).json(insertedTables);
+  const { x, y } = req.body;
+
+  // this will send back an error response if the requirements are not met
+  // otherwise it will continue running the rest of the code
+  verifyFields(['x', 'y'], req.body, res);
+
+  const newTable = new Table({ x, y });
+
+  newTable
+    .save()
+    .then((addedTable) => {
+      res.status(201).json(addedTable);
     })
     .catch((err) => {
-      res
-        .status(500)
-        .json({ err, msg: 'Error communicating with the database.' });
+      res.status(500).json({ err, msg: 'There was an error saving the table to the database.' });
     });
 });
 
