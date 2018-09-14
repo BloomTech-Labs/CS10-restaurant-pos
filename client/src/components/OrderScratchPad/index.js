@@ -11,7 +11,9 @@ class OrderScratchPad extends React.Component {
         <s.Scroll>
           {this.props.order.map(item => (
             <s.Items key={shortid.generate()}>
-              <s.DeleteButton onClick={() => this.props.removeItemFromOrder(item)}>X</s.DeleteButton>
+              <s.DeleteButton onClick={() => this.props.removeItemFromOrder(item)}>
+                X
+              </s.DeleteButton>
               <span>{item.name}</span>
               <span>{item.price}</span>
             </s.Items>

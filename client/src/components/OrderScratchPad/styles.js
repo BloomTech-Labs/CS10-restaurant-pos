@@ -5,7 +5,6 @@ import { flexCenterMixin } from '../../global-styles/mixins';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
 `;
 
 export const Items = styled.div`
@@ -36,6 +35,6 @@ export const Scroll = styled.div`
   border: 2px solid purple;
   display: inline-block;
   width: 300px;
-  height: 90%
+  height: 90%;
   overflow-y: scroll;
 `;

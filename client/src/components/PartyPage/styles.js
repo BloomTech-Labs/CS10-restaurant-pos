@@ -1,17 +1,23 @@
 import styled from 'styled-components';
 
-import { containerMixin, flexCenterMixin } from '../../global-styles/mixins';
+import { flexCenterMixin } from '../../global-styles/mixins';
 
 export const Container = styled.div`
-  border: 2px solid green;
-  ${containerMixin}
+  border: 2px solid blue;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+  width: 100%;
 `;
 
-export const Content = styled.div`
-  border: 2px solid blue;
+export const Title = styled.div`
   ${flexCenterMixin};
-  justify-content: space-between;
-  max-width: 950px;
+  font-size: 2rem;
+  }
+`;
+
+export const Food = styled.div`
+  display: flex;
+  flex-grow: 2;
   width: 100%;
-  height: 700px;
 `;
