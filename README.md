@@ -24,7 +24,7 @@
     - [Delete a Party](#delete-a-party)
   - [Table Routes](#table-routes)
     - [Get All Tables](#get-all-tables)
-    - [Get Table by ID](#get-table-by-id)
+    - [Get A Specific Table](#get-a-specific-table)
     - [Add Table](#add-table)
     - [Update Table](#update-table)
     - [Deactivate Table](#deactivate-table)
@@ -595,7 +595,7 @@ Response:
 ]
 ```
 
-### Get Table by ID
+### Get A Specific Table
 
 GET`/api/tables/:id`
 
