@@ -2,18 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
 
+import * as s from './styles';
+
 class OrderScratchPad extends React.Component {
   render() {
     return (
-      <div>
+      <s.Container>
         {this.props.order.map(item => (
-          <div key={shortid.generate()}>
-            <span onClick={() => this.props.removeItemFromOrder(item)}>X</span>
+          <s.Boxes key={shortid.generate()}>
+            <s.DeleteButton onClick={() => this.props.removeItemFromOrder(item)}>X</s.DeleteButton>
             <span>{item.name}</span>
             <span>{item.price}</span>
-          </div>
+          </s.Boxes>
         ))}
-      </div>
+      </s.Container>
     );
   }
 }

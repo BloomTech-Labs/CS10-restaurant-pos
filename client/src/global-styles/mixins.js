@@ -7,6 +7,6 @@ export const flexCenterMixin = css`
 `;
 
 export const containerMixin = css`
-  ${flexCenterMixin}
+  ${flexCenterMixin};
   flex-grow: 2;
 `;
