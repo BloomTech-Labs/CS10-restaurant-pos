@@ -30,8 +30,8 @@ export const addTable = () => ({
   type: ADD_TABLE,
   payload: {
     active: false,
-    x: 10,
-    y: 10
+    x: 50,
+    y: 50
   }
 });
 

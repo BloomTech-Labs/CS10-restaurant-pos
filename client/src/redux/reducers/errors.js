@@ -20,6 +20,10 @@ import {
   DELETING_PARTY_ERROR,
   DELETING_PARTY_SUCCESS,
 } from '../actions/party';
+import {
+  LOADING_ITEMS_ERROR,
+  LOADING_ITEMS_SUCCESS
+} from '../actions/items';
 
 const initialState = {
   loginError: false,
@@ -30,6 +34,7 @@ const initialState = {
   addingPartyError: false,
   updatingPartyError: false,
   deletingPartyError: false,
+  loadingItemsError: false,
 };
 
 const ErrorReducer = (errors = initialState, action) => {
@@ -66,6 +71,10 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, deletingPartyError: action.payload };
     case DELETING_PARTY_SUCCESS:
       return { ...errors, deletingPartyError: false };
+    case LOADING_ITEMS_ERROR:
+      return { ...errors, loadingItemsError: action.payload };
+    case LOADING_ITEMS_SUCCESS:
+      return { ...errors, loadingItemsError: false };
     default:
       return errors;
   }
