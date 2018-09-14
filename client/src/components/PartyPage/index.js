@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import shortid from 'shortid';
 
 import ItemSelector from '../ItemSelector';
 import OrderScratchPad from '../OrderScratchPad';
@@ -10,6 +9,7 @@ import { getItems } from '../../redux/actions/items';
 class PartyPage extends React.Component {
   state = {
     order: [],
+    localRef: 0, // eslint-disable-line react/no-unused-state
   }
 
   componentDidMount() {
@@ -17,12 +17,10 @@ class PartyPage extends React.Component {
   }
 
   addItemToOrder = (item) => {
-    this.setState((prev) => {
-      item.localRef = shortid.generate();
-      return {
-        order: [ ...prev.order, item ],
-      };
-    });
+    this.setState((prev) => ({
+      order: [ ...prev.order, { ...item, localRef: prev.localRef } ],
+      localRef: prev.localRef + 1,
+    }));
   }
 
   removeItemFromOrder = (item) => {
@@ -35,7 +33,7 @@ class PartyPage extends React.Component {
     return (
       <div>
         <ItemSelector items={this.props.items} addItemToOrder={this.addItemToOrder} />
-        <OrderScratchPad order={this.state.order} />
+        <OrderScratchPad order={this.state.order} removeItemFromOrder={this.removeItemFromOrder} />
       </div>
     );
   }
