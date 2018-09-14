@@ -1,7 +1,8 @@
 import {
   LOADING_TABLES,
   LOADING_TABLES_SUCCESS,
-  ADD_TABLE,
+  ADDING_TABLE,
+  ADDING_TABLE_SUCCESS,
   MOVE_TABLE,
   SAVING_TABLES,
   SAVING_TABLES_SUCCESS,
@@ -22,7 +23,10 @@ const TablesReducer = (state = initialState, action) => {
     case LOADING_TABLES_SUCCESS:
       return { ...state, loading: false, tableList: action.payload };
 
-    case ADD_TABLE:
+    case ADDING_TABLE:
+      return { ...state, loading: true };
+
+    case ADDING_TABLE_SUCCESS:
       return { ...state, tableList: [...state.tableList, action.payload] };
 
     case MOVE_TABLE:
@@ -31,8 +35,8 @@ const TablesReducer = (state = initialState, action) => {
     case SAVING_TABLES:
       return { ...state, loading: true };
 
-    case SAVING_TABLES_SUCCESS:
-      return { ...state, loading: false, tableList: action.payload };
+    case SAVING_TABLES_SUCCESS: // ? Do we need: `tableList: action.payload` ?
+      return { ...state, loading: false };
 
     case DEACTIVATING_TABLE:
       return { ...state, loading: true };

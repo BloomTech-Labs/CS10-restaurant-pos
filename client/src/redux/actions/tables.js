@@ -6,7 +6,9 @@ export const LOADING_TABLES = 'LOADING_TABLES';
 export const LOADING_TABLES_SUCCESS = 'LOADING_TABLES_SUCCESS';
 export const LOADING_TABLES_ERROR = 'LOADING_TABLES_ERROR';
 export const MOVE_TABLE = 'MOVE_TABLE';
-export const ADD_TABLE = 'ADD_TABLE';
+export const ADDING_TABLE = 'ADDING_TABLE';
+export const ADDING_TABLE_SUCCESS = 'ADDING_TABLE_SUCCESS';
+export const ADDING_TABLE_ERROR = 'ADDING_TABLE_ERROR';
 export const SAVING_TABLES = 'SAVING_TABLES';
 export const SAVING_TABLES_SUCCESS = 'SAVING_TABLES_SUCCESS';
 export const SAVING_TABLES_ERROR = 'SAVING_TABLES_ERROR';
@@ -29,14 +31,17 @@ export const getTables = () => (dispatch) => {
     });
 };
 
-export const addTable = () => ({
-  type: ADD_TABLE,
-  payload: {
-    active: false,
-    x: 50,
-    y: 50
-  }
-});
+export const addTable = (table) => (dispatch) => {
+  dispatch({ type: ADDING_TABLE });
+  axios
+    .post(`${serverURI}/api/tables/add`, table)
+    .then((res) => {
+      dispatch({ type: ADDING_TABLE_SUCCESS, payload: res.data });
+    })
+    .catch((err) => {
+      dispatch({ type: ADDING_TABLE_ERROR, payload: err });
+    });
+};
 
 export const moveTable = (tables) => ({
   type: MOVE_TABLE,
@@ -46,8 +51,8 @@ export const moveTable = (tables) => ({
 export const saveTables = (tables) => (dispatch) => {
   dispatch({ type: SAVING_TABLES });
   axios
-    .post(`${serverURI}/api/tables/add`, tables)
-    .then((res) => {
+    .post(`${serverURI}/api/tables/add`, { tables })
+    .then((res) => { // ? Do we need to bother with `payload: res.data`?
       dispatch({ type: SAVING_TABLES_SUCCESS, payload: res.data });
     })
     .catch((err) => {
