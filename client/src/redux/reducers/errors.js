@@ -7,6 +7,8 @@ import {
 import {
   LOADING_TABLES_ERROR,
   LOADING_TABLES_SUCCESS,
+  SAVING_TABLES_ERROR,
+  SAVING_TABLES_SUCCESS,
 } from '../actions/tables';
 import {
   LOADING_PARTIES_ERROR,
@@ -29,6 +31,7 @@ const initialState = {
   loginError: false,
   passMatchError: false,
   loadingTablesError: false,
+  savingTablesError: false,
   loadingPartiesError: false,
   loadingPartyError: false,
   addingPartyError: false,
@@ -47,10 +50,16 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, passMatchError: action.payload };
     case PASSWORD_MATCH_SUCCESS:
       return { ...errors, passMatchError: false };
+
     case LOADING_TABLES_ERROR:
       return { ...errors, loadingTablesError: action.payload };
     case LOADING_TABLES_SUCCESS:
       return { ...errors, loadingTablesError: false };
+    case SAVING_TABLES_ERROR:
+      return { ...errors, savingTablesError: action.payload };
+    case SAVING_TABLES_SUCCESS:
+      return { ...errors, savingTablesError: false };
+
     case LOADING_PARTIES_ERROR:
       return { ...errors, loadingPartiesError: action.payload };
     case LOADING_PARTIES_SUCCESS:
@@ -71,6 +80,7 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, deletingPartyError: action.payload };
     case DELETING_PARTY_SUCCESS:
       return { ...errors, deletingPartyError: false };
+
     case LOADING_ITEMS_ERROR:
       return { ...errors, loadingItemsError: action.payload };
     case LOADING_ITEMS_SUCCESS:
