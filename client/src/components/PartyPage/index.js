@@ -36,7 +36,6 @@ class PartyPage extends React.Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <s.Container>
         <TablesPageTitle tables={this.props.tables} />
@@ -69,7 +68,7 @@ PartyPage.propTypes = {
 PartyPage.defaultProps = {
   getItems: () => {},
   items: [],
-  tables: [{ number: 1 }, { number: 6 }, { number: 3 }, { number: 3 } ],
+  tables: [{ number: 1 }, { number: 6 }, { number: 3 } ],
   location: { country: 'US', state: 'CA' },
 };
 
