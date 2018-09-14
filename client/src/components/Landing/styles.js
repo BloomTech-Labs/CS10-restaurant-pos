@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
+import { flexCenterMixin } from '../../global-styles/mixins';
+
 export const LandingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${flexCenterMixin}
   flex-grow: 2;
 `;
 

@@ -4,6 +4,9 @@ const passport = require('passport');
 
 const keys = require('../../config/keys');
 const Employee = require('../models/Employee');
+// verifyFields verifies that all required fields are provided
+const verifyFields = require('../validation/verifyFields');
+
 
 const router = express.Router();
 
@@ -19,8 +22,11 @@ router.post('/register', (req, res) => {
   const {
     pass: password,
     role,
-    name
+    name,
+    administrator
   } = req.body;
+
+  verifyFields(['name', 'pass'], req.body, res);
 
   let pin = '';
 
@@ -33,7 +39,8 @@ router.post('/register', (req, res) => {
     name,
     password,
     role,
-    pin
+    pin,
+    administrator
   });
 
   // Check if the DB is empty or not
@@ -42,6 +49,18 @@ router.post('/register', (req, res) => {
       // make first employee admin by default
       if (employees.length === 0) {
         newEmployee.role.admin = true;
+      } else {
+        // if there is at least one employee in the database, check if current user has
+        // permissions to add new server
+        try {
+          const currentUser = jwt.verify(req.headers.authorization.slice(7), keys.secretOrKey);
+
+          if (!currentUser.role.admin && !currentUser.role.manager) {
+            return res.status(401).json({ msg: 'You are not authorized to do this.' });
+          }
+        } catch (err) {
+          return res.status(500).json({ err, msg: 'Error verifying the token.' });
+        }
       }
 
       newEmployee
@@ -55,6 +74,7 @@ router.post('/register', (req, res) => {
               admin: employeeInfo.role.admin,
               manager: employeeInfo.role.manager,
             },
+            administrator: employeeInfo.administrator
           };
 
           // Sign the token
@@ -68,11 +88,11 @@ router.post('/register', (req, res) => {
           );
         })
         .catch((err) => {
-          res.status(400).json(err);
+          res.status(500).json({ err, msg: 'Error saving the employee to the database.' });
         });
     })
     .catch((err) => {
-      res.status(400).json(err); // ? I added this catch. Should it be status 500?
+      res.status(500).json({ err, msg: 'Error communicating with the database.' });
     });
 });
 // @route   POST api/employees/login
@@ -81,12 +101,16 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res) => {
   // Pull off the pin and pass from the request
   const { pin, pass } = req.body;
+
+  verifyFields(['pin', 'pass'], req.body, res);
+
   // Find the employee in the DB
   Employee.findOne({ pin })
     .then((employee) => {
       if (!employee) {
-        return res.status(404).json({ error: 'No employee found!' });
+        return res.status(401).json({ msg: 'Invalid PIN or password.' });
       }
+
       // Check the password on the model
       employee
         .checkPassword(pass)
@@ -100,28 +124,35 @@ router.post('/login', (req, res) => {
                 admin: employee.role.admin,
                 manager: employee.role.manager,
               },
+              administrator: employee.administrator
             };
+
             // Sign the token
             jwt.sign(
               payload,
               keys.secretOrKey,
               { expiresIn: '1d' },
               (err, token) => {
-                res.json({ token: `Bearer ${token}` });
+                if (err) {
+                  res.status(400).json({ err, msg: 'Error signing the token.' });
+                }
+
+                res.status(200).json({ token: `Bearer ${token}` });
               }
             );
           } else {
-            res.status(401).json({ error: 'Invalid credentials!' });
+            res.status(401).json({ msg: 'Invalid PIN or password.' });
           }
         })
         .catch((err) => {
-          res.status(400).json(err); // ? I added this catch. Should it be status 500?
+          res.status(401).json({ err, msg: 'Error checking the password.' });
         });
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res.status(500).json({ err, msg: 'Error communicating with the database.' });
     });
 });
+
 // @route   PUT api/employees/update/:pin
 // @desc    Allow a user to change their password
 // @access  Private
@@ -132,36 +163,46 @@ router.put(
     // Pull off the pin, oldPassword, and newPassword from the request
     const { oldPassword, newPassword } = req.body;
     const { pin } = req.params;
+    const { user } = req;
+
+    if (!user.role.admin && !user.role.manager && user.pin !== pin) {
+      return res.status(401).json({ msg: 'You are not authorized to do this.' });
+    }
+
+    verifyFields(['oldPassword', 'newPassword'], req.body, res);
+
     // Locate the employee
     Employee.findOne({ pin })
       .then((employee) => {
         if (!employee) {
-          return res.status(404).json({ error: 'No employee found!' });
+          return res.status(401).json({ msg: 'Invalid PIN or password.' });
         }
+
         // Check the password on the model
         employee
           .checkPassword(oldPassword)
           .then((verified) => {
             if (verified) {
               employee.password = newPassword;
+
               employee
                 .save()
-                .then((employeeInfo) => {
-                  res.status(200).json(employeeInfo);
+                .then(() => {
+                  res.status(200).json({ msg: 'Successfully changed the password.' });
                 })
                 .catch((err) => {
-                  res.status(400).json(err);
+                  res.status(500).json({ err, msg: 'Error communicating with the database.' });
                 });
             } else {
-              res.status().json({ error: 'Invalid credentials!' });
+              res.status(401).json({ msg: 'Invalid PIN or password.' });
             }
           })
           .catch((err) => {
-            res.status(400).json(err);
+            res.status(401).json({ err, msg: 'Error checking the password.' });
           });
       })
       .catch((err) => {
-        res.status(400).json(err);
+        res.status(500).json({ err, msg: 'Error communicating with the database.' });
       });
   }
 );

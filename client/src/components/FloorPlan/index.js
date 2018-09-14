@@ -25,10 +25,10 @@ class FloorPlan extends React.Component {
     if (this.props.tables.length !== prevProps.tables.length) {
       this.clear();
 
-      this.props.tables.forEach((table) => {
+      this.props.tables.forEach((table, i) => {
         // table.localPosition = i;
         this.tables.push(table);
-        this.circleCreator(table);
+        this.circleCreator(table, i);
       });
     }
   }
@@ -38,7 +38,7 @@ class FloorPlan extends React.Component {
     this.tables = [];
   }
 
-  circleCreator = (table) => {
+  circleCreator = (table, index) => {
     const circle = new PIXI.Graphics();
     circle.interactive = true;
     circle.beginFill(0xffffff);
@@ -48,6 +48,11 @@ class FloorPlan extends React.Component {
     circle.y = table.y;
     this.app.stage.addChild(circle);
 
+    const tableNumber = new PIXI.Text(index);
+    tableNumber.x = table.x - 10;
+    tableNumber.y = table.y - 15;
+    this.app.stage.addChild(tableNumber);
+
     const onDragStart = event => {
       // store a reference to the data
       // the reason for this is because of multitouch
@@ -55,6 +60,8 @@ class FloorPlan extends React.Component {
       circle.data = event.data;
       circle.alpha = 0.5;
       circle.dragging = true;
+      tableNumber.data = event.data;
+      tableNumber.dragging = true;
     };
 
     const onDragEnd = () => {
@@ -69,6 +76,9 @@ class FloorPlan extends React.Component {
 
       // set the interaction data to null
       circle.data = null;
+
+      tableNumber.dragging = false;
+      tableNumber.data = null;
     };
 
     const onDragMove = () => {
@@ -76,6 +86,9 @@ class FloorPlan extends React.Component {
         const newPosition = circle.data.getLocalPosition(circle.parent);
         circle.x = newPosition.x;
         circle.y = newPosition.y;
+
+        tableNumber.x = newPosition.x - 10;
+        tableNumber.y = newPosition.y - 15;
       }
     };
 
