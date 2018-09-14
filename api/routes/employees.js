@@ -6,7 +6,8 @@ const keys = require('../../config/keys');
 const Employee = require('../models/Employee');
 // verifyFields verifies that all required fields are provided
 const verifyFields = require('../validation/verifyFields');
-
+// Verify Roles for Authentication
+const verifyRole = require('../validation/verifyRole');
 
 const router = express.Router();
 
@@ -20,12 +21,9 @@ router.get('/test', (req, res) => res.json({ msg: 'Employee Routes Work' }));
 // @access  Public
 router.post('/register', (req, res) => {
   const {
-    pass: password,
-    role,
-    name,
-    administrator
+    pass: password, role, name, administrator
   } = req.body;
-
+  // Validate Fields
   verifyFields(['name', 'pass'], req.body, res);
 
   let pin = '';
@@ -53,11 +51,14 @@ router.post('/register', (req, res) => {
         // if there is at least one employee in the database, check if current user has
         // permissions to add new server
         try {
-          const currentUser = jwt.verify(req.headers.authorization.slice(7), keys.secretOrKey);
-
-          if (!currentUser.role.admin && !currentUser.role.manager) {
+          // Check to see if token exists
+          if (!req.headers.authorization) {
             return res.status(401).json({ msg: 'You are not authorized to do this.' });
           }
+          const currentUser = jwt.verify(req.headers.authorization.slice(7), keys.secretOrKey);
+
+          // Verify roles
+          verifyRole(currentUser, res);
         } catch (err) {
           return res.status(500).json({ err, msg: 'Error verifying the token.' });
         }
@@ -72,20 +73,15 @@ router.post('/register', (req, res) => {
             pin: employeeInfo.pin,
             role: {
               admin: employeeInfo.role.admin,
-              manager: employeeInfo.role.manager,
+              manager: employeeInfo.role.manager
             },
             administrator: employeeInfo.administrator
           };
 
           // Sign the token
-          jwt.sign(
-            payload,
-            keys.secretOrKey,
-            { expiresIn: '1d' },
-            (err, token) => {
-              res.status(201).json({ token: `Bearer ${token}` });
-            }
-          );
+          jwt.sign(payload, keys.secretOrKey, { expiresIn: '1d' }, (err, token) => {
+            res.status(201).json({ token: `Bearer ${token}` });
+          });
         })
         .catch((err) => {
           res.status(500).json({ err, msg: 'Error saving the employee to the database.' });
@@ -95,6 +91,7 @@ router.post('/register', (req, res) => {
       res.status(500).json({ err, msg: 'Error communicating with the database.' });
     });
 });
+
 // @route   POST api/employees/login
 // @desc    Lets a user login
 // @access  Public
@@ -122,24 +119,19 @@ router.post('/login', (req, res) => {
               pin: employee.pin,
               role: {
                 admin: employee.role.admin,
-                manager: employee.role.manager,
+                manager: employee.role.manager
               },
               administrator: employee.administrator
             };
 
             // Sign the token
-            jwt.sign(
-              payload,
-              keys.secretOrKey,
-              { expiresIn: '1d' },
-              (err, token) => {
-                if (err) {
-                  res.status(400).json({ err, msg: 'Error signing the token.' });
-                }
-
-                res.status(200).json({ token: `Bearer ${token}` });
+            jwt.sign(payload, keys.secretOrKey, { expiresIn: '1d' }, (err, token) => {
+              if (err) {
+                res.status(400).json({ err, msg: 'Error signing the token.' });
               }
-            );
+
+              res.status(200).json({ token: `Bearer ${token}` });
+            });
           } else {
             res.status(401).json({ msg: 'Invalid PIN or password.' });
           }
@@ -156,68 +148,62 @@ router.post('/login', (req, res) => {
 // @route   PUT api/employees/update/:pin
 // @desc    Allow a user to change their password
 // @access  Private
-router.put(
-  '/update/:pin',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    // Pull off the pin, oldPassword, and newPassword from the request
-    const { oldPassword, newPassword } = req.body;
-    const { pin } = req.params;
-    const { user } = req;
+router.put('/update/:pin', passport.authenticate('jwt', { session: false }), (req, res) => {
+  // Pull off the pin, oldPassword, and newPassword from the request
+  const { oldPassword, newPassword } = req.body;
+  const { pin } = req.params;
+  const { user } = req;
 
-    if (!user.role.admin && !user.role.manager && user.pin !== pin) {
-      return res.status(401).json({ msg: 'You are not authorized to do this.' });
-    }
-
-    verifyFields(['oldPassword', 'newPassword'], req.body, res);
-
-    // Locate the employee
-    Employee.findOne({ pin })
-      .then((employee) => {
-        if (!employee) {
-          return res.status(401).json({ msg: 'Invalid PIN or password.' });
-        }
-
-        // Check the password on the model
-        employee
-          .checkPassword(oldPassword)
-          .then((verified) => {
-            if (verified) {
-              employee.password = newPassword;
-
-              employee
-                .save()
-                .then(() => {
-                  res.status(200).json({ msg: 'Successfully changed the password.' });
-                })
-                .catch((err) => {
-                  res.status(500).json({ err, msg: 'Error communicating with the database.' });
-                });
-            } else {
-              res.status(401).json({ msg: 'Invalid PIN or password.' });
-            }
-          })
-          .catch((err) => {
-            res.status(401).json({ err, msg: 'Error checking the password.' });
-          });
-      })
-      .catch((err) => {
-        res.status(500).json({ err, msg: 'Error communicating with the database.' });
-      });
+  // Validate a users role and pin
+  if (!user.role.admin && !user.role.manager && user.pin !== pin) {
+    return res.status(401).json({ msg: 'You are not authorized to do this.' });
   }
-);
+
+  verifyFields(['oldPassword', 'newPassword'], req.body, res);
+
+  // Locate the employee
+  Employee.findOne({ pin })
+    .then((employee) => {
+      if (!employee) {
+        return res.status(401).json({ msg: 'Invalid PIN or password.' });
+      }
+
+      // Check the password on the model
+      employee
+        .checkPassword(oldPassword)
+        .then((verified) => {
+          if (verified) {
+            employee.password = newPassword;
+
+            employee
+              .save()
+              .then(() => {
+                res.status(200).json({ msg: 'Successfully changed the password.' });
+              })
+              .catch((err) => {
+                res.status(500).json({ err, msg: 'Error communicating with the database.' });
+              });
+          } else {
+            res.status(401).json({ msg: 'Invalid PIN or password.' });
+          }
+        })
+        .catch((err) => {
+          res.status(401).json({ err, msg: 'Error checking the password.' });
+        });
+    })
+    .catch((err) => {
+      res.status(500).json({ err, msg: 'Error communicating with the database.' });
+    });
+});
+
 // @route   GET server/employees/current
 // @desc    Return current employee
 // @access  Private
-router.get(
-  '/current',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    res.json({
-      id: req.user.id,
-      pin: req.user.pin,
-      role: req.user.role,
-    });
-  }
-);
+router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
+  res.json({
+    id: req.user.id,
+    pin: req.user.pin,
+    role: req.user.role
+  });
+});
 module.exports = router;
