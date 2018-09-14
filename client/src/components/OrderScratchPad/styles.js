@@ -26,11 +26,6 @@ export const DeleteButton = styled.div`
   margin-right: 10px;
 `;
 
-export const SubTotal = styled.div`
-  ${flexCenterMixin};
-  height: 10%;
-`;
-
 export const Scroll = styled.div`
   border: 2px solid purple;
   display: inline-block;

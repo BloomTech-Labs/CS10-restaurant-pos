@@ -36,6 +36,7 @@ class PartyPage extends React.Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <s.Container>
         <TablesPageTitle tables={this.props.tables} />
@@ -45,6 +46,7 @@ class PartyPage extends React.Component {
             order={this.state.order}
             subTotal={this.state.subTotal}
             removeItemFromOrder={this.removeItemFromOrder}
+            location={this.props.location}
           />
         </s.Food>
       </s.Container>
@@ -52,20 +54,29 @@ class PartyPage extends React.Component {
   }
 }
 
+const locationType = PropTypes.shape({
+  country: PropTypes.string,
+  state: PropTypes.string,
+});
+
 PartyPage.propTypes = {
   getItems: PropTypes.func,
   items: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
-  tables: PropTypes.arrayOf(PropTypes.object) // TODO: define shape of the objects,
+  tables: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
+  location: locationType,
 };
 
 PartyPage.defaultProps = {
   getItems: () => {},
   items: [],
   tables: [{ number: 1 }, { number: 6 }, { number: 3 }, { number: 3 } ],
+  location: { country: 'US', state: 'CA' },
 };
 
 const mapStateToProps = state => ({
   items: state.items.itemList,
+  location: state.restaurant.restaurantInfo.location,
+  store: state,
 });
 
 export default connect(
