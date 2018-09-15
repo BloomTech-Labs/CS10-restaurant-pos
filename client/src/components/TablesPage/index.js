@@ -9,9 +9,38 @@ import FloorPlan from '../FloorPlan';
 import * as s from './styles';
 
 class TablesPage extends Component {
+  state = {
+    authorized: this.props.user.admin || this.props.user.manager,
+    editing: false,
+    selected: new Set()
+  };
+
   componentDidMount() {
     this.props.getTables();
   }
+
+  toggleEdit = () => {
+    this.setState((prev) => ({
+      editing: !prev.editing
+    }));
+  };
+
+  selectTable = (table) => {
+    this.setState((prev) => {
+      if (prev.selected.has(table)) {
+        prev.selected.delete(table);
+        return { selected: prev.selected };
+      }
+      return { selected: prev.selected.add(table) };
+    });
+  };
+
+  saveParty = (event) => {
+    event.preventDefault();
+
+    // TODO: this.props.saveParty or some shit
+    console.log(this.state.selected);
+  };
 
   render() {
     return (
@@ -22,17 +51,25 @@ class TablesPage extends Component {
           <button type="button" onClick={this.props.addTable}>
             Add Table
           </button>
-          <s.Form action="">
+          <s.Form onSubmit={this.saveParty}>
             <input type="text" placeholder="1080" />
             <input type="text" placeholder="1920" />
             <button type="submit">Save</button>
           </s.Form>
+          {this.state.authorized && (
+            <button type="button" onClick={this.toggleEdit}>
+              Edit Floor Plan
+            </button>
+          )}
         </s.Menu>
         <s.Editor>
+          {this.state.editing && 'EDITING'}
           <FloorPlan
-            user={this.props.user}
+            editing={this.state.editing && this.state.authorized}
             tables={this.props.tables}
+            selected={this.state.selected}
             moveTable={this.props.moveTable}
+            selectTable={this.selectTable}
           />
         </s.Editor>
       </s.Container>

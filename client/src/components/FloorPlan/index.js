@@ -17,9 +17,6 @@ class FloorPlan extends React.Component {
     });
     this.app.renderer.backgroundColor = 0x8698aa;
     this.tables = []; // TODO: investigate cleaner solutions
-
-    this.authorized = this.props.user.admin || this.props.user.manager;
-    console.log(this.authorized, this.props.user);
   }
 
   componentDidMount() {
@@ -41,7 +38,7 @@ class FloorPlan extends React.Component {
   }
 
   authorizationFilter = (func) => {
-    if (this.authorized) return func;
+    if (this.props.editing) return func();
   };
 
   clear = () => {
@@ -68,54 +65,65 @@ class FloorPlan extends React.Component {
     tableNumber.anchor.set(0.5);
 
     const activate = () => {
-      console.log('clicked');
+      if (this.props.selected.has(index)) {
+        this.props.selectTable(index);
+        circle.alpha = 0.2;
+      } else {
+        circle.alpha = 1;
+      }
     };
 
     const onDragStart = (event) => {
-      console.log('in onDragStart');
-      // store a reference to the data
-      // the reason for this is because of multitouch
-      // we want to track the movement of this particular touch
-      circle.data = event.data;
-      circle.alpha = 0.5;
-      circle.dragging = true;
+      if (this.props.editing) {
+        // store a reference to the data
+        // the reason for this is because of multitouch
+        // we want to track the movement of this particular touch
+        circle.data = event.data;
+        circle.alpha = 0.5;
+        circle.dragging = true;
+      } else {
+        activate();
+      }
     };
 
     const onDragEnd = () => {
-      this.props.moveTable(this.tables);
+      if (this.props.editing) {
+        this.props.moveTable(this.tables);
 
-      circle.alpha = 1;
-
-      circle.dragging = false;
-
-      // set the interaction data to null
-      circle.data = null;
+        circle.alpha = 1;
+        circle.dragging = false;
+        circle.data = null;
+      }
+      if (this.props.selected.has(index)) circle.alpha = 0.2;
     };
 
     const onDragMove = () => {
-      if (circle.dragging) {
-        const newPosition = circle.data.getLocalPosition(circle.parent);
-        circle.x = newPosition.x;
-        circle.y = newPosition.y;
+      if (this.props.editing) {
+        if (circle.dragging) {
+          const newPosition = circle.data.getLocalPosition(circle.parent);
+          circle.x = newPosition.x;
+          circle.y = newPosition.y;
+        }
       }
     };
 
     const deleteCircle = () => {
-      circle.destroy();
-      // TODO: Call action to delete from the database
+      if (this.props.editing) {
+        circle.destroy();
+        // TODO: Call action to delete from the database
+      }
     };
 
     // run the render loop
     circle
-      .on('mousedown', this.authorized ? onDragStart : activate)
-      .on('touchstart', this.authorized ? onDragStart : activate)
-      .on('mouseup', this.authorizationFilter(onDragEnd))
-      .on('mouseupoutside', this.authorizationFilter(deleteCircle))
-      .on('touchend', this.authorizationFilter(onDragEnd))
-      .on('touchendoutside', this.authorizationFilter(deleteCircle))
-      .on('mousemove', this.authorizationFilter(onDragMove))
-      .on('touchmove', this.authorizationFilter(onDragMove));
-    // TODO: Try: this.authorized && onDragMove;
+      .on('mousedown', onDragStart)
+      .on('touchstart', onDragStart)
+      .on('mouseup', onDragEnd)
+      .on('mouseupoutside', deleteCircle)
+      .on('touchend', onDragEnd)
+      .on('touchendoutside', deleteCircle)
+      .on('mousemove', onDragMove)
+      .on('touchmove', onDragMove);
   };
 
   setup = () => {
@@ -152,18 +160,19 @@ class FloorPlan extends React.Component {
 }
 
 FloorPlan.propTypes = {
-  user: PropTypes.shape({
-    admin: PropTypes.bool,
-    manager: PropTypes.bool
-  }),
+  editing: PropTypes.bool,
+  selected: PropTypes.array,
   tables: PropTypes.arrayOf(PropTypes.object),
-  moveTable: PropTypes.func
+  moveTable: PropTypes.func,
+  selectTable: PropTypes.func
 };
 
 FloorPlan.defaultProps = {
-  user: { admin: false, manager: false },
+  editing: false,
+  selected: new Set(),
   tables: [],
-  moveTable: () => {}
+  moveTable: () => {},
+  selectTable: () => {}
 };
 
 export default FloorPlan;
