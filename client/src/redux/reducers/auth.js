@@ -13,7 +13,7 @@ if (jwt) {
   if (decodedJwt.exp < currentTime) {
     localStorage.removeItem('jwt');
   } else {
-    role = decodedJwt.userRole;
+    role = decodedJwt.role; // eslint-disable-line prefer-destructuring
   }
 }
 
@@ -26,6 +26,7 @@ const AuthReducer = (auth = initialState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
       return { ...auth, jwt: action.payload.jwt, role: action.payload.role };
+
     default:
       return auth;
   }
