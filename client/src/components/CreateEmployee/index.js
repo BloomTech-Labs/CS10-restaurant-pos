@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { registerEmployee } from '../../redux/actions/auth';
+import { addEmployee } from '../../redux/actions/auth';
 
 import * as s from './styles';
 
@@ -20,7 +20,7 @@ class CreateEmployee extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.registerEmployee(this.state);
+    this.props.addEmployee(this.state);
   };
 
   render() {
@@ -70,14 +70,14 @@ class CreateEmployee extends React.Component {
 }
 
 CreateEmployee.propTypes = {
-  registerEmployee: PropTypes.func,
+  addEmployee: PropTypes.func,
 };
 
 CreateEmployee.defaultProps = {
-  registerEmployee: () => {},
+  addEmployee: () => {},
 };
 
 export default connect(
   null,
-  { registerEmployee }
+  { addEmployee }
 )(CreateEmployee);

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { employeeLogin } from '../../redux/actions/auth';
+import { loginEmployee } from '../../redux/actions/auth';
 
 import * as s from './styles';
 
@@ -16,7 +16,7 @@ class Login extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.employeeLogin(this.state, this.props.history.push);
+    this.props.loginEmployee(this.state, this.props.history.push);
   };
 
   render() {
@@ -52,17 +52,17 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  employeeLogin: PropTypes.func,
+  loginEmployee: PropTypes.func,
   history: PropTypes.objectOf(PropTypes.any),
 };
 
 Login.defaultProps = {
-  employeeLogin: () => {},
+  loginEmployee: () => {},
   history: {}
 };
 
 
 export default connect(
   null,
-  { employeeLogin }
+  { loginEmployee }
 )(Login);

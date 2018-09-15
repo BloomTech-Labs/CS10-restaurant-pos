@@ -11,7 +11,7 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE'; // TODO: make separate action type
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'; // TODO: make separate action types for registration
 export const EMPLOYEE_LOGIN_FAILURE = 'EMPLOYEE_LOGIN_FAILURE'; // TODO: make separate action types for registration
 export const EMPLOYEE_LOGIN_SUCCESS = 'EMPLOYEE_LOGIN_SUCCESS'; // TODO: make separate action types for registration
-// TODO: Make loading action type LOGGING_IN for login and employeeLogin actions
+// TODO: Make loading action type LOGGING_IN for login and loginEmployee actions
 
 // Axios Defaults
 
@@ -69,7 +69,7 @@ export const register = ({ firstName, lastName, pass, confirmPass }, push) => (d
     });
 };
 
-export const employeeLogin = ({ pin, pass }, push) => (dispatch) => {
+export const loginEmployee = ({ pin, pass }, push) => (dispatch) => {
   // TODO: Change action types to be unique from register/login
   axios
     .post(`${serverURI}/api/employees/login`, { pin, pass })
@@ -91,7 +91,7 @@ export const employeeLogin = ({ pin, pass }, push) => (dispatch) => {
     });
 };
 
-export const registerEmployee = ({ firstName, lastName, pass, confirmPass }) => (dispatch) => {
+export const addEmployee = ({ firstName, lastName, pass, confirmPass }) => (dispatch) => {
   if (pass !== confirmPass) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
