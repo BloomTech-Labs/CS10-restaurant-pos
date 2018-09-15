@@ -5,6 +5,7 @@ import { Container } from './styles';
 import Landing from './components/Landing';
 import Login from './components/Login';
 import Register from './components/Register';
+import LoginEmployee from './components/LoginEmployee';
 import CreateEmployee from './components/CreateEmployee';
 import Servers from './components/Servers';
 import TablesPage from './components/TablesPage';
@@ -26,6 +27,7 @@ class App extends Component {
             <Route path="/" component={Landing} exact />
             <Route path="/login" component={RequireNotAuth(Login)} />
             <Route path="/register" component={RequireNotAuth(Register)} />
+            <Route path="/login-employee" component={RequireAuth(LoginEmployee)} />
             <Route path="/new-employee" component={RequireAuth(CreateEmployee)} />
             <Route path="/tables" component={RequireAuth(TablesPage)} />
             <Route path="/servers" component={RequireAuth(Servers)} />

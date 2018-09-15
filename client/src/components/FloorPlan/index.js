@@ -28,7 +28,8 @@ class FloorPlan extends React.Component {
       this.props.tables.forEach((table, i) => {
         // table.localPosition = i;
         this.tables.push(table);
-        this.circleCreator(table, i);
+        // TODO: Make table numbers come from the database
+        this.circleCreator(table, i + 1);
       });
     }
   }

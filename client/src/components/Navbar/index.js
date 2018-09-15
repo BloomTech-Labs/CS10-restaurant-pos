@@ -6,7 +6,8 @@ class Navbar extends React.Component {
   render() {
     return (
       <s.Navbar>
-        <s.StyledLink to="/login">(Employee Login)</s.StyledLink>
+        <s.StyledLink to="/login-employee">(Employee Login DO NOT USE)</s.StyledLink>
+        <s.StyledLink to="/login">(Admin Login)</s.StyledLink>
         <s.StyledLink to="/register">(Register)</s.StyledLink>
         <s.StyledLink to="/restaurant/sign-up">(Restaurant)</s.StyledLink>
         <s.StyledLink to="/new-employee">(New Employee)</s.StyledLink>
