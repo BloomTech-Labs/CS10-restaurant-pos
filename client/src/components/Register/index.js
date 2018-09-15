@@ -42,7 +42,7 @@ class Register extends React.Component {
             name="lastName"
             maxLength="30"
             value={this.state.lastName}
-          />
+          /> {/* // TODO: Add email field eventually} */}
           <input
             placeholder="password"
             type="password"

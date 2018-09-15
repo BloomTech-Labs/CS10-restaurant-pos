@@ -39,15 +39,15 @@ router.post('/add', (req, res) => {
 // @route   GET api/tables/all
 // @desc    Get all tables
 // @access  Private
-router.get('/all', (req, res) => [
+router.get('/all', (req, res) => {
   Table.find({})
     .then((tables) => {
       res.status(200).json(tables);
     })
     .catch((err) => {
       res.status(400).json(err);
-    })
-]);
+    });
+});
 
 // @route   GET api/tables/:id
 // @desc    Get a table by the ID
