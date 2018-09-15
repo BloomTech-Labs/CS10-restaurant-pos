@@ -8,9 +8,10 @@ import serverURI from '../../config/URI';
 export const PASSWORD_MATCH_ERROR = 'PASSWORD_MATCH_ERROR';
 export const PASSWORD_MATCH_SUCCESS = 'PASSWORD_MATCH_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'; // TODO: make separate action types for registration
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'; //
-export const EMPLOYEE_LOGIN_FAILURE = 'EMPLOYEE_LOGIN_FAILURE'; //
-export const EMPLOYEE_LOGIN_SUCCESS = 'EMPLOYEE_LOGIN_SUCCESS'; //
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'; // TODO: make separate action types for registration
+export const EMPLOYEE_LOGIN_FAILURE = 'EMPLOYEE_LOGIN_FAILURE'; // TODO: make separate action types for registration
+export const EMPLOYEE_LOGIN_SUCCESS = 'EMPLOYEE_LOGIN_SUCCESS'; // TODO: make separate action types for registration
+// TODO: Make loading action type LOGGING_IN for login and employeeLogin actions
 
 // Axios Defaults
 
@@ -61,13 +62,13 @@ export const register = ({ firstName, lastName, pin, pass, confirmPass }) => (
 );
 
 export const employeeLogin = ({ pin, pass }, push) => (
-  (dispatch) => {
+  (dispatch) => { // TODO: Change action types to be unique from register/login
     axios
       .post(`${serverURI}/api/employees/login`, { pin, pass })
       .then((res) => {
         const { role } = jwtDecode(res.data.token);
 
-        dispatch({ type: EMPLOYEE_LOGIN_SUCCESS, jwt: res.data.token, role });
+        dispatch({ type: LOGIN_SUCCESS, payload: { jwt: res.data.token, role } });
 
         localStorage.setItem('jwt', res.data.token);
 
@@ -78,7 +79,7 @@ export const employeeLogin = ({ pin, pass }, push) => (
         }
       })
       .catch((err) => {
-        dispatch({ type: EMPLOYEE_LOGIN_FAILURE, payload: err });
+        dispatch({ type: LOGIN_FAILURE, payload: err });
       });
   }
 );
