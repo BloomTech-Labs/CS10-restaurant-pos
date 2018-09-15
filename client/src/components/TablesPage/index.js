@@ -25,14 +25,17 @@ class TablesPage extends Component {
     }));
   };
 
-  selectTable = (table) => {
-    this.setState((prev) => {
-      if (prev.selected.has(table)) {
-        prev.selected.delete(table);
-        return { selected: prev.selected };
-      }
-      return { selected: prev.selected.add(table) };
-    });
+  toggleTable = (table) => {
+    this.setState(
+      (prev) => {
+        if (prev.selected.has(table)) {
+          prev.selected.delete(table);
+          return { selected: prev.selected };
+        }
+        return { selected: prev.selected.add(table) };
+      },
+      () => console.log(this.state.selected)
+    );
   };
 
   saveParty = (event) => {
@@ -54,7 +57,11 @@ class TablesPage extends Component {
           <s.Form onSubmit={this.saveParty}>
             <input type="text" placeholder="1080" />
             <input type="text" placeholder="1920" />
+            {/* // TODO: This save button needs to submit the data in the
+                // TODO: redux store of new table locations to the database
+                // TODO: and possibly any restaurant dimension changes */}
             <button type="submit">Save</button>
+            {/* // TODO: --------------------------------------------- */}
           </s.Form>
           {this.state.authorized && (
             <button type="button" onClick={this.toggleEdit}>
@@ -69,7 +76,7 @@ class TablesPage extends Component {
             tables={this.props.tables}
             selected={this.state.selected}
             moveTable={this.props.moveTable}
-            selectTable={this.selectTable}
+            toggleTable={this.toggleTable}
           />
         </s.Editor>
       </s.Container>

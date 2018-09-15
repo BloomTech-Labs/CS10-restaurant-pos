@@ -1,6 +1,7 @@
 import React from 'react';
 import * as PIXI from 'pixi.js';
 import PropTypes from 'prop-types';
+import SetType from 'es6-set-proptypes';
 
 import * as s from './styles';
 
@@ -20,86 +21,113 @@ class FloorPlan extends React.Component {
   }
 
   componentDidMount() {
+    // Lay the initial stage
     this.pixi.current.appendChild(this.app.view);
-
     this.setup();
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.tables.length !== prevProps.tables.length) {
+      // If any tables were added or removed, clear the stage...
       this.clear();
 
-      this.props.tables.forEach((table, i) => {
+      // ...and redraw them on the stage
+      this.props.tables.forEach((table) => {
         this.tables.push(table);
-        // TODO: Make table numbers come from the database
-        this.circleCreator(table, i + 1);
+        this.circleCreator(table);
       });
     }
   }
-
-  authorizationFilter = (func) => {
-    if (this.props.editing) return func();
-  };
 
   clear = () => {
     this.app.stage.removeChildren();
     this.tables = [];
   };
 
-  circleCreator = (table, index) => {
+  circleCreator = (table) => {
+    // Create a circle, make it interactive,
+    // and add `cursor: pointer` css style
     const circle = new PIXI.Graphics();
     circle.interactive = true;
     circle.buttonMode = true;
+
+    // Determine the color, size,
+    // and location of the circle.
+    // But x and y shouldn't be set here
     circle.beginFill(0xffffff);
     circle.drawCircle(0, 0, 30);
     circle.endFill();
 
     // Position the circle according to
     // its location from the database
+    // and add the circle to the stage
     circle.x = table.x;
     circle.y = table.y;
     this.app.stage.addChild(circle);
 
-    const tableNumber = new PIXI.Text(index);
+    // Adds the table number text,
+    // adds it as a child to the circle,
+    // and adjusts its position to be centered
+    const tableNumber = new PIXI.Text(table.number);
     circle.addChild(tableNumber);
     tableNumber.anchor.set(0.5);
 
-    const activate = () => {
-      if (this.props.selected.has(index)) {
-        this.props.selectTable(index);
+    const toggleActive = () => {
+      if (!this.props.selected.has(table.number)) {
+        // If the table doesn't exist in the active Set,
+        // add it to the Set and adjust its appearance
+        this.props.toggleTable(table.number);
         circle.alpha = 0.2;
       } else {
+        // If the table does exist in the active Set,
+        // remove it from the Set and adjust its appearance
+        this.props.toggleTable(table.number);
         circle.alpha = 1;
       }
     };
 
     const onDragStart = (event) => {
       if (this.props.editing) {
-        // store a reference to the data
-        // the reason for this is because of multitouch
-        // we want to track the movement of this particular touch
-        circle.data = event.data;
+        // If editing mode is on:
+        // Make it transparent on drag, then store a
+        // reference to the data to track the movement
+        // of this particular touch for multitouch
         circle.alpha = 0.5;
+        circle.data = event.data;
         circle.dragging = true;
       } else {
-        activate();
+        // If editing mode is off, a click should
+        // toggle the table's active status
+        toggleActive();
       }
     };
 
     const onDragEnd = () => {
       if (this.props.editing) {
+        // If editing mode is on:
+        // Update Redux Store's table location,
+        // set dragging to false and clear the data
         this.props.moveTable(this.tables);
-
-        circle.alpha = 1;
         circle.dragging = false;
         circle.data = null;
+
+        if (this.props.selected.has(table.number)) {
+          // If the table is selected, it should
+          // adjust its appearance appropriately
+          circle.alpha = 0.2;
+        } else {
+          // Otherwise it should return to normal
+          // after completing the drag
+          circle.alpha = 1;
+        }
       }
-      if (this.props.selected.has(index)) circle.alpha = 0.2;
     };
 
     const onDragMove = () => {
       if (this.props.editing) {
         if (circle.dragging) {
+          // If you are allowed to edit and the
+          // circle is moving then adjust the position
           const newPosition = circle.data.getLocalPosition(circle.parent);
           circle.x = newPosition.x;
           circle.y = newPosition.y;
@@ -108,13 +136,16 @@ class FloorPlan extends React.Component {
     };
 
     const deleteCircle = () => {
+      // This is called on 'mouseupoutside' so that,
+      // if you are in editing mode, dragging the
+      // circle out of bounds will destroy it
       if (this.props.editing) {
         circle.destroy();
         // TODO: Call action to delete from the database
       }
     };
 
-    // run the render loop
+    // Run the render loop
     circle
       .on('mousedown', onDragStart)
       .on('touchstart', onDragStart)
@@ -134,6 +165,8 @@ class FloorPlan extends React.Component {
 
     animate();
 
+    // TODO: Fix all this shit more
+    // TODO: and then comment thit shit!
     const resize = () => {
       let w;
       let h;
@@ -161,10 +194,10 @@ class FloorPlan extends React.Component {
 
 FloorPlan.propTypes = {
   editing: PropTypes.bool,
-  selected: PropTypes.array,
+  selected: SetType,
   tables: PropTypes.arrayOf(PropTypes.object),
   moveTable: PropTypes.func,
-  selectTable: PropTypes.func
+  toggleTable: PropTypes.func
 };
 
 FloorPlan.defaultProps = {
@@ -172,7 +205,7 @@ FloorPlan.defaultProps = {
   selected: new Set(),
   tables: [],
   moveTable: () => {},
-  selectTable: () => {}
+  toggleTable: () => {}
 };
 
 export default FloorPlan;
