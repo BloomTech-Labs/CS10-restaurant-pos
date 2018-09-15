@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { register } from '../../redux/actions/auth';
+import { registerEmployee } from '../../redux/actions/auth';
 
 import * as s from './styles';
 
@@ -20,12 +20,13 @@ class CreateEmployee extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.register(this.state);
+    this.props.registerEmployee(this.state);
   };
 
   render() {
     return (
       <s.Container>
+        Create a new employee
         <s.Form onSubmit={this.handleSubmit}>
           <input
             placeholder="First Name"
@@ -69,14 +70,14 @@ class CreateEmployee extends React.Component {
 }
 
 CreateEmployee.propTypes = {
-  register: PropTypes.func,
+  registerEmployee: PropTypes.func,
 };
 
 CreateEmployee.defaultProps = {
-  register: () => {},
+  registerEmployee: () => {},
 };
 
 export default connect(
   null,
-  { register }
+  { registerEmployee }
 )(CreateEmployee);
