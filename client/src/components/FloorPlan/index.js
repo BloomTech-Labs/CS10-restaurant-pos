@@ -1,5 +1,6 @@
 import React from 'react';
 import * as PIXI from 'pixi.js';
+import Viewport from 'pixi-viewport';
 import PropTypes from 'prop-types';
 import SetType from 'es6-set-proptypes';
 
@@ -11,10 +12,18 @@ class FloorPlan extends React.Component {
 
     this.pixi = React.createRef();
     this.app = new PIXI.Application({
-      width: window.innerHeight - 150,
-      height: window.innerHeight - 150,
+      width: window.innerWidth,
+      height: window.innerHeight,
       transparent: false,
-      antialias: true
+      // antialias: true,
+      // resolution: window.devicePixelRatio
+    });
+    this.viewport = new Viewport({
+      screenHeight: window.innerWidth,
+      screenWidth: window.innerHeight,
+      worldHeight: 1000,
+      worldWidth: 1000,
+      interaction: this.app.renderer.interaction,
     });
     this.app.renderer.backgroundColor = 0x8698aa;
     this.tables = []; // TODO: investigate cleaner solutions
@@ -24,6 +33,7 @@ class FloorPlan extends React.Component {
     // Lay the initial stage
     this.pixi.current.appendChild(this.app.view);
     this.setup();
+    this.resize();
   }
 
   componentDidUpdate(prevProps) {
@@ -32,19 +42,41 @@ class FloorPlan extends React.Component {
       this.clear();
 
       // ...and redraw them on the stage
-      this.props.tables.forEach((table) => {
+      this.props.tables.forEach(table => {
         this.tables.push(table);
         this.circleCreator(table);
       });
     }
+
+    // if (this.props.editing) {
+    //   this.viewport.pausePlugin('drag');
+    // } else {
+    //   this.viewport.resumePlugin('drag');
+    // }
   }
 
   clear = () => {
-    this.app.stage.removeChildren();
+    this.viewport.removeChildren();
     this.tables = [];
+    this.border();
   };
 
-  circleCreator = (table) => {
+  line = (x, y, width, height) => {
+    const l = this.viewport.addChild(new PIXI.Sprite(PIXI.Texture.WHITE));
+    l.tint = 0xff0000;
+    l.position.set(x, y);
+    l.width = width;
+    l.height = height;
+  };
+
+  border = () => {
+    this.line(0, 0, this.viewport.worldWidth, 10);
+    this.line(0, this.viewport.worldHeight - 10, this.viewport.worldWidth, 10);
+    this.line(0, 0, 10, this.viewport.worldHeight);
+    this.line(this.viewport.worldWidth - 10, 0, 10, this.viewport.worldHeight);
+  };
+
+  circleCreator = table => {
     // Create a circle, make it interactive,
     // and add `cursor: pointer` css style
     const circle = new PIXI.Graphics();
@@ -63,7 +95,7 @@ class FloorPlan extends React.Component {
     // and add the circle to the stage
     circle.x = table.x;
     circle.y = table.y;
-    this.app.stage.addChild(circle);
+    this.viewport.addChild(circle);
 
     // Adds the table number text,
     // adds it as a child to the circle,
@@ -86,7 +118,7 @@ class FloorPlan extends React.Component {
       }
     };
 
-    const onDragStart = (event) => {
+    const onDragStart = event => {
       if (this.props.editing) {
         // If editing mode is on:
         // Make it transparent on drag, then store a
@@ -100,6 +132,8 @@ class FloorPlan extends React.Component {
         // toggle the table's active status
         toggleActive();
       }
+
+      this.viewport.pausePlugin('drag');
     };
 
     const onDragEnd = () => {
@@ -121,6 +155,8 @@ class FloorPlan extends React.Component {
           circle.alpha = 1;
         }
       }
+
+      this.viewport.resumePlugin('drag');
     };
 
     const onDragMove = () => {
@@ -165,25 +201,41 @@ class FloorPlan extends React.Component {
 
     animate();
 
+    this.app.stage.addChild(this.viewport);
+
+    this.viewport
+      .drag()
+      .bounce({ time: 500 })
+      .pinch()
+      .wheel()
+      .decelerate();
+
+    this.viewport.on('wheel', () => {
+      console.log(this.pixi.current);
+    });
+
+    this.border();
+
     // TODO: Fix all this shit more
     // TODO: and then comment thit shit!
-    const resize = () => {
-      let w;
-      let h;
-      if (window.innerWidth / window.innerHeight >= 1) {
-        w = window.innerHeight * 1 - 160;
-        h = window.innerHeight - 160;
-      } else {
-        w = window.innerWidth - 160;
-        h = window.innerWidth / 1 - 160;
-      }
-      this.app.view.style.width = `${w}px`;
-      this.app.view.style.height = `${h}px`;
-    };
 
     window.onresize = () => {
-      resize();
+      this.resize();
     };
+  };
+
+  resize = () => {
+    let w;
+    let h;
+    if (window.innerWidth / window.innerHeight >= 1) {
+      w = window.innerWidth - 300;
+      h = window.innerHeight - 160;
+    } else {
+      w = window.innerWidth - 300;
+      h = window.innerHeight - 160;
+    }
+    this.app.renderer.resize(w, h);
+    this.viewport.resize(w, h, 1000, 1000);
   };
 
   render() {
