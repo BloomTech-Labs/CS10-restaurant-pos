@@ -12,5 +12,5 @@ export const containerMixin = css`
 `;
 
 export const modalBlur = css`
-  filter: blur(2px);
+  filter: blur(1px);
 `;

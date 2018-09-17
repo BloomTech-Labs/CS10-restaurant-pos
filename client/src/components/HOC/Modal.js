@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { connect } from 'mongoose';
 
+import { closeModal } from '../../redux/actions/modal';
 import { flexCenterMixin } from '../../global-styles/mixins';
-// import {} from '../../global-styles/variables';
 
 const Container = styled.div`
   ${flexCenterMixin};
@@ -25,6 +26,7 @@ const Overlay = styled.div`
   width: 100%;
 `;
 
+// TODO: Make percents match max- width/height
 const Modal = styled.div`
   background: green;
   ${flexCenterMixin};
@@ -37,13 +39,18 @@ const Modal = styled.div`
   height: 66%;
 `;
 
-export default function ModalComponent(props) {
-  return (
-    <Container>
-      <Overlay onClick={props.closeModal} />
-      <Modal>{props.children}</Modal>
-    </Container>
-  );
+class ModalComponent extends React.Component {
+  render() {
+    return (
+      <Container>
+        <Overlay onClick={this.props.closeModal} />
+        <Modal>
+          <div onClick={this.props.closeModal}>x</div>
+          {this.props.children}
+        </Modal>
+      </Container>
+    );
+  }
 }
 
 ModalComponent.propTypes = {
@@ -53,5 +60,10 @@ ModalComponent.propTypes = {
 
 ModalComponent.defaultProps = {
   closeModal: () => {},
-  children: [],
+  children: []
 };
+
+export default connect(
+  null,
+  { closeModal }
+)(ModalComponent);
