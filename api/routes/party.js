@@ -27,7 +27,10 @@ router.post('/add', (req, res) => {
   // eslint-disable-next-line compat/compat
   Promise.all(promises)
     .catch(err => {
-      res.status(500).json(err);
+      res.status(500).json({
+        err,
+        msg: 'There was an error setting tables to active in the DB.'
+      });
     });
 
   // makes a new party with the provided tables array
@@ -43,10 +46,16 @@ router.post('/add', (req, res) => {
         .then((party) => {
           res.status(200).json(party);
         })
-        .catch((err) => res.status(500).json(err));
+        .catch((err) => res.status(500).json({
+          err,
+          msg: 'There was an error communicating with the DB.'
+        }));
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res.status(400).json({
+        err,
+        msg: 'There was an error saving the party to the DB.'
+      });
     });
 });
 
@@ -68,7 +77,10 @@ router.put('/update/:id', (req, res) => {
       res.status(200).json(updatedParty);
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res.status(400).json({
+        err,
+        msg: 'There was an error updating the party in the DB.'
+      });
     });
 });
 
@@ -120,7 +132,10 @@ router.get('/all', (req, res) => {
       res.status(200).json(parties);
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res.status(400).json({
+        err,
+        msg: 'There was an error retrieving the parties from the DB.'
+      });
     });
 });
 
@@ -141,7 +156,10 @@ router.get('/:id', (req, res) => {
       res.status(200).json(party);
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res.status(400).json({
+        err,
+        msg: 'There was an error retrieving the party from the DB.'
+      });
     });
 });
 
