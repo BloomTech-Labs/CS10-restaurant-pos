@@ -10,3 +10,7 @@ export const containerMixin = css`
   ${flexCenterMixin};
   flex-grow: 2;
 `;
+
+export const blurStyles = css`
+  filter: blur(2px);
+`;

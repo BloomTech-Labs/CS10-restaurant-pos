@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import { Container } from './styles';
@@ -22,7 +24,7 @@ class App extends Component {
     return (
       <Router>
         <Container>
-          <Navbar />
+          <Navbar modalIsOpen={this.props.modalIsOpen} />
           <Switch>
             <Route path="/" component={Landing} exact />
             <Route path="/login" component={RequireNotAuth(Login)} />
@@ -43,4 +45,16 @@ class App extends Component {
   }
 }
 
-export default App;
+App.propTypes = {
+  modalIsOpen: PropTypes.bool
+};
+
+App.defaultProps = {
+  modalIsOpen: false
+};
+
+const mapStateToProps = (state) => ({
+  modalIsOpen: state.modal.isOpen
+});
+
+export default connect(mapStateToProps)(App);
