@@ -175,6 +175,7 @@ Each element in the response array includes and item's:
 
 - name
 - description
+- category
 - price
 
 Response:
@@ -185,6 +186,7 @@ Response:
     "_id": "5b9564a0ed2e4d86346d6c83",
     "name": "Sweet Potato Roll",
     "description": "A yummy delight for all sane mortals",
+    "category": "food",
     "price": 4.99,
     "__v": 0
   },
@@ -192,6 +194,7 @@ Response:
     "_id": "5b983d7a26d91bbaec2fea19",
     "name": "Wow Burger Bro",
     "price": 59.99,
+    "category": "burgers",
     "description": "A delish nutrish",
     "__v": 0
   }
@@ -232,7 +235,7 @@ POST `/api/items/add`
 
 **Requires Authorization**
 
-Adds a new food item to the database.
+Adds a new food item to the database. Only managers and admins can do this.
 
 Request body should look like this:
 
@@ -240,7 +243,8 @@ Request body should look like this:
 {
   "name": "burger",
   "description": "It's a burger.",
-  "price": "11.99"
+  "price": "11.99",
+  "category": "sandwiches"
 }
 ```
 
@@ -250,10 +254,13 @@ Request body should look like this:
 
 `price`: Number, required
 
+`category`: String, optional
+
 Response includes the added item's:
 
 - name
 - price
+- category
 - description
 
 Response:
@@ -263,6 +270,7 @@ Response:
   "_id": "5b984988b345de51f0587d2e",
   "name": "burger",
   "price": 11.99,
+  "category": "sandwiches",
   "description": "It's a burger.",
   "__v": 0
 }
@@ -274,7 +282,7 @@ PUT `/api/items/update/:id`
 
 **Requires Authorization**
 
-Updates information for an existing food item.
+Updates information for an existing food item. Only managers and admins can do this.
 
 Request body should look like this:
 
@@ -292,12 +300,15 @@ Request body should look like this:
 
 `price`: Number
 
+`category`: String
+
 You only need one field!
 
 Response includes the updated item's:
 
 - name
 - price
+- category
 - description
 
 Response:khttps://zoom.us/j/762844869https://zoom.us/j/762844869
@@ -307,6 +318,7 @@ Response:khttps://zoom.us/j/762844869https://zoom.us/j/762844869
   "_id": "5b9850813689155850e79c75",
   "name": "burger",
   "price": 13.99,
+  "category": "sandwiches",
   "description": "New description",
   "__v": 0
 }
@@ -318,12 +330,13 @@ DELETE `/api/items/delete/:id`
 
 **Requires Authorization**
 
-Deletes an item from the database.
+Deletes an item from the database. Only managers and admins can do this.
 
 Response includes a success message and the deleted item's:
 
 - name
 - price
+- category
 - description
 
 Response:
@@ -334,6 +347,7 @@ Response:
     "_id": "5b9850813689155850e79c75",
     "name": "burger",
     "price": 13.99,
+    "category": "sandwiches",
     "description": "New description",
     "__v": 0
 },
@@ -696,7 +710,12 @@ PUT `api/tables/deactivate/:id`
 
 **Requires Authorization**
 
-Deactivates a table by it's ID and removes the table from any connected party. The response will contain the aforementioned party and the newly updated table. The ID will be pulled off of the request parameters. No request body is required for this route.
+Deactivates a table by it's ID and removes the table from any connected party.
+
+Response includes:
+
+- the associated party with an updated list of tables
+- the table that was just deactivated
 
 Response:
 
@@ -729,7 +748,7 @@ Delete `api/tables/delete/:id`
 
 **Requires Authorization**
 
-Deletes a table by it's ID. The ID will be pulled off of the request parameters. No request body is required for this route.
+Deletes a table by its ID. The ID will be pulled off of the request parameters. No request body is required for this route. Only managers and admins can do this.
 
 Response:
 
