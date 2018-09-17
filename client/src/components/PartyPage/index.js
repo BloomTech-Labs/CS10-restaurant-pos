@@ -14,7 +14,7 @@ import * as s from './styles';
 
 class PartyPage extends React.Component {
   state = {
-    order: [],
+    order: this.props.order,
     subTotal: 0,
     localRef: 0 // eslint-disable-line react/no-unused-state
   };
@@ -24,7 +24,7 @@ class PartyPage extends React.Component {
   }
 
   openModal = () => {
-    this.props.saveOrder();
+    this.props.saveOrder(this.state.order);
     this.props.openModal();
   };
 
@@ -49,12 +49,12 @@ class PartyPage extends React.Component {
       <React.Fragment>
         {this.props.modalIsOpen && (
           <Modal order={this.state.order}>
-            {this.state.order.map((item) => (
+            {this.props.order.map((item) => (
               <div>{item.name}</div>
             ))}
-            {/* <div>Checkout Modal</div>
+            <div>Checkout Modal</div>
             <button type="button">Split Check</button>
-            <button type="button">Checkout</button> */}
+            <button type="button">Checkout</button>
           </Modal>
         )}
         <s.Container modalOpen={this.props.modalIsOpen}>
@@ -87,6 +87,7 @@ PartyPage.propTypes = {
   getItems: PropTypes.func,
   modalIsOpen: PropTypes.bool,
   items: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
+  order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   tables: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   location: locationType
 };
@@ -97,6 +98,7 @@ PartyPage.defaultProps = {
   getItems: () => {},
   modalIsOpen: false,
   items: [],
+  order: [],
   tables: [{ number: 1 }, { number: 6 }, { number: 3 }],
   location: { country: 'US', state: 'CA' }
 };
@@ -104,6 +106,7 @@ PartyPage.defaultProps = {
 const mapStateToProps = (state) => ({
   modalIsOpen: state.modal.isOpen,
   items: state.items.itemList,
+  order: state.party.order,
   location: state.restaurant.restaurantInfo.location,
   store: state
 });
