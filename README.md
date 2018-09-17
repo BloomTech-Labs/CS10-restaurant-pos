@@ -47,18 +47,20 @@ When committing, `npm run lint-all` will automatically be run.
 ## Running
 
 `npm run client`: Runs only the front-end client.
+
 `npm run server`: Runs only the back-end server.
+
 `npm run dev`: Runs both the front and back ends.
 
 # Environment Variables
 
-HEROKU_URI: URL of website (front and back end are deployed here)
+`HEROKU_URI`: URL of website (front and back end are deployed here)
 
-MONGO_URI: URL for the database
+`MONGO_URI`: URL for the database
 
-NODE_MODULES_CACHE: false
+`NODE_MODULES_CACHE`: false
 
-SECRET_OR_KEY: secret key for bcryptjs
+`SECRET_OR_KEY`: secret key for bcryptjs
 
 # Backend Endpoints
 
