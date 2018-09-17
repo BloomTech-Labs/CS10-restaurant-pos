@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const TableSchema = new Schema({
+  number: {
+    type: Number,
+    required: true
+  },
   x: {
     type: Number,
   },
@@ -12,7 +16,7 @@ const TableSchema = new Schema({
   active: {
     type: Boolean,
     default: false,
-  },
+  }
 });
 
 module.exports = mongoose.model('Table', TableSchema);
