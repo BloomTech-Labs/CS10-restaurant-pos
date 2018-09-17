@@ -45,7 +45,10 @@ router.get('/all', (req, res) => [
       res.status(200).json(tables);
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res.status(500).json({
+        err,
+        msg: 'There was an error retrieving the tables from the DB.'
+      });
     })
 ]);
 
@@ -60,7 +63,10 @@ router.get('/:id', (req, res) => {
       res.status(200).json(table);
     })
     .catch((err) => {
-      res.status(200).json(err);
+      res.status(500).json({
+        err,
+        msg: 'There was an error retrieving the table from the DB.'
+      });
     });
 });
 
@@ -88,7 +94,10 @@ router.post('/update', (req, res) => {
       res.status(200).json(updatedTables);
     })
     .catch((err) => {
-      res.status(500).json(err);
+      res.status(500).json({
+        err,
+        msg: 'There was an error updating the table in the DB.'
+      });
     });
 });
 
@@ -97,12 +106,28 @@ router.post('/update', (req, res) => {
 // @access  Private
 router.put('/deactivate/:id', async (req, res) => {
   const { id } = req.params;
+  let updatedTable;
+  let party;
 
   // Deactivates a Table
-  const updatedTable = await Table.findOneAndUpdate({ _id: id }, { active: false });
+  try {
+    updatedTable = await Table.findOneAndUpdate({ _id: id }, { active: false });
+  } catch (err) {
+    res.status(500).json({
+      err,
+      msg: 'There was an error deactivating the table in the DB.'
+    });
+  }
 
-  // Locate all parties
-  const party = await Party.findOne({ tables: id });
+  // Locate the party associated with the table
+  try {
+    party = await Party.findOne({ tables: id });
+  } catch (err) {
+    res.status(500).json({
+      err,
+      msg: 'There was an error deactivating the table in the DB.'
+    });
+  }
 
   // Filter allParties to remove inactive Tables
   party.tables = party.tables.filter((table) => String(table) !== id);
@@ -123,30 +148,39 @@ router.put('/deactivate/:id', async (req, res) => {
           });
         })
         .catch((err) => {
-          res.status(400).json(err);
+          res.status(500).json({
+            err,
+            msg: 'There was an error communicating with the DB.'
+          });
         });
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res.status(500).json({
+        err,
+        msg: 'There was an error deactivating the table in the DB.'
+      });
     });
 });
 
 // @route   DELETE api/tables/delete/:id
 // @desc    Delete a table by its ID
 // @access  Private
-router.delete('/delete/:id', (req, res) => {
-  const { id } = req.params;
+// router.delete('/delete/:id', (req, res) => {
+//   const { id } = req.params;
 
-  // Verify Roles
-  verifyRole(req.user, res);
+//   // Verify Roles
+//   verifyRole(req.user, res);
 
-  Table.findOneAndRemove({ _id: id })
-    .then((removedTable) => {
-      res.status(200).json({ removedTable, msg: 'Table deleted from the database.' });
-    })
-    .catch((err) => {
-      res.status(400).catch(err);
-    });
-});
+//   Table.findOneAndRemove({ _id: id })
+//     .then((removedTable) => {
+//       res.status(200).json({ removedTable, msg: 'Table deleted from the database.' });
+//     })
+//     .catch((err) => {
+//       res.status(400).catch({
+//         err,
+//         msg: 'There was an error removing the table from the DB.'
+//       });
+//     });
+// });
 
 module.exports = router;
