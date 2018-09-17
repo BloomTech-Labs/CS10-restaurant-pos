@@ -4,6 +4,8 @@ const router = express.Router();
 
 // Require Order Model
 const Order = require('../models/Order');
+// verifies the fields
+const verifyFields = require('../validation/verifyFields');
 
 // @route   POST api/orders/test
 // @desc    Test the orders routes
@@ -18,6 +20,9 @@ router.get('/test', (req, res) => {
 router.post('/add', (req, res) => {
   const orderData = { ...req.body };
 
+  // Verify that all required fields are provided, sends error response if not
+  verifyFields(['party', 'server', 'food'], req.body, res);
+
   // Create the new order
   const newOrder = new Order(orderData);
 
@@ -28,7 +33,9 @@ router.post('/add', (req, res) => {
       res.status(200).json(order);
     })
     .catch((err) => {
-      res.status(400).json({ message: 'Something went wrong!', err });
+      res
+        .status(500)
+        .json({ err, msg: 'Error adding the order to the database.' });
     });
 });
 
@@ -43,7 +50,9 @@ router.get('/all', (req, res) => {
       res.status(200).json(order);
     })
     .catch((err) => {
-      res.status(400).json({ message: 'Something went wrong!', err });
+      res
+        .status(500)
+        .json({ err, msg: 'Error retrieving the orders the database.' });
     });
 });
 
@@ -56,7 +65,7 @@ router.get('/:id', (req, res) => {
   Order.findOne({ _id: id })
     .populate('server', ['name'])
     .populate('food', ['name', 'price'])
-    .then(order => {
+    .then((order) => {
       if (!order) {
         res
           .status(404)
