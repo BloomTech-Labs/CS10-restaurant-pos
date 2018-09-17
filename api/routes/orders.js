@@ -18,13 +18,11 @@ router.get('/test', (req, res) => {
 // @desc    Create a new order
 // @access  Private
 router.post('/add', (req, res) => {
-  const orderData = { ...req.body };
-
   // Verify that all required fields are provided, sends error response if not
   verifyFields(['party', 'server', 'food'], req.body, res);
 
   // Create the new order
-  const newOrder = new Order(orderData);
+  const newOrder = new Order(req.body);
 
   // Assign Refs
   newOrder
