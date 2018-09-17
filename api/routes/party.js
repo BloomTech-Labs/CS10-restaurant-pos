@@ -5,6 +5,8 @@ const router = express.Router();
 // Import Party Model
 const Party = require('../models/Party');
 const Table = require('../models/Table');
+// Auth Checking
+const verifyFields = require('../validation/verifyFields');
 
 // @route   POST api/party/add
 // @desc    Adds a new party to the database
@@ -12,6 +14,9 @@ const Table = require('../models/Table');
 router.post('/add', (req, res) => {
   // tables SHOULD BE AN ARRAY of Table ObjectIds!
   const { tables, server } = req.body;
+
+  // Verify Fields
+  verifyFields(['tables', 'server'], req.body, res);
 
   // Map over tables from req.body, update each and return the promise
   const promises = tables.map(table => (
@@ -73,6 +78,9 @@ router.put('/update/:id', (req, res) => {
 router.delete('/delete/:id', (req, res) => {
   const { id } = req.params;
 
+  // Verify Fields
+  verifyFields(['id'], req.params, res);
+
   Party.findOneAndRemove({ _id: id })
     .then((removedParty) => {
       res.status(200).json({ removedParty, msg: 'Party has been removed.' });
@@ -103,6 +111,9 @@ router.get('/all', (req, res) => {
 // @access  Private
 router.get('/:id', (req, res) => {
   const { id } = req.params;
+
+  // Verify Fields
+  verifyFields(['id'], req.params, res);
 
   Party.findOne({ _id: id })
     .populate('server', ['name'])
