@@ -7,6 +7,7 @@ import ItemSelector from '../ItemSelector';
 import OrderScratchPad from '../OrderScratchPad';
 import Modal from '../HOC/Modal';
 import { getItems } from '../../redux/actions/items';
+import { saveOrder } from '../../redux/actions/party';
 import { openModal, closeModal } from '../../redux/actions/modal';
 
 import * as s from './styles';
@@ -21,6 +22,11 @@ class PartyPage extends React.Component {
   componentDidMount() {
     this.props.getItems();
   }
+
+  openModal = () => {
+    this.props.saveOrder();
+    this.props.openModal();
+  };
 
   addItemToOrder = (item) => {
     this.setState((prev) => ({
@@ -38,11 +44,17 @@ class PartyPage extends React.Component {
   };
 
   render() {
+    console.log(this.state.order);
     return (
       <React.Fragment>
         {this.props.modalIsOpen && (
-          <Modal>
-            <div>Checkout Modal</div>
+          <Modal order={this.state.order}>
+            {this.state.order.map((item) => (
+              <div>{item.name}</div>
+            ))}
+            {/* <div>Checkout Modal</div>
+            <button type="button">Split Check</button>
+            <button type="button">Checkout</button> */}
           </Modal>
         )}
         <s.Container modalOpen={this.props.modalIsOpen}>
@@ -55,7 +67,7 @@ class PartyPage extends React.Component {
               subTotal={this.state.subTotal}
               removeItemFromOrder={this.removeItemFromOrder}
               location={this.props.location}
-              openModal={this.props.openModal}
+              openModal={this.openModal}
             />
           </s.Food>
         </s.Container>
@@ -71,6 +83,7 @@ const locationType = PropTypes.shape({
 
 PartyPage.propTypes = {
   openModal: PropTypes.func,
+  saveOrder: PropTypes.func,
   getItems: PropTypes.func,
   modalIsOpen: PropTypes.bool,
   items: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
@@ -80,6 +93,7 @@ PartyPage.propTypes = {
 
 PartyPage.defaultProps = {
   openModal: () => {},
+  saveOrder: () => {},
   getItems: () => {},
   modalIsOpen: false,
   items: [],
@@ -96,5 +110,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { openModal, closeModal, getItems }
+  { openModal, closeModal, getItems, saveOrder }
 )(PartyPage);

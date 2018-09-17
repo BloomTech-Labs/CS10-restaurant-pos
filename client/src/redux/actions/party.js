@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import serverURI from '../../config/URI';
 
+export const SAVE_ORDER = 'SAVE_ORDER';
 export const LOADING_PARTIES = 'LOADING_PARTIES';
 export const LOADING_PARTIES_SUCCESS = 'LOADING_PARTIES_SUCCESS';
 export const LOADING_PARTIES_ERROR = 'LOADING_PARTIES_ERROR';
@@ -20,6 +21,12 @@ export const DELETING_PARTY_ERROR = 'DELETING_PARTY_ERROR';
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common.Authorization = localStorage.getItem('jwt');
+
+// Saves the Order on the ScratchPad
+export const saveOrder = (order) => ({
+  type: SAVE_ORDER,
+  payload: order
+});
 
 // Gets all Parties: server (name), food (name, price), and tables
 export const getParties = () => (dispatch) => {
