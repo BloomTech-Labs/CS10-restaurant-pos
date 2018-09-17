@@ -15,13 +15,13 @@ router.post('/add', (req, res) => {
   // Verify Role
   verifyRole(req.user, res);
 
-  const { x, y } = req.body;
+  const { x, y, number } = req.body;
 
   // this will send back an error response if the requirements are not met
   // otherwise it will continue running the rest of the code
-  verifyFields(['x', 'y'], req.body, res);
+  verifyFields(['x', 'y', 'number'], req.body, res);
 
-  const newTable = new Table({ x, y });
+  const newTable = new Table({ x, y, number });
 
   newTable
     .save()
@@ -31,7 +31,7 @@ router.post('/add', (req, res) => {
     .catch((err) => {
       res.status(500).json({
         err,
-        msg: 'There was an error saving the table to the database.'
+        msg: 'There was an error saving the table to the database.',
       });
     });
 });
@@ -47,9 +47,9 @@ router.get('/all', (req, res) => [
     .catch((err) => {
       res.status(500).json({
         err,
-        msg: 'There was an error retrieving the tables from the DB.'
+        msg: 'There was an error retrieving the tables from the DB.',
       });
-    })
+    }),
 ]);
 
 // @route   GET api/tables/:id
@@ -65,7 +65,7 @@ router.get('/:id', (req, res) => {
     .catch((err) => {
       res.status(500).json({
         err,
-        msg: 'There was an error retrieving the table from the DB.'
+        msg: 'There was an error retrieving the table from the DB.',
       });
     });
 });
@@ -115,7 +115,7 @@ router.put('/deactivate/:id', async (req, res) => {
   } catch (err) {
     res.status(500).json({
       err,
-      msg: 'There was an error deactivating the table in the DB.'
+      msg: 'There was an error deactivating the table in the DB.',
     });
   }
 
@@ -125,7 +125,7 @@ router.put('/deactivate/:id', async (req, res) => {
   } catch (err) {
     res.status(500).json({
       err,
-      msg: 'There was an error deactivating the table in the DB.'
+      msg: 'There was an error deactivating the table in the DB.',
     });
   }
 
@@ -144,20 +144,20 @@ router.put('/deactivate/:id', async (req, res) => {
           res.status(200).json({
             populatedParty,
             msg: 'Table has been deactivated and removed from the party.',
-            updatedTable
+            updatedTable,
           });
         })
         .catch((err) => {
           res.status(500).json({
             err,
-            msg: 'There was an error communicating with the DB.'
+            msg: 'There was an error communicating with the DB.',
           });
         });
     })
     .catch((err) => {
       res.status(500).json({
         err,
-        msg: 'There was an error deactivating the table in the DB.'
+        msg: 'There was an error deactivating the table in the DB.',
       });
     });
 });
