@@ -6,15 +6,14 @@ const router = express.Router();
 const Table = require('../models/Table');
 const Party = require('../models/Party');
 const verifyFields = require('../validation/verifyFields');
+const verifyRole = require('../validation/verifyRole');
 
 // @route   POST api/tables/add
 // @desc    Adds a new table to the database
 // @access  Private
 router.post('/add', (req, res) => {
-  // only managers or admins are allowed to add tables!
-  if (!req.user.role.admin && !req.user.role.manager) {
-    return res.status(401).json({ msg: 'You are not authorized to do this.' });
-  }
+  // Verify Role
+  verifyRole(req.user, res);
 
   const { x, y } = req.body;
 
@@ -32,7 +31,7 @@ router.post('/add', (req, res) => {
     .catch((err) => {
       res.status(500).json({
         err,
-        msg: 'There was an error saving the table to the database.',
+        msg: 'There was an error saving the table to the database.'
       });
     });
 });
@@ -40,15 +39,15 @@ router.post('/add', (req, res) => {
 // @route   GET api/tables/all
 // @desc    Get all tables
 // @access  Private
-router.get('/all', (req, res) => [
+router.get('/all', (req, res) => {
   Table.find({})
     .then((tables) => {
       res.status(200).json(tables);
     })
     .catch((err) => {
       res.status(400).json(err);
-    }),
-]);
+    });
+});
 
 // @route   GET api/tables/:id
 // @desc    Get a table by the ID
@@ -69,12 +68,8 @@ router.get('/:id', (req, res) => {
 // @desc    Update all tables in the database
 // @access  Private
 router.post('/update', (req, res) => {
-  const { user } = req;
-
-  // check if user is authorized
-  if (!user.role.admin && !user.role.manager) {
-    return res.status(401).json({ msg: 'You are not authorized to do this.' });
-  }
+  // Verify Roles
+  verifyRole(req.user, res);
 
   // checks if the required fields exist on the request, sends an error back if not
   verifyFields(['tables'], req.body, res);
@@ -104,10 +99,7 @@ router.put('/deactivate/:id', async (req, res) => {
   const { id } = req.params;
 
   // Deactivates a Table
-  const updatedTable = await Table.findOneAndUpdate(
-    { _id: id },
-    { active: false }
-  );
+  const updatedTable = await Table.findOneAndUpdate({ _id: id }, { active: false });
 
   // Locate all parties
   const party = await Party.findOne({ tables: id });
@@ -127,7 +119,7 @@ router.put('/deactivate/:id', async (req, res) => {
           res.status(200).json({
             populatedParty,
             msg: 'Table has been deactivated and removed from the party.',
-            updatedTable,
+            updatedTable
           });
         })
         .catch((err) => {
@@ -145,11 +137,12 @@ router.put('/deactivate/:id', async (req, res) => {
 router.delete('/delete/:id', (req, res) => {
   const { id } = req.params;
 
+  // Verify Roles
+  verifyRole(req.user, res);
+
   Table.findOneAndRemove({ _id: id })
     .then((removedTable) => {
-      res
-        .status(200)
-        .json({ removedTable, msg: 'Table deleted from the database.' });
+      res.status(200).json({ removedTable, msg: 'Table deleted from the database.' });
     })
     .catch((err) => {
       res.status(400).catch(err);

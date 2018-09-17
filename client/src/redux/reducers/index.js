@@ -5,6 +5,7 @@ import ErrorReducer from './errors';
 import TablesReducer from './tables';
 import PartyReducer from './party';
 import ItemsReducer from './items';
+import RestaurantReducer from './restaurant';
 
 const rootReducer = combineReducers({
   auth: AuthReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   tables: TablesReducer,
   party: PartyReducer,
   items: ItemsReducer,
+  restaurant: RestaurantReducer,
 });
 
 export default rootReducer;
