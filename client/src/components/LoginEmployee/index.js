@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -7,7 +6,7 @@ import { loginEmployee } from '../../redux/actions/auth';
 
 import * as s from './styles';
 
-class Login extends React.Component {
+class LoginEmployee extends React.Component {
   state = { pin: '', pass: '' };
 
   handleChange = (event) => {
@@ -22,7 +21,7 @@ class Login extends React.Component {
   render() {
     return (
       <s.Container>
-        <Link to="/register">Don&apos;t have an account? Register here</Link>
+        <h1>Do not use me yet! I login employees when Admins are already logged in.</h1>
         <s.Form onSubmit={this.handleSubmit}>
           <input
             placeholder="pin"
@@ -51,12 +50,12 @@ class Login extends React.Component {
   }
 }
 
-Login.propTypes = {
+LoginEmployee.propTypes = {
   loginEmployee: PropTypes.func,
   history: PropTypes.objectOf(PropTypes.any),
 };
 
-Login.defaultProps = {
+LoginEmployee.defaultProps = {
   loginEmployee: () => {},
   history: {}
 };
@@ -64,5 +63,5 @@ Login.defaultProps = {
 
 export default connect(
   null,
-  { loginEmployee } // TODO: Change this to just `login` once routes change
-)(Login);
+  { loginEmployee }
+)(LoginEmployee);

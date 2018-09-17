@@ -39,7 +39,7 @@ router.post('/add', (req, res) => {
 // @route   GET api/tables/all
 // @desc    Get all tables
 // @access  Private
-router.get('/all', (req, res) => [
+router.get('/all', (req, res) => {
   Table.find({})
     .then((tables) => {
       res.status(200).json(tables);
@@ -49,8 +49,8 @@ router.get('/all', (req, res) => [
         err,
         msg: 'There was an error retrieving the tables from the DB.',
       });
-    }),
-]);
+    });
+});
 
 // @route   GET api/tables/:id
 // @desc    Get a table by the ID
