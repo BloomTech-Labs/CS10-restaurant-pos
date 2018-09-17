@@ -5,9 +5,9 @@ const { ObjectId } = Schema.Types;
 
 // Create Schema
 const Order = new Schema({
-  table: {
+  party: {
     type: ObjectId,
-    ref: 'Table',
+    ref: 'Party',
     required: true,
   },
   server: {
