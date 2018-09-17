@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { connect } from 'mongoose';
+import { connect } from 'react-redux';
 
 import { closeModal } from '../../redux/actions/modal';
 import { flexCenterMixin } from '../../global-styles/mixins';

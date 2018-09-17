@@ -41,14 +41,11 @@ class PartyPage extends React.Component {
     return (
       <React.Fragment>
         {this.props.modalIsOpen && (
-          <Modal closeModal={this.props.closeModal}>
+          <Modal>
             <div>Checkout Modal</div>
           </Modal>
         )}
         <s.Container modalOpen={this.props.modalIsOpen}>
-          <button type="button" onClick={this.props.openModal}>
-            Click for the Modal
-          </button>
           <TablesPageTitle tables={this.props.tables} />
           <s.Food>
             {/* // TODO: figure out how to name things */}
@@ -58,6 +55,7 @@ class PartyPage extends React.Component {
               subTotal={this.state.subTotal}
               removeItemFromOrder={this.removeItemFromOrder}
               location={this.props.location}
+              openModal={this.props.openModal}
             />
           </s.Food>
         </s.Container>
@@ -73,7 +71,6 @@ const locationType = PropTypes.shape({
 
 PartyPage.propTypes = {
   openModal: PropTypes.func,
-  closeModal: PropTypes.func,
   getItems: PropTypes.func,
   modalIsOpen: PropTypes.bool,
   items: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
@@ -83,7 +80,6 @@ PartyPage.propTypes = {
 
 PartyPage.defaultProps = {
   openModal: () => {},
-  closeModal: () => {},
   getItems: () => {},
   modalIsOpen: false,
   items: [],
