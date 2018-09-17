@@ -11,6 +11,6 @@ export const containerMixin = css`
   flex-grow: 2;
 `;
 
-export const blurStyles = css`
+export const modalBlur = css`
   filter: blur(2px);
 `;

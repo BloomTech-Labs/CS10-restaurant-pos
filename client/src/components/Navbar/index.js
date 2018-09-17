@@ -4,12 +4,6 @@ import PropTypes from 'prop-types';
 import * as s from './styles';
 
 class Navbar extends React.Component {
-  componentDidUpdate(prev) {
-    if (prev.modalIsOpen !== this.props.modalIsOpen) {
-      this.forceUpdate();
-    }
-  }
-
   render() {
     return (
       <s.Navbar modalIsOpen={this.props.modalIsOpen}>
