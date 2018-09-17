@@ -15,8 +15,8 @@ class FloorPlan extends React.Component {
       width: window.innerWidth,
       height: window.innerHeight,
       transparent: false,
-      // antialias: true,
-      // resolution: window.devicePixelRatio
+      antialias: true,
+      resolution: window.devicePixelRatio
     });
     this.viewport = new Viewport({
       screenHeight: window.innerWidth,
@@ -47,12 +47,6 @@ class FloorPlan extends React.Component {
         this.circleCreator(table);
       });
     }
-
-    // if (this.props.editing) {
-    //   this.viewport.pausePlugin('drag');
-    // } else {
-    //   this.viewport.resumePlugin('drag');
-    // }
   }
 
   clear = () => {
@@ -225,15 +219,10 @@ class FloorPlan extends React.Component {
   };
 
   resize = () => {
-    let w;
-    let h;
-    if (window.innerWidth / window.innerHeight >= 1) {
-      w = window.innerWidth - 300;
-      h = window.innerHeight - 160;
-    } else {
-      w = window.innerWidth - 300;
-      h = window.innerHeight - 160;
-    }
+    // TODO: subtracting 300px to allow space for the sidebar, fix later
+    const w = window.innerWidth - 300;
+    // TODO: subtracting 160 px to allow for top bar and padding, fix later
+    const h = window.innerHeight - 160;
     this.app.renderer.resize(w, h);
     this.viewport.resize(w, h, 1000, 1000);
   };
