@@ -31,7 +31,8 @@ router.post('/add', (req, res) => {
     name,
     price,
     description,
-    category
+    category,
+    restaurant: req.user.restaurant
   });
 
   // save the new item to the database
@@ -49,7 +50,7 @@ router.post('/add', (req, res) => {
 // @desc    Retrieves all the food items in the DB
 // @access  Private
 router.get('/all', (req, res) => {
-  Item.find({})
+  Item.find({ restaurant: req.user.restaurant })
     .then((items) => {
       res.status(200).json(items);
     })
@@ -64,7 +65,7 @@ router.get('/all', (req, res) => {
 router.get('/:id', (req, res) => {
   const { id } = req.params;
 
-  Item.findOne({ _id: id })
+  Item.findOne({ _id: id, restaurant: req.user.restaurant })
     .then((item) => {
       res.status(200).json(item);
     })
@@ -102,7 +103,7 @@ router.delete('/delete/:id', (req, res) => {
   // Verify Roles
   verifyRole(req.user, res);
 
-  Item.findOneAndRemove({ _id: id })
+  Item.findOneAndRemove({ _id: id, restaurant: req.user.restaurant })
     .then((removedItem) => {
       res.status(200).json({ removedItem, msg: 'Item deleted from the database.' });
     })
