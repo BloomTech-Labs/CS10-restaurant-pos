@@ -4,6 +4,10 @@ const { Schema } = mongoose;
 const { ObjectId } = Schema.Types;
 
 const TableSchema = new Schema({
+  number: {
+    type: Number,
+    required: true
+  },
   x: {
     type: Number,
   },

@@ -2,12 +2,15 @@ import axios from 'axios';
 
 import serverURI from '../../config/URI';
 
+export const SAVE_ORDER = 'SAVE_ORDER';
+export const SAVE_SPLIT_ORDER = 'SAVE_SPLIT_ORDER';
 export const LOADING_PARTIES = 'LOADING_PARTIES';
 export const LOADING_PARTIES_SUCCESS = 'LOADING_PARTIES_SUCCESS';
 export const LOADING_PARTIES_ERROR = 'LOADING_PARTIES_ERROR';
 export const LOADING_PARTY = 'LOADING_PARTY';
 export const LOADING_PARTY_SUCCESS = 'LOADING_PARTY_SUCCESS';
 export const LOADING_PARTY_ERROR = 'LOADING_PARTY_ERROR';
+export const CREATE_PARTY = 'CREATE_PARTY';
 export const ADDING_PARTY = 'ADDING_PARTY';
 export const ADDING_PARTY_SUCCESS = 'ADDING_PARTY_SUCCESS';
 export const ADDING_PARTY_ERROR = 'ADDING_PARTY_ERROR';
@@ -20,6 +23,27 @@ export const DELETING_PARTY_ERROR = 'DELETING_PARTY_ERROR';
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common.Authorization = localStorage.getItem('jwt');
+
+// Saves the Order on the ScratchPad
+export const createParty = (tables, push) => {
+  push('/party');
+  return {
+    type: CREATE_PARTY,
+    payload: tables
+  };
+};
+
+// Saves the Order on the ScratchPad
+export const saveOrder = (order) => ({
+  type: SAVE_ORDER,
+  payload: order
+});
+
+// Saves the Split Order on the Modal
+export const saveSplitOrder = (splitOrder) => ({
+  type: SAVE_SPLIT_ORDER,
+  payload: splitOrder
+});
 
 // Gets all Parties: server (name), food (name, price), and tables
 export const getParties = () => (dispatch) => {

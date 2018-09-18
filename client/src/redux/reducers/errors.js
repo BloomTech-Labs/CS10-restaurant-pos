@@ -27,6 +27,12 @@ import {
   DELETING_PARTY_SUCCESS
 } from '../actions/party';
 import { LOADING_ITEMS_ERROR, LOADING_ITEMS_SUCCESS } from '../actions/items';
+import {
+  LOADING_RESTAURANT_ERROR,
+  LOADING_RESTAURANT_SUCCESS,
+  ADDING_RESTAURANT_ERROR,
+  ADDING_RESTAURANT_SUCCESS
+} from '../actions/restaurant';
 
 const initialState = {
   loginError: false,
@@ -40,7 +46,9 @@ const initialState = {
   addingPartyError: false,
   updatingPartyError: false,
   deletingPartyError: false,
-  loadingItemsError: false
+  loadingItemsError: false,
+  loadingRestaurantError: false,
+  addingRestaurantError: false
 };
 
 const ErrorReducer = (errors = initialState, action) => {
@@ -96,6 +104,17 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, loadingItemsError: action.payload };
     case LOADING_ITEMS_SUCCESS:
       return { ...errors, loadingItemsError: false };
+
+    case LOADING_RESTAURANT_ERROR:
+      return { ...errors, loadingRestaurantError: action.payload };
+    case LOADING_RESTAURANT_SUCCESS:
+      return { ...errors, loadingRestaurantError: false };
+
+    case ADDING_RESTAURANT_ERROR:
+      return { ...errors, addingRestaurantError: action.payload };
+    case ADDING_RESTAURANT_SUCCESS:
+      return { ...errors, addingRestaurantError: false };
+
     default:
       return errors;
   }
