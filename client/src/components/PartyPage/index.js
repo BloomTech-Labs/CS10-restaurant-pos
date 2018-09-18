@@ -86,7 +86,7 @@ class PartyPage extends React.Component {
           </Modal>
         )}
         {this.props.splitModalIsOpen && (
-          <Modal closeSplitModal={this.closeSplitModal}>
+          <Modal closeSplitModal={this.props.closeSplitModal}>
             {this.props.splitOrder.map((item) => (
               <div>{item.name}</div>
             ))}
@@ -131,6 +131,7 @@ PartyPage.propTypes = {
   getItems: PropTypes.func,
   modalIsOpen: PropTypes.bool,
   splitModalIsOpen: PropTypes.bool,
+  closeSplitModal: PropTypes.func,
   items: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   splitOrder: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
@@ -150,6 +151,7 @@ PartyPage.defaultProps = {
   saveSplitOrder: () => {},
   getItems: () => {},
   history: { push: () => {} },
+  closeSplitModal: () => {},
   modalIsOpen: false,
   splitModalIsOpen: false,
   items: [],

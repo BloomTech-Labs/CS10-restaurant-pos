@@ -40,12 +40,14 @@ const Modal = styled.div`
 `;
 
 class ModalComponent extends React.Component {
+  close = () => this.props.closeSplitModal || this.props.closeModal;
+
   render() {
     return (
       <Container>
-        <Overlay onClick={this.props.closeSplitModal || this.props.closeModal} />
+        <Overlay onClick={this.close()} />
         <Modal>
-          <div onClick={this.props.closeSplitModal || this.props.closeModal}>x</div>
+          <div onClick={this.close()}>x</div>
           {this.props.children}
         </Modal>
       </Container>
@@ -55,13 +57,13 @@ class ModalComponent extends React.Component {
 
 ModalComponent.propTypes = {
   closeModal: PropTypes.func,
-  closeSplitModal: PropTypes.func,
+  closeSplitModal: PropTypes.oneOf(undefined, PropTypes.func),
   children: PropTypes.arrayOf(PropTypes.node)
 };
 
 ModalComponent.defaultProps = {
   closeModal: () => {},
-  closeSplitModal: () => {},
+  closeSplitModal: undefined,
   children: []
 };
 
