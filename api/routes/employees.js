@@ -16,6 +16,43 @@ const router = express.Router();
 // @access  Public
 router.get('/test', (req, res) => res.json({ msg: 'Employee Routes Work' }));
 
+// @route   POST api/employees/admin/register
+// @desc    Adds an administrator to the DB
+// @access  Public
+router.post('/admin/register', (req, res) => {
+  const { name, pass } = req.body;
+
+  // Validate Fields
+  verifyFields(['name', 'pass'], req.body, res);
+
+  // Create an initial PIN
+  const pin = '0000';
+  const role = {
+    admin: true
+  };
+
+  // Create a new administrator
+  const newAdministrator = new Employee({
+    name,
+    password: pass,
+    pin,
+    role
+  });
+
+  // Save the new administrator
+  newAdministrator
+    .save()
+    .then((adminInfo) => {
+      res.status(200).json(adminInfo);
+    })
+    .catch((err) => {
+      res.status(500).json({
+        err,
+        msg: 'Error saving the administrator to the DB.'
+      });
+    });
+});
+
 // @route   POST api/employees/add
 // @desc    Adds a new user to the DB
 // @access  Public
