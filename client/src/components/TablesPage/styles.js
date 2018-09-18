@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { flexCenterMixin, containerMixin } from '../../global-styles/mixins';
+import { flexCenterMixin } from '../../global-styles/mixins';
 
 export const Container = styled.div`
   display: flex;
@@ -20,10 +20,4 @@ export const Menu = styled.div`
   border-right: 2px solid grey;
   width: 300px;
   padding: 10px;
-`;
-
-export const Form = styled.form`
-  ${containerMixin}
-  flex-direction: column;
-  width: 100%;
 `;

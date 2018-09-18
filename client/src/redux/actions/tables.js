@@ -15,6 +15,8 @@ export const SAVING_TABLES_ERROR = 'SAVING_TABLES_ERROR';
 export const DEACTIVATING_TABLE = 'DEACTIVATING_TABLE';
 export const DEACTIVATING_TABLE_SUCCESS = 'DEACTIVATING_TABLE_SUCCESS';
 export const DEACTIVATING_TABLE_ERROR = 'DEACTIVATING_TABLE_ERROR';
+export const TOGGLE_TABLE = 'TOGGLE_TABLE';
+export const TOGGLE_EDIT = 'TOGGLE_EDIT';
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common.Authorization = localStorage.getItem('jwt');
@@ -71,3 +73,12 @@ export const deactivateTable = (id) => (dispatch) => {
       dispatch({ type: DEACTIVATING_TABLE_ERROR, payload: err });
     });
 };
+
+export const toggleTable = (table) => ({
+  type: TOGGLE_TABLE,
+  payload: table
+});
+
+export const toggleEdit = () => ({
+  type: TOGGLE_EDIT,
+});

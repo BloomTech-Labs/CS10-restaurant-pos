@@ -66,6 +66,14 @@ class FloorPlan extends React.Component {
     });
   }
 
+  zoomIn = () => {
+    this.viewport.zoomPercent(0.15, true);
+  }
+
+  zoomOut = () => {
+    this.viewport.zoomPercent(-0.15, true);
+  }
+
   clear = () => {
     this.viewport.removeChildren();
     this.tables = [];
@@ -251,8 +259,11 @@ class FloorPlan extends React.Component {
             <span>Lock</span>
           </label>
         </div>
+        <div style={{ position: 'fixed', right: '40px' }}> {/* // ! make these not inline */}
+          <button type="button" onClick={this.zoomIn}>+</button>
+          <button type="button" onClick={this.zoomOut}>-</button>
+        </div>
       </React.Fragment>
-    
     );
   }
 }

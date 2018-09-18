@@ -29,14 +29,14 @@ class App extends Component {
         <s.Container>
           <Navbar modalIsOpen={this.props.modalIsOpen} />
           <s.Main>
-            <SidebarWithRouter modalIsOpen={this.props.modalIsOpen} />
+            <SidebarWithRouter modalIsOpen={this.props.modalIsOpen} role={this.props.role} />
             <Switch>
               <Route path="/" component={Landing} exact />
               <Route path="/login" component={RequireNotAuth(Login)} />
               <Route path="/register" component={RequireNotAuth(Register)} />
               <Route path="/login-employee" component={RequireAuth(LoginEmployee)} />
               <Route path="/new-employee" component={RequireAuth(CreateEmployee)} />
-              <Route path="/tables" component={RequireAuth(TablesPage)} />
+              <Route path="/tables" component={RequireNotAuth(TablesPage)} />
               <Route path="/servers" component={RequireAuth(Servers)} />
               <Route path="/party" component={RequireAuth(PartyPage)} />
               <Route path="/settings" component={RequireAuth(Settings)} />
@@ -52,15 +52,21 @@ class App extends Component {
 }
 
 App.propTypes = {
-  modalIsOpen: PropTypes.bool
+  modalIsOpen: PropTypes.bool,
+  role: PropTypes.shape({
+    admin: PropTypes.bool,
+    manager: PropTypes.bool
+  }),
 };
 
 App.defaultProps = {
-  modalIsOpen: false
+  modalIsOpen: false,
+  role: { admin: false, manager: false },
 };
 
 const mapStateToProps = (state) => ({
-  modalIsOpen: state.modal.isOpen
+  modalIsOpen: state.modal.isOpen,
+  role: state.auth.role
 });
 
 export default connect(mapStateToProps)(App);

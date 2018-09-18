@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import SetType from 'es6-set-proptypes';
 
-import { getTables, addTable, moveTable } from '../../redux/actions/tables';
+import { getTables, addTable, moveTable, toggleTable, toggleEdit } from '../../redux/actions/tables';
 import { createParty } from '../../redux/actions/party';
 import FloorPlan from '../FloorPlan';
 
@@ -12,36 +13,19 @@ import * as s from './styles';
 class TablesPage extends Component {
   state = {
     authorized: this.props.user.admin || this.props.user.manager,
-    editing: false,
-    selected: new Set()
   };
 
   componentDidMount() {
     this.props.getTables();
   }
 
-  toggleEdit = () => {
-    this.setState((prev) => ({
-      editing: !prev.editing
-    }));
-  };
-
   toggleTable = (table) => {
-    this.setState(
-      (prev) => {
-        if (prev.selected.has(table)) {
-          prev.selected.delete(table);
-          return { selected: prev.selected };
-        }
-        return { selected: prev.selected.add(table) };
-      },
-      () => console.log(this.state.selected)
-    );
+    this.props.toggleTable(table);
   };
 
   createParty = () => {
     // TODO: this.props.saveParty or some shit
-    const tablesArray = this.props.tables.filter(table => this.state.selected.has(table.number));
+    const tablesArray = this.props.tables.filter(table => this.props.selected.has(table.number));
     this.props.createParty(tablesArray, this.props.history.push);
   };
 
@@ -57,27 +41,17 @@ class TablesPage extends Component {
           <button type="button" onClick={this.props.addTable}>
             Add Table
           </button>
-          <s.Form onSubmit={this.saveParty}>
-            <input type="text" placeholder="1080" />
-            <input type="text" placeholder="1920" />
-            {/* // TODO: This save button needs to submit the data in the
-                // TODO: redux store of new table locations to the database
-                // TODO: and possibly any restaurant dimension changes */}
-            <button type="submit">Save</button>
-            {/* // TODO: --------------------------------------------- */}
-          </s.Form>
           {this.state.authorized && (
-            <button type="button" onClick={this.toggleEdit}>
+            <button type="button" onClick={this.props.toggleEdit}>
               Edit Floor Plan
             </button>
           )}
         </s.Menu>
         <s.Editor>
-          {this.state.editing && 'EDITING'}
           <FloorPlan
-            editing={this.state.editing && this.state.authorized}
+            editing={this.props.editing && this.state.authorized}
             tables={this.props.tables}
-            selected={this.state.selected}
+            selected={this.props.selected}
             moveTable={this.props.moveTable}
             toggleTable={this.toggleTable}
           />
@@ -88,6 +62,8 @@ class TablesPage extends Component {
 }
 
 TablesPage.propTypes = {
+  selected: SetType,
+  editing: PropTypes.bool,
   history: PropTypes.shape({
     push: PropTypes.func
   }),
@@ -99,17 +75,23 @@ TablesPage.propTypes = {
   getTables: PropTypes.func,
   addTable: PropTypes.func,
   moveTable: PropTypes.func,
-  createParty: PropTypes.func
+  createParty: PropTypes.func,
+  toggleTable: PropTypes.func,
+  toggleEdit: PropTypes.func,
 };
 
 TablesPage.defaultProps = {
+  selected: new Set(),
+  editing: false,
+  history: { push: () => {} },
   user: { admin: false, manager: false },
   tables: [],
-  history: { push: () => {} },
   getTables: () => {},
   addTable: () => {},
   moveTable: () => {},
-  createParty: () => {}
+  createParty: () => {},
+  toggleTable: () => {},
+  toggleEdit: () => {},
 };
 
 const mapStateToProps = (state) => ({
@@ -119,5 +101,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { getTables, addTable, moveTable, createParty }
+  { getTables, addTable, moveTable, createParty, toggleTable, toggleEdit }
 )(TablesPage);
