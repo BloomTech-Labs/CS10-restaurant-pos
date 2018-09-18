@@ -20,7 +20,7 @@ router.get('/test', (req, res) => res.json({ msg: 'Employee Routes Work' }));
 // @desc    Adds an administrator to the DB
 // @access  Public
 router.post('/admin/register', (req, res) => {
-  const { name, pass } = req.body;
+  const { name, pass, email } = req.body;
 
   // Validate Fields
   verifyFields(['name', 'pass'], req.body, res);
@@ -35,6 +35,7 @@ router.post('/admin/register', (req, res) => {
   const newAdministrator = new Employee({
     name,
     password: pass,
+    email,
     pin,
     role
   });
@@ -58,10 +59,10 @@ router.post('/admin/register', (req, res) => {
 // @access  Public
 router.post('/register', (req, res) => {
   const {
-    pass: password, role, name, administrator
+    pass: password, role, name, restaurant
   } = req.body;
   // Validate Fields
-  verifyFields(['name', 'pass'], req.body, res);
+  verifyFields(['name', 'pass', 'restaurant'], req.body, res);
 
   let pin = '';
 
@@ -75,7 +76,7 @@ router.post('/register', (req, res) => {
     password,
     role,
     pin,
-    administrator
+    restaurant
   });
 
   // Check if the DB is empty or not

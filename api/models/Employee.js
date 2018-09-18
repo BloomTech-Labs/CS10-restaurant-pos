@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const mongooseTypes = require('mongoose-types');
+// Loads into Mongoose Schema Types
+mongooseTypes.loadTypes(mongoose, 'email');
 
 const { Schema } = mongoose;
 const { ObjectId } = Schema.Types;
+const { Email } = mongoose.SchemaTypes;
 
 const Employee = new Schema({
   name: {
@@ -18,6 +22,10 @@ const Employee = new Schema({
     required: true,
     min: 4,
     max: 4,
+  },
+  email: {
+    type: Email,
+    required: true
   },
   role: {
     admin: {
