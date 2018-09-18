@@ -12,12 +12,3 @@ export const Editor = styled.div`
   flex-grow: 6;
   padding: 50px;
 `;
-
-export const Menu = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-right: 2px solid grey;
-  width: 300px;
-  padding: 10px;
-`;

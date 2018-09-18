@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { sidebar } from '../../config/conditionalPathnames';
+import TableEditPanel from '../TableEditPanel';
 
 import * as s from './styles';
-
 
 class Sidebar extends React.Component {
   render() {
@@ -14,6 +14,7 @@ class Sidebar extends React.Component {
         <s.LinkGroup>
           <s.StyledLink to="/tables">Tables</s.StyledLink>
           <s.StyledLink to="/servers">Servers</s.StyledLink>
+          <TableEditPanel push={this.props.history.push} />
         </s.LinkGroup>
         <s.LinkGroup>
           <s.StyledLink to="/settings">Settings</s.StyledLink>
@@ -29,11 +30,15 @@ Sidebar.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string
   }),
+  history: PropTypes.shape({
+    push: PropTypes.func
+  }),
 };
 
 Sidebar.defaultProps = {
   modalIsOpen: false,
   location: {},
+  history: { push: () => {} },
 };
 
 export default Sidebar;
