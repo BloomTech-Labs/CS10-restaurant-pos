@@ -145,6 +145,48 @@ router.post('/login', (req, res) => {
     });
 });
 
+// @route   POST api/employees/admin/login
+// @desc    Lets an admin login
+// @access  Public
+router.post('/admin/login', (req, res) => {
+  const { email, pass } = req.body;
+
+  Employee
+    .findOne({ email })
+    .then(user => {
+      // check the provided password against the password in the db
+      user.checkPassword(pass)
+        .then((verified) => {
+          // check if password matches
+          if (verified) {
+            // add the restaurant and user's id to the payload
+            const payload = {
+              id: user._id,
+              pin: null,
+              role: {
+                admin: null,
+                manager: null
+              },
+              restaurant: user.restaurant
+            };
+
+            // sign a new token with the restaurant id
+            const token = `Bearer ${jwt.sign(payload, keys.secretOrKey)}`;
+
+            // send back the token
+            res.status(200).json({ token });
+          } else {
+            res.status(401).json({ msg: 'Invalid email or password.' });
+          }
+        }).catch(err => {
+          res.status(401).json({ err, msg: 'Error checking the password.' });
+        }); // catch for checkPassword
+    })
+    .catch(err => {
+      res.status(500).json({ err, msg: 'There was an error communicating with the database.' });
+    }); // catch for findOne
+});
+
 // @route   PUT api/employees/update/:pin
 // @desc    Allow a user to change their password
 // @access  Private
