@@ -18,7 +18,7 @@ router.post('/add', (req, res) => {
   const { tables, server } = req.body;
 
   // makes a new party with the provided tables array
-  const newParty = new Party({ tables, server });
+  const newParty = new Party({ tables, server, restaurant: req.user.restaurant });
 
   newParty
     .save()
@@ -49,7 +49,7 @@ router.put('/update/:id', (req, res) => {
   if (food) updatedFields.food = food;
   if (tables) updatedFields.tables = tables;
 
-  Party.findOneAndUpdate({ _id: id }, updatedFields, { new: true })
+  Party.findOneAndUpdate({ _id: id, restaurant: req.user.restaurant }, updatedFields, { new: true })
     .then((updatedParty) => {
       res.status(200).json(updatedParty);
     })
@@ -64,7 +64,7 @@ router.put('/update/:id', (req, res) => {
 router.delete('/delete/:id', (req, res) => {
   const { id } = req.params;
 
-  Party.findOneAndRemove({ _id: id })
+  Party.findOneAndRemove({ _id: id, restaurant: req.user.restaurant })
     .then((removedParty) => {
       res.status(200).json({ removedParty, msg: 'Party has been removed.' });
     })
@@ -77,7 +77,7 @@ router.delete('/delete/:id', (req, res) => {
 // @desc    Retrieves all parties from the database
 // @access  Private
 router.get('/all', (req, res) => {
-  Party.find({})
+  Party.find({ restaurant: req.user.restaurant })
     .populate('server', ['name'])
     .populate('food', ['name', 'price'])
     .populate('tables')
@@ -95,7 +95,7 @@ router.get('/all', (req, res) => {
 router.get('/:id', (req, res) => {
   const { id } = req.params;
 
-  Party.findOne({ _id: id })
+  Party.findOne({ _id: id, restaurant: req.user.restaurant })
     .populate('server', ['name'])
     .populate('food', ['name', 'price'])
     .populate('tables')
