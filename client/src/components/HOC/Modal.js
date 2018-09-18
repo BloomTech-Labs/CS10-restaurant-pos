@@ -57,7 +57,7 @@ class ModalComponent extends React.Component {
 
 ModalComponent.propTypes = {
   closeModal: PropTypes.func,
-  closeSplitModal: PropTypes.oneOf(undefined, PropTypes.func),
+  closeSplitModal: PropTypes.oneOf([undefined, PropTypes.func]),
   children: PropTypes.arrayOf(PropTypes.node)
 };
 
