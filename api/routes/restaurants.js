@@ -5,6 +5,7 @@ const router = express.Router();
 
 const verifyFields = require('../validation/verifyFields');
 const Restaurant = require('../models/Restaurant');
+const Employee = require('../models/Employee');
 const keys = require('../../config/keys');
 
 // @route   POST api/restaurants/register
@@ -20,6 +21,14 @@ router.post('/register', (req, res) => {
 
   newRestaurant.save()
     .then((savedRestaurant) => {
+      const adminId = req.user._id;
+
+      Employee
+        .findOneAndUpdate({ _id: adminId }, { restaurant: savedRestaurant._id })
+        .catch(err => {
+          res.status(500).json({ err, msg: 'There was an error updating the account.' });
+        });
+
       const payload = {
         id: null,
         pin: null,
