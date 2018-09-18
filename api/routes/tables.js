@@ -21,7 +21,7 @@ router.post('/add', (req, res) => {
   // otherwise it will continue running the rest of the code
   verifyFields(['x', 'y'], req.body, res);
 
-  const newTable = new Table({ x, y });
+  const newTable = new Table({ x, y, restaurant: req.user.restaurant });
 
   newTable
     .save()
@@ -31,7 +31,7 @@ router.post('/add', (req, res) => {
     .catch((err) => {
       res.status(500).json({
         err,
-        msg: 'There was an error saving the table to the database.'
+        msg: 'There was an error saving the table to the database.',
       });
     });
 });
@@ -40,13 +40,13 @@ router.post('/add', (req, res) => {
 // @desc    Get all tables
 // @access  Private
 router.get('/all', (req, res) => [
-  Table.find({})
+  Table.find({ restaurant: req.user.restaurant })
     .then((tables) => {
       res.status(200).json(tables);
     })
     .catch((err) => {
       res.status(400).json(err);
-    })
+    }),
 ]);
 
 // @route   GET api/tables/:id
@@ -55,7 +55,7 @@ router.get('/all', (req, res) => [
 router.get('/:id', (req, res) => {
   const { id } = req.params;
 
-  Table.findOne({ _id: id })
+  Table.findOne({ _id: id, restaurant: req.user.restaurant })
     .then((table) => {
       res.status(200).json(table);
     })
@@ -78,7 +78,11 @@ router.post('/update', (req, res) => {
 
   // map over tables from req.body, update each and return the promise
   const promises = tables.map((table) => (
-    Table.findOneAndUpdate({ _id: table._id }, table, { new: true })
+    Table.findOneAndUpdate(
+      { _id: table._id, restaurant: req.user.restaurant },
+      table,
+      { new: true }
+    )
   ));
 
   // pass promises array into Promise.all and send the client the list of resolved promises
@@ -99,10 +103,16 @@ router.put('/deactivate/:id', async (req, res) => {
   const { id } = req.params;
 
   // Deactivates a Table
-  const updatedTable = await Table.findOneAndUpdate({ _id: id }, { active: false });
+  const updatedTable = await Table.findOneAndUpdate(
+    { _id: id, restaurant: req.user.restaurant },
+    { active: false }
+  );
 
   // Locate all parties
-  const party = await Party.findOne({ tables: id });
+  const party = await Party.findOne({
+    tables: id,
+    restaurant: req.user.restaurant,
+  });
 
   // Filter allParties to remove inactive Tables
   party.tables = party.tables.filter((table) => String(table) !== id);
@@ -119,7 +129,7 @@ router.put('/deactivate/:id', async (req, res) => {
           res.status(200).json({
             populatedParty,
             msg: 'Table has been deactivated and removed from the party.',
-            updatedTable
+            updatedTable,
           });
         })
         .catch((err) => {
@@ -140,9 +150,11 @@ router.delete('/delete/:id', (req, res) => {
   // Verify Roles
   verifyRole(req.user, res);
 
-  Table.findOneAndRemove({ _id: id })
+  Table.findOneAndRemove({ _id: id, restaurant: req.user.restaurant })
     .then((removedTable) => {
-      res.status(200).json({ removedTable, msg: 'Table deleted from the database.' });
+      res
+        .status(200)
+        .json({ removedTable, msg: 'Table deleted from the database.' });
     })
     .catch((err) => {
       res.status(400).catch(err);
