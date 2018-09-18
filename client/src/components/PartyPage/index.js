@@ -22,6 +22,10 @@ class PartyPage extends React.Component {
 
   componentDidMount() {
     this.props.getItems();
+
+    if (this.props.tables.length === 0) {
+      this.props.history.push('/tables');
+    }
   }
 
   openModal = () => {
@@ -29,7 +33,6 @@ class PartyPage extends React.Component {
     this.props.openModal();
   };
 
-  // ────────────────────────────────────────────────────────────────────────────────
   addToSplitCheck = (item) => {
     this.setState((prev) => ({
       splitCheck: [...prev.splitCheck, item]
@@ -41,7 +44,6 @@ class PartyPage extends React.Component {
     this.props.closeModal();
     this.props.openSplitModal();
   };
-  // ────────────────────────────────────────────────────────────────────────────────
 
   addItemToOrder = (item) => {
     this.setState((prev) => ({
@@ -115,7 +117,8 @@ class PartyPage extends React.Component {
 
 const locationType = PropTypes.shape({
   country: PropTypes.string,
-  state: PropTypes.string
+  state: PropTypes.string,
+
 });
 
 PartyPage.propTypes = {
@@ -132,7 +135,10 @@ PartyPage.propTypes = {
   order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   splitOrder: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   tables: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
-  location: locationType
+  location: locationType,
+  history: PropTypes.shape({
+    push: PropTypes.func
+  }),
 };
 
 PartyPage.defaultProps = {
@@ -143,13 +149,14 @@ PartyPage.defaultProps = {
   saveOrder: () => {},
   saveSplitOrder: () => {},
   getItems: () => {},
+  history: { push: () => {} },
   modalIsOpen: false,
   splitModalIsOpen: false,
   items: [],
   order: [],
   splitOrder: [],
   tables: [{ number: 1 }, { number: 6 }, { number: 3 }],
-  location: { country: 'US', state: 'CA' }
+  location: { country: 'US', state: 'CA' },
 };
 
 const mapStateToProps = (state) => ({
