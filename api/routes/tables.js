@@ -15,13 +15,13 @@ router.post('/add', (req, res) => {
   // Verify Role
   verifyRole(req.user, res);
 
-  const { x, y } = req.body;
+  const { x, y, number } = req.body;
 
   // this will send back an error response if the requirements are not met
   // otherwise it will continue running the rest of the code
-  verifyFields(['x', 'y'], req.body, res);
+  verifyFields(['x', 'y', 'number'], req.body, res);
 
-  const newTable = new Table({ x, y });
+  const newTable = new Table({ x, y, number });
 
   newTable
     .save()
@@ -31,7 +31,7 @@ router.post('/add', (req, res) => {
     .catch((err) => {
       res.status(500).json({
         err,
-        msg: 'There was an error saving the table to the database.'
+        msg: 'There was an error saving the table to the database.',
       });
     });
 });
@@ -45,7 +45,10 @@ router.get('/all', (req, res) => {
       res.status(200).json(tables);
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res.status(500).json({
+        err,
+        msg: 'There was an error retrieving the tables from the DB.',
+      });
     });
 });
 
@@ -60,7 +63,10 @@ router.get('/:id', (req, res) => {
       res.status(200).json(table);
     })
     .catch((err) => {
-      res.status(200).json(err);
+      res.status(500).json({
+        err,
+        msg: 'There was an error retrieving the table from the DB.',
+      });
     });
 });
 
@@ -88,7 +94,10 @@ router.post('/update', (req, res) => {
       res.status(200).json(updatedTables);
     })
     .catch((err) => {
-      res.status(500).json(err);
+      res.status(500).json({
+        err,
+        msg: 'There was an error updating the table in the DB.',
+      });
     });
 });
 
@@ -97,12 +106,28 @@ router.post('/update', (req, res) => {
 // @access  Private
 router.put('/deactivate/:id', async (req, res) => {
   const { id } = req.params;
+  let updatedTable;
+  let party;
 
   // Deactivates a Table
-  const updatedTable = await Table.findOneAndUpdate({ _id: id }, { active: false });
+  try {
+    updatedTable = await Table.findOneAndUpdate({ _id: id }, { active: false });
+  } catch (err) {
+    res.status(500).json({
+      err,
+      msg: 'There was an error deactivating the table in the DB.',
+    });
+  }
 
-  // Locate all parties
-  const party = await Party.findOne({ tables: id });
+  // Locate the party associated with the table
+  try {
+    party = await Party.findOne({ tables: id });
+  } catch (err) {
+    res.status(500).json({
+      err,
+      msg: 'There was an error deactivating the table in the DB.',
+    });
+  }
 
   // Filter allParties to remove inactive Tables
   party.tables = party.tables.filter((table) => String(table) !== id);
@@ -119,15 +144,21 @@ router.put('/deactivate/:id', async (req, res) => {
           res.status(200).json({
             populatedParty,
             msg: 'Table has been deactivated and removed from the party.',
-            updatedTable
+            updatedTable,
           });
         })
         .catch((err) => {
-          res.status(400).json(err);
+          res.status(500).json({
+            err,
+            msg: 'There was an error communicating with the DB.',
+          });
         });
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res.status(500).json({
+        err,
+        msg: 'There was an error deactivating the table in the DB.',
+      });
     });
 });
 
@@ -142,10 +173,33 @@ router.delete('/delete/:id', (req, res) => {
 
   Table.findOneAndRemove({ _id: id })
     .then((removedTable) => {
-      res.status(200).json({ removedTable, msg: 'Table deleted from the database.' });
+      Table.update(
+        { number: { $gt: removedTable.number } },
+        { $inc: { number: -1 } },
+        { multi: true }
+      ).catch((err) => {
+        res.status(500).json({
+          err,
+          msg: 'There was an error updating the table numbers.',
+        });
+      });
+
+      Table.find({})
+        .then((tables) => {
+          res
+            .status(200)
+            .json({ tables, msg: 'Table deleted from the database.' });
+        }).catch(err => {
+          res
+            .status(500)
+            .json({ err, msg: 'There was an error retrieving the tables from the database.' });
+        });
     })
     .catch((err) => {
-      res.status(400).catch(err);
+      res.status(400).catch({
+        err,
+        msg: 'There was an error removing the table from the DB.',
+      });
     });
 });
 
