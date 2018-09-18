@@ -29,7 +29,7 @@ export const createParty = (tables, push) => {
   push('/party');
   return {
     type: CREATE_PARTY,
-    payload: tables
+    payload: Array.from(tables)
   };
 };
 
