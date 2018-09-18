@@ -218,8 +218,9 @@ router.put('/update/:pin', passport.authenticate('jwt', { session: false }), (re
   verifyFields(['oldPassword', 'newPassword'], req.body, res);
 
   // Locate the employee
-  Employee.findOne({ pin })
+  Employee.findOne({ pin, restaurant: req.user.restaurant })
     .then((employee) => {
+      // if the employee doesn't exist send an error
       if (!employee) {
         return res.status(401).json({ msg: 'Invalid PIN or password.' });
       }
@@ -228,6 +229,7 @@ router.put('/update/:pin', passport.authenticate('jwt', { session: false }), (re
       employee
         .checkPassword(oldPassword)
         .then((verified) => {
+          // if the password is correct update the employee's password
           if (verified) {
             employee.password = newPassword;
 
