@@ -25,7 +25,7 @@ router.post('/add', (req, res) => {
   orderData.restaurant = req.user.restaurant;
 
   // Create the new order
-  const newOrder = new Order(req.body);
+  const newOrder = new Order(orderData);
 
   // Assign Refs
   newOrder
@@ -44,7 +44,7 @@ router.post('/add', (req, res) => {
 // @desc    View all orders
 // @access  Private
 router.get('/all', (req, res) => {
-  Order.find({ restaurant: res.user.restaurant })
+  Order.find({ restaurant: req.user.restaurant })
     .populate('server', ['name'])
     .populate('food', ['name', 'price'])
     .then((order) => {
@@ -63,7 +63,7 @@ router.get('/all', (req, res) => {
 router.get('/:id', (req, res) => {
   const { id } = req.params;
 
-  Order.findOne({ _id: id, restaurant: req.user.restaurant })
+  Order.findOne({ _id: id })
     .populate('server', ['name'])
     .populate('food', ['name', 'price'])
     .then((order) => {

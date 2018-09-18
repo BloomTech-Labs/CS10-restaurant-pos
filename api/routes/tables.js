@@ -63,7 +63,7 @@ router.get('/all', (req, res) => {
 router.get('/:id', (req, res) => {
   const { id } = req.params;
 
-  Table.findOne({ _id: id, restaurant: req.user.restaurant })
+  Table.findOne({ _id: id })
     .then((table) => {
       res.status(200).json(table);
     })
@@ -90,7 +90,7 @@ router.post('/update', (req, res) => {
   // map over tables from req.body, update each and return the promise
   const promises = tables.map((table) => (
     Table.findOneAndUpdate(
-      { _id: table._id, restaurant: req.user.restaurant },
+      { _id: table._id },
       table,
       { new: true }
     )
@@ -180,7 +180,7 @@ router.delete('/delete/:id', (req, res) => {
   // Verify Roles
   verifyRole(req.user, res);
 
-  Table.findOneAndRemove({ _id: id, restaurant: req.user.restaurant })
+  Table.findOneAndRemove({ _id: id })
     .then((removedTable) => {
       Table.update(
         { number: { $gt: removedTable.number }, restaurant: req.user.restaurant },

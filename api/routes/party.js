@@ -72,7 +72,7 @@ router.put('/update/:id', (req, res) => {
   if (food) updatedFields.food = food;
   if (tables) updatedFields.tables = tables;
 
-  Party.findOneAndUpdate({ _id: id, restaurant: req.user.restaurant }, updatedFields, { new: true })
+  Party.findOneAndUpdate({ _id: id }, updatedFields, { new: true })
     .then((updatedParty) => {
       res.status(200).json(updatedParty);
     })
