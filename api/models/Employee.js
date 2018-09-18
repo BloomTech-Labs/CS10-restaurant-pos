@@ -18,7 +18,6 @@ const Employee = new Schema({
     required: true,
     min: 4,
     max: 4,
-    unique: true,
   },
   role: {
     admin: {
@@ -35,9 +34,9 @@ const Employee = new Schema({
       default: false,
     },
   },
-  administrator: {
+  restaurant: {
     type: ObjectId,
-    ref: 'Employee',
+    ref: 'Restaurant',
   },
 });
 
