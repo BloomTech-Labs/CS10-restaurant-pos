@@ -22,7 +22,7 @@ class OrderScratchPad extends React.Component {
           ))}
         </s.Scroll>
         <OrderTotal location={this.props.location} subTotal={this.props.subTotal} />
-        <button type="button">Save</button>
+        <button type="button" onClick={this.props.addParty}>Save</button>
         <button type="button" onClick={this.props.openModal}>
           Checkout Now
         </button>
@@ -41,7 +41,8 @@ OrderScratchPad.propTypes = {
   removeItemFromOrder: PropTypes.func,
   location: locationType,
   subTotal: PropTypes.number,
-  openModal: PropTypes.func
+  openModal: PropTypes.func,
+  addParty: PropTypes.func
 };
 
 OrderScratchPad.defaultProps = {
@@ -49,7 +50,8 @@ OrderScratchPad.defaultProps = {
   subTotal: 0,
   location: { country: 'US', state: 'CA' },
   removeItemFromOrder: () => {},
-  openModal: () => {}
+  openModal: () => {},
+  addParty: () => {}
 };
 
 export default OrderScratchPad;

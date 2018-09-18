@@ -7,14 +7,14 @@ import ItemSelector from '../ItemSelector';
 import OrderScratchPad from '../OrderScratchPad';
 import Modal from '../HOC/Modal';
 import { getItems } from '../../redux/actions/items';
-import { saveOrder, saveSplitOrder } from '../../redux/actions/party';
+import { addParty, saveOrder, saveSplitOrder } from '../../redux/actions/party';
 import { openModal, closeModal, openSplitModal, closeSplitModal } from '../../redux/actions/modal';
 
 import * as s from './styles';
 
 class PartyPage extends React.Component {
   state = {
-    splitCheck: [], // ! Do I need you?
+    splitCheck: [],
     order: this.props.order,
     subTotal: 0,
     localRef: 0 // eslint-disable-line react/no-unused-state
@@ -58,6 +58,13 @@ class PartyPage extends React.Component {
     }));
   };
 
+  addParty = () => {
+    // ! send in `server: this.props.server` from
+    // ! redux `server: state.auth.user._id`
+    // ! * this hasn't been created yet
+    this.props.addParty({ tables: this.props.tables, order: this.state.order });
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -92,6 +99,7 @@ class PartyPage extends React.Component {
             {/* // TODO: figure out how to name things */}
             <ItemSelector items={this.props.items} addItemToOrder={this.addItemToOrder} />
             <OrderScratchPad
+              addParty={this.addParty}
               order={this.state.order}
               subTotal={this.state.subTotal}
               removeItemFromOrder={this.removeItemFromOrder}
@@ -114,6 +122,7 @@ PartyPage.propTypes = {
   openModal: PropTypes.func,
   closeModal: PropTypes.func,
   openSplitModal: PropTypes.func,
+  addParty: PropTypes.func,
   saveOrder: PropTypes.func,
   saveSplitOrder: PropTypes.func,
   getItems: PropTypes.func,
@@ -130,6 +139,7 @@ PartyPage.defaultProps = {
   openModal: () => {},
   closeModal: () => {},
   openSplitModal: () => {},
+  addParty: () => {},
   saveOrder: () => {},
   saveSplitOrder: () => {},
   getItems: () => {},
@@ -147,6 +157,7 @@ const mapStateToProps = (state) => ({
   splitModalIsOpen: state.modal.splitModalIsOpen,
   items: state.items.itemList,
   order: state.party.order,
+  tables: state.party.tables,
   splitOrder: state.party.splitOrder,
   location: state.restaurant.restaurantInfo.location,
   store: state
@@ -154,5 +165,14 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { openModal, closeModal, getItems, saveOrder, saveSplitOrder, openSplitModal, closeSplitModal }
+  {
+    addParty,
+    getItems,
+    saveOrder,
+    saveSplitOrder,
+    openModal,
+    closeModal,
+    openSplitModal,
+    closeSplitModal
+  }
 )(PartyPage);

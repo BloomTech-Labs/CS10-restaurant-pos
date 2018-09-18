@@ -5,6 +5,7 @@ import {
   LOADING_PARTIES_SUCCESS,
   LOADING_PARTY,
   LOADING_PARTY_SUCCESS,
+  CREATE_PARTY,
   ADDING_PARTY,
   ADDING_PARTY_SUCCESS,
   UPDATING_PARTY,
@@ -15,6 +16,7 @@ import {
 import { DEACTIVATING_TABLE_SUCCESS } from '../actions/tables';
 
 const initialState = {
+  tables: [],
   order: [],
   splitOrder: [],
   fetchedParty: {},
@@ -41,6 +43,9 @@ const PartyReducer = (state = initialState, action) => {
 
     case LOADING_PARTY_SUCCESS:
       return { ...state, loading: false, fetchedParty: action.payload };
+
+    case CREATE_PARTY:
+      return { ...state, tables: action.payload };
 
     case ADDING_PARTY:
       return { ...state, loading: true };

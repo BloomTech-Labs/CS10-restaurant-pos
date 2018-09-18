@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { getTables, addTable, moveTable } from '../../redux/actions/tables';
+import { createParty } from '../../redux/actions/party';
 import FloorPlan from '../FloorPlan';
 
 import * as s from './styles';
@@ -38,17 +39,18 @@ class TablesPage extends Component {
     );
   };
 
-  saveParty = (event) => {
-    event.preventDefault();
-
+  createParty = () => {
     // TODO: this.props.saveParty or some shit
-    console.log(this.state.selected);
+    this.props.createParty(this.state.selected, this.props.history.push);
   };
 
   render() {
     return (
       <s.Container>
         <s.Menu>
+          <button type="button" onClick={this.createParty}>
+            Add Order
+          </button>
           <h1>Tables</h1>
           <p>{this.props.tables.length}</p>
           <button type="button" onClick={this.props.addTable}>
@@ -85,6 +87,9 @@ class TablesPage extends Component {
 }
 
 TablesPage.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func
+  }),
   user: PropTypes.shape({
     admin: PropTypes.bool,
     manager: PropTypes.bool
@@ -92,15 +97,18 @@ TablesPage.propTypes = {
   tables: PropTypes.arrayOf(PropTypes.object),
   getTables: PropTypes.func,
   addTable: PropTypes.func,
-  moveTable: PropTypes.func
+  moveTable: PropTypes.func,
+  createParty: PropTypes.func
 };
 
 TablesPage.defaultProps = {
   user: { admin: false, manager: false },
   tables: [],
+  history: { push: () => {} },
   getTables: () => {},
   addTable: () => {},
-  moveTable: () => {}
+  moveTable: () => {},
+  createParty: () => {}
 };
 
 const mapStateToProps = (state) => ({
@@ -110,5 +118,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { getTables, addTable, moveTable }
+  { getTables, addTable, moveTable, createParty }
 )(TablesPage);
