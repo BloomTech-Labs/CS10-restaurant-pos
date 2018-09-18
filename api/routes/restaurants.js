@@ -14,8 +14,11 @@ const keys = require('../../config/keys');
 router.post('/register', (req, res) => {
   // requires admin id, name, location, billing.address
 
+  const restaurantInfo = req.body;
+  restaurantInfo.admin = req.user._id;
+
   // verify the required fields
-  verifyFields(['admin', 'name', 'location', 'billing'], req.body, res);
+  verifyFields(['name', 'location', 'billing'], req.body, res);
 
   const newRestaurant = new Restaurant(req.body);
 
@@ -23,6 +26,7 @@ router.post('/register', (req, res) => {
     .then((savedRestaurant) => {
       const adminId = req.user._id;
 
+      // add the restaurant id to the admin's account
       Employee
         .findOneAndUpdate({ _id: adminId }, { restaurant: savedRestaurant._id })
         .catch(err => {

@@ -150,7 +150,7 @@ router.post('/login', (req, res) => {
         };
 
         // Sign the token
-        const newToken = jwt.sign(payload, keys.secretOrKey);
+        const newToken = `Bearer ${jwt.sign(payload, keys.secretOrKey)}`;
 
         // Send in the token
         res.status(200).json({ token: newToken });
