@@ -110,48 +110,35 @@ router.post('/register', (req, res) => {
 // @access  Public
 router.post('/login', (req, res) => {
   // Pull off the pin and pass from the request
-  const { pin, pass } = req.body;
+  const { pin } = req.body;
+  // Token contains the restaurant source via logged in admin
+  const token = jwt.verify(req.headers.authorization.slice(7), keys.secretOrKey);
 
-  verifyFields(['pin', 'pass'], req.body, res);
+  verifyFields(['pin'], req.body, res);
 
   // Find the employee in the DB
-  Employee.findOne({ pin })
+  Employee.findOne({ pin, restaurant: token.restaurant })
     .then((employee) => {
       if (!employee) {
         return res.status(401).json({ msg: 'Invalid PIN or password.' });
       }
 
-      // Check the password on the model
-      employee
-        .checkPassword(pass)
-        .then((verified) => {
-          if (verified) {
-            // Create a payload
-            const payload = {
-              id: employee.id,
-              pin: employee.pin,
-              role: {
-                admin: employee.role.admin,
-                manager: employee.role.manager
-              },
-              administrator: employee.administrator
-            };
+      // Create a payload for the logged in user
+      const payload = {
+        id: employee.id,
+        pin: employee.pin,
+        role: {
+          admin: employee.role.admin,
+          manager: employee.role.manager
+        },
+        restaurant: employee.restaurant
+      };
 
-            // Sign the token
-            jwt.sign(payload, keys.secretOrKey, { expiresIn: '1d' }, (err, token) => {
-              if (err) {
-                res.status(400).json({ err, msg: 'Error signing the token.' });
-              }
+      // Sign the token
+      const newToken = jwt.sign(payload, keys.secretOrKey);
 
-              res.status(200).json({ token: `Bearer ${token}` });
-            });
-          } else {
-            res.status(401).json({ msg: 'Invalid PIN or password.' });
-          }
-        })
-        .catch((err) => {
-          res.status(401).json({ err, msg: 'Error checking the password.' });
-        });
+      // Send in the token
+      res.status(200).json({ token: newToken });
     })
     .catch((err) => {
       res.status(500).json({ err, msg: 'Error communicating with the database.' });
