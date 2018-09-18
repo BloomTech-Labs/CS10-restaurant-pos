@@ -59,10 +59,28 @@ router.post('/admin/register', (req, res) => {
 // @access  Public
 router.post('/register', (req, res) => {
   const {
-    pass: password, role, name, restaurant
+    pass: password, role, name
   } = req.body;
   // Validate Fields
-  verifyFields(['name', 'pass', 'restaurant'], req.body, res);
+  verifyFields(['name', 'pass'], req.body, res);
+
+  let restaurant;
+
+  try {
+    // Check to see if token exists
+    if (!req.headers.authorization) {
+      return res.status(401).json({ msg: 'You are not authorized to do this.' });
+    }
+    const currentUser = jwt.verify(req.headers.authorization.slice(7), keys.secretOrKey);
+
+    // eslint-disable-next-line
+    restaurant = currentUser.restaurant;
+
+    // Verify roles
+    verifyRole(currentUser, res);
+  } catch (err) {
+    return res.status(500).json({ err, msg: 'Error verifying the token.' });
+  }
 
   // TODO: Remove auto generated pins
   let pin = '';
@@ -79,20 +97,6 @@ router.post('/register', (req, res) => {
     pin,
     restaurant
   });
-
-
-  try {
-    // Check to see if token exists
-    if (!req.headers.authorization) {
-      return res.status(401).json({ msg: 'You are not authorized to do this.' });
-    }
-    const currentUser = jwt.verify(req.headers.authorization.slice(7), keys.secretOrKey);
-
-    // Verify roles
-    verifyRole(currentUser, res);
-  } catch (err) {
-    return res.status(500).json({ err, msg: 'Error verifying the token.' });
-  }
 
   newEmployee
     .save()
