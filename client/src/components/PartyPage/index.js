@@ -60,11 +60,12 @@ class PartyPage extends React.Component {
     }));
   };
 
-  addParty = () => {
+  saveParty = () => {
     // ! send in `server: this.props.server` from
     // ! redux `server: state.auth.user._id`
     // ! * this hasn't been created yet
     this.props.addParty({ tables: this.props.tables, order: this.state.order });
+    this.props.history.push('/tables');
   }
 
   render() {
@@ -101,7 +102,7 @@ class PartyPage extends React.Component {
             {/* // TODO: figure out how to name things */}
             <ItemSelector items={this.props.items} addItemToOrder={this.addItemToOrder} />
             <OrderScratchPad
-              addParty={this.addParty}
+              saveParty={this.saveParty}
               order={this.state.order}
               subTotal={this.state.subTotal}
               removeItemFromOrder={this.removeItemFromOrder}
