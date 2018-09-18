@@ -110,7 +110,7 @@ router.post('/register', (req, res) => {
 // @access  Public
 router.post('/login', (req, res) => {
   // Pull off the pin and pass from the request
-  const { pin } = req.body;
+  const { pin, pass } = req.body;
   // Token contains the restaurant source via logged in admin
   const token = jwt.verify(req.headers.authorization.slice(7), keys.secretOrKey);
 
@@ -118,27 +118,41 @@ router.post('/login', (req, res) => {
 
   // Find the employee in the DB
   Employee.findOne({ pin, restaurant: token.restaurant })
-    .then((employee) => {
+    .then(async (employee) => {
       if (!employee) {
-        return res.status(401).json({ msg: 'Invalid PIN or password.' });
+        return res.status(401).json({ msg: 'No user found.' });
       }
 
-      // Create a payload for the logged in user
-      const payload = {
-        id: employee.id,
-        pin: employee.pin,
-        role: {
-          admin: employee.role.admin,
-          manager: employee.role.manager
-        },
-        restaurant: employee.restaurant
-      };
+      let verified = true;
 
-      // Sign the token
-      const newToken = jwt.sign(payload, keys.secretOrKey);
+      if (employee.role.admin || employee.role.manager) {
+        try {
+          verified = await employee.checkPassword(pass);
+        } catch (err) {
+          res.status(500).json({ err, msg: 'There was an error checking the password.' });
+        }
+      }
 
-      // Send in the token
-      res.status(200).json({ token: newToken });
+      if (verified) {
+        // Create a payload for the logged in user
+        const payload = {
+          id: employee.id,
+          pin: employee.pin,
+          role: {
+            admin: employee.role.admin,
+            manager: employee.role.manager
+          },
+          restaurant: employee.restaurant
+        };
+
+        // Sign the token
+        const newToken = jwt.sign(payload, keys.secretOrKey);
+
+        // Send in the token
+        res.status(200).json({ token: newToken });
+      } else {
+        res.status(401).json({ msg: 'Invalid PIN or password.' });
+      }
     })
     .catch((err) => {
       res.status(500).json({ err, msg: 'Error communicating with the database.' });
