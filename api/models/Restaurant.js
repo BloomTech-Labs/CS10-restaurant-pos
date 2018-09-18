@@ -32,6 +32,10 @@ const RestaurantSchema = new Schema({
   },
   width: Number,
   height: Number,
+  currentPIN: {
+    type: String,
+    default: '1111'
+  }
 });
 
 module.exports = mongoose.model('Restaurant', RestaurantSchema);
