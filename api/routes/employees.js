@@ -64,6 +64,7 @@ router.post('/register', (req, res) => {
   // Validate Fields
   verifyFields(['name', 'pass', 'restaurant'], req.body, res);
 
+  // TODO: Remove auto generated pins
   let pin = '';
 
   for (let i = 0; i < 4; i++) {
@@ -79,54 +80,28 @@ router.post('/register', (req, res) => {
     restaurant
   });
 
-  // Check if the DB is empty or not
-  Employee.find({})
-    .then((employees) => {
-      // make first employee admin by default
-      if (employees.length === 0) {
-        newEmployee.role.admin = true;
-      } else {
-        // if there is at least one employee in the database, check if current user has
-        // permissions to add new server
-        try {
-          // Check to see if token exists
-          if (!req.headers.authorization) {
-            return res.status(401).json({ msg: 'You are not authorized to do this.' });
-          }
-          const currentUser = jwt.verify(req.headers.authorization.slice(7), keys.secretOrKey);
 
-          // Verify roles
-          verifyRole(currentUser, res);
-        } catch (err) {
-          return res.status(500).json({ err, msg: 'Error verifying the token.' });
-        }
-      }
+  try {
+    // Check to see if token exists
+    if (!req.headers.authorization) {
+      return res.status(401).json({ msg: 'You are not authorized to do this.' });
+    }
+    const currentUser = jwt.verify(req.headers.authorization.slice(7), keys.secretOrKey);
 
-      newEmployee
-        .save()
-        .then((employeeInfo) => {
-          // Make a payload for the JWT with the new employee info
-          const payload = {
-            id: employeeInfo.id,
-            pin: employeeInfo.pin,
-            role: {
-              admin: employeeInfo.role.admin,
-              manager: employeeInfo.role.manager
-            },
-            administrator: employeeInfo.administrator
-          };
+    // Verify roles
+    verifyRole(currentUser, res);
+  } catch (err) {
+    return res.status(500).json({ err, msg: 'Error verifying the token.' });
+  }
 
-          // Sign the token
-          jwt.sign(payload, keys.secretOrKey, { expiresIn: '1d' }, (err, token) => {
-            res.status(201).json({ token: `Bearer ${token}` });
-          });
-        })
-        .catch((err) => {
-          res.status(500).json({ err, msg: 'Error saving the employee to the database.' });
-        });
+  newEmployee
+    .save()
+    .then((employeeInfo) => {
+      // Send the employees pin number
+      res.status(201).json(employeeInfo.pin);
     })
     .catch((err) => {
-      res.status(500).json({ err, msg: 'Error communicating with the database.' });
+      res.status(500).json({ err, msg: 'Error saving the employee to the database.' });
     });
 });
 

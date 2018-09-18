@@ -25,7 +25,6 @@ const Employee = new Schema({
   },
   email: {
     type: Email,
-    required: true
   },
   role: {
     admin: {
