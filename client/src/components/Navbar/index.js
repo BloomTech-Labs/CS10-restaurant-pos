@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import * as s from './styles';
 
 class Navbar extends React.Component {
   render() {
     return (
-      <s.Navbar>
+      <s.Navbar modalIsOpen={this.props.modalIsOpen}>
         <s.StyledLink to="/login-employee">(Employee Login DO NOT USE)</s.StyledLink>
         <s.StyledLink to="/login">(Admin Login)</s.StyledLink>
         <s.StyledLink to="/register">(Register)</s.StyledLink>
@@ -18,5 +19,13 @@ class Navbar extends React.Component {
     );
   }
 }
+
+Navbar.propTypes = {
+  modalIsOpen: PropTypes.bool
+};
+
+Navbar.defaultProps = {
+  modalIsOpen: false
+};
 
 export default Navbar;
