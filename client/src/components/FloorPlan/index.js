@@ -15,8 +15,8 @@ class FloorPlan extends React.Component {
       width: window.innerWidth,
       height: window.innerHeight,
       transparent: false,
-      antialias: true,
-      resolution: window.devicePixelRatio
+      antialias: true, // special filtering to look smoother
+      resolution: window.devicePixelRatio // for different screen resolutions/types
     });
     this.viewport = new Viewport({
       screenHeight: window.innerWidth,
@@ -24,6 +24,7 @@ class FloorPlan extends React.Component {
       worldHeight: 1000,
       worldWidth: 1000,
       interaction: this.app.renderer.interaction,
+      passiveWheel: false, // presence of unnecessary passive event listeners causes a warning
     });
     this.app.renderer.backgroundColor = 0x8698aa;
     this.tables = []; // TODO: investigate cleaner solutions
@@ -203,10 +204,6 @@ class FloorPlan extends React.Component {
       .pinch()
       .wheel()
       .decelerate();
-
-    this.viewport.on('wheel', () => {
-      console.log(this.pixi.current);
-    });
 
     this.border();
 
