@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { flexCenterMixin } from '../../global-styles/mixins';
+import { flexCenterMixin, containerMixin } from '../../global-styles/mixins';
 
 export const Container = styled.div`
   display: flex;
@@ -23,8 +23,7 @@ export const Menu = styled.div`
 `;
 
 export const Form = styled.form`
-  display: flex;
+  ${containerMixin}
   flex-direction: column;
-  flex-grow: 2;
   width: 100%;
 `;

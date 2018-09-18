@@ -6,6 +6,8 @@ import RestaurantInfo from '../RestaurantInfo';
 import Billing from '../Billing';
 import ChangePassword from '../ChangePassword';
 
+import * as s from './styles';
+
 class Settings extends React.Component {
   adminDisplay = () => (
     <React.Fragment>
@@ -16,11 +18,11 @@ class Settings extends React.Component {
 
   render() {
     return (
-      <div>
+      <s.Container>
         {/* // ! change to admin */}
         {this.props.manager && this.adminDisplay()}
         <ChangePassword />
-      </div>);
+      </s.Container>);
   }
 }
 

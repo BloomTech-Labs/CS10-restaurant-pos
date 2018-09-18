@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { modalBlur } from '../../global-styles/mixins';
+import { modalBlur, containerMixin } from '../../global-styles/mixins';
 
 export const Container = styled.div`
   border: 2px solid blue;
@@ -12,7 +12,6 @@ export const Container = styled.div`
 `;
 
 export const Food = styled.div`
-  display: flex;
-  flex-grow: 2;
+  ${containerMixin}
   width: 100%;
 `;
