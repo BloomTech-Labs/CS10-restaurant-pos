@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
 
 import * as s from './styles';
 import Landing from './components/Landing';
@@ -20,6 +20,8 @@ import RequireNotAuth from './components/HOC/RequireNotAuth';
 import RequireAuth from './components/HOC/RequireAuth';
 import Test from './components/Test';
 
+const SidebarWithRouter = withRouter((props) => <Sidebar {...props} />);
+
 class App extends Component {
   render() {
     return (
@@ -27,7 +29,7 @@ class App extends Component {
         <s.Container>
           <Navbar modalIsOpen={this.props.modalIsOpen} />
           <s.Main>
-            <Sidebar />
+            <SidebarWithRouter modalIsOpen={this.props.modalIsOpen} />
             <Switch>
               <Route path="/" component={Landing} exact />
               <Route path="/login" component={RequireNotAuth(Login)} />

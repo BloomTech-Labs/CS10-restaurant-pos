@@ -1,26 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { sidebar } from '../../config/conditionalPathnames';
+
 import * as s from './styles';
 
-class Navbar extends React.Component {
-  render() {
-    return (
-      <s.Navbar modalIsOpen={this.props.modalIsOpen}>
-        <s.StyledLink to="/tables">(Tables)</s.StyledLink>
 
-        <s.StyledLink to="/settings">(Settings)</s.StyledLink>
-      </s.Navbar>
+class Sidebar extends React.Component {
+  render() {
+    const { pathname } = this.props.location;
+    return (
+      <s.Sidebar modalIsOpen={this.props.modalIsOpen} visible={!sidebar.includes(pathname)}>
+        <s.LinkGroup>
+          <s.StyledLink to="/tables">Tables</s.StyledLink>
+          <s.StyledLink to="/servers">Servers</s.StyledLink>
+        </s.LinkGroup>
+        <s.LinkGroup>
+          <s.StyledLink to="/settings">Settings</s.StyledLink>
+          <s.StyledLink to="/help">Help</s.StyledLink>
+        </s.LinkGroup>
+      </s.Sidebar>
     );
   }
 }
 
-Navbar.propTypes = {
-  modalIsOpen: PropTypes.bool
+Sidebar.propTypes = {
+  modalIsOpen: PropTypes.bool,
+  location: PropTypes.shape({
+    pathname: PropTypes.string
+  }),
 };
 
-Navbar.defaultProps = {
-  modalIsOpen: false
+Sidebar.defaultProps = {
+  modalIsOpen: false,
+  location: {},
 };
 
-export default Navbar;
+export default Sidebar;

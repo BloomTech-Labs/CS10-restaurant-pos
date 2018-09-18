@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import shortid from 'shortid';
 
 import TablesPageTitle from '../TablesPageTitle';
 import ItemSelector from '../ItemSelector';
@@ -74,7 +75,7 @@ class PartyPage extends React.Component {
         {this.props.modalIsOpen && (
           <Modal>
             {this.props.order.map((item) => (
-              <div>
+              <div key={shortid.generate()}>
                 {item.name}
                 <div onClick={() => this.addToSplitCheck(item)}>+</div>
               </div>
@@ -89,7 +90,7 @@ class PartyPage extends React.Component {
         {this.props.splitModalIsOpen && (
           <Modal closeSplitModal={this.props.closeSplitModal}>
             {this.props.splitOrder.map((item) => (
-              <div>{item.name}</div>
+              <div key={shortid.generate()}>{item.name}</div>
             ))}
             <div>Split Modal</div>
             <button type="button">split modal button one</button>
@@ -158,7 +159,7 @@ PartyPage.defaultProps = {
   items: [],
   order: [],
   splitOrder: [],
-  tables: [{ number: 1 }, { number: 6 }, { number: 3 }],
+  tables: [ { number: 4 } ],
   location: { country: 'US', state: 'CA' },
 };
 
@@ -170,7 +171,6 @@ const mapStateToProps = (state) => ({
   tables: state.party.tables,
   splitOrder: state.party.splitOrder,
   location: state.restaurant.restaurantInfo.location,
-  store: state
 });
 
 export default connect(

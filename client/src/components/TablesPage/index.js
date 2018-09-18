@@ -41,7 +41,8 @@ class TablesPage extends Component {
 
   createParty = () => {
     // TODO: this.props.saveParty or some shit
-    this.props.createParty(this.state.selected, this.props.history.push);
+    const tablesArray = this.props.tables.filter(table => this.state.selected.has(table.number));
+    this.props.createParty(tablesArray, this.props.history.push);
   };
 
   render() {

@@ -9,9 +9,9 @@ function TablesPageTitle(props) {
       {props.tables.length === 1 ? <span>Table:&nbsp;</span> : <span>Tables:&nbsp;</span>}
       {props.tables.map((table, i) => {
         if (props.tables.length - 1 !== i) {
-          return <span key={table}><span>#</span>{table},&nbsp;</span>;
+          return <span key={table.number}><span>#</span>{table.number},&nbsp;</span>;
         }
-        return <span key={table}><span>#</span>{table}</span>;
+        return <span key={table.number}><span>#</span>{table.number}</span>;
       })}
     </s.Title>
   );
