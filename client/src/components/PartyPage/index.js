@@ -7,13 +7,14 @@ import ItemSelector from '../ItemSelector';
 import OrderScratchPad from '../OrderScratchPad';
 import Modal from '../HOC/Modal';
 import { getItems } from '../../redux/actions/items';
-import { saveOrder } from '../../redux/actions/party';
-import { openModal, closeModal } from '../../redux/actions/modal';
+import { saveOrder, saveSplitOrder } from '../../redux/actions/party';
+import { openModal, closeModal, openSplitModal, closeSplitModal } from '../../redux/actions/modal';
 
 import * as s from './styles';
 
 class PartyPage extends React.Component {
   state = {
+    splitCheck: [], // ! Do I need you?
     order: this.props.order,
     subTotal: 0,
     localRef: 0 // eslint-disable-line react/no-unused-state
@@ -27,6 +28,20 @@ class PartyPage extends React.Component {
     this.props.saveOrder(this.state.order);
     this.props.openModal();
   };
+
+  // ────────────────────────────────────────────────────────────────────────────────
+  addToSplitCheck = (item) => {
+    this.setState((prev) => ({
+      splitCheck: [...prev.splitCheck, item]
+    }));
+  };
+
+  openSplitModal = () => {
+    this.props.saveSplitOrder(this.state.splitCheck);
+    this.props.closeModal();
+    this.props.openSplitModal();
+  };
+  // ────────────────────────────────────────────────────────────────────────────────
 
   addItemToOrder = (item) => {
     this.setState((prev) => ({
@@ -44,17 +59,31 @@ class PartyPage extends React.Component {
   };
 
   render() {
-    console.log(this.state.order);
     return (
       <React.Fragment>
         {this.props.modalIsOpen && (
-          <Modal order={this.state.order}>
+          <Modal>
             {this.props.order.map((item) => (
-              <div>{item.name}</div>
+              <div>
+                {item.name}
+                <div onClick={() => this.addToSplitCheck(item)}>+</div>
+              </div>
             ))}
             <div>Checkout Modal</div>
-            <button type="button">Split Check</button>
+            <button type="button" onClick={this.openSplitModal}>
+              Split Check
+            </button>
             <button type="button">Checkout</button>
+          </Modal>
+        )}
+        {this.props.splitModalIsOpen && (
+          <Modal closeSplitModal={this.closeSplitModal}>
+            {this.props.splitOrder.map((item) => (
+              <div>{item.name}</div>
+            ))}
+            <div>Split Modal</div>
+            <button type="button">split modal button one</button>
+            <button type="button">split modal button two</button>
           </Modal>
         )}
         <s.Container modalOpen={this.props.modalIsOpen}>
@@ -83,35 +112,47 @@ const locationType = PropTypes.shape({
 
 PartyPage.propTypes = {
   openModal: PropTypes.func,
+  closeModal: PropTypes.func,
+  openSplitModal: PropTypes.func,
   saveOrder: PropTypes.func,
+  saveSplitOrder: PropTypes.func,
   getItems: PropTypes.func,
   modalIsOpen: PropTypes.bool,
+  splitModalIsOpen: PropTypes.bool,
   items: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
+  splitOrder: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   tables: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   location: locationType
 };
 
 PartyPage.defaultProps = {
   openModal: () => {},
+  closeModal: () => {},
+  openSplitModal: () => {},
   saveOrder: () => {},
+  saveSplitOrder: () => {},
   getItems: () => {},
   modalIsOpen: false,
+  splitModalIsOpen: false,
   items: [],
   order: [],
+  splitOrder: [],
   tables: [{ number: 1 }, { number: 6 }, { number: 3 }],
   location: { country: 'US', state: 'CA' }
 };
 
 const mapStateToProps = (state) => ({
   modalIsOpen: state.modal.isOpen,
+  splitModalIsOpen: state.modal.splitModalIsOpen,
   items: state.items.itemList,
   order: state.party.order,
+  splitOrder: state.party.splitOrder,
   location: state.restaurant.restaurantInfo.location,
   store: state
 });
 
 export default connect(
   mapStateToProps,
-  { openModal, closeModal, getItems, saveOrder }
+  { openModal, closeModal, getItems, saveOrder, saveSplitOrder, openSplitModal, closeSplitModal }
 )(PartyPage);

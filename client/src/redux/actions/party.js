@@ -3,6 +3,7 @@ import axios from 'axios';
 import serverURI from '../../config/URI';
 
 export const SAVE_ORDER = 'SAVE_ORDER';
+export const SAVE_SPLIT_ORDER = 'SAVE_SPLIT_ORDER';
 export const LOADING_PARTIES = 'LOADING_PARTIES';
 export const LOADING_PARTIES_SUCCESS = 'LOADING_PARTIES_SUCCESS';
 export const LOADING_PARTIES_ERROR = 'LOADING_PARTIES_ERROR';
@@ -26,6 +27,12 @@ axios.defaults.headers.common.Authorization = localStorage.getItem('jwt');
 export const saveOrder = (order) => ({
   type: SAVE_ORDER,
   payload: order
+});
+
+// Saves the Split Order on the Modal
+export const saveSplitOrder = (splitOrder) => ({
+  type: SAVE_SPLIT_ORDER,
+  payload: splitOrder
 });
 
 // Gets all Parties: server (name), food (name, price), and tables

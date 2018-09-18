@@ -1,5 +1,6 @@
 import {
   SAVE_ORDER,
+  SAVE_SPLIT_ORDER,
   LOADING_PARTIES,
   LOADING_PARTIES_SUCCESS,
   LOADING_PARTY,
@@ -15,6 +16,7 @@ import { DEACTIVATING_TABLE_SUCCESS } from '../actions/tables';
 
 const initialState = {
   order: [],
+  splitOrder: [],
   fetchedParty: {},
   partyList: [],
   loading: false
@@ -24,6 +26,9 @@ const PartyReducer = (state = initialState, action) => {
   switch (action.type) {
     case SAVE_ORDER:
       return { ...state, order: action.payload };
+
+    case SAVE_SPLIT_ORDER:
+      return { ...state, splitOrder: action.payload };
 
     case LOADING_PARTIES:
       return { ...state, loading: true };
