@@ -30,6 +30,10 @@ class FloorPlan extends React.Component {
     this.tables = []; // TODO: investigate cleaner solutions
   }
 
+  state = {
+    locked: false,
+  }
+
   componentDidMount() {
     // Lay the initial stage
     this.pixi.current.appendChild(this.app.view);
@@ -48,6 +52,18 @@ class FloorPlan extends React.Component {
         this.circleCreator(table);
       });
     }
+  }
+
+  toggleLock = () => {
+    this.setState((prev) => ({
+      locked: !prev.locked,
+    }), () => {
+      if (this.state.locked) {
+        this.viewport.pausePlugin('drag');
+      } else {
+        this.viewport.resumePlugin('drag');
+      }
+    });
   }
 
   clear = () => {
@@ -226,7 +242,18 @@ class FloorPlan extends React.Component {
 
   render() {
     // TODO: Stretch Goal: Use border-radius and arrows to fuck with shit
-    return <s.FloorPlan innerRef={this.pixi} />;
+    return (
+      <React.Fragment>
+        <s.FloorPlan innerRef={this.pixi} />
+        <div style={{ position: 'fixed', right: '100px' }}> {/* // ! make these not inline */}
+          <label htmlFor="lock">
+            <input type="checkbox" id="lock" onClick={this.toggleLock} value={this.state.locked} />
+            <span>Lock</span>
+          </label>
+        </div>
+      </React.Fragment>
+    
+    );
   }
 }
 
