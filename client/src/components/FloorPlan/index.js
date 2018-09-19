@@ -125,6 +125,7 @@ class FloorPlan extends React.Component {
     // and add the circle to the stage
     circle.x = table.x;
     circle.y = table.y;
+    circle.tableId = table._id;
     this.viewport.addChild(circle);
 
     // Adds the table number text,
@@ -170,7 +171,7 @@ class FloorPlan extends React.Component {
         // If editing mode is on:
         // Update Redux Store's table location,
         // set dragging to false and clear the data
-        this.props.moveTable(this.tables);
+        this.props.moveTable({ x: circle.x, y: circle.y, tableId: circle.tableId });
         circle.dragging = false;
         circle.data = null;
 
@@ -271,7 +272,6 @@ class FloorPlan extends React.Component {
           </label>
         </div>
         <div style={{ position: 'fixed', right: '40px' }}>
-          {' '}
           {/* // ! make these not inline */}
           <button type="button" onClick={this.zoomIn}>
             +

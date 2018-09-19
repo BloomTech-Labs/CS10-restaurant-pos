@@ -44,9 +44,9 @@ export const addTable = (number) => (dispatch) => {
     });
 };
 
-export const moveTable = (tables) => ({
+export const moveTable = (table) => ({
   type: MOVE_TABLE,
-  payload: tables
+  payload: table
 });
 
 export const saveTables = (tables) => (dispatch) => {
