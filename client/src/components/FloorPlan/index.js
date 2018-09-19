@@ -179,7 +179,7 @@ class FloorPlan extends React.Component {
           circle.alpha = 1;
         }
       }
-
+      console.log(this.viewport);
       this.viewport.resumePlugin('drag');
     };
 

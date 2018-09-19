@@ -33,9 +33,9 @@ export const addRestaurant = ({
   axios
     .post(`${serverURI}/api/restaurants/register`, { name, location, billing: { address } })
     .then(res => {
-      const { restaurant, id } = jwtDecode(res.data.token);
+      const { restaurant } = jwtDecode(res.data.token);
 
-      dispatch({ type: RESTAURANT_AUTH, payload: { jwt: res.data.token, restaurant, id } });
+      dispatch({ type: RESTAURANT_AUTH, payload: { jwt: res.data.token, restaurant } });
 
       localStorage.setItem('jwt', res.data.token);
 

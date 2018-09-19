@@ -10,9 +10,10 @@ import { createParty } from '../../redux/actions/party';
 import * as s from './styles';
 
 class TableEditPanel extends React.Component {
-  state = {
-    authorized: this.props.role.admin || this.props.role.manager,
-  };
+  addTable = () => {
+    const newTableNumber = this.props.tables.length + 1;
+    this.props.addTable(newTableNumber);
+  }
 
   createParty = () => {
     // TODO: this.props.saveParty or some shit
@@ -21,9 +22,10 @@ class TableEditPanel extends React.Component {
   };
 
   render() {
+    const authorized = this.props.role.admin || this.props.role.manager;
     return (
       <s.Panel>
-        {this.state.authorized && (
+        {authorized && (
           <button type="button" onClick={this.props.toggleEdit}>
             Edit
           </button>
@@ -32,7 +34,7 @@ class TableEditPanel extends React.Component {
           Add Order
         </button>
         {this.props.editing && (
-          <button type="button" onClick={this.props.addTable}>
+          <button type="button" onClick={this.addTable}>
             Add Table
           </button>
         )}

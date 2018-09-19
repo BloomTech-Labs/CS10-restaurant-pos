@@ -45,7 +45,7 @@ class App extends Component {
                 <Route path="/" component={Landing} exact />
                 <Route path="/login" component={RequireNotAuth(Login)} />
                 <Route path="/register" component={RequireNotAuth(Register)} />
-                <Route path="/success" component={RequireNotAuth(RegistrationSuccess)} />
+                <Route path="/success" component={RegistrationSuccess} />
                 <Route path="/login-employee" component={RequireAuth(LoginEmployee)} />
                 <Route path="/new-restaurant" component={RequireAuth(NewRestaurant)} />
                 <Route path="/new-employee" component={RequireAuth(CreateEmployee)} />

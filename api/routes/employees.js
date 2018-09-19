@@ -102,7 +102,7 @@ router.post('/register', (req, res) => {
     .save()
     .then((employeeInfo) => {
       // Send the employees pin number
-      res.status(201).json(employeeInfo.pin);
+      res.status(201).json({ pin: employeeInfo.pin });
     })
     .catch((err) => {
       res.status(500).json({ err, msg: 'Error saving the employee to the database.' });

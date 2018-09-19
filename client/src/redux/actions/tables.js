@@ -32,10 +32,10 @@ export const getTables = () => (dispatch) => {
     });
 };
 
-export const addTable = () => (dispatch) => {
+export const addTable = (number) => (dispatch) => {
   dispatch({ type: ADDING_TABLE });
   axios
-    .post(`${serverURI}/api/tables/add`, { x: 50, y: 50 })
+    .post(`${serverURI}/api/tables/add`, { number, x: 50, y: 50 })
     .then((res) => {
       dispatch({ type: ADDING_TABLE_SUCCESS, payload: res.data });
     })
