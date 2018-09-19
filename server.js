@@ -11,18 +11,21 @@ const passport = require('passport');
 const cors = require('cors');
 
 const { mongoURI: db, clientURI } = require('./config/keys');
-const employees = require('./api/routes/employees');
+// const employees = require('./api/routes/employees');
 const items = require('./api/routes/items');
 const party = require('./api/routes/party');
 const orders = require('./api/routes/orders');
 const tables = require('./api/routes/tables');
 const restaurants = require('./api/routes/restaurants');
 const subscriptions = require('./api/routes/subscriptions');
+// Route Imports
+const employeeRoutes = require('./api/routes/employeeRoutes');
 
 const corsOptions = { origin: clientURI, credentials: true };
 
 // Initialize Server
 const server = express();
+
 
 // Middleware
 server.use(express.json());
@@ -62,7 +65,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Routes
-server.use('/api/employees', employees);
+// server.use('/api/employees', employees);
 server.use(
   '/api/restaurants',
   passport.authenticate('jwt', { session: false }),
@@ -93,6 +96,9 @@ server.use(
   passport.authenticate('jwt', { session: false }),
   subscriptions
 );
+
+// Routes
+employeeRoutes(server);
 
 server.listen(PORT, (err) => {
   if (err) console.error(err);
