@@ -12,13 +12,13 @@ const cors = require('cors');
 
 const { mongoURI: db, clientURI } = require('./config/keys');
 const tables = require('./api/routes/tables');
-const subscriptions = require('./api/routes/subscriptions');
 // Route Imports
 const employeeRoutes = require('./api/routes/employeeRoutes');
 const itemRoutes = require('./api/routes/itemRoutes');
 const restaurantRoutes = require('./api/routes/restaurantRoutes');
 const orderRoutes = require('./api/routes/orderRoutes');
 const partyRoutes = require('./api/routes/partyRoutes');
+const stripeRoutes = require('./api/routes/stripeRoutes');
 
 const corsOptions = { origin: clientURI, credentials: true };
 
@@ -69,11 +69,6 @@ server.use(
   passport.authenticate('jwt', { session: false }),
   tables
 );
-server.use(
-  '/api/subscriptions',
-  passport.authenticate('jwt', { session: false }),
-  subscriptions
-);
 
 // Routes
 employeeRoutes(server);
@@ -81,6 +76,7 @@ itemRoutes(server, passport.authenticate('jwt', { session: false }));
 restaurantRoutes(server, passport.authenticate('jwt', { session: false }));
 orderRoutes(server, passport.authenticate('jwt', { session: false }));
 partyRoutes(server, passport.authenticate('jwt', { session: false }));
+stripeRoutes(server, passport.authenticate('jwt', { session: false }));
 
 server.listen(PORT, (err) => {
   if (err) console.error(err);

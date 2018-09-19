@@ -1,19 +1,10 @@
-const express = require('express');
-
-const stripe = require('../../config/keys').stripeSecretKey;
-const Employee = require('../models/Employee');
-
-const router = express.Router();
-
-// @route   GET api/subscriptions/test
-// @desc    Tests subscription routes
-// @access  Private
-router.get('/test', (req, res) => res.json({ msg: 'Subscription Routes Work' }));
+const stripe = require('../../../config/keys').stripeSecretKey;
+const Employee = require('../../models/Employee');
 
 // @route   GET api/subscriptions/subscribe
 // @desc    Tests subscription routes
 // @access  Private
-router.post('/subscribe', (req, res) => {
+const subscribe = (req, res) => {
   const { pin, email, stripeToken } = req.body;
 
   // Create a new customer
@@ -48,6 +39,6 @@ router.post('/subscribe', (req, res) => {
     .catch((err) => {
       res.status(400).json(err);
     });
-});
+};
 
-module.exports = router;
+module.exports = { subscribe };
