@@ -17,6 +17,8 @@ export const DEACTIVATING_TABLE_SUCCESS = 'DEACTIVATING_TABLE_SUCCESS';
 export const DEACTIVATING_TABLE_ERROR = 'DEACTIVATING_TABLE_ERROR';
 export const TOGGLE_TABLE = 'TOGGLE_TABLE';
 export const TOGGLE_EDIT = 'TOGGLE_EDIT';
+export const SIDEBAR_REF = 'SIDEBAR_REF';
+export const TOPBAR_REF = 'TOPBAR_REF';
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common.Authorization = localStorage.getItem('jwt');
@@ -81,4 +83,14 @@ export const toggleTable = (table) => ({
 
 export const toggleEdit = () => ({
   type: TOGGLE_EDIT,
+});
+
+export const saveSidebarRef = (ref) => ({
+  type: SIDEBAR_REF,
+  payload: ref
+});
+
+export const saveTopbarRef = (ref) => ({
+  type: TOPBAR_REF,
+  payload: ref
 });

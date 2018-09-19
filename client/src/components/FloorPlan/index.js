@@ -4,7 +4,10 @@ import Viewport from 'pixi-viewport';
 import PropTypes from 'prop-types';
 import SetType from 'es6-set-proptypes';
 
+import { sidebarWidth, topbarHeight } from '../../global-styles/variables';
+
 import * as s from './styles';
+
 
 class FloorPlan extends React.Component {
   constructor(props) {
@@ -105,7 +108,7 @@ class FloorPlan extends React.Component {
     // Determine the color, size,
     // and location of the circle.
     // But x and y shouldn't be set here
-    circle.beginFill(0xffffff);
+    circle.beginFill(0xF7F9FA);
     circle.drawCircle(0, 0, 30);
     circle.endFill();
 
@@ -240,10 +243,11 @@ class FloorPlan extends React.Component {
   };
 
   resize = () => {
-    // TODO: subtracting 300px to allow space for the sidebar, fix later
-    const w = window.innerWidth - 300;
-    // TODO: subtracting 160 px to allow for top bar and padding, fix later
-    const h = window.innerHeight - 160;
+    const { sidebarRef, topbarRef } = this.props;
+    console.log(window.innerHeight);
+    console.log(topbarRef ? topbarRef.current.clientHeight : topbarHeight);
+    const w = window.innerWidth - (sidebarRef ? sidebarRef.current.clientWidth : sidebarWidth);
+    const h = window.innerHeight - (topbarRef ? topbarRef.current.clientHeight : topbarHeight);
     this.app.renderer.resize(w, h);
     this.viewport.resize(w, h, 1000, 1000);
   };
@@ -273,7 +277,9 @@ FloorPlan.propTypes = {
   selected: SetType,
   tables: PropTypes.arrayOf(PropTypes.object),
   moveTable: PropTypes.func,
-  toggleTable: PropTypes.func
+  toggleTable: PropTypes.func,
+  topbarRef: PropTypes.any, // eslint-disable-line react/forbid-prop-types
+  sidebarRef: PropTypes.any, // eslint-disable-line react/forbid-prop-types
 };
 
 FloorPlan.defaultProps = {
@@ -281,7 +287,9 @@ FloorPlan.defaultProps = {
   selected: new Set(),
   tables: [],
   moveTable: () => {},
-  toggleTable: () => {}
+  toggleTable: () => {},
+  topbarRef: false, // hack to let the ternary work
+  sidebarRef: false, // hack to let the ternary work
 };
 
 export default FloorPlan;

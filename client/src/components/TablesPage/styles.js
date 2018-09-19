@@ -10,5 +10,4 @@ export const Container = styled.div`
 export const Editor = styled.div`
   ${flexCenterMixin}
   flex-grow: 6;
-  padding: 50px;
 `;

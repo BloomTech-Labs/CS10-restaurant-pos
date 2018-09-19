@@ -45,6 +45,10 @@ TableEditPanel.propTypes = {
   tables: PropTypes.arrayOf(PropTypes.object),
   editing: PropTypes.bool,
   selected: SetType,
+  role: PropTypes.shape({
+    admin: PropTypes.bool,
+    manager: PropTypes.bool
+  }),
   createParty: PropTypes.func,
   addTable: PropTypes.func,
   toggleEdit: PropTypes.func,
@@ -55,6 +59,7 @@ TableEditPanel.defaultProps = {
   tables: [],
   editing: false,
   selected: new Set(),
+  role: { admin: false, manager: false },
   createParty: () => {},
   addTable: () => {},
   toggleEdit: () => {},

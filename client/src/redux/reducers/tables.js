@@ -10,13 +10,17 @@ import {
   DEACTIVATING_TABLE_SUCCESS,
   TOGGLE_TABLE,
   TOGGLE_EDIT,
+  SIDEBAR_REF,
+  TOPBAR_REF
 } from '../actions/tables';
 
 const initialState = {
   tableList: [],
   selected: new Set(),
   editing: false,
-  loading: false
+  loading: false,
+  sidebarRef: null,
+  topbarRef: null
 };
 
 const TablesReducer = (state = initialState, action) => {
@@ -50,7 +54,7 @@ const TablesReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        tableList: state.tableList.map((table) => {
+        tableList: state.tableList.map(table => {
           if (table._id === updatedTable._id) return updatedTable;
           return table;
         })
@@ -67,6 +71,12 @@ const TablesReducer = (state = initialState, action) => {
 
     case TOGGLE_EDIT:
       return { ...state, editing: !state.editing };
+
+    case SIDEBAR_REF:
+      return { ...state, sidebarRef: action.payload };
+
+    case TOPBAR_REF:
+      return { ...state, topbarRef: action.payload };
 
     default:
       return state;
