@@ -2,81 +2,78 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 
 // URIs
-
 import serverURI from '../../config/URI';
 
+export const AUTH_LOADING = 'AUTH_LOADING';
 export const PASSWORD_MATCH_ERROR = 'PASSWORD_MATCH_ERROR';
 export const PASSWORD_MATCH_SUCCESS = 'PASSWORD_MATCH_SUCCESS';
-export const LOGIN_FAILURE = 'LOGIN_FAILURE'; // TODO: make separate action types for registration
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'; // TODO: make separate action types for registration
-export const EMPLOYEE_LOGIN_FAILURE = 'EMPLOYEE_LOGIN_FAILURE'; // TODO: make separate action types for registration
-export const EMPLOYEE_LOGIN_SUCCESS = 'EMPLOYEE_LOGIN_SUCCESS'; // TODO: make separate action types for registration
-// TODO: Make loading action type LOGGING_IN for login and loginEmployee actions
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const REGISTRATION_FAILURE = 'REGISTRATION_FAILURE';
+export const REGISTRATION_SUCCESS = 'REGISTRATION_SUCCESS';
+export const EMPLOYEE_LOGIN_FAILURE = 'EMPLOYEE_LOGIN_FAILURE';
+export const EMPLOYEE_LOGIN_SUCCESS = 'EMPLOYEE_LOGIN_SUCCESS';
 
-// Axios Defaults
-
-axios.defaults.withCredentials = true;
-axios.defaults.headers.common.Authorization = localStorage.getItem('jwt');
-
-// Actions
-
-export const login = ({ pin, pass }, push) => (dispatch) => {
+export const login = ({ email, pass }, push) => (dispatch) => {
+  dispatch({ type: AUTH_LOADING });
   axios // TODO: Determine the name of this route
-    .post(`${serverURI}/api/restaurants/login`, { pin, pass })
+    .post(`${serverURI}/api/employees/admin/login`, { email, pass })
     .then((res) => {
-      const { role } = jwtDecode(res.data.token);
+      const { restaurant } = jwtDecode(res.data.token);
 
-      dispatch({ type: LOGIN_SUCCESS, jwt: res.data.token, role });
+      // * res.data.token:
+      // const payload = {
+      //   id: user._id,
+      //   pin: null,
+      //   role: {
+      //     admin: null,
+      //     manager: null
+      //   },
+      //   restaurant: user.restaurant
+      // };
+
+      dispatch({ type: LOGIN_SUCCESS, payload: { jwt: res.data.token, restaurant } });
 
       localStorage.setItem('jwt', res.data.token);
 
-      if (role.admin || role.manager) {
-        push('/servers');
-      } else {
-        push('/tables');
-      }
+      push('/login-employee');
     })
     .catch((err) => {
       dispatch({ type: LOGIN_FAILURE, payload: err });
     });
 };
 
-export const register = ({ firstName, lastName, pass, confirmPass }, push) => (dispatch) => {
+export const register = ({ firstName, lastName, email, pass, confirmPass }, push) => (dispatch) => {
   if (pass !== confirmPass) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
   }
   dispatch({ type: PASSWORD_MATCH_SUCCESS });
+  dispatch({ type: AUTH_LOADING });
   axios
-    .post(`${serverURI}/api/employees/admin/register`, { name: `${firstName} ${lastName}`, pass })
+    .post(`${serverURI}/api/employees/admin/register`, {
+      name: `${firstName} ${lastName}`,
+      email,
+      pass
+    })
     .then((res) => {
-      // TODO: Test that this works -----------------------------------
-      const { role } = jwtDecode(res.data.token);
-
-      dispatch({ type: LOGIN_SUCCESS, jwt: res.data.token, role });
-
-      localStorage.setItem('jwt', res.data.token);
-
-      if (role.admin) {
-        push('/restaurant/sign-up');
-      } else {
-        push('/404');
-      }
-      // TODO: --------------------------------------------------------
+      dispatch({ type: REGISTRATION_SUCCESS, payload: res.data.pin });
+      push('/success');
     })
     .catch((err) => {
-      dispatch({ type: LOGIN_FAILURE, payload: err });
+      dispatch({ type: REGISTRATION_FAILURE, payload: err });
     });
 };
 
 export const loginEmployee = ({ pin, pass }, push) => (dispatch) => {
-  // TODO: Change action types to be unique from register/login
+  dispatch({ type: AUTH_LOADING });
   axios
     .post(`${serverURI}/api/employees/login`, { pin, pass })
     .then((res) => {
-      const { role } = jwtDecode(res.data.token);
+      const { role, restaurant } = jwtDecode(res.data.token);
+      console.log({ role, restaurant, jwt: jwtDecode(res.data.token) });
 
-      dispatch({ type: LOGIN_SUCCESS, payload: { jwt: res.data.token, role } });
+      dispatch({ type: LOGIN_SUCCESS, payload: { jwt: res.data.token, role, restaurant } });
 
       localStorage.setItem('jwt', res.data.token);
 
@@ -97,6 +94,7 @@ export const addEmployee = ({ firstName, lastName, pass, confirmPass }) => (disp
     return;
   }
   dispatch({ type: PASSWORD_MATCH_SUCCESS });
+  dispatch({ type: AUTH_LOADING });
   axios
     .post(`${serverURI}/api/employees/register`, { name: `${firstName} ${lastName}`, pass })
     .then((res) => {

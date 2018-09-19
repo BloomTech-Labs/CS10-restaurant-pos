@@ -16,7 +16,7 @@ class Navbar extends React.Component {
   render() {
     return (
       <s.Navbar innerRef={this.ref} modalIsOpen={this.props.modalIsOpen}>
-        <s.StyledLink to="/login-employee">(Employee Login DO NOT USE)</s.StyledLink>
+        <s.StyledLink to="/login-employee">(Employee Login)</s.StyledLink>
         <s.StyledLink to="/login">(Admin Login)</s.StyledLink>
         <s.StyledLink to="/register">(Register)</s.StyledLink>
         <s.StyledLink to="/restaurant/sign-up">(Restaurant)</s.StyledLink>

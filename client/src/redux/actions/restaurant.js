@@ -9,9 +9,6 @@ export const ADDING_RESTAURANT = 'ADDING_RESTAURANT';
 export const ADDING_RESTAURANT_SUCCESS = 'ADDING_RESTAURANT_SUCCESS';
 export const ADDING_RESTAURANT_ERROR = 'ADDING_RESTAURANT_ERROR';
 
-axios.defaults.withCredentials = true;
-axios.defaults.headers.common.Authorization = localStorage.getItem('jwt');
-
 export const getRestaurant = () => dispatch => {
   dispatch({ type: LOADING_RESTAURANT });
   axios

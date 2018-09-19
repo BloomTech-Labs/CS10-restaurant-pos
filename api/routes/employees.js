@@ -117,7 +117,6 @@ router.post('/login', (req, res) => {
   const { pin, pass } = req.body;
   // Token contains the restaurant source via logged in admin
   const token = jwt.verify(req.headers.authorization.slice(7), keys.secretOrKey);
-
   verifyFields(['pin'], req.body, res);
 
   // Find the employee in the DB

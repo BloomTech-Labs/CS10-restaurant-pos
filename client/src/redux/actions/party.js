@@ -21,9 +21,6 @@ export const DELETING_PARTY = 'DELETING_PARTY';
 export const DELETING_PARTY_SUCCESS = 'DELETING_PARTY_SUCCESS';
 export const DELETING_PARTY_ERROR = 'DELETING_PARTY_ERROR';
 
-axios.defaults.withCredentials = true;
-axios.defaults.headers.common.Authorization = localStorage.getItem('jwt');
-
 // Saves the Order on the ScratchPad
 export const createParty = (tables, push) => {
   push('/party');
