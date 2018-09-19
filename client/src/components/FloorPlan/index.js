@@ -4,10 +4,9 @@ import Viewport from 'pixi-viewport';
 import PropTypes from 'prop-types';
 import SetType from 'es6-set-proptypes';
 
-import { sidebarWidth, topbarHeight } from '../../global-styles/variables';
+import { theme } from '../../global-styles/variables';
 
 import * as s from './styles';
-
 
 class FloorPlan extends React.Component {
   constructor(props) {
@@ -27,15 +26,15 @@ class FloorPlan extends React.Component {
       worldHeight: 1000,
       worldWidth: 1000,
       interaction: this.app.renderer.interaction,
-      passiveWheel: false, // presence of unnecessary passive event listeners causes a warning
+      passiveWheel: false // presence of unnecessary passive event listeners causes a warning
     });
-    this.app.renderer.backgroundColor = 0x8698aa;
+    this.app.renderer.backgroundColor = parseInt(theme.contentBackground.slice(1), 16);
     this.tables = []; // TODO: investigate cleaner solutions
   }
 
   state = {
-    locked: false,
-  }
+    locked: false
+  };
 
   componentDidMount() {
     // Lay the initial stage
@@ -50,7 +49,7 @@ class FloorPlan extends React.Component {
       this.clear();
 
       // ...and redraw them on the stage
-      this.props.tables.forEach(table => {
+      this.props.tables.forEach((table) => {
         this.tables.push(table);
         this.circleCreator(table);
       });
@@ -58,24 +57,27 @@ class FloorPlan extends React.Component {
   }
 
   toggleLock = () => {
-    this.setState((prev) => ({
-      locked: !prev.locked,
-    }), () => {
-      if (this.state.locked) {
-        this.viewport.pausePlugin('drag');
-      } else {
-        this.viewport.resumePlugin('drag');
+    this.setState(
+      (prev) => ({
+        locked: !prev.locked
+      }),
+      () => {
+        if (this.state.locked) {
+          this.viewport.pausePlugin('drag');
+        } else {
+          this.viewport.resumePlugin('drag');
+        }
       }
-    });
-  }
+    );
+  };
 
   zoomIn = () => {
     this.viewport.zoomPercent(0.15, true);
-  }
+  };
 
   zoomOut = () => {
     this.viewport.zoomPercent(-0.15, true);
-  }
+  };
 
   clear = () => {
     this.viewport.removeChildren();
@@ -98,7 +100,7 @@ class FloorPlan extends React.Component {
     this.line(this.viewport.worldWidth - 10, 0, 10, this.viewport.worldHeight);
   };
 
-  circleCreator = table => {
+  circleCreator = (table) => {
     // Create a circle, make it interactive,
     // and add `cursor: pointer` css style
     const circle = new PIXI.Graphics();
@@ -108,7 +110,7 @@ class FloorPlan extends React.Component {
     // Determine the color, size,
     // and location of the circle.
     // But x and y shouldn't be set here
-    circle.beginFill(0xF7F9FA);
+    circle.beginFill(0xf7f9fa);
     circle.drawCircle(0, 0, 30);
     circle.endFill();
 
@@ -140,7 +142,7 @@ class FloorPlan extends React.Component {
       }
     };
 
-    const onDragStart = event => {
+    const onDragStart = (event) => {
       if (this.props.editing) {
         // If editing mode is on:
         // Make it transparent on drag, then store a
@@ -244,10 +246,10 @@ class FloorPlan extends React.Component {
 
   resize = () => {
     const { sidebarRef, topbarRef } = this.props;
-    console.log(window.innerHeight);
-    console.log(topbarRef ? topbarRef.current.clientHeight : topbarHeight);
-    const w = window.innerWidth - (sidebarRef ? sidebarRef.current.clientWidth : sidebarWidth);
-    const h = window.innerHeight - (topbarRef ? topbarRef.current.clientHeight : topbarHeight);
+    const w = window.innerWidth
+      - (sidebarRef ? sidebarRef.current.clientWidth : theme.sideBarWidth);
+    const h = window.innerHeight
+      - (topbarRef ? topbarRef.current.clientHeight : theme.topBarHeight);
     this.app.renderer.resize(w, h);
     this.viewport.resize(w, h, 1000, 1000);
   };
@@ -257,15 +259,23 @@ class FloorPlan extends React.Component {
     return (
       <React.Fragment>
         <s.FloorPlan innerRef={this.pixi} />
-        <div style={{ position: 'fixed', right: '100px' }}> {/* // ! make these not inline */}
+        <div style={{ position: 'fixed', right: '100px' }}>
+          {' '}
+          {/* // ! make these not inline */}
           <label htmlFor="lock">
             <input type="checkbox" id="lock" onClick={this.toggleLock} value={this.state.locked} />
             <span>Lock</span>
           </label>
         </div>
-        <div style={{ position: 'fixed', right: '40px' }}> {/* // ! make these not inline */}
-          <button type="button" onClick={this.zoomIn}>+</button>
-          <button type="button" onClick={this.zoomOut}>-</button>
+        <div style={{ position: 'fixed', right: '40px' }}>
+          {' '}
+          {/* // ! make these not inline */}
+          <button type="button" onClick={this.zoomIn}>
+            +
+          </button>
+          <button type="button" onClick={this.zoomOut}>
+            -
+          </button>
         </div>
       </React.Fragment>
     );
@@ -279,7 +289,7 @@ FloorPlan.propTypes = {
   moveTable: PropTypes.func,
   toggleTable: PropTypes.func,
   topbarRef: PropTypes.any, // eslint-disable-line react/forbid-prop-types
-  sidebarRef: PropTypes.any, // eslint-disable-line react/forbid-prop-types
+  sidebarRef: PropTypes.any // eslint-disable-line react/forbid-prop-types
 };
 
 FloorPlan.defaultProps = {
@@ -289,7 +299,7 @@ FloorPlan.defaultProps = {
   moveTable: () => {},
   toggleTable: () => {},
   topbarRef: false, // hack to let the ternary work
-  sidebarRef: false, // hack to let the ternary work
+  sidebarRef: false // hack to let the ternary work
 };
 
 export default FloorPlan;
