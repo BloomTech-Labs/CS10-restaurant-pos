@@ -246,8 +246,10 @@ class FloorPlan extends React.Component {
 
   resize = () => {
     const { sidebarRef, topbarRef } = this.props;
-    const w = window.innerWidth - (sidebarRef ? sidebarRef.current.clientWidth : theme.sideBarWidth);
-    const h = window.innerHeight - (topbarRef ? topbarRef.current.clientHeight : theme.topBarHeight);
+    const w = window.innerWidth
+      - (sidebarRef ? sidebarRef.current.clientWidth : theme.sideBarWidth);
+    const h = window.innerHeight
+      - (topbarRef ? topbarRef.current.clientHeight : theme.topBarHeight);
     this.app.renderer.resize(w, h);
     this.viewport.resize(w, h, 1000, 1000);
   };
