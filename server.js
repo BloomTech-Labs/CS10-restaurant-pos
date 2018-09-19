@@ -12,13 +12,13 @@ const cors = require('cors');
 
 const { mongoURI: db, clientURI } = require('./config/keys');
 const party = require('./api/routes/party');
-const orders = require('./api/routes/orders');
 const tables = require('./api/routes/tables');
 const subscriptions = require('./api/routes/subscriptions');
 // Route Imports
 const employeeRoutes = require('./api/routes/employeeRoutes');
 const itemRoutes = require('./api/routes/itemRoutes');
 const restaurantRoutes = require('./api/routes/restaurantRoutes');
+const orderRoutes = require('./api/routes/orderRoutes');
 
 const corsOptions = { origin: clientURI, credentials: true };
 
@@ -70,11 +70,6 @@ server.use(
   party
 );
 server.use(
-  '/api/orders',
-  passport.authenticate('jwt', { session: false }),
-  orders
-);
-server.use(
   '/api/tables',
   passport.authenticate('jwt', { session: false }),
   tables
@@ -89,6 +84,7 @@ server.use(
 employeeRoutes(server);
 itemRoutes(server, passport.authenticate('jwt', { session: false }));
 restaurantRoutes(server, passport.authenticate('jwt', { session: false }));
+orderRoutes(server, passport.authenticate('jwt', { session: false }));
 
 server.listen(PORT, (err) => {
   if (err) console.error(err);
