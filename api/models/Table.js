@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
+const { ObjectId } = Schema.Types;
 
 const TableSchema = new Schema({
   number: {
@@ -16,6 +17,11 @@ const TableSchema = new Schema({
   active: {
     type: Boolean,
     default: false,
+  },
+  restaurant: {
+    type: ObjectId,
+    ref: 'Restaurant',
+    required: true
   }
 });
 

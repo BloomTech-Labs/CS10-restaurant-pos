@@ -33,6 +33,7 @@ import {
   ADDING_RESTAURANT_ERROR,
   ADDING_RESTAURANT_SUCCESS
 } from '../actions/restaurant';
+import { LOADING_SERVERS_ERROR, LOADING_SERVERS_SUCCESS } from '../actions/servers';
 
 const initialState = {
   loginError: false,
@@ -48,7 +49,8 @@ const initialState = {
   deletingPartyError: false,
   loadingItemsError: false,
   loadingRestaurantError: false,
-  addingRestaurantError: false
+  addingRestaurantError: false,
+  loadingServersError: false
 };
 
 const ErrorReducer = (errors = initialState, action) => {
@@ -114,6 +116,11 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, addingRestaurantError: action.payload };
     case ADDING_RESTAURANT_SUCCESS:
       return { ...errors, addingRestaurantError: false };
+
+    case LOADING_SERVERS_ERROR:
+      return { ...errors, loadingServersError: action.payload };
+    case LOADING_SERVERS_SUCCESS:
+      return { ...errors, loadingServersError: false };
 
     default:
       return errors;

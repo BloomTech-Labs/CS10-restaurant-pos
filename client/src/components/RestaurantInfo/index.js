@@ -6,7 +6,7 @@ import { addRestaurant } from '../../redux/actions/restaurant';
 
 import * as s from './styles';
 
-class Restaurant extends React.Component {
+class RestaurantInfo extends React.Component {
   state = {
     name: '',
     email: '',
@@ -64,15 +64,15 @@ class Restaurant extends React.Component {
   }
 }
 
-Restaurant.propTypes = {
+RestaurantInfo.propTypes = {
   addRestaurant: PropTypes.func
 };
 
-Restaurant.defaultProps = {
+RestaurantInfo.defaultProps = {
   addRestaurant: () => {}
 };
 
 export default connect(
   null,
   { addRestaurant }
-)(Restaurant);
+)(RestaurantInfo);

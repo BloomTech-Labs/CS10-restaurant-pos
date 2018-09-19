@@ -10,21 +10,4 @@ export const Container = styled.div`
 export const Editor = styled.div`
   ${flexCenterMixin}
   flex-grow: 6;
-  padding: 50px;
-`;
-
-export const Menu = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-right: 2px solid grey;
-  width: 300px;
-  padding: 10px;
-`;
-
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 2;
-  width: 100%;
 `;

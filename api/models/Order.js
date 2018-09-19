@@ -35,6 +35,11 @@ const Order = new Schema({
     type: Date,
     default: Date.now,
   },
+  restaurant: {
+    type: ObjectId,
+    ref: 'Restaurant',
+    required: true
+  }
 });
 
 module.exports = mongoose.model('Order', Order);

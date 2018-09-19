@@ -19,7 +19,12 @@ const PartySchema = new Schema({
       type: ObjectId,
       ref: 'Table',
     },
-  ]
+  ],
+  restaurant: {
+    type: ObjectId,
+    ref: 'Restaurant',
+    required: true
+  }
 });
 
 module.exports = mongoose.model('Party', PartySchema);
