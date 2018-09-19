@@ -5,6 +5,7 @@
   - [Linting](#linting)
   - [Running](#running)
 - [Environment Variables](#environment-variables)
+- [Auth Token Payload](#auth-token-payload)
 - [Backend Endpoints](#backend-endpoints)
   - [Employee Routes](#employee-routes)
     - [Register Admin](#register-admin)
@@ -63,6 +64,31 @@ When committing, `npm run lint-all` will automatically be run.
 `NODE_MODULES_CACHE`: false
 
 `SECRET_OR_KEY`: secret key for bcryptjs
+
+# Auth Token Payload
+
+The JWT payload will look like this:
+
+```
+{
+  id: '1234567890',
+  pin: '1234,
+  role: {
+    admin: true,
+    manager: false
+  },
+  restaurant: '0987654321'
+};
+```
+
+When the admin signs in these fields will be null:
+
+- pin
+- role
+
+If the restaurant field is not defined, that means that the admin has not created a restaurant yet, and should be prompted to make one. Otherwise, the restaurant field will be populated with the ObjectId of the admin's restaurant.
+
+When an employee logs in to the POS system through the employee login, the id, pin and role fields will be populated with the employee's data.
 
 # Backend Endpoints
 
