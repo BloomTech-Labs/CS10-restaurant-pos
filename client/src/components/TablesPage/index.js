@@ -22,7 +22,6 @@ class TablesPage extends Component {
   };
 
   render() {
-    console.log(this.props.tables);
     return (
       <FloorPlan
         editing={this.props.editing && this.state.authorized}
@@ -65,6 +64,7 @@ TablesPage.defaultProps = {
 };
 
 const mapStateToProps = state => ({
+  selected: state.tables.selected,
   tables: state.tables.tableList,
   editing: state.tables.editing,
   role: state.auth.role,

@@ -138,14 +138,13 @@ class FloorPlan extends React.Component {
       if (!this.props.selected.has(table.number)) {
         // If the table doesn't exist in the active Set,
         // add it to the Set and adjust its appearance
-        this.props.toggleTable(table.number);
         circle.alpha = 0.2;
       } else {
         // If the table does exist in the active Set,
         // remove it from the Set and adjust its appearance
-        this.props.toggleTable(table.number);
         circle.alpha = 1;
       }
+      this.props.toggleTable(table.number);
     };
 
     const onDragStart = (event) => {
@@ -185,7 +184,6 @@ class FloorPlan extends React.Component {
           circle.alpha = 1;
         }
       }
-      console.log(this.viewport);
       this.viewport.resumePlugin('drag');
     };
 
@@ -266,7 +264,6 @@ class FloorPlan extends React.Component {
       <React.Fragment>
         <s.FloorPlan innerRef={this.pixi} />
         <div style={{ position: 'fixed', right: '100px' }}>
-          {' '}
           {/* // ! make these not inline */}
           <label htmlFor="lock">
             <input type="checkbox" id="lock" onClick={this.toggleLock} value={this.state.locked} />
