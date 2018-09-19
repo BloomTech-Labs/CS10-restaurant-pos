@@ -34,7 +34,7 @@ router.post('/add', (req, res) => {
     });
 
   // makes a new party with the provided tables array
-  const newParty = new Party({ tables, server });
+  const newParty = new Party({ tables, server, restaurant: req.user.restaurant });
 
   newParty
     .save()
@@ -52,7 +52,7 @@ router.post('/add', (req, res) => {
         }));
     })
     .catch((err) => {
-      res.status(400).json({
+      res.status(500).json({
         err,
         msg: 'There was an error saving the party to the DB.'
       });
@@ -77,7 +77,7 @@ router.put('/update/:id', (req, res) => {
       res.status(200).json(updatedParty);
     })
     .catch((err) => {
-      res.status(400).json({
+      res.status(500).json({
         err,
         msg: 'There was an error updating the party in the DB.'
       });
@@ -108,12 +108,13 @@ router.delete('/delete/:id', (req, res) => {
             msg: 'There was an error updating the table in the DB.'
           });
         });
+      return removedParty;
     })
     .then((removedParty) => {
       res.status(200).json({ removedParty, msg: 'Party has been removed.' });
     })
     .catch((err) => {
-      res.status(400).json({
+      res.status(500).json({
         err,
         msg: 'There was an error deleting the party in the DB.'
       });
@@ -124,7 +125,7 @@ router.delete('/delete/:id', (req, res) => {
 // @desc    Retrieves all parties from the database
 // @access  Private
 router.get('/all', (req, res) => {
-  Party.find({})
+  Party.find({ restaurant: req.user.restaurant })
     .populate('server', ['name'])
     .populate('food', ['name', 'price'])
     .populate('tables')
@@ -132,7 +133,7 @@ router.get('/all', (req, res) => {
       res.status(200).json(parties);
     })
     .catch((err) => {
-      res.status(400).json({
+      res.status(500).json({
         err,
         msg: 'There was an error retrieving the parties from the DB.'
       });
@@ -156,7 +157,7 @@ router.get('/:id', (req, res) => {
       res.status(200).json(party);
     })
     .catch((err) => {
-      res.status(400).json({
+      res.status(500).json({
         err,
         msg: 'There was an error retrieving the party from the DB.'
       });

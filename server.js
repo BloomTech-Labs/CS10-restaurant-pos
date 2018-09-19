@@ -16,6 +16,7 @@ const items = require('./api/routes/items');
 const party = require('./api/routes/party');
 const orders = require('./api/routes/orders');
 const tables = require('./api/routes/tables');
+const restaurants = require('./api/routes/restaurants');
 const subscriptions = require('./api/routes/subscriptions');
 
 const corsOptions = { origin: clientURI, credentials: true };
@@ -62,6 +63,11 @@ if (process.env.NODE_ENV === 'production') {
 
 // Routes
 server.use('/api/employees', employees);
+server.use(
+  '/api/restaurants',
+  passport.authenticate('jwt', { session: false }),
+  restaurants
+);
 server.use(
   '/api/items',
   passport.authenticate('jwt', { session: false }),

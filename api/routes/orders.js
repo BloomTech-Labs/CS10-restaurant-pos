@@ -18,11 +18,14 @@ router.get('/test', (req, res) => {
 // @desc    Create a new order
 // @access  Private
 router.post('/add', (req, res) => {
-  // Verify that all required fields are provided, sends error response if not
+  const orderData = { ...req.body };
   verifyFields(['party', 'server', 'food'], req.body, res);
 
+  // pull restaurant id from req.user and assign to the new order
+  orderData.restaurant = req.user.restaurant;
+
   // Create the new order
-  const newOrder = new Order(req.body);
+  const newOrder = new Order(orderData);
 
   // Assign Refs
   newOrder
@@ -41,7 +44,7 @@ router.post('/add', (req, res) => {
 // @desc    View all orders
 // @access  Private
 router.get('/all', (req, res) => {
-  Order.find({})
+  Order.find({ restaurant: req.user.restaurant })
     .populate('server', ['name'])
     .populate('food', ['name', 'price'])
     .then((order) => {

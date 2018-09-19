@@ -21,7 +21,12 @@ router.post('/add', (req, res) => {
   // otherwise it will continue running the rest of the code
   verifyFields(['x', 'y', 'number'], req.body, res);
 
-  const newTable = new Table({ x, y, number });
+  const newTable = new Table({
+    x,
+    y,
+    number,
+    restaurant: req.user.restaurant
+  });
 
   newTable
     .save()
@@ -40,7 +45,7 @@ router.post('/add', (req, res) => {
 // @desc    Get all tables
 // @access  Private
 router.get('/all', (req, res) => {
-  Table.find({})
+  Table.find({ restaurant: req.user.restaurant })
     .then((tables) => {
       res.status(200).json(tables);
     })
@@ -84,7 +89,11 @@ router.post('/update', (req, res) => {
 
   // map over tables from req.body, update each and return the promise
   const promises = tables.map((table) => (
-    Table.findOneAndUpdate({ _id: table._id }, table, { new: true })
+    Table.findOneAndUpdate(
+      { _id: table._id },
+      table,
+      { new: true }
+    )
   ));
 
   // pass promises array into Promise.all and send the client the list of resolved promises
@@ -174,7 +183,7 @@ router.delete('/delete/:id', (req, res) => {
   Table.findOneAndRemove({ _id: id })
     .then((removedTable) => {
       Table.update(
-        { number: { $gt: removedTable.number } },
+        { number: { $gt: removedTable.number }, restaurant: req.user.restaurant },
         { $inc: { number: -1 } },
         { multi: true }
       ).catch((err) => {
@@ -184,7 +193,7 @@ router.delete('/delete/:id', (req, res) => {
         });
       });
 
-      Table.find({})
+      Table.find({ restaurant: req.user.restaurant })
         .then((tables) => {
           res
             .status(200)
@@ -196,7 +205,7 @@ router.delete('/delete/:id', (req, res) => {
         });
     })
     .catch((err) => {
-      res.status(400).catch({
+      res.status(500).catch({
         err,
         msg: 'There was an error removing the table from the DB.',
       });

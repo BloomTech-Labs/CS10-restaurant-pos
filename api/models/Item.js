@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
+const { ObjectId } = Schema.Types;
 
 const ItemSchema = new Schema({
   name: {
@@ -17,6 +18,11 @@ const ItemSchema = new Schema({
   },
   category: {
     type: String,
+  },
+  restaurant: {
+    type: ObjectId,
+    ref: 'Restaurant',
+    required: true
   }
 });
 

@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const mongooseTypes = require('mongoose-types');
+// Loads into Mongoose Schema Types
+mongooseTypes.loadTypes(mongoose, 'email');
 
 const { Schema } = mongoose;
 const { ObjectId } = Schema.Types;
+const { Email } = mongoose.SchemaTypes;
 
 const Employee = new Schema({
   name: {
@@ -18,7 +22,10 @@ const Employee = new Schema({
     required: true,
     min: 4,
     max: 4,
-    unique: true,
+  },
+  email: {
+    // ! should be unique but it doesn't seem to work!?
+    type: Email
   },
   role: {
     admin: {
@@ -35,9 +42,9 @@ const Employee = new Schema({
       default: false,
     },
   },
-  administrator: {
+  restaurant: {
     type: ObjectId,
-    ref: 'Employee',
+    ref: 'Restaurant',
   },
 });
 
