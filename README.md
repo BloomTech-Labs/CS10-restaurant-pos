@@ -7,8 +7,10 @@
 - [Environment Variables](#environment-variables)
 - [Backend Endpoints](#backend-endpoints)
   - [Employee Routes](#employee-routes)
-    - [Register](#register)
-    - [Login](#login)
+    - [Register Admin](#register-admin)
+    - [Register Employee](#register-employee)
+    - [Login Admin](#login-admin)
+    - [Login Employee](#login-employee)
     - [Change Password](#change-password)
   - [Item Routes](#item-routes)
     - [Get All Items](#get-all-items)
@@ -66,11 +68,47 @@ When committing, `npm run lint-all` will automatically be run.
 
 ## Employee Routes
 
-### Register
+### Register Admin
+
+POST `/api/employees/admin/register`
+
+Registers a new admin. It will automatically assign the user a PIN of `0000` and set admin status as true.
+
+Request body should look like this:
+
+```
+{
+  "name": "First Last",
+  "pass": "asdfghjkl",
+  "email": "user@email.com"
+}
+```
+
+`name`: String, required
+
+`pass`: String, required, min 8 characters
+
+`email`: Email, required, must be unique
+
+Response includes the admin's PIN.
+
+Response:
+
+```
+{
+  "pin": "0000"
+}
+```
+
+### Register Employee
 
 POST `/api/employees/register`
 
-Registers a new user. If the user is the first in the database, it will automatically be made into an admin account. Only administrators and managers can register a new employee.
+**Requires Authentication**
+
+**Admin/Manager only**
+
+Registers a new employee. The `restaurant` field for the Employee will automatically be pulled from the JWT.
 
 Request body should look like this:
 
@@ -80,8 +118,7 @@ Request body should look like this:
   "pass": "asdfghjkl",
   "role": {
     "manager": "true"
-  },
-  "administrator": "5b98371f09563dc8dca06af3"
+  }
 }
 ```
 
@@ -91,9 +128,36 @@ Request body should look like this:
 
 `role`: Object, optional
 
-`administrator`: Admin's Employee ObjectId, required for all employees that are not the administrator.
+Response includes the new employee's PIN.
 
-Response includes a Bearer token for authorization.
+Response:
+
+```
+{
+  "pin": "1234"
+}
+```
+
+### Login Admin
+
+POST `/api/employees/admin/login`
+
+Logs in an existing administrator. This will bring the user to the employee login screen.
+
+Request body should look like this:
+
+```
+{
+  "email": "user@email.com",
+  "pass": "asdfghjkl"
+}
+```
+
+`email`: Email, required
+
+`pass`: String, required
+
+Response includes a success message and a Bearer token for authorization. This token will NOT have user information on it, it will only contain the restaurant id!
 
 Response:
 
@@ -103,11 +167,11 @@ Response:
 }
 ```
 
-### Login
+### Login Employee
 
 POST `/api/employees/login`
 
-Logs in an existing user.
+Logs an existing user into the application. If the user is a manager or admin, they need to provide their password.
 
 Request body should look like this:
 
@@ -118,9 +182,9 @@ Request body should look like this:
 }
 ```
 
-`pin`: String, required, min 4 characters
+`pin`: String, required, 4 characters
 
-`pass`: String, required
+`pass`: String, required only for admin/managers
 
 Response includes a Bearer token for authorization.
 
@@ -131,6 +195,7 @@ Response:
   "token": "Bearer (token)"
 }
 ```
+
 
 ### Change Password
 
