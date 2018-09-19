@@ -4,7 +4,18 @@ import * as s from './styles';
 
 class NotFound extends Component {
   render() {
-    return <s.Test>404</s.Test>;
+    return (
+      <div>
+        404
+        <s.Test>
+          Test text
+          <s.Bg>
+            <s.Button>Here is a Test Button</s.Button>
+            <s.Button main>Here is a Test Button</s.Button>
+          </s.Bg>
+        </s.Test>
+      </div>
+    );
   }
 }
 

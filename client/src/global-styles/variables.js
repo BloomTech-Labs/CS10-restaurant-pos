@@ -1,9 +1,11 @@
 // * Root Colors ----------------------
+const transparent = 'rgba(0, 0, 0, 0)';
 const white = '#FFFFFF';
 const aquaHaze = '#F7F9FA';
 const razzmatazz = '#E30E58';
 const oxfordBlue = '#303B49';
 const comet = '#5F6273';
+const steelBlue = '#4381C1';
 
 export const theme = {
   // * Misc. -----------------------------------
@@ -15,8 +17,16 @@ export const theme = {
   topBarHeight: 125,
 
   // * Buttons ---------------------------------
+  // Standard
   btnWidth: 210,
   btnHeight: 60,
+  btnBorderRadius: 10,
+  btnFontSize: 2,
+  btnColor: white,
+  btnBgColor: transparent,
+
+  // Main
+  btnMainBgColor: steelBlue,
 
   // * Color Theme Variables -------------------
   // Main Styles
