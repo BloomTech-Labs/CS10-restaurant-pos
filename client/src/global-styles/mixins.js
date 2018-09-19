@@ -7,7 +7,7 @@ export const flexCenterMixin = css`
 `;
 
 export const containerMixin = css`
-  ${flexCenterMixin};
+  display: flex;
   flex-grow: 2;
 `;
 

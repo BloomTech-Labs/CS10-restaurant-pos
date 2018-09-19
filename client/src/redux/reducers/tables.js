@@ -7,12 +7,20 @@ import {
   SAVING_TABLES,
   SAVING_TABLES_SUCCESS,
   DEACTIVATING_TABLE,
-  DEACTIVATING_TABLE_SUCCESS
+  DEACTIVATING_TABLE_SUCCESS,
+  TOGGLE_TABLE,
+  TOGGLE_EDIT,
+  SIDEBAR_REF,
+  TOPBAR_REF
 } from '../actions/tables';
 
 const initialState = {
   tableList: [],
-  loading: false
+  selected: new Set(),
+  editing: false,
+  loading: false,
+  sidebarRef: null,
+  topbarRef: null
 };
 
 const TablesReducer = (state = initialState, action) => {
@@ -46,11 +54,29 @@ const TablesReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        tableList: state.tableList.map((table) => {
+        tableList: state.tableList.map(table => {
           if (table._id === updatedTable._id) return updatedTable;
           return table;
         })
       };
+
+    case TOGGLE_TABLE:
+      const table = action.payload; // eslint-disable-line no-case-declarations
+      const newSet = new Set(state.selected); // eslint-disable-line no-case-declarations
+      if (state.selected.has(table)) {
+        newSet.delete(table);
+        return { ...state, selected: newSet };
+      }
+      return { ...state, selected: newSet.add(table) };
+
+    case TOGGLE_EDIT:
+      return { ...state, editing: !state.editing };
+
+    case SIDEBAR_REF:
+      return { ...state, sidebarRef: action.payload };
+
+    case TOPBAR_REF:
+      return { ...state, topbarRef: action.payload };
 
     default:
       return state;

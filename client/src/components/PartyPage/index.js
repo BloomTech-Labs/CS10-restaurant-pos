@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import shortid from 'shortid';
 
 import TablesPageTitle from '../TablesPageTitle';
 import ItemSelector from '../ItemSelector';
@@ -22,6 +23,10 @@ class PartyPage extends React.Component {
 
   componentDidMount() {
     this.props.getItems();
+
+    if (this.props.tables.length === 0) {
+      this.props.history.push('/tables');
+    }
   }
 
   openModal = () => {
@@ -29,7 +34,6 @@ class PartyPage extends React.Component {
     this.props.openModal();
   };
 
-  // ────────────────────────────────────────────────────────────────────────────────
   addToSplitCheck = (item) => {
     this.setState((prev) => ({
       splitCheck: [...prev.splitCheck, item]
@@ -41,7 +45,6 @@ class PartyPage extends React.Component {
     this.props.closeModal();
     this.props.openSplitModal();
   };
-  // ────────────────────────────────────────────────────────────────────────────────
 
   addItemToOrder = (item) => {
     this.setState((prev) => ({
@@ -58,11 +61,12 @@ class PartyPage extends React.Component {
     }));
   };
 
-  addParty = () => {
+  saveParty = () => {
     // ! send in `server: this.props.server` from
     // ! redux `server: state.auth.user._id`
     // ! * this hasn't been created yet
     this.props.addParty({ tables: this.props.tables, order: this.state.order });
+    this.props.history.push('/tables');
   }
 
   render() {
@@ -71,7 +75,7 @@ class PartyPage extends React.Component {
         {this.props.modalIsOpen && (
           <Modal>
             {this.props.order.map((item) => (
-              <div>
+              <div key={shortid.generate()}>
                 {item.name}
                 <div onClick={() => this.addToSplitCheck(item)}>+</div>
               </div>
@@ -84,9 +88,9 @@ class PartyPage extends React.Component {
           </Modal>
         )}
         {this.props.splitModalIsOpen && (
-          <Modal closeSplitModal={this.closeSplitModal}>
+          <Modal closeSplitModal={this.props.closeSplitModal}>
             {this.props.splitOrder.map((item) => (
-              <div>{item.name}</div>
+              <div key={shortid.generate()}>{item.name}</div>
             ))}
             <div>Split Modal</div>
             <button type="button">split modal button one</button>
@@ -99,7 +103,7 @@ class PartyPage extends React.Component {
             {/* // TODO: figure out how to name things */}
             <ItemSelector items={this.props.items} addItemToOrder={this.addItemToOrder} />
             <OrderScratchPad
-              addParty={this.addParty}
+              saveParty={this.saveParty}
               order={this.state.order}
               subTotal={this.state.subTotal}
               removeItemFromOrder={this.removeItemFromOrder}
@@ -115,7 +119,8 @@ class PartyPage extends React.Component {
 
 const locationType = PropTypes.shape({
   country: PropTypes.string,
-  state: PropTypes.string
+  state: PropTypes.string,
+
 });
 
 PartyPage.propTypes = {
@@ -128,11 +133,15 @@ PartyPage.propTypes = {
   getItems: PropTypes.func,
   modalIsOpen: PropTypes.bool,
   splitModalIsOpen: PropTypes.bool,
+  closeSplitModal: PropTypes.func,
   items: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   splitOrder: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   tables: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
-  location: locationType
+  location: locationType,
+  history: PropTypes.shape({
+    push: PropTypes.func
+  }),
 };
 
 PartyPage.defaultProps = {
@@ -143,13 +152,15 @@ PartyPage.defaultProps = {
   saveOrder: () => {},
   saveSplitOrder: () => {},
   getItems: () => {},
+  history: { push: () => {} },
+  closeSplitModal: () => {},
   modalIsOpen: false,
   splitModalIsOpen: false,
   items: [],
   order: [],
   splitOrder: [],
-  tables: [{ number: 1 }, { number: 6 }, { number: 3 }],
-  location: { country: 'US', state: 'CA' }
+  tables: [ { number: 4 } ],
+  location: { country: 'US', state: 'CA' },
 };
 
 const mapStateToProps = (state) => ({
@@ -160,7 +171,6 @@ const mapStateToProps = (state) => ({
   tables: state.party.tables,
   splitOrder: state.party.splitOrder,
   location: state.restaurant.restaurantInfo.location,
-  store: state
 });
 
 export default connect(

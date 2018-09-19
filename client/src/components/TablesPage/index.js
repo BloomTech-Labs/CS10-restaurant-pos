@@ -1,122 +1,76 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import SetType from 'es6-set-proptypes';
 
-import { getTables, addTable, moveTable } from '../../redux/actions/tables';
-import { createParty } from '../../redux/actions/party';
 import FloorPlan from '../FloorPlan';
+import { getTables, moveTable, toggleTable } from '../../redux/actions/tables';
 
-import * as s from './styles';
+// import * as s from './styles';
 
 class TablesPage extends Component {
   state = {
-    authorized: this.props.user.admin || this.props.user.manager,
-    editing: false,
-    selected: new Set()
+    authorized: this.props.role.admin || this.props.role.manager
   };
 
   componentDidMount() {
     this.props.getTables();
   }
 
-  toggleEdit = () => {
-    this.setState((prev) => ({
-      editing: !prev.editing
-    }));
-  };
-
-  toggleTable = (table) => {
-    this.setState(
-      (prev) => {
-        if (prev.selected.has(table)) {
-          prev.selected.delete(table);
-          return { selected: prev.selected };
-        }
-        return { selected: prev.selected.add(table) };
-      },
-      () => console.log(this.state.selected)
-    );
-  };
-
-  createParty = () => {
-    // TODO: this.props.saveParty or some shit
-    this.props.createParty(this.state.selected, this.props.history.push);
+  toggleTable = table => {
+    this.props.toggleTable(table);
   };
 
   render() {
     return (
-      <s.Container>
-        <s.Menu>
-          <button type="button" onClick={this.createParty}>
-            Add Order
-          </button>
-          <h1>Tables</h1>
-          <p>{this.props.tables.length}</p>
-          <button type="button" onClick={this.props.addTable}>
-            Add Table
-          </button>
-          <s.Form onSubmit={this.saveParty}>
-            <input type="text" placeholder="1080" />
-            <input type="text" placeholder="1920" />
-            {/* // TODO: This save button needs to submit the data in the
-                // TODO: redux store of new table locations to the database
-                // TODO: and possibly any restaurant dimension changes */}
-            <button type="submit">Save</button>
-            {/* // TODO: --------------------------------------------- */}
-          </s.Form>
-          {this.state.authorized && (
-            <button type="button" onClick={this.toggleEdit}>
-              Edit Floor Plan
-            </button>
-          )}
-        </s.Menu>
-        <s.Editor>
-          {this.state.editing && 'EDITING'}
-          <FloorPlan
-            editing={this.state.editing && this.state.authorized}
-            tables={this.props.tables}
-            selected={this.state.selected}
-            moveTable={this.props.moveTable}
-            toggleTable={this.toggleTable}
-          />
-        </s.Editor>
-      </s.Container>
+      <FloorPlan
+        editing={this.props.editing && this.state.authorized}
+        tables={this.props.tables}
+        selected={this.props.selected}
+        moveTable={this.props.moveTable}
+        toggleTable={this.toggleTable}
+        sidebarRef={this.props.sidebarRef}
+        topbarRef={this.props.topbarRef}
+      />
     );
   }
 }
 
 TablesPage.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func
-  }),
-  user: PropTypes.shape({
+  selected: SetType,
+  editing: PropTypes.bool,
+  role: PropTypes.shape({
     admin: PropTypes.bool,
     manager: PropTypes.bool
   }),
   tables: PropTypes.arrayOf(PropTypes.object),
   getTables: PropTypes.func,
-  addTable: PropTypes.func,
   moveTable: PropTypes.func,
-  createParty: PropTypes.func
+  toggleTable: PropTypes.func,
+  topbarRef: PropTypes.any, // eslint-disable-line react/forbid-prop-types
+  sidebarRef: PropTypes.any, // eslint-disable-line react/forbid-prop-types
 };
 
 TablesPage.defaultProps = {
-  user: { admin: false, manager: false },
+  selected: new Set(),
+  editing: false,
+  role: { admin: false, manager: false },
   tables: [],
-  history: { push: () => {} },
   getTables: () => {},
-  addTable: () => {},
   moveTable: () => {},
-  createParty: () => {}
+  toggleTable: () => {},
+  topbarRef: false, // hack to let the ternary work
+  sidebarRef: false, // hack to let the ternary work
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   tables: state.tables.tableList,
-  user: state.auth.role
+  role: state.auth.role,
+  sidebarRef: state.tables.sidebarRef,
+  topbarRef: state.tables.topbarRef,
 });
 
 export default connect(
   mapStateToProps,
-  { getTables, addTable, moveTable, createParty }
+  { getTables, moveTable, toggleTable }
 )(TablesPage);
