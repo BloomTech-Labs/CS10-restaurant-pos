@@ -9,6 +9,7 @@ import * as s from './styles';
 import Landing from './components/Landing';
 import Login from './components/Login';
 import Register from './components/Register';
+import RegistrationSuccess from './components/RegistrationSuccess';
 import LoginEmployee from './components/LoginEmployee';
 import CreateEmployee from './components/CreateEmployee';
 import Servers from './components/Servers';
@@ -43,6 +44,7 @@ class App extends Component {
                 <Route path="/" component={Landing} exact />
                 <Route path="/login" component={RequireNotAuth(Login)} />
                 <Route path="/register" component={RequireNotAuth(Register)} />
+                <Route path="/success" component={RequireNotAuth(RegistrationSuccess)} />
                 <Route path="/login-employee" component={RequireAuth(LoginEmployee)} />
                 <Route path="/new-employee" component={RequireAuth(CreateEmployee)} />
                 <Route path="/tables" component={RequireAuth(TablesPage)} />

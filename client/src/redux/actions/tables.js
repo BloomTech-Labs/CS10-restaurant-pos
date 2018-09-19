@@ -20,9 +20,6 @@ export const TOGGLE_EDIT = 'TOGGLE_EDIT';
 export const SIDEBAR_REF = 'SIDEBAR_REF';
 export const TOPBAR_REF = 'TOPBAR_REF';
 
-axios.defaults.withCredentials = true;
-axios.defaults.headers.common.Authorization = localStorage.getItem('jwt');
-
 export const getTables = () => (dispatch) => {
   dispatch({ type: LOADING_TABLES });
   axios

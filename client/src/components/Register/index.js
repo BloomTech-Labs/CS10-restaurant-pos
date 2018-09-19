@@ -10,8 +10,9 @@ class Register extends React.Component {
   state = {
     firstName: '',
     lastName: '',
+    email: '',
     pass: '',
-    confirmPass: '',
+    confirmPass: ''
   };
 
   handleChange = (event) => {
@@ -20,8 +21,10 @@ class Register extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.register(this.state);
+    this.props.register(this.state, this.props.history.push);
   };
+
+  // TODO: Send out the PIN in an email
 
   render() {
     return (
@@ -42,12 +45,20 @@ class Register extends React.Component {
             name="lastName"
             maxLength="30"
             value={this.state.lastName}
-          /> {/* // TODO: Add email field eventually} */}
+          />
+          <input
+            placeholder="email"
+            type="email"
+            onChange={this.handleChange}
+            name="email"
+            maxLength="30"
+            value={this.state.email}
+          />
           <input
             placeholder="password"
             type="password"
             minLength="8"
-            maxLength="30" // TODO: Look into max pass length
+            maxLength="21"
             onChange={this.handleChange}
             name="pass"
             value={this.state.pass}
@@ -56,7 +67,7 @@ class Register extends React.Component {
             placeholder="confirm password"
             type="password"
             minLength="8"
-            maxLength="30" // TODO: Look into max pass length
+            maxLength="21"
             onChange={this.handleChange}
             name="confirmPass"
             value={this.state.confirmPass}
@@ -70,10 +81,14 @@ class Register extends React.Component {
 
 Register.propTypes = {
   register: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func
+  })
 };
 
 Register.defaultProps = {
   register: () => {},
+  history: { push: () => {} }
 };
 
 export default connect(
