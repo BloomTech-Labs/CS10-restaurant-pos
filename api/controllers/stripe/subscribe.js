@@ -1,43 +1,64 @@
 const stripe = require('../../../config/keys').stripeSecretKey;
-const Employee = require('../../models/Employee');
+const Restaurant = require('../../models/Restaurant');
 
-// @route   GET api/subscriptions/subscribe
-// @desc    Tests subscription routes
+// @route   POST api/subscriptions/subscribe
+// @desc    Creates a subscription for an admin
 // @access  Private
 const subscribe = (req, res) => {
-  const { pin, email, stripeToken } = req.body;
+  const { stripeToken, email } = req.body;
+  const id = req.user.restaurant._id;
 
-  // Create a new customer
-  const newCustomer = stripe.customers.create({
-    email,
-    source: stripeToken
-  });
-
-  // Create a new subscription
-  const newSubscription = stripe.subscriptions.create({
-    customer: newCustomer.id,
-    items: [
-      {
-        plan: 'Monthly'
+  Restaurant.findById({ _id: id })
+    .then(restaurant => {
+      if (restaurant.membership) {
+        res.status(400).json({ msg: 'You are already subscribed!' });
+      } else {
+        stripe.customers.create(
+          {
+            email,
+            source: stripeToken
+          },
+          (err, customer) => {
+            if (err) {
+              res.status(400).json({
+                err,
+                message: 'Something went wrong creating the customer!'
+              });
+            } else {
+              const { customerId } = customer;
+              stripe.subscriptions.create(
+                {
+                  customer: customerId,
+                  items: [
+                    {
+                      plan: 'Monthly'
+                    }
+                  ]
+                },
+                (error, subscription) => {
+                  if (error) {
+                    res.status(400).json({
+                      err,
+                      message: 'Error subscribing'
+                    });
+                  } else {
+                    restaurant.subscription = subscription.id;
+                    restaurant.membership = true;
+                    restaurant.save();
+                    res.status(200).json({ message: 'Successfully Subscribed' });
+                  }
+                }
+              );
+            }
+          }
+        );
       }
-    ]
-  });
-
-  // Compile data to update a user
-  const updateAdmin = {
-    role: {
-      subscription: newSubscription.id,
-      membership: true
-    }
-  };
-
-  // Update the admin info
-  Employee.findOneAndUpdate({ pin }, updateAdmin)
-    .then((employee) => {
-      res.status(200).json(employee);
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res.status(500).json({
+        err,
+        msg: 'Something went wrong communicating with the database!'
+      });
     });
 };
 
