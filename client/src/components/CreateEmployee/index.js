@@ -15,7 +15,7 @@ class CreateEmployee extends React.Component {
   };
 
   componentDidMount() {
-    if (!this.props.role.admin || !this.props.role.manager) {
+    if (!this.props.role.admin && !this.props.role.manager) {
       this.props.history.push('/tables');
     }
   }
