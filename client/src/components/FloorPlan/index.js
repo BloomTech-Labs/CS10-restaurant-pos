@@ -41,6 +41,12 @@ class FloorPlan extends React.Component {
     this.pixi.current.appendChild(this.app.view);
     this.setup();
     this.resize();
+
+    // initially draw the tables from redux state
+    this.props.tables.forEach((table) => {
+      this.tables.push(table);
+      this.circleCreator(table);
+    });
   }
 
   componentDidUpdate(prevProps) {

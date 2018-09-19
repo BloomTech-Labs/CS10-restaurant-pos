@@ -22,6 +22,7 @@ class TablesPage extends Component {
   };
 
   render() {
+    console.log(this.props.tables);
     return (
       <FloorPlan
         editing={this.props.editing && this.state.authorized}
