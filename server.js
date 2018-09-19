@@ -98,3 +98,5 @@ server.listen(PORT, (err) => {
   if (err) console.error(err);
   console.log(`Server running on port: ${PORT}`);
 });
+
+module.exports = server;
