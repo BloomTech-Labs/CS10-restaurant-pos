@@ -11,6 +11,7 @@ const jwt = localStorage.getItem('jwt');
 
 let role = { admin: false, manager: false };
 let restaurant = '';
+let id = '';
 
 if (jwt) {
   const currentTime = Date.now() / 1000;
@@ -21,6 +22,7 @@ if (jwt) {
   } else {
     role = decodedJwt.role; // eslint-disable-line prefer-destructuring
     restaurant = decodedJwt.restaurant; // eslint-disable-line prefer-destructuring
+    id = decodedJwt.id; // eslint-disable-line prefer-destructuring
   }
 }
 
@@ -29,6 +31,7 @@ const initialState = {
   pin: '',
   jwt,
   role,
+  id,
   restaurant
 };
 
@@ -42,7 +45,8 @@ const AuthReducer = (auth = initialState, action) => {
         ...auth,
         loading: false,
         jwt: action.payload.jwt,
-        restaurant: action.payload.restaurant
+        restaurant: action.payload.restaurant,
+        id: action.payload.id,
       };
 
     case REGISTRATION_SUCCESS:
@@ -53,7 +57,8 @@ const AuthReducer = (auth = initialState, action) => {
         ...auth,
         loading: false,
         jwt: action.payload.jwt,
-        role: action.payload.role
+        role: action.payload.role,
+        id: action.payload.id,
       };
 
     default:

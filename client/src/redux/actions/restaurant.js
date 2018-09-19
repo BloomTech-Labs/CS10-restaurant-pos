@@ -22,10 +22,10 @@ export const getRestaurant = () => dispatch => {
     });
 };
 
-export const addRestaurant = (data) => dispatch => {
+export const addRestaurant = () => dispatch => {
   dispatch({ type: ADDING_RESTAURANT });
   axios
-    .post(`${serverURI}/api/restaurants/register`, data) // TODO: Verify this route
+    .post(`${serverURI}/api/restaurants/register`)
     .then(res => {
       dispatch({ type: ADDING_RESTAURANT_SUCCESS, payload: res.data });
     })

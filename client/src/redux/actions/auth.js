@@ -14,12 +14,12 @@ export const REGISTRATION_SUCCESS = 'REGISTRATION_SUCCESS';
 export const EMPLOYEE_LOGIN_FAILURE = 'EMPLOYEE_LOGIN_FAILURE';
 export const EMPLOYEE_LOGIN_SUCCESS = 'EMPLOYEE_LOGIN_SUCCESS';
 
-export const login = ({ email, pass }, push) => (dispatch) => {
+export const login = ({ email, pass }, push) => dispatch => {
   dispatch({ type: AUTH_LOADING });
   axios // TODO: Determine the name of this route
     .post(`${serverURI}/api/employees/admin/login`, { email, pass })
-    .then((res) => {
-      const { restaurant } = jwtDecode(res.data.token);
+    .then(res => {
+      const { restaurant, id } = jwtDecode(res.data.token);
 
       // * res.data.token:
       // const payload = {
@@ -32,18 +32,18 @@ export const login = ({ email, pass }, push) => (dispatch) => {
       //   restaurant: user.restaurant
       // };
 
-      dispatch({ type: LOGIN_SUCCESS, payload: { jwt: res.data.token, restaurant } });
+      dispatch({ type: LOGIN_SUCCESS, payload: { jwt: res.data.token, restaurant, id } });
 
       localStorage.setItem('jwt', res.data.token);
 
       push('/login-employee');
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch({ type: LOGIN_FAILURE, payload: err });
     });
 };
 
-export const register = ({ firstName, lastName, email, pass, confirmPass }, push) => (dispatch) => {
+export const register = ({ firstName, lastName, email, pass, confirmPass }, push) => dispatch => {
   if (pass !== confirmPass) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
@@ -56,24 +56,27 @@ export const register = ({ firstName, lastName, email, pass, confirmPass }, push
       email,
       pass
     })
-    .then((res) => {
+    .then(res => {
       dispatch({ type: REGISTRATION_SUCCESS, payload: res.data.pin });
       push('/success');
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch({ type: REGISTRATION_FAILURE, payload: err });
     });
 };
 
-export const loginEmployee = ({ pin, pass }, push) => (dispatch) => {
+export const loginEmployee = ({ pin, pass }, push) => dispatch => {
   dispatch({ type: AUTH_LOADING });
   axios
     .post(`${serverURI}/api/employees/login`, { pin, pass })
-    .then((res) => {
+    .then(res => {
       const { role, restaurant } = jwtDecode(res.data.token);
       console.log({ role, restaurant, jwt: jwtDecode(res.data.token) });
 
-      dispatch({ type: LOGIN_SUCCESS, payload: { jwt: res.data.token, role, restaurant } });
+      dispatch({
+        type: EMPLOYEE_LOGIN_SUCCESS,
+        payload: { jwt: res.data.token, role, restaurant }
+      });
 
       localStorage.setItem('jwt', res.data.token);
 
@@ -83,12 +86,12 @@ export const loginEmployee = ({ pin, pass }, push) => (dispatch) => {
         push('/tables');
       }
     })
-    .catch((err) => {
-      dispatch({ type: LOGIN_FAILURE, payload: err });
+    .catch(err => {
+      dispatch({ type: EMPLOYEE_LOGIN_FAILURE, payload: err });
     });
 };
 
-export const addEmployee = ({ firstName, lastName, pass, confirmPass }) => (dispatch) => {
+export const addEmployee = ({ firstName, lastName, pass, confirmPass }) => dispatch => {
   if (pass !== confirmPass) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
@@ -97,10 +100,10 @@ export const addEmployee = ({ firstName, lastName, pass, confirmPass }) => (disp
   dispatch({ type: AUTH_LOADING });
   axios
     .post(`${serverURI}/api/employees/register`, { name: `${firstName} ${lastName}`, pass })
-    .then((res) => {
+    .then(res => {
       dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch({ type: LOGIN_FAILURE, payload: err });
     });
 };
