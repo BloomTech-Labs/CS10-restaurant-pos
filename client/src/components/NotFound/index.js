@@ -4,9 +4,7 @@ import * as s from './styles';
 
 class NotFound extends Component {
   render() {
-    return (
-      <s.Test>404</s.Test>
-    );
+    return <s.Test>404</s.Test>;
   }
 }
 

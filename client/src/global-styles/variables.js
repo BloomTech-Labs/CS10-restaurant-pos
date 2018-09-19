@@ -14,6 +14,10 @@ export const theme = {
   sideBarWidth: 265,
   topBarHeight: 125,
 
+  // * Buttons ---------------------------------
+  btnWidth: 210,
+  btnHeight: 60,
+
   // * Color Theme Variables -------------------
   // Main Styles
   appPrimary: white,
