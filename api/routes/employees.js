@@ -44,7 +44,7 @@ router.post('/admin/register', (req, res) => {
   newAdministrator
     .save()
     .then((adminInfo) => {
-      res.status(200).json(adminInfo);
+      res.status(200).json({ pin: adminInfo.pin });
     })
     .catch((err) => {
       res.status(500).json({
