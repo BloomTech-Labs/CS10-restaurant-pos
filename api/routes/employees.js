@@ -67,21 +67,7 @@ router.post('/register', (req, res) => {
       newEmployee
         .save()
         .then((employeeInfo) => {
-          // Make a payload for the JWT with the new employee info
-          const payload = {
-            id: employeeInfo.id,
-            pin: employeeInfo.pin,
-            role: {
-              admin: employeeInfo.role.admin,
-              manager: employeeInfo.role.manager
-            },
-            administrator: employeeInfo.administrator
-          };
-
-          // Sign the token
-          jwt.sign(payload, keys.secretOrKey, { expiresIn: '1d' }, (err, token) => {
-            res.status(201).json({ token: `Bearer ${token}` });
-          });
+          res.status(201).json({ pin: employeeInfo.pin });
         })
         .catch((err) => {
           res.status(500).json({ err, msg: 'Error saving the employee to the database.' });
