@@ -1,8 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-import { addRestaurant } from '../../redux/actions/restaurant';
 
 import * as s from './styles';
 
@@ -14,19 +12,18 @@ class RestaurantInfo extends React.Component {
     billing: ''
   };
 
-  handleChange = (event) => {
+  handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = event => {
     event.preventDefault();
-    this.props.addRestaurant(this.state);
   };
 
   render() {
     return (
       <s.Container>
-        Add Your Restaurant, Mr. Admin
+        Restaurant Info
         <s.Form onSubmit={this.handleSubmit}>
           <input
             placeholder="name"
@@ -64,15 +61,4 @@ class RestaurantInfo extends React.Component {
   }
 }
 
-RestaurantInfo.propTypes = {
-  addRestaurant: PropTypes.func
-};
-
-RestaurantInfo.defaultProps = {
-  addRestaurant: () => {}
-};
-
-export default connect(
-  null,
-  { addRestaurant }
-)(RestaurantInfo);
+export default connect(null)(RestaurantInfo);

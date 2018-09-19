@@ -6,12 +6,11 @@ import { addRestaurant } from '../../redux/actions/restaurant';
 
 import * as s from './styles';
 
-class RestaurantInfo extends React.Component {
+class NewRestaurant extends React.Component {
   state = {
-    name: '',
-    email: '',
-    address: '',
-    billing: ''
+    restaurantName: '',
+    location: '',
+    billingAddress: '',
   };
 
   handleChange = (event) => {
@@ -20,7 +19,7 @@ class RestaurantInfo extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.addRestaurant(this.state);
+    this.props.addRestaurant(this.state, this.props.history.push);
   };
 
   render() {
@@ -29,33 +28,26 @@ class RestaurantInfo extends React.Component {
         Add Your Restaurant, Mr. Admin
         <s.Form onSubmit={this.handleSubmit}>
           <input
-            placeholder="name"
+            placeholder="Restaurant Name"
             type="text"
             onChange={this.handleChange}
-            name="name"
+            name="restaurantName"
             maxLength="30"
-            value={this.state.name}
+            value={this.state.restaurantName}
           />
           <input
-            placeholder="email"
+            placeholder="location"
             type="text"
             onChange={this.handleChange}
-            name="email"
-            value={this.state.email}
+            name="location"
+            value={this.state.location}
           />
           <input
-            placeholder="address"
+            placeholder="billing address"
             type="text"
             onChange={this.handleChange}
-            name="address"
-            value={this.state.address}
-          />
-          <input
-            placeholder="billing"
-            type="text"
-            onChange={this.handleChange}
-            name="billing"
-            value={this.state.billing}
+            name="billingAddress"
+            value={this.state.billingAddress}
           />
           <button type="submit">Submit</button>
         </s.Form>
@@ -64,15 +56,20 @@ class RestaurantInfo extends React.Component {
   }
 }
 
-RestaurantInfo.propTypes = {
-  addRestaurant: PropTypes.func
+NewRestaurant.propTypes = {
+  addRestaurant: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
 };
 
-RestaurantInfo.defaultProps = {
-  addRestaurant: () => {}
+NewRestaurant.defaultProps = {
+  addRestaurant: () => {},
+  history: { push: () => {} },
 };
+
 
 export default connect(
   null,
   { addRestaurant }
-)(RestaurantInfo);
+)(NewRestaurant);

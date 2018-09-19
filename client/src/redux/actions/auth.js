@@ -13,6 +13,8 @@ export const REGISTRATION_FAILURE = 'REGISTRATION_FAILURE';
 export const REGISTRATION_SUCCESS = 'REGISTRATION_SUCCESS';
 export const EMPLOYEE_LOGIN_FAILURE = 'EMPLOYEE_LOGIN_FAILURE';
 export const EMPLOYEE_LOGIN_SUCCESS = 'EMPLOYEE_LOGIN_SUCCESS';
+export const EMPLOYEE_REGISTER_SUCCESS = 'EMPLOYEE_REGISTER_SUCCESS';
+export const EMPLOYEE_REGISTER_FAILURE = 'EMPLOYEE_REGISTER_FAILURE';
 
 export const login = ({ email, pass }, push) => dispatch => {
   dispatch({ type: AUTH_LOADING });
@@ -91,7 +93,7 @@ export const loginEmployee = ({ pin, pass }, push) => dispatch => {
     });
 };
 
-export const addEmployee = ({ firstName, lastName, pass, confirmPass }) => dispatch => {
+export const addEmployee = ({ firstName, lastName, pass, confirmPass }, push) => dispatch => {
   if (pass !== confirmPass) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
@@ -101,9 +103,10 @@ export const addEmployee = ({ firstName, lastName, pass, confirmPass }) => dispa
   axios
     .post(`${serverURI}/api/employees/register`, { name: `${firstName} ${lastName}`, pass })
     .then(res => {
-      dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+      dispatch({ type: EMPLOYEE_REGISTER_SUCCESS, payload: res.data.pin });
+      push('/success');
     })
     .catch(err => {
-      dispatch({ type: LOGIN_FAILURE, payload: err });
+      dispatch({ type: EMPLOYEE_REGISTER_FAILURE, payload: err });
     });
 };

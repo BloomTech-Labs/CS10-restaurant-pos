@@ -6,7 +6,9 @@ import {
   REGISTRATION_FAILURE,
   REGISTRATION_SUCCESS,
   PASSWORD_MATCH_ERROR,
-  PASSWORD_MATCH_SUCCESS
+  PASSWORD_MATCH_SUCCESS,
+  EMPLOYEE_REGISTER_FAILURE,
+  EMPLOYEE_REGISTER_SUCCESS,
 } from '../actions/auth';
 import {
   LOADING_TABLES_ERROR,
@@ -77,6 +79,10 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, passMatchError: action.payload };
     case PASSWORD_MATCH_SUCCESS:
       return { ...errors, passMatchError: false };
+    case EMPLOYEE_REGISTER_FAILURE:
+      return { ...errors, employeeRegisterError: action.payload };
+    case EMPLOYEE_REGISTER_SUCCESS:
+      return { ...errors, employeeRegisterError: false };
 
     case LOADING_TABLES_ERROR:
       return { ...errors, loadingTablesError: action.payload };

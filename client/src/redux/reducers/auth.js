@@ -4,8 +4,10 @@ import {
   AUTH_LOADING,
   LOGIN_SUCCESS,
   REGISTRATION_SUCCESS,
-  EMPLOYEE_LOGIN_SUCCESS
+  EMPLOYEE_LOGIN_SUCCESS,
+  EMPLOYEE_REGISTER_SUCCESS
 } from '../actions/auth';
+import { RESTAURANT_AUTH } from '../actions/restaurant';
 
 const jwt = localStorage.getItem('jwt');
 
@@ -46,7 +48,7 @@ const AuthReducer = (auth = initialState, action) => {
         loading: false,
         jwt: action.payload.jwt,
         restaurant: action.payload.restaurant,
-        id: action.payload.id,
+        id: action.payload.id
       };
 
     case REGISTRATION_SUCCESS:
@@ -58,8 +60,20 @@ const AuthReducer = (auth = initialState, action) => {
         loading: false,
         jwt: action.payload.jwt,
         role: action.payload.role,
-        id: action.payload.id,
+        id: action.payload.id
       };
+
+    case RESTAURANT_AUTH:
+      return {
+        ...auth,
+        loading: false,
+        jwt: action.payload.jwt,
+        role: action.payload.role,
+        id: action.payload.id
+      };
+
+    case EMPLOYEE_REGISTER_SUCCESS:
+      return { ...auth, loading: false, pin: action.payload };
 
     default:
       return auth;
