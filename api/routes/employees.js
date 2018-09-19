@@ -36,7 +36,7 @@ router.get('/all', (req, res) => {
 
     // if the user is a manager, they will only see servers.
     // admins can see all employees
-    if (role.manager) {
+    if (role.manager && !role.admin) {
       searchQuery.role = { admin: false, manager: false };
     }
 
