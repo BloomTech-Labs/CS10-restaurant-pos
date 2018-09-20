@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Prompt } from 'react-router-dom';
 import shortid from 'shortid';
+import StripeCheckout from 'react-stripe-checkout';
 
 import TablesPageTitle from '../TablesPageTitle';
 import ItemSelector from '../ItemSelector';
@@ -99,9 +100,22 @@ class PartyPage extends React.Component {
               <Button dark type="button" onClick={this.openSplitModal}>
                 Split Check
               </Button>
-              <Button dark primary type="button">
-                Checkout
-              </Button>
+              <StripeCheckout
+                name="POS Checkout"
+                description="subtitle"
+                ComponentClass="div"
+                currency="USD"
+                email="test@test.com"
+                stripeKey="pk_test_0axArT8SI2u6aiUnuQH2lJzg"
+                image="https://beej.us/images/beejthumb.gif"
+                token={this.sendToken}
+                allowRememberMe={false}
+                amount={this.state.subTotal * 100}
+              >
+                <Button dark primary type="button">
+                  Checkout
+                </Button>
+              </StripeCheckout>
             </s.OrderButtons>
           </Modal>
         )}
