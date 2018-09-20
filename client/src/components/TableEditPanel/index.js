@@ -3,38 +3,55 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SetType from 'es6-set-proptypes';
 
-import { addTable, toggleEdit } from '../../redux/actions/tables';
+import { addTable, toggleEdit, saveTables } from '../../redux/actions/tables';
 import { createParty } from '../../redux/actions/party';
 // TODO: create save button action
 
 import * as s from './styles';
 
 class TableEditPanel extends React.Component {
-  state = {
-    authorized: this.props.role.admin || this.props.role.manager,
+  addTable = () => {
+    const newTableNumber = this.props.tables.length + 1;
+    this.props.addTable(newTableNumber);
+  };
+
+  saveTables = () => {
+    this.props.saveTables(this.props.tables);
   };
 
   createParty = () => {
     // TODO: this.props.saveParty or some shit
-    const tablesArray = this.props.tables.filter(table => this.props.selected.has(table.number));
+    const tablesArray = this.props.tables.filter((table) => this.props.selected.has(table.number));
     this.props.createParty(tablesArray, this.props.push);
   };
 
   render() {
+    const authorized = this.props.role.admin || this.props.role.manager;
     return (
       <s.Panel>
-        {this.state.authorized && (
-          <button type="button" onClick={this.props.toggleEdit}>
-            Edit
-          </button>
+        {authorized
+          && !this.props.editing && (
+            <React.Fragment>
+              <button type="button" onClick={this.createParty}>
+                Add Order
+              </button>
+              <button type="button" onClick={this.props.toggleEdit}>
+                Edit
+              </button>
+            </React.Fragment>
         )}
-        <button type="button" onClick={this.createParty}>
-          Add Order
-        </button>
         {this.props.editing && (
-          <button type="button" onClick={this.props.addTable}>
-            Add Table
-          </button>
+          <React.Fragment>
+            <button type="button" onClick={this.addTable}>
+              Add Table
+            </button>
+            <button type="button" onClick={this.saveTables}>
+              Save
+            </button>
+            <button type="button" onClick={this.props.toggleEdit}>
+              Cancel
+            </button>
+          </React.Fragment>
         )}
       </s.Panel>
     );
@@ -51,8 +68,9 @@ TableEditPanel.propTypes = {
   }),
   createParty: PropTypes.func,
   addTable: PropTypes.func,
+  saveTables: PropTypes.func,
   toggleEdit: PropTypes.func,
-  push: PropTypes.func,
+  push: PropTypes.func
 };
 
 TableEditPanel.defaultProps = {
@@ -62,18 +80,19 @@ TableEditPanel.defaultProps = {
   role: { admin: false, manager: false },
   createParty: () => {},
   addTable: () => {},
+  saveTables: () => {},
   toggleEdit: () => {},
-  push: () => {},
+  push: () => {}
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   tables: state.tables.tableList,
   editing: state.tables.editing,
   selected: state.tables.selected,
-  role: state.auth.role,
+  role: state.auth.role
 });
 
 export default connect(
   mapStateToProps,
-  { createParty, addTable, toggleEdit }
+  { createParty, addTable, saveTables, toggleEdit }
 )(TableEditPanel);

@@ -32,10 +32,10 @@ export const getTables = () => (dispatch) => {
     });
 };
 
-export const addTable = () => (dispatch) => {
+export const addTable = (number) => (dispatch) => {
   dispatch({ type: ADDING_TABLE });
   axios
-    .post(`${serverURI}/api/tables/add`, { x: 50, y: 50 })
+    .post(`${serverURI}/api/tables/add`, { number, x: 50, y: 50 })
     .then((res) => {
       dispatch({ type: ADDING_TABLE_SUCCESS, payload: res.data });
     })
@@ -44,17 +44,18 @@ export const addTable = () => (dispatch) => {
     });
 };
 
-export const moveTable = (tables) => ({
+export const moveTable = (table) => ({
   type: MOVE_TABLE,
-  payload: tables
+  payload: table
 });
 
 export const saveTables = (tables) => (dispatch) => {
   dispatch({ type: SAVING_TABLES });
   axios
-    .post(`${serverURI}/api/tables/add`, { tables })
-    .then((res) => { // ? Do we need to bother with `payload: res.data`?
-      dispatch({ type: SAVING_TABLES_SUCCESS, payload: res.data });
+    .post(`${serverURI}/api/tables/update`, { tables })
+    .then(() => {
+      // res.data.tables is unneeded but contains the updated tables array
+      dispatch({ type: SAVING_TABLES_SUCCESS });
     })
     .catch((err) => {
       dispatch({ type: SAVING_TABLES_ERROR, payload: err });
@@ -79,7 +80,7 @@ export const toggleTable = (table) => ({
 });
 
 export const toggleEdit = () => ({
-  type: TOGGLE_EDIT,
+  type: TOGGLE_EDIT
 });
 
 export const saveSidebarRef = (ref) => ({

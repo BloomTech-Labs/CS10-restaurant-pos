@@ -26,7 +26,7 @@ class CreateEmployee extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.addEmployee(this.state);
+    this.props.addEmployee(this.state, this.props.history.push);
   };
 
   render() {

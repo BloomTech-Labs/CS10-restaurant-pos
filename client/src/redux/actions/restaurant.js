@@ -1,4 +1,5 @@
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
 import serverURI from '../../config/URI';
 
@@ -8,6 +9,7 @@ export const LOADING_RESTAURANT_ERROR = 'LOADING_RESTAURANT_ERROR';
 export const ADDING_RESTAURANT = 'ADDING_RESTAURANT';
 export const ADDING_RESTAURANT_SUCCESS = 'ADDING_RESTAURANT_SUCCESS';
 export const ADDING_RESTAURANT_ERROR = 'ADDING_RESTAURANT_ERROR';
+export const RESTAURANT_AUTH = 'RESTAURANT_AUTH';
 
 export const getRestaurant = () => dispatch => {
   dispatch({ type: LOADING_RESTAURANT });
@@ -22,12 +24,23 @@ export const getRestaurant = () => dispatch => {
     });
 };
 
-export const addRestaurant = (data) => dispatch => {
+export const addRestaurant = ({
+  restaurantName: name,
+  location,
+  billingAddress: address
+}, push) => dispatch => {
   dispatch({ type: ADDING_RESTAURANT });
   axios
-    .post(`${serverURI}/api/restaurants/register`, data) // TODO: Verify this route
+    .post(`${serverURI}/api/restaurants/register`, { name, location, billing: { address } })
     .then(res => {
-      dispatch({ type: ADDING_RESTAURANT_SUCCESS, payload: res.data });
+      const { restaurant } = jwtDecode(res.data.token);
+
+      dispatch({ type: RESTAURANT_AUTH, payload: { jwt: res.data.token, restaurant } });
+
+      localStorage.setItem('jwt', res.data.token);
+
+      console.log(push);
+      push('/login-employee');
     })
     .catch(err => {
       console.error(err);
