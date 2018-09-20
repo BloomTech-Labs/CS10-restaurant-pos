@@ -56,7 +56,7 @@ class PartyPage extends React.Component {
       order: [...prev.order, { ...item, localRef: prev.localRef }],
       localRef: prev.localRef + 1,
       subTotal: Number(
-        prev.order.reduce((acc, foodItem) => acc + foodItem.price, 0).toFixed(2)
+        (prev.order.reduce((acc, foodItem) => acc + foodItem.price, 0) + item.price).toFixed(2)
       )
     }));
   };
@@ -64,7 +64,9 @@ class PartyPage extends React.Component {
   removeItemFromOrder = item => {
     this.setState(prev => ({
       order: prev.order.filter(orderItem => orderItem.localRef !== item.localRef),
-      subTotal: Number((prev.subTotal - item.price).toFixed(2))
+      subTotal: Number(
+        (prev.order.reduce((acc, foodItem) => acc + foodItem.price, 0) - item.price).toFixed(2)
+      )
     }));
   };
 
@@ -109,8 +111,12 @@ class PartyPage extends React.Component {
               <div key={shortid.generate()}>{item.name}</div>
             ))}
             <div>Split Modal</div>
-            <Button type="button">split modal button one</Button>
-            <Button type="button">split modal button two</Button>
+            <Button dark type="button">
+              split modal button one
+            </Button>
+            <Button dark primary type="button">
+              split modal button two
+            </Button>
           </Modal>
         )}
         <s.Container modalOpen={this.props.modalIsOpen}>
