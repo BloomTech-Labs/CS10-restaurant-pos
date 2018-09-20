@@ -10,6 +10,6 @@ export const Button = styled.button`
   ${buttonMixin};
 `;
 
-export const Bg = styled.button`
+export const Bg = styled.div`
   background: red;
 `;

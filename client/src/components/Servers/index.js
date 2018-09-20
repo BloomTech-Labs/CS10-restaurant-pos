@@ -33,8 +33,8 @@ Servers.defaultProps = {
   serverList: [{ name: 'Jimmy', _id: '38hiodsn' }, { name: 'Randy', _id: 'dgas98yh3n2' }, { name: 'Carl', _id: 'asg0hio2n3' }],
 };
 
-// const mapStateToProps = (state) => ({
-//   serverList: state.servers.serverList,
-// });
+const mapStateToProps = (state) => ({
+  serverList: state.servers.serverList,
+});
 
-export default connect(null, { getServers })(Servers);
+export default connect(mapStateToProps, { getServers })(Servers);
