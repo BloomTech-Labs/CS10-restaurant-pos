@@ -1,4 +1,7 @@
-const stripe = require('../../../config/keys').stripeSecretKey;
+const stripeKey = require('../../../config/keys').stripeSecretKey;
+
+// eslint-disable-next-line
+const stripe = require('stripe')(stripeKey);
 const Restaurant = require('../../models/Restaurant');
 
 // @route   POST api/subscriptions/subscribe
@@ -6,9 +9,9 @@ const Restaurant = require('../../models/Restaurant');
 // @access  Private
 const subscribe = (req, res) => {
   const { stripeToken, email } = req.body;
-  const id = req.user.restaurant._id;
+  const id = req.user.restaurant;
 
-  Restaurant.findById({ _id: id })
+  Restaurant.findOne({ _id: id })
     .then(restaurant => {
       if (restaurant.membership) {
         res.status(400).json({ msg: 'You are already subscribed!' });
@@ -25,13 +28,13 @@ const subscribe = (req, res) => {
                 message: 'Something went wrong creating the customer!'
               });
             } else {
-              const { customerId } = customer;
+              const { id: customerId } = customer;
               stripe.subscriptions.create(
                 {
                   customer: customerId,
                   items: [
                     {
-                      plan: 'Monthly'
+                      plan: 'plan_Db7wsyXgtzAWBN'
                     }
                   ]
                 },
