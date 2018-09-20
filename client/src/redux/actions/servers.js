@@ -10,9 +10,9 @@ export const getServers = () => (
   (dispatch) => {
     dispatch({ type: LOADING_SERVERS });
     axios
-      .get(`${serverURI}/api/servers/all`)
+      .get(`${serverURI}/api/employees/all`)
       .then((res) => {
-        dispatch({ type: LOADING_SERVERS_SUCCESS, payload: res.data });
+        dispatch({ type: LOADING_SERVERS_SUCCESS, payload: res.data.employees });
       })
       .catch((err) => {
         console.error(err);

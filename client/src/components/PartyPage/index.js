@@ -6,10 +6,12 @@ import shortid from 'shortid';
 import TablesPageTitle from '../TablesPageTitle';
 import ItemSelector from '../ItemSelector';
 import OrderScratchPad from '../OrderScratchPad';
+import OrderTotal from '../OrderTotal';
 import Modal from '../HOC/Modal';
 import { getItems } from '../../redux/actions/items';
 import { addParty, saveOrder, saveSplitOrder } from '../../redux/actions/party';
 import { openModal, closeModal, openSplitModal, closeSplitModal } from '../../redux/actions/modal';
+import { Button } from '../../global-styles/styledComponents';
 
 import * as s from './styles';
 
@@ -62,9 +64,6 @@ class PartyPage extends React.Component {
   };
 
   saveParty = () => {
-    // ! send in `server: this.props.server` from
-    // ! redux `server: state.auth.user._id`
-    // ! * this hasn't been created yet
     this.props.addParty({ tables: this.props.tables, order: this.state.order });
     this.props.history.push('/tables');
   }
@@ -80,11 +79,18 @@ class PartyPage extends React.Component {
                 <div onClick={() => this.addToSplitCheck(item)}>+</div>
               </div>
             ))}
-            <div>Checkout Modal</div>
-            <button type="button" onClick={this.openSplitModal}>
-              Split Check
-            </button>
-            <button type="button">Checkout</button>
+            <s.Title>
+              <h2>Checkout Modal</h2>
+              <div>Server Name</div>
+            </s.Title>
+            <s.Order>your order and shit</s.Order>
+            <div><OrderTotal subTotal={this.state.subTotal} location={this.props.location} /></div>
+            <s.OrderButtons>
+              <Button dark type="button" onClick={this.openSplitModal}>
+                Split Check
+              </Button>
+              <Button dark primary type="button">Checkout</Button>
+            </s.OrderButtons>
           </Modal>
         )}
         {this.props.splitModalIsOpen && (
@@ -93,8 +99,8 @@ class PartyPage extends React.Component {
               <div key={shortid.generate()}>{item.name}</div>
             ))}
             <div>Split Modal</div>
-            <button type="button">split modal button one</button>
-            <button type="button">split modal button two</button>
+            <Button type="button">split modal button one</Button>
+            <Button type="button">split modal button two</Button>
           </Modal>
         )}
         <s.Container modalOpen={this.props.modalIsOpen}>
