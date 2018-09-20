@@ -7,7 +7,8 @@ const {
   adminLogin,
   updatePin,
   employeeLogout,
-  getCurrentUser
+  getCurrentUser,
+  getAllServers
 } = require('../controllers/employees');
 
 module.exports = server => {
@@ -18,4 +19,5 @@ module.exports = server => {
   server.route('/api/employees/update/:pin', passport.authenticate('jwt', { session: false })).put(updatePin);
   server.route('/api/employees/logout').get(employeeLogout);
   server.route('/api/employees/current').get(getCurrentUser);
+  server.route('/api/employees/all', passport.authenticate('jwt', { session: false })).get(getAllServers);
 };

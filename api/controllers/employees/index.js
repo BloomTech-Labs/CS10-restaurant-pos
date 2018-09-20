@@ -5,6 +5,7 @@ const { adminLogin } = require('./adminLogin');
 const { updatePin } = require('./updatePin');
 const { employeeLogout } = require('./employeeLogout');
 const { getCurrentUser } = require('./getCurrentUser');
+const { getAllServers } = require('./getAllServers');
 
 module.exports = {
   adminRegister,
@@ -13,5 +14,6 @@ module.exports = {
   adminLogin,
   updatePin,
   employeeLogout,
-  getCurrentUser
+  getCurrentUser,
+  getAllServers
 };
