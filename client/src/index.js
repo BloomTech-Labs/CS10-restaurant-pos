@@ -16,16 +16,14 @@ let store;
 if (process.env.NODE_ENV === 'production') {
   store = createStore(reducer, applyMiddleware(thunk, requireManager, axiosAuth));
 } else {
-  import('redux-logger')
-    .then((logger) => {
-      // eslint-disable-next-line no-underscore-dangle
-      const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-      store = createStore(
-        reducer,
-        composeEnhancers(applyMiddleware(thunk, requireManager, axiosAuth, logger))
-      );
-    })
-    .catch((err) => console.error(err));
+  // eslint-disable-next-line global-require
+  const logger = require('redux-logger').default;
+  // eslint-disable-next-line no-underscore-dangle
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  store = createStore(
+    reducer,
+    composeEnhancers(applyMiddleware(thunk, requireManager, axiosAuth, logger))
+  );
 }
 
 ReactDOM.render(
