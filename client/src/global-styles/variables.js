@@ -19,17 +19,26 @@ export const theme = {
   // * Buttons ---------------------------------
   // Standard
   btnWidth: 210,
-  btnHeight: 60,
+  btnHeight: 58,
   btnBorderRadius: 10,
   btnFontSize: 2,
-  btnColor: white,
+  btnTextColor: white,
   btnBgColor: transparent,
+  btnBorderColor: steelBlue,
 
-  // Main
-  btnMainBgColor: steelBlue,
+  // Primary
+  btnPrimaryBgColor: steelBlue,
+
+
+  // Dark Primary
+  btnDarkPrimaryBgColor: razzmatazz,
+
+  // Dark
+  btnDarkBorderColor: white,
+
 
   // * Color Theme Variables -------------------
-  // Main Styles
+  // Primary Styles
   appPrimary: white,
   appSecondary: razzmatazz,
   appTertiary: oxfordBlue,

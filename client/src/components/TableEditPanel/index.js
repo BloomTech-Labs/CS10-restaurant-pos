@@ -17,6 +17,7 @@ class TableEditPanel extends React.Component {
 
   saveTables = () => {
     this.props.saveTables(this.props.tables);
+    this.props.toggleEdit();
   };
 
   createParty = () => {
