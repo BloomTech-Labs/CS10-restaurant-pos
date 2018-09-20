@@ -36,6 +36,7 @@
     - [Add a New Order](#add-a-new-order)
     - [Get All Orders](#get-all-orders)
     - [Get a Specific Order](#get-a-specific-order)
+    - [Restaurant Routes](#restaurant-routes)
 
 # Scripts
 
@@ -114,7 +115,7 @@ Request body should look like this:
 
 `pass`: String, required, min 8 characters
 
-`email`: Email, required, must be unique
+`email`: Email, required, must be unique (should be unique)
 
 Response includes the admin's PIN.
 
@@ -153,6 +154,9 @@ Request body should look like this:
 `pass`: String, required, min 8 characters
 
 `role`: Object, optional
+
+  - `admin`: Boolean
+  - `manager`: Boolean
 
 Response includes the new employee's PIN.
 
@@ -984,5 +988,44 @@ Response:
   "last4": "1234",
   "date": "2018-09-12T16:58:21.473Z",
   "__v": 0
+}
+```
+
+### Restaurant Routes
+
+POST `/api/restaurants/register`
+
+**Requires Authorization**
+
+Adds a new restaurant to the signed-in admin's account.
+
+Request body should look like this:
+
+```
+{
+  "name": "Rigby's Tacos",
+  "location": "Saint Paul, MN",
+  "billing": {
+    "address": "123 Main St"
+  }
+}
+```
+
+`name`: String, required, the name of the restaurant
+
+`location`: String, required
+
+`billing`: Object, some fields required:
+
+- `address`: String? required
+
+Response contains a success messages and a new bearer token. The token will contain the restaurant id.
+
+Response:
+
+```
+{
+  "token": "Bearer (token)",
+  "msg": "Successfully created"
 }
 ```
