@@ -12,9 +12,12 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "cross-env NPM_CONFIG_PRODUCTION=true npm i --prefix client && npm run build --prefix client",
     "lint": "eslint api/",
-    "test": "",
+    "test": "jest --forceExit",
     "lint-all": "concurrently \"npm run lint\" \"cd client && npm run lint\"",
     "precommit": "npm run lint-all"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "repository": "git@github.com:Lambda-School-Labs/CS10-restaurant-pos.git",
   "author": "Team POS",
@@ -45,7 +48,9 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-react": "^7.11.1",
     "husky": "^0.14.3",
+    "jest": "^23.6.0",
     "morgan": "^1.9.0",
-    "nodemon": "^1.18.4"
+    "nodemon": "^1.18.4",
+    "supertest": "^3.3.0"
   }
 }
