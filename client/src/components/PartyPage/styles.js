@@ -22,8 +22,9 @@ export const OrderButtons = styled.div`
   width: 100%;
 `;
 
-// export const Title = styled.div`
-// `;
+export const Title = styled.div`
+  display: flex;
+`;
 
 export const Order = styled.div`
   display: flex;
