@@ -41,6 +41,12 @@ class FloorPlan extends React.Component {
     this.pixi.current.appendChild(this.app.view);
     this.setup();
     this.resize();
+
+    // initially draw the tables from redux state
+    this.props.tables.forEach((table) => {
+      this.tables.push(table);
+      this.circleCreator(table);
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -119,6 +125,7 @@ class FloorPlan extends React.Component {
     // and add the circle to the stage
     circle.x = table.x;
     circle.y = table.y;
+    circle.tableId = table._id;
     this.viewport.addChild(circle);
 
     // Adds the table number text,
@@ -132,14 +139,13 @@ class FloorPlan extends React.Component {
       if (!this.props.selected.has(table.number)) {
         // If the table doesn't exist in the active Set,
         // add it to the Set and adjust its appearance
-        this.props.toggleTable(table.number);
         circle.alpha = 0.2;
       } else {
         // If the table does exist in the active Set,
         // remove it from the Set and adjust its appearance
-        this.props.toggleTable(table.number);
         circle.alpha = 1;
       }
+      this.props.toggleTable(table.number);
     };
 
     const onDragStart = (event) => {
@@ -165,7 +171,7 @@ class FloorPlan extends React.Component {
         // If editing mode is on:
         // Update Redux Store's table location,
         // set dragging to false and clear the data
-        this.props.moveTable(this.tables);
+        this.props.moveTable({ x: circle.x, y: circle.y, tableId: circle.tableId });
         circle.dragging = false;
         circle.data = null;
 
@@ -179,7 +185,6 @@ class FloorPlan extends React.Component {
           circle.alpha = 1;
         }
       }
-
       this.viewport.resumePlugin('drag');
     };
 
@@ -260,7 +265,6 @@ class FloorPlan extends React.Component {
       <React.Fragment>
         <s.FloorPlan innerRef={this.pixi} />
         <div style={{ position: 'fixed', right: '100px' }}>
-          {' '}
           {/* // ! make these not inline */}
           <label htmlFor="lock">
             <input type="checkbox" id="lock" onClick={this.toggleLock} value={this.state.locked} />
@@ -268,7 +272,6 @@ class FloorPlan extends React.Component {
           </label>
         </div>
         <div style={{ position: 'fixed', right: '40px' }}>
-          {' '}
           {/* // ! make these not inline */}
           <button type="button" onClick={this.zoomIn}>
             +

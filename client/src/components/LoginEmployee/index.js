@@ -21,15 +21,15 @@ class LoginEmployee extends React.Component {
   render() {
     return (
       <s.Container>
-        <h1>Do not use me yet! I login employees when Admins are already logged in.</h1>
+        <h1>I login employees when the restaurant service is logged in.</h1>
         <s.Form onSubmit={this.handleSubmit}>
           <input
             placeholder="pin"
             type="text"
             onChange={this.handleChange}
             name="pin"
-            minLength="6"
-            maxLength="6"
+            minLength="4"
+            maxLength="4"
             autoComplete="username"
             value={this.state.pin}
           />
@@ -39,7 +39,7 @@ class LoginEmployee extends React.Component {
             onChange={this.handleChange}
             name="pass"
             minLength="8"
-            maxLength="30"
+            maxLength="21"
             autoComplete="current-password"
             value={this.state.pass}
           />

@@ -11,8 +11,14 @@ class CreateEmployee extends React.Component {
     firstName: '',
     lastName: '',
     pass: '',
-    confirmPass: '',
+    confirmPass: ''
   };
+
+  componentDidMount() {
+    if (!this.props.role.admin && !this.props.role.manager) {
+      this.props.history.push('/tables');
+    }
+  }
 
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
@@ -20,7 +26,7 @@ class CreateEmployee extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.addEmployee(this.state);
+    this.props.addEmployee(this.state, this.props.history.push);
   };
 
   render() {
@@ -70,14 +76,27 @@ class CreateEmployee extends React.Component {
 }
 
 CreateEmployee.propTypes = {
-  addEmployee: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func
+  }),
+  role: PropTypes.shape({
+    admin: PropTypes.bool,
+    manager: PropTypes.bool
+  }),
+  addEmployee: PropTypes.func
 };
 
 CreateEmployee.defaultProps = {
-  addEmployee: () => {},
+  history: { push: () => {} },
+  role: { admin: false, manager: false },
+  addEmployee: () => {}
 };
 
+const mapStateToProps = (state) => ({
+  role: state.auth.role
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { addEmployee }
 )(CreateEmployee);

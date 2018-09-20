@@ -6,6 +6,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 
 import { requireManager } from './redux/middleware/permissions';
+import { axiosAuth } from './redux/middleware/axios';
 import reducer from './redux/reducers';
 import App from './App';
 import './index.css';
@@ -17,7 +18,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
   reducer,
-  composeEnhancers(applyMiddleware(thunk, requireManager, logger))
+  composeEnhancers(applyMiddleware(thunk, requireManager, axiosAuth, logger))
 );
 
 ReactDOM.render(

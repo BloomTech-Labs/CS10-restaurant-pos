@@ -9,6 +9,7 @@ import * as s from './styles';
 import Landing from './components/Landing';
 import Login from './components/Login';
 import Register from './components/Register';
+import RegistrationSuccess from './components/RegistrationSuccess';
 import LoginEmployee from './components/LoginEmployee';
 import CreateEmployee from './components/CreateEmployee';
 import Servers from './components/Servers';
@@ -18,6 +19,7 @@ import Navbar from './components/Navbar';
 import PartyPage from './components/PartyPage';
 import Settings from './components/Settings';
 import Sidebar from './components/Sidebar';
+import NewRestaurant from './components/NewRestaurant';
 import RequireNotAuth from './components/HOC/RequireNotAuth';
 import RequireAuth from './components/HOC/RequireAuth';
 import Test from './components/Test';
@@ -43,7 +45,9 @@ class App extends Component {
                 <Route path="/" component={Landing} exact />
                 <Route path="/login" component={RequireNotAuth(Login)} />
                 <Route path="/register" component={RequireNotAuth(Register)} />
+                <Route path="/success" component={RegistrationSuccess} />
                 <Route path="/login-employee" component={RequireAuth(LoginEmployee)} />
+                <Route path="/new-restaurant" component={RequireAuth(NewRestaurant)} />
                 <Route path="/new-employee" component={RequireAuth(CreateEmployee)} />
                 <Route path="/tables" component={RequireAuth(TablesPage)} />
                 <Route path="/servers" component={RequireAuth(Servers)} />

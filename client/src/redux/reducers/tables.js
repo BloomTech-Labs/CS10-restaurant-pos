@@ -1,3 +1,5 @@
+/* eslint-disable no-case-declarations */
+
 import {
   LOADING_TABLES,
   LOADING_TABLES_SUCCESS,
@@ -38,7 +40,16 @@ const TablesReducer = (state = initialState, action) => {
       return { ...state, tableList: [...state.tableList, action.payload] };
 
     case MOVE_TABLE:
-      return { ...state, tableList: action.payload };
+      const { x, y, tableId } = action.payload;
+      return {
+        ...state,
+        tableList: state.tableList.map((table) => {
+          if (table._id === tableId) {
+            return { ...table, x, y };
+          }
+          return table;
+        })
+      };
 
     case SAVING_TABLES:
       return { ...state, loading: true };
@@ -50,19 +61,19 @@ const TablesReducer = (state = initialState, action) => {
       return { ...state, loading: true };
 
     case DEACTIVATING_TABLE_SUCCESS:
-      const { updatedTable } = action.payload; // eslint-disable-line no-case-declarations
+      const { updatedTable } = action.payload;
       return {
         ...state,
         loading: false,
-        tableList: state.tableList.map(table => {
+        tableList: state.tableList.map((table) => {
           if (table._id === updatedTable._id) return updatedTable;
           return table;
         })
       };
 
     case TOGGLE_TABLE:
-      const table = action.payload; // eslint-disable-line no-case-declarations
-      const newSet = new Set(state.selected); // eslint-disable-line no-case-declarations
+      const table = action.payload;
+      const newSet = new Set(state.selected);
       if (state.selected.has(table)) {
         newSet.delete(table);
         return { ...state, selected: newSet };

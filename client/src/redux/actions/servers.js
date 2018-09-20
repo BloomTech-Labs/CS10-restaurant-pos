@@ -6,9 +6,6 @@ export const LOADING_SERVERS = 'LOADING_SERVERS';
 export const LOADING_SERVERS_SUCCESS = 'LOADING_SERVERS_SUCCESS';
 export const LOADING_SERVERS_ERROR = 'LOADING_SERVERS_ERROR';
 
-axios.defaults.withCredentials = true;
-axios.defaults.headers.common.Authorization = localStorage.getItem('jwt');
-
 export const getServers = () => (
   (dispatch) => {
     dispatch({ type: LOADING_SERVERS });
