@@ -19,6 +19,7 @@ const tables = require('./api/routes/tables');
 const restaurants = require('./api/routes/restaurants');
 const subscriptions = require('./api/routes/subscriptions');
 
+// TODO: Setup morgan and helmet
 const corsOptions = { origin: clientURI, credentials: true };
 
 // Initialize Server
@@ -47,7 +48,7 @@ require('./config/passport.js')(passport);
 // Initialize PORT
 const PORT = process.env.PORT || 5000;
 
-// Use Routes
+// Test route
 server.post('/api', (req, res) => {
   console.log(req.body);
   res.status(200).json({ message: 'Success' });
@@ -67,6 +68,7 @@ server.listen(PORT, (err) => {
   console.log(`Server running on port: ${PORT}`);
 });
 
+// * This must be at the bottom of the file
 // Server static assets if in production
 if (process.env.NODE_ENV === 'production') {
   server.use(express.static('client/build'));
