@@ -1,8 +1,14 @@
 import {
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
+  EMPLOYEE_LOGIN_FAILURE,
+  EMPLOYEE_LOGIN_SUCCESS,
+  REGISTRATION_FAILURE,
+  REGISTRATION_SUCCESS,
   PASSWORD_MATCH_ERROR,
-  PASSWORD_MATCH_SUCCESS
+  PASSWORD_MATCH_SUCCESS,
+  EMPLOYEE_REGISTER_FAILURE,
+  EMPLOYEE_REGISTER_SUCCESS,
 } from '../actions/auth';
 import {
   LOADING_TABLES_ERROR,
@@ -37,6 +43,8 @@ import { LOADING_SERVERS_ERROR, LOADING_SERVERS_SUCCESS } from '../actions/serve
 
 const initialState = {
   loginError: false,
+  employeeLoginError: false,
+  registrationError: false,
   passMatchError: false,
   loadingTablesError: false,
   addingTablesError: false,
@@ -59,10 +67,22 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, loginError: action.payload };
     case LOGIN_SUCCESS:
       return { ...errors, loginError: false };
+    case EMPLOYEE_LOGIN_FAILURE:
+      return { ...errors, employeeLoginError: action.payload };
+    case EMPLOYEE_LOGIN_SUCCESS:
+      return { ...errors, employeeLoginError: false };
+    case REGISTRATION_FAILURE:
+      return { ...errors, registrationError: action.payload };
+    case REGISTRATION_SUCCESS:
+      return { ...errors, registrationError: false };
     case PASSWORD_MATCH_ERROR:
       return { ...errors, passMatchError: action.payload };
     case PASSWORD_MATCH_SUCCESS:
       return { ...errors, passMatchError: false };
+    case EMPLOYEE_REGISTER_FAILURE:
+      return { ...errors, employeeRegisterError: action.payload };
+    case EMPLOYEE_REGISTER_SUCCESS:
+      return { ...errors, employeeRegisterError: false };
 
     case LOADING_TABLES_ERROR:
       return { ...errors, loadingTablesError: action.payload };

@@ -64,7 +64,9 @@ TablesPage.defaultProps = {
 };
 
 const mapStateToProps = state => ({
+  selected: state.tables.selected,
   tables: state.tables.tableList,
+  editing: state.tables.editing,
   role: state.auth.role,
   sidebarRef: state.tables.sidebarRef,
   topbarRef: state.tables.topbarRef,

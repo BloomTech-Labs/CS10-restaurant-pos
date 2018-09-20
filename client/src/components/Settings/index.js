@@ -17,28 +17,32 @@ class Settings extends React.Component {
   );
 
   render() {
+    const { manager, admin } = this.props.role;
     return (
       <s.Container>
         {/* // ! change to admin */}
-        {this.props.manager && this.adminDisplay()}
+        {(manager || admin) && this.adminDisplay()}
         <ChangePassword />
       </s.Container>);
   }
 }
 
 Settings.propTypes = {
-  // admin: PropTypes.bool,
-  manager: PropTypes.bool,
+  role: PropTypes.shape({
+    admin: PropTypes.bool,
+    manager: PropTypes.bool,
+  }),
 };
 
 Settings.defaultProps = {
-  // admin: false,
-  manager: false,
+  role: {
+    admin: false,
+    manager: false,
+  },
 };
 
 const mapStateToProps = (state) => ({
-  // admin: state.auth.role.admin,
-  manager: state.auth.role.manager,
+  role: state.auth.role,
 });
 
 export default connect(mapStateToProps)(Settings);

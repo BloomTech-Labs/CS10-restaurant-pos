@@ -16,6 +16,43 @@ const router = express.Router();
 // @access  Public
 router.get('/test', (req, res) => res.json({ msg: 'Employee Routes Work' }));
 
+router.get('/all', (req, res) => {
+  // if no token exists, send back unauthorized message
+  if (!req.headers.authorization) {
+    return res.status(401).json({ msg: 'You are not authorized to do this.' });
+  }
+
+  try {
+    // pull the role and the restaurant off the token
+    const { role, restaurant } = jwt.verify(req.headers.authorization.slice(7), keys.secretOrKey);
+
+    // if the logged in user isn't an admin or manager, they're not authed
+    if (!role.admin && !role.manager) {
+      return res.status(401).json({ msg: 'You are not authorized to do this.' });
+    }
+
+    // search query will filter by restaurant by default
+    const searchQuery = { restaurant };
+
+    // if the user is a manager, they will only see servers.
+    // admins can see all employees
+    if (role.manager && !role.admin) {
+      searchQuery.role = { admin: false, manager: false };
+    }
+
+    // find tall employees based on searchQuery
+    Employee.find(searchQuery)
+      .then(employees => {
+        res.status(200).json({ employees });
+      })
+      .catch(err => {
+        res.status(500).json({ err, msg: 'There was an error retrieving the servers.' });
+      });
+  } catch (err) {
+    res.status(400).json({ err, msg: 'There was an error verifying the token.' });
+  }
+});
+
 // @route   POST api/employees/admin/register
 // @desc    Adds an administrator to the DB
 // @access  Public
@@ -102,7 +139,7 @@ router.post('/register', (req, res) => {
     .save()
     .then((employeeInfo) => {
       // Send the employees pin number
-      res.status(201).json(employeeInfo.pin);
+      res.status(201).json({ pin: employeeInfo.pin });
     })
     .catch((err) => {
       res.status(500).json({ err, msg: 'Error saving the employee to the database.' });
@@ -117,7 +154,6 @@ router.post('/login', (req, res) => {
   const { pin, pass } = req.body;
   // Token contains the restaurant source via logged in admin
   const token = jwt.verify(req.headers.authorization.slice(7), keys.secretOrKey);
-
   verifyFields(['pin'], req.body, res);
 
   // Find the employee in the DB

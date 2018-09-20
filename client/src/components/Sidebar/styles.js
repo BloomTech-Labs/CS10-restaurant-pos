@@ -2,14 +2,13 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 import { modalBlur } from '../../global-styles/mixins';
-import { sidebarWidth } from '../../global-styles/variables';
 
 export const Sidebar = styled.nav`
   display: ${(props) => (props.visible ? 'flex' : 'none')};
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  max-width: ${sidebarWidth}px;
+  max-width: ${props => props.theme.sideBarHeight}px;
   background: red;
   ${(props) => props.modalIsOpen && modalBlur};
 `;

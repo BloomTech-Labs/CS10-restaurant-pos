@@ -6,9 +6,6 @@ export const LOADING_ITEMS = 'LOADING_ITEMS';
 export const LOADING_ITEMS_SUCCESS = 'LOADING_ITEMS_SUCCESS';
 export const LOADING_ITEMS_ERROR = 'LOADING_ITEMS_ERROR';
 
-axios.defaults.withCredentials = true;
-axios.defaults.headers.common.Authorization = localStorage.getItem('jwt');
-
 export const getItems = () => (
   (dispatch) => {
     dispatch({ type: LOADING_ITEMS });
