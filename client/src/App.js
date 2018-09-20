@@ -23,7 +23,6 @@ import Sidebar from './components/Sidebar';
 import NewRestaurant from './components/NewRestaurant';
 import RequireNotAuth from './components/HOC/RequireNotAuth';
 import RequireAuth from './components/HOC/RequireAuth';
-import Test from './components/Test';
 import { theme } from './global-styles/variables';
 
 const SidebarWithRouter = withRouter((props) => <Sidebar {...props} />);
@@ -64,7 +63,6 @@ class App extends Component {
                 <Route path="/servers" component={RequireAuth(Servers)} />
                 <Route path="/party" component={RequireAuth(PartyPage)} />
                 <Route path="/settings" component={RequireAuth(Settings)} />
-                <Route path="/test" component={RequireAuth(Test)} />
                 <Route path="/404" component={NotFound} exact />
                 <Redirect to="/404" />
               </Switch>

@@ -21,7 +21,6 @@ class Navbar extends React.Component {
         <s.StyledLink to="/register">(Register)</s.StyledLink>
         <s.StyledLink to="/new-employee">(New Employee)</s.StyledLink>
         <s.StyledLink to="/new-restaurant">(New Restaurant)</s.StyledLink>
-        <s.StyledLink to="/test">(TEST PAGE)</s.StyledLink>
         <s.StyledLink to="/tables">(Tables)</s.StyledLink>
         <s.StyledLink to="/party">(Party)</s.StyledLink>
         <s.StyledLink to="/servers">(Servers)</s.StyledLink>
