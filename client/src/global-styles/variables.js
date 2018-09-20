@@ -11,6 +11,7 @@ export const theme = {
   // * Misc. -----------------------------------
   menuOpacity: null,
   lineHeight: null,
+  boxShadow: '0 2px 4px 1px rgba(0, 0, 0, 0.15)',
 
   // * Default Dimensions ----------------------
   sideBarWidth: 265,
@@ -43,6 +44,7 @@ export const theme = {
   appSecondary: razzmatazz,
   appTertiary: oxfordBlue,
   contentBackground: aquaHaze,
+  textColorDark: white,
   // Top Bar
   topBarHeader: white,
   topBarLink: comet,

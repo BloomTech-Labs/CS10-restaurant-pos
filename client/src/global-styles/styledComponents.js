@@ -7,11 +7,9 @@ import { flexCenterMixin } from './mixins';
 export const Button = styled.button`
   ${flexCenterMixin};
   padding: 0;
-  font-family: Nunito, sans-serif;
   font-weight: 600;
   letter-spacing: 2px;
-  color:
-  ${props => {
+  color: ${props => {
     if (!props.primary && !props.dark) {
       return props.theme.btnPrimaryBgColor;
     }
@@ -32,8 +30,7 @@ export const Button = styled.button`
     }
     return `border: 2px solid ${color}`;
   }};
-  background:
-  ${props => {
+  background: ${props => {
     if (props.primary && props.dark) {
       return props.theme.btnDarkPrimaryBgColor;
     }
@@ -42,4 +39,10 @@ export const Button = styled.button`
     }
     return props.theme.btnBgColor;
   }};
+
+  &:hover {
+    cursor: pointer;
+    margin-bottom: 2px;
+    box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.1);
+  }
 `;
