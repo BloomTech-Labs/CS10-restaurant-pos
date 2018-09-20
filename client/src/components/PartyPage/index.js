@@ -109,7 +109,11 @@ class PartyPage extends React.Component {
             </s.Title>
             <s.Order>your order and shit</s.Order>
             <div>
-              <OrderTotal subTotal={this.state.subTotal} location={this.props.location} setTotal={this.setTotal} />
+              <OrderTotal
+                subTotal={this.state.subTotal}
+                location={this.props.location}
+                setTotal={this.setTotal}
+              />
             </div>
             <s.OrderButtons>
               <Button dark type="button" onClick={this.openSplitModal}>
