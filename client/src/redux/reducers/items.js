@@ -1,11 +1,17 @@
-import { LOADING_ITEMS, LOADING_ITEMS_SUCCESS } from '../actions/items';
+import {
+  LOADING_ITEMS,
+  LOADING_ITEMS_SUCCESS,
+  ADDING_ITEM,
+  ADDING_ITEM_SUCCESS,
+} from '../actions/items';
 
 const initialState = {
   itemList: [],
-  loading: false
+  newItem: {},
+  loading: false,
 };
 
-const TablesReducer = (state = initialState, action) => {
+const ItemsReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOADING_ITEMS:
       return { ...state, loading: true };
@@ -13,9 +19,15 @@ const TablesReducer = (state = initialState, action) => {
     case LOADING_ITEMS_SUCCESS:
       return { ...state, loading: false, itemList: action.payload };
 
+    case ADDING_ITEM:
+      return { ...state, loading: true };
+
+    case ADDING_ITEM_SUCCESS:
+      return { ...state, loading: false, newItem: action.payload };
+
     default:
       return state;
   }
 };
 
-export default TablesReducer;
+export default ItemsReducer;

@@ -34,7 +34,7 @@ const addItem = (req, res) => {
   newItem
     .save()
     .then((item) => {
-      res.status(201).json(item);
+      res.status(201).json({ item });
     })
     .catch((err) => {
       res.status(500).json({ err, msg: 'Error saving the item to the database.' });
