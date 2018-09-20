@@ -10,12 +10,12 @@ export const Navbar = styled.nav`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background: red;
+  background: ${(props) => props.theme.appPrimary};
   ${(props) => props.modalIsOpen && modalBlur};
 `;
 
 export const StyledLink = styled(Link)`
-  color: white;
+  color: ${(props) => props.theme.primaryText};
   text-decoration: none;
   margin-left: 10px;
 `;
