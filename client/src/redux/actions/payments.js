@@ -6,11 +6,14 @@ export const SENDING_PAYMENT = 'SENDING_PAYMENT';
 export const PAYMENT_SUCCESS = 'PAYMENT_SUCCESS';
 export const PAYMENT_ERROR = 'PAYMENT_ERROR';
 
-export const addItem = (token, amount, description) => (
+export const sendPayment = (token, amount, description) => (
   (dispatch) => {
+    // const stripeToken =
     dispatch({ type: SENDING_PAYMENT });
+    console.log(amount);
+    console.log(token);
     axios
-      .post(`${serverURI}/api/checkout`, { token, amount, description })
+      .post(`${serverURI}/api/checkout`, { stripeToken: token.id, amount, description })
       .then((res) => {
         dispatch({ type: PAYMENT_SUCCESS, payload: res.data });
       })

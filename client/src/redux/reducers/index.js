@@ -8,6 +8,7 @@ import PartyReducer from './party';
 import ItemsReducer from './items';
 import RestaurantReducer from './restaurant';
 import ServerReducer from './servers';
+import PaymentsReducer from './payments';
 
 const rootReducer = combineReducers({
   modal: ModalReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   items: ItemsReducer,
   restaurant: RestaurantReducer,
   servers: ServerReducer,
+  payments: PaymentsReducer,
 });
 
 export default rootReducer;

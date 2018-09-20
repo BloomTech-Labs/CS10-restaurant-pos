@@ -13,11 +13,18 @@ import Modal from '../HOC/Modal';
 import { getItems } from '../../redux/actions/items';
 import { addParty, saveOrder, saveSplitOrder } from '../../redux/actions/party';
 import { openModal, closeModal, openSplitModal, closeSplitModal } from '../../redux/actions/modal';
+import { sendPayment } from '../../redux/actions/payments';
 import { Button } from '../../global-styles/styledComponents';
 
 import * as s from './styles';
 
 class PartyPage extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.total = 0;
+  }
+
   state = {
     splitCheck: [],
     order: this.props.order,
@@ -76,6 +83,14 @@ class PartyPage extends React.Component {
     this.props.history.push('/tables');
   };
 
+  setTotal = total => {
+    this.total = total;
+  };
+
+  saveToken = token => {
+    this.props.sendPayment(token, this.total * 100, 'dgaishn');
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -94,7 +109,7 @@ class PartyPage extends React.Component {
             </s.Title>
             <s.Order>your order and shit</s.Order>
             <div>
-              <OrderTotal subTotal={this.state.subTotal} location={this.props.location} />
+              <OrderTotal subTotal={this.state.subTotal} location={this.props.location} setTotal={this.setTotal} />
             </div>
             <s.OrderButtons>
               <Button dark type="button" onClick={this.openSplitModal}>
@@ -108,7 +123,7 @@ class PartyPage extends React.Component {
                 email="test@test.com"
                 stripeKey="pk_test_0axArT8SI2u6aiUnuQH2lJzg"
                 image="https://beej.us/images/beejthumb.gif"
-                token={this.sendToken}
+                token={this.saveToken}
                 allowRememberMe={false}
                 amount={this.state.subTotal * 100}
               >
@@ -165,6 +180,7 @@ PartyPage.propTypes = {
   addParty: PropTypes.func,
   saveOrder: PropTypes.func,
   saveSplitOrder: PropTypes.func,
+  sendPayment: PropTypes.func,
   getItems: PropTypes.func,
   modalIsOpen: PropTypes.bool,
   splitModalIsOpen: PropTypes.bool,
@@ -186,6 +202,7 @@ PartyPage.defaultProps = {
   addParty: () => {},
   saveOrder: () => {},
   saveSplitOrder: () => {},
+  sendPayment: () => {},
   getItems: () => {},
   history: { push: () => {} },
   closeSplitModal: () => {},
@@ -218,6 +235,7 @@ export default connect(
     openModal,
     closeModal,
     openSplitModal,
-    closeSplitModal
+    closeSplitModal,
+    sendPayment
   }
 )(PartyPage);
