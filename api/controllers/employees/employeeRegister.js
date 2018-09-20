@@ -14,8 +14,13 @@ const employeeRegister = (req, res) => {
   const {
     pass: password, role, name
   } = req.body;
+
   // Validate Fields
-  verifyFields(['name', 'pass'], req.body, res);
+  const missingFields = verifyFields(['pass', 'name'], req.body, res);
+
+  if (missingFields.length > 0) {
+    return res.status(422).json({ msg: `Fields missing: ${missingFields.join(', ')}` });
+  }
 
   let restaurant;
 
@@ -30,7 +35,9 @@ const employeeRegister = (req, res) => {
     restaurant = currentUser.restaurant;
 
     // Verify roles
-    verifyRole(currentUser, res);
+    if (!verifyRole(currentUser, res)) {
+      return res.status(401).json({ msg: 'You are not authorized to do this.' });
+    }
   } catch (err) {
     return res.status(500).json({ err, msg: 'Error verifying the token.' });
   }

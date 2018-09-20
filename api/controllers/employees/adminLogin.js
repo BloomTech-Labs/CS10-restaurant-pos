@@ -3,13 +3,21 @@ const jwt = require('jsonwebtoken');
 const keys = require('../../../config/keys');
 // verifyFields verifies that all required fields are provided
 const Employee = require('../../models/Employee');
-
+// import field validation function
+const verifyFields = require('../../validation/verifyFields');
 
 // @route   POST api/employees/admin/login
 // @desc    Lets an admin login
 // @access  Public
 const adminLogin = (req, res) => {
   const { email, pass } = req.body;
+
+  // Validate Fields
+  const missingFields = verifyFields(['email', 'pass'], req.body, res);
+
+  if (missingFields.length > 0) {
+    return res.status(422).json({ msg: `Fields missing: ${missingFields.join(', ')}` });
+  }
 
   Employee
     .findOne({ email })
