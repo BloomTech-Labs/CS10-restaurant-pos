@@ -11,15 +11,22 @@ import reducer from './redux/reducers';
 import App from './App';
 import './index.css';
 
+
 // import registerServiceWorker from './registerServiceWorker';
-
-// eslint-disable-next-line no-underscore-dangle
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const store = createStore(
-  reducer,
-  composeEnhancers(applyMiddleware(thunk, requireManager, axiosAuth, logger))
-);
+let store;
+if (process.env.NODE_ENV === 'production') {
+  store = createStore(
+    reducer,
+    applyMiddleware(thunk, requireManager, axiosAuth)
+  );
+} else {
+  // eslint-disable-next-line no-underscore-dangle
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  store = createStore(
+    reducer,
+    composeEnhancers(applyMiddleware(thunk, requireManager, axiosAuth, logger))
+  );
+}
 
 ReactDOM.render(
   <Provider store={store}>

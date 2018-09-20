@@ -11,19 +11,21 @@ const passport = require('passport');
 const cors = require('cors');
 
 const { mongoURI: db, clientURI } = require('./config/keys');
-const employees = require('./api/routes/employees');
-const items = require('./api/routes/items');
-const party = require('./api/routes/party');
-const orders = require('./api/routes/orders');
-const tables = require('./api/routes/tables');
-const restaurants = require('./api/routes/restaurants');
-const subscriptions = require('./api/routes/subscriptions');
+// Route Imports
+const employeeRoutes = require('./api/routes/employeeRoutes');
+const itemRoutes = require('./api/routes/itemRoutes');
+const restaurantRoutes = require('./api/routes/restaurantRoutes');
+const orderRoutes = require('./api/routes/orderRoutes');
+const partyRoutes = require('./api/routes/partyRoutes');
+const stripeRoutes = require('./api/routes/stripeRoutes');
+const tableRoutes = require('./api/routes/tableRoutes');
 
 // TODO: Setup morgan and helmet
 const corsOptions = { origin: clientURI, credentials: true };
 
 // Initialize Server
 const server = express();
+
 
 // Middleware
 server.use(express.json());
@@ -55,13 +57,13 @@ server.post('/api', (req, res) => {
 });
 
 // Routes
-server.use('/api/employees', employees);
-server.use('/api/restaurants', passport.authenticate('jwt', { session: false }), restaurants);
-server.use('/api/items', passport.authenticate('jwt', { session: false }), items);
-server.use('/api/party', passport.authenticate('jwt', { session: false }), party);
-server.use('/api/orders', passport.authenticate('jwt', { session: false }), orders);
-server.use('/api/tables', passport.authenticate('jwt', { session: false }), tables);
-server.use('/api/subscriptions', passport.authenticate('jwt', { session: false }), subscriptions);
+employeeRoutes(server);
+itemRoutes(server, passport.authenticate('jwt', { session: false }));
+restaurantRoutes(server, passport.authenticate('jwt', { session: false }));
+orderRoutes(server, passport.authenticate('jwt', { session: false }));
+partyRoutes(server, passport.authenticate('jwt', { session: false }));
+stripeRoutes(server, passport.authenticate('jwt', { session: false }));
+tableRoutes(server, passport.authenticate('jwt', { session: false }));
 
 server.listen(PORT, (err) => {
   if (err) console.error(err);
@@ -76,3 +78,5 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
+
+module.exports = server;
