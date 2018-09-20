@@ -135,6 +135,16 @@ class FloorPlan extends React.Component {
     circle.addChild(tableNumber);
     tableNumber.anchor.set(0.5);
 
+    if (!this.props.selected.has(table.number)) {
+      // If the table doesn't exist in the active Set,
+      // add it to the Set and adjust its appearance
+      circle.alpha = 1;
+    } else {
+      // If the table does exist in the active Set,
+      // remove it from the Set and adjust its appearance
+      circle.alpha = 0.2;
+    }
+
     const toggleActive = () => {
       if (!this.props.selected.has(table.number)) {
         // If the table doesn't exist in the active Set,

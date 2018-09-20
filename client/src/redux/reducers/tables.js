@@ -15,6 +15,9 @@ import {
   SIDEBAR_REF,
   TOPBAR_REF
 } from '../actions/tables';
+import {
+  CLEAR_PARTY,
+} from '../actions/party';
 
 const initialState = {
   tableList: [],
@@ -88,6 +91,9 @@ const TablesReducer = (state = initialState, action) => {
 
     case TOPBAR_REF:
       return { ...state, topbarRef: action.payload };
+
+    case CLEAR_PARTY:
+      return { ...state, selected: new Set() };
 
     default:
       return state;

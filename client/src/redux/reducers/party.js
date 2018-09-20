@@ -11,7 +11,8 @@ import {
   UPDATING_PARTY,
   UPDATING_PARTY_SUCCESS,
   DELETING_PARTY,
-  DELETING_PARTY_SUCCESS
+  DELETING_PARTY_SUCCESS,
+  CLEAR_PARTY
 } from '../actions/party';
 import { DEACTIVATING_TABLE_SUCCESS } from '../actions/tables';
 
@@ -64,7 +65,7 @@ const PartyReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        partyList: state.partyList.map((party) => {
+        partyList: state.partyList.map(party => {
           if (party._id === action.payload._id) return action.payload;
           return party;
         })
@@ -77,7 +78,7 @@ const PartyReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        partyList: state.partyList.filter((party) => party._id !== action.payload.removedParty._id)
+        partyList: state.partyList.filter(party => party._id !== action.payload.removedParty._id)
       };
 
     // ? Should we add the populatedParty to state.fetchedParty?
@@ -85,11 +86,14 @@ const PartyReducer = (state = initialState, action) => {
       const { populatedParty } = action.payload; // eslint-disable-line no-case-declarations
       return {
         ...state,
-        partyList: state.partyList.map((party) => {
+        partyList: state.partyList.map(party => {
           if (party._id === populatedParty._id) return populatedParty;
           return party;
         })
       };
+
+    case CLEAR_PARTY:
+      return { ...initialState };
 
     default:
       return state;
