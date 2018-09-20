@@ -31,6 +31,7 @@ const SidebarWithRouter = withRouter((props) => <Sidebar {...props} />);
 class App extends Component {
   render() {
     const getUserConfirmation = (message, callback) => {
+      // TODO: use custom modal instead of an alert
       const result = window.confirm(message); // eslint-disable-line no-alert
 
       if (result) {

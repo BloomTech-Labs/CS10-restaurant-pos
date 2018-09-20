@@ -36,10 +36,6 @@ class PartyPage extends React.Component {
 
   componentDidMount() {
     this.props.getItems();
-
-    if (this.props.tables.length === 0) {
-      this.props.history.push('/tables');
-    }
   }
 
   openModal = () => {
@@ -94,7 +90,7 @@ class PartyPage extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Prompt when message="Leave?" />
+        <Prompt when={this.props.order.length} message="Leave?" />
         {this.props.modalIsOpen && (
           <Modal>
             {this.props.order.map(item => (
