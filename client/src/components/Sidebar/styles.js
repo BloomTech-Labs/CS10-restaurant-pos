@@ -31,7 +31,7 @@ export const StyledLink = styled(NavLink).attrs({ activeClassName })`
     font-weight: 700;
     padding-left: 15px;
     background: ${props => props.theme.contentBackground};
-    border-left: 10px solid ${props => props.theme.oxfordBlue}
+    border-left: 10px solid ${props => props.theme.oxfordBlue};
     border-radius: 10px 0 0 10px;
   }
 `;
