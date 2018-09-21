@@ -5,7 +5,6 @@ import { Prompt } from 'react-router-dom';
 import shortid from 'shortid';
 import StripeCheckout from 'react-stripe-checkout';
 
-import TablesPageTitle from '../TablesPageTitle';
 import ItemSelector from '../ItemSelector';
 import OrderScratchPad from '../OrderScratchPad';
 import OrderTotal from '../OrderTotal';
@@ -43,8 +42,8 @@ class PartyPage extends React.Component {
     this.props.openModal();
   };
 
-  addToSplitCheck = item => {
-    this.setState(prev => ({
+  addToSplitCheck = (item) => {
+    this.setState((prev) => ({
       splitCheck: [...prev.splitCheck, item]
     }));
   };
@@ -55,8 +54,8 @@ class PartyPage extends React.Component {
     this.props.openSplitModal();
   };
 
-  addItemToOrder = item => {
-    this.setState(prev => ({
+  addItemToOrder = (item) => {
+    this.setState((prev) => ({
       order: [...prev.order, { ...item, localRef: prev.localRef }],
       localRef: prev.localRef + 1,
       subTotal: Number(
@@ -65,9 +64,9 @@ class PartyPage extends React.Component {
     }));
   };
 
-  removeItemFromOrder = item => {
-    this.setState(prev => ({
-      order: prev.order.filter(orderItem => orderItem.localRef !== item.localRef),
+  removeItemFromOrder = (item) => {
+    this.setState((prev) => ({
+      order: prev.order.filter((orderItem) => orderItem.localRef !== item.localRef),
       subTotal: Number(
         (prev.order.reduce((acc, foodItem) => acc + foodItem.price, 0) - item.price).toFixed(2)
       )
@@ -79,11 +78,11 @@ class PartyPage extends React.Component {
     this.props.history.push('/tables');
   };
 
-  setTotal = total => {
+  setTotal = (total) => {
     this.total = total;
   };
 
-  saveToken = token => {
+  saveToken = (token) => {
     this.props.sendPayment(token, this.total * 100, 'dgaishn');
   };
 
@@ -93,7 +92,7 @@ class PartyPage extends React.Component {
         <Prompt when={!!this.props.order.length} message="Leave?" />
         {this.props.modalIsOpen && (
           <Modal>
-            {this.props.order.map(item => (
+            {this.props.order.map((item) => (
               <div key={shortid.generate()}>
                 {item.name}
                 <div onClick={() => this.addToSplitCheck(item)}>+</div>
@@ -136,7 +135,7 @@ class PartyPage extends React.Component {
         )}
         {this.props.splitModalIsOpen && (
           <Modal closeSplitModal={this.props.closeSplitModal}>
-            {this.props.splitOrder.map(item => (
+            {this.props.splitOrder.map((item) => (
               <div key={shortid.generate()}>{item.name}</div>
             ))}
             <div>Split Modal</div>
@@ -149,19 +148,20 @@ class PartyPage extends React.Component {
           </Modal>
         )}
         <s.Container modalOpen={this.props.modalIsOpen}>
-          <TablesPageTitle tables={this.props.tables} />
-          <s.Food>
-            {/* // TODO: figure out how to name things */}
-            <ItemSelector items={this.props.items} addItemToOrder={this.addItemToOrder} />
-            <OrderScratchPad
-              saveParty={this.saveParty}
-              order={this.state.order}
-              subTotal={this.state.subTotal}
-              removeItemFromOrder={this.removeItemFromOrder}
-              location={this.props.location}
-              openModal={this.openModal}
-            />
-          </s.Food>
+          {/* // TODO: figure out how to name things */}
+          <ItemSelector
+            tables={this.props.tables}
+            items={this.props.items}
+            addItemToOrder={this.addItemToOrder}
+          />
+          <OrderScratchPad
+            saveParty={this.saveParty}
+            order={this.state.order}
+            subTotal={this.state.subTotal}
+            removeItemFromOrder={this.removeItemFromOrder}
+            location={this.props.location}
+            openModal={this.openModal}
+          />
         </s.Container>
       </React.Fragment>
     );
@@ -215,7 +215,7 @@ PartyPage.defaultProps = {
   location: { country: 'US', state: 'CA' }
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   modalIsOpen: state.modal.isOpen,
   splitModalIsOpen: state.modal.splitModalIsOpen,
   items: state.items.itemList,

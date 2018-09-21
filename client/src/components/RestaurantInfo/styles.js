@@ -4,7 +4,6 @@ import { containerMixin, flexCenterMixin } from '../../global-styles/mixins';
 
 export const Container = styled.div`
   ${containerMixin}
-  border: 2px solid green;
   flex-direction: column;
 `;
 

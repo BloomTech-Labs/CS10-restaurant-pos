@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import shortid from 'shortid';
 
 import OrderTotal from '../OrderTotal';
+import { Button } from '../../global-styles/styledComponents';
 
 import * as s from './styles';
 
@@ -21,11 +22,17 @@ class OrderScratchPad extends React.Component {
             </s.Items>
           ))}
         </s.Scroll>
-        <OrderTotal location={this.props.location} subTotal={this.props.subTotal} />
-        <button type="button" onClick={this.props.saveParty}>Save</button>
-        <button type="button" onClick={this.props.openModal}>
-          Checkout Now
-        </button>
+        <s.Checkout>
+          <OrderTotal location={this.props.location} subTotal={this.props.subTotal} />
+          <s.ButtonContainer>
+            <Button primary dark type="button" onClick={this.props.saveParty}>
+              Save
+            </Button>
+            <Button dark type="button" onClick={this.props.openModal}>
+              Checkout Now
+            </Button>
+          </s.ButtonContainer>
+        </s.Checkout>
       </s.Container>
     );
   }

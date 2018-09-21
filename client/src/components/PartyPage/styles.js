@@ -1,19 +1,14 @@
 import styled from 'styled-components';
 
-import { modalBlur, containerMixin } from '../../global-styles/mixins';
+import { modalBlur } from '../../global-styles/mixins';
+import { MainContainer } from '../../global-styles/styledComponents';
 
-export const Container = styled.div`
-  border: 2px solid blue;
+export const Container = styled(MainContainer)`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-grow: 2;
   width: 100%;
   ${(props) => props.modalOpen && modalBlur};
-`;
-
-export const Food = styled.div`
-  ${containerMixin}
-  width: 100%;
 `;
 
 export const OrderButtons = styled.div`
