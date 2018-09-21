@@ -34,7 +34,7 @@ class TableEditPanel extends React.Component {
         {authorized
           && !this.props.editing && (
             <React.Fragment>
-              <Button type="button" onClick={this.createParty}>
+              <Button primary type="button" onClick={this.createParty}>
                 Add Order
               </Button>
               <Button type="button" onClick={this.props.toggleEdit}>
@@ -47,7 +47,7 @@ class TableEditPanel extends React.Component {
             <Button type="button" onClick={this.addTable}>
               Add Table
             </Button>
-            <Button type="button" onClick={this.saveTables}>
+            <Button primary type="button" onClick={this.saveTables}>
               Save
             </Button>
             <Button type="button" onClick={this.props.toggleEdit}>
