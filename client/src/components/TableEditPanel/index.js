@@ -12,6 +12,9 @@ import * as s from './styles';
 
 class TableEditPanel extends React.Component {
   addTable = () => {
+    const { membership, tables } = this.props;
+
+    if (!membership && tables.length >= 5) return;
     const newTableNumber = this.props.tables.length + 1;
     this.props.addTable(newTableNumber);
   };
@@ -64,6 +67,7 @@ TableEditPanel.propTypes = {
   tables: PropTypes.arrayOf(PropTypes.object),
   editing: PropTypes.bool,
   selected: SetType,
+  membership: PropTypes.bool,
   role: PropTypes.shape({
     admin: PropTypes.bool,
     manager: PropTypes.bool
@@ -79,6 +83,7 @@ TableEditPanel.defaultProps = {
   tables: [],
   editing: false,
   selected: new Set(),
+  membership: false,
   role: { admin: false, manager: false },
   createParty: () => {},
   addTable: () => {},
@@ -91,6 +96,7 @@ const mapStateToProps = (state) => ({
   tables: state.tables.tableList,
   editing: state.tables.editing,
   selected: state.tables.selected,
+  membership: state.auth.membership,
   role: state.auth.role
 });
 

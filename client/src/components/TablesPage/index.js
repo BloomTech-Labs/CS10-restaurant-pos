@@ -33,6 +33,7 @@ class TablesPage extends Component {
           />
         ) : (
           <Tables
+            membership={membership}
             tables={this.props.tables}
             selected={this.props.selected}
             toggleTable={this.toggleTable}

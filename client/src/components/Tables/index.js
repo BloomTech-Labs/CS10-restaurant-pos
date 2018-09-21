@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import SetType from 'es6-set-proptypes';
+import shortId from 'shortid';
 
 import Table from '../Table';
 
 class Tables extends Component {
-  componentDidMount() {}
-
   render() {
     return (
       <React.Fragment>
-        {this.props.tables.map((eachTable) => (
-          <Table
-            table={eachTable}
-            selected={this.props.selected.has(eachTable.number)}
-            toggleTable={this.props.toggleTable}
-          />
-        ))}
+        {this.props.tables.map((table, i) => {
+          if (i >= 5) return;
+          return (
+            <Table
+              key={shortId.generate()}
+              table={table}
+              selected={this.props.selected.has(table.number)}
+              toggleTable={this.props.toggleTable}
+            />
+          );
+        })}
       </React.Fragment>
     );
   }

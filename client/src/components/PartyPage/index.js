@@ -90,7 +90,7 @@ class PartyPage extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Prompt when={this.props.order.length} message="Leave?" />
+        <Prompt when={!!this.props.order.length} message="Leave?" />
         {this.props.modalIsOpen && (
           <Modal>
             {this.props.order.map(item => (
