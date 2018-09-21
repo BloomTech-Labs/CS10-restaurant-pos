@@ -31,12 +31,12 @@ class TableEditPanel extends React.Component {
     const authorized = this.props.role.admin || this.props.role.manager;
     return (
       <s.Panel>
+        <Button primary type="button" onClick={this.createParty}>
+          Add Order
+        </Button>
         {authorized
           && !this.props.editing && (
             <React.Fragment>
-              <Button primary type="button" onClick={this.createParty}>
-                Add Order
-              </Button>
               <Button type="button" onClick={this.props.toggleEdit}>
                 Edit
               </Button>
