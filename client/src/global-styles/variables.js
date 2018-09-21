@@ -11,6 +11,7 @@ export const theme = {
   // * Misc. -----------------------------------
   menuOpacity: null,
   lineHeight: null,
+  boxShadow: '0 2px 4px 1px rgba(0, 0, 0, 0.15)',
 
   // * Default Dimensions ----------------------
   sideBarWidth: 265,
@@ -19,21 +20,31 @@ export const theme = {
   // * Buttons ---------------------------------
   // Standard
   btnWidth: 210,
-  btnHeight: 60,
+  btnHeight: 58,
   btnBorderRadius: 10,
   btnFontSize: 2,
-  btnColor: white,
+  btnTextColor: white,
   btnBgColor: transparent,
+  btnBorderColor: steelBlue,
 
-  // Main
-  btnMainBgColor: steelBlue,
+  // Primary
+  btnPrimaryBgColor: steelBlue,
+
+
+  // Dark Primary
+  btnDarkPrimaryBgColor: razzmatazz,
+
+  // Dark
+  btnDarkBorderColor: white,
+
 
   // * Color Theme Variables -------------------
-  // Main Styles
+  // Primary Styles
   appPrimary: white,
   appSecondary: razzmatazz,
   appTertiary: oxfordBlue,
   contentBackground: aquaHaze,
+  textColorDark: white,
   // Top Bar
   topBarHeader: white,
   topBarLink: comet,

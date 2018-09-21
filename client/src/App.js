@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 're
 import { ThemeProvider } from 'styled-components';
 
 import { saveTopbarRef, saveSidebarRef } from './redux/actions/tables';
+import { clearParty } from './redux/actions/party';
 import * as s from './styles';
 import Landing from './components/Landing';
 import Login from './components/Login';
@@ -25,13 +26,22 @@ import RequireAuth from './components/HOC/RequireAuth';
 import Test from './components/Test';
 import { theme } from './global-styles/variables';
 
-
 const SidebarWithRouter = withRouter((props) => <Sidebar {...props} />);
 
 class App extends Component {
   render() {
+    const getUserConfirmation = (message, callback) => {
+      const result = window.confirm(message); // eslint-disable-line no-alert
+
+      if (result) {
+        this.props.clearParty();
+      }
+
+      callback(result);
+    };
+
     return (
-      <Router>
+      <Router getUserConfirmation={getUserConfirmation}>
         <ThemeProvider theme={theme}>
           <s.Container>
             <Navbar modalIsOpen={this.props.modalIsOpen} saveTopbarRef={this.props.saveTopbarRef} />
@@ -72,14 +82,16 @@ App.propTypes = {
     manager: PropTypes.bool
   }),
   saveSidebarRef: PropTypes.func,
-  saveTopbarRef: PropTypes.func
+  saveTopbarRef: PropTypes.func,
+  clearParty: PropTypes.func,
 };
 
 App.defaultProps = {
   modalIsOpen: false,
   role: { admin: false, manager: false },
   saveSidebarRef: () => {},
-  saveTopbarRef: () => {}
+  saveTopbarRef: () => {},
+  clearParty: () => {},
 };
 
 const mapStateToProps = (state) => ({
@@ -89,5 +101,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { saveSidebarRef, saveTopbarRef }
+  { saveSidebarRef, saveTopbarRef, clearParty }
 )(App);

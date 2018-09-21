@@ -6,6 +6,7 @@ import TableEditPanel from '../TableEditPanel';
 
 import * as s from './styles';
 
+
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);

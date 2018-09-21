@@ -5,6 +5,7 @@
 
 * {
   box-sizing: border-box;
+  font-family: Nunito, sans-serif;
 }
 
 html,
@@ -91,9 +92,10 @@ video {
   margin: 0;
   padding: 0;
   border: 0;
+  font-family: Nunito, sans-serif;
   font-size: 100%;
-  font: inherit;
   vertical-align: baseline;
+  font-weight: 600;
 }
 /* HTML5 display-role reset for older browsers */
 article,

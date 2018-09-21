@@ -28,15 +28,21 @@ const Overlay = styled.div`
 
 // TODO: Make percents match max- width/height
 const Modal = styled.div`
-  background: green;
+  background: ${(props) => props.theme.appTertiary};
+  color: ${(props) => props.theme.textColorDark};
   ${flexCenterMixin};
   position: fixed;
+  flex-direction: column;
+  justify-content: space-evenly;
   top: calc(50% - (66% / 2));
   z-index: 20;
-  max-width: 275px;
+  max-width: 675px;
   width: 35%;
-  max-height: 315px;
+  max-height: 715px;
   height: 66%;
+  border-radius: 25px;
+  box-shadow: ${(props) => props.theme.boxShadow};
+  padding: 40px;
 `;
 
 class ModalComponent extends React.Component {
@@ -47,7 +53,7 @@ class ModalComponent extends React.Component {
       <Container>
         <Overlay onClick={this.close()} />
         <Modal>
-          <div onClick={this.close()}>x</div>
+          <div style={{ position: 'absolute', top: '20px', right: '20px', cursor: 'pointer' }} onClick={this.close()}>x</div>
           {this.props.children}
         </Modal>
       </Container>

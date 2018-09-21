@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SetType from 'es6-set-proptypes';
 
+import { Button } from '../../global-styles/styledComponents';
 import { addTable, toggleEdit, saveTables } from '../../redux/actions/tables';
 import { createParty } from '../../redux/actions/party';
 // TODO: create save button action
@@ -17,6 +18,7 @@ class TableEditPanel extends React.Component {
 
   saveTables = () => {
     this.props.saveTables(this.props.tables);
+    this.props.toggleEdit();
   };
 
   createParty = () => {
@@ -32,25 +34,25 @@ class TableEditPanel extends React.Component {
         {authorized
           && !this.props.editing && (
             <React.Fragment>
-              <button type="button" onClick={this.createParty}>
+              <Button type="button" onClick={this.createParty}>
                 Add Order
-              </button>
-              <button type="button" onClick={this.props.toggleEdit}>
+              </Button>
+              <Button type="button" onClick={this.props.toggleEdit}>
                 Edit
-              </button>
+              </Button>
             </React.Fragment>
         )}
         {this.props.editing && (
           <React.Fragment>
-            <button type="button" onClick={this.addTable}>
+            <Button type="button" onClick={this.addTable}>
               Add Table
-            </button>
-            <button type="button" onClick={this.saveTables}>
+            </Button>
+            <Button type="button" onClick={this.saveTables}>
               Save
-            </button>
-            <button type="button" onClick={this.props.toggleEdit}>
+            </Button>
+            <Button type="button" onClick={this.props.toggleEdit}>
               Cancel
-            </button>
+            </Button>
           </React.Fragment>
         )}
       </s.Panel>

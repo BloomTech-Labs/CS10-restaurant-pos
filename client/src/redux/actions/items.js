@@ -5,6 +5,9 @@ import serverURI from '../../config/URI';
 export const LOADING_ITEMS = 'LOADING_ITEMS';
 export const LOADING_ITEMS_SUCCESS = 'LOADING_ITEMS_SUCCESS';
 export const LOADING_ITEMS_ERROR = 'LOADING_ITEMS_ERROR';
+export const ADDING_ITEM = 'ADDING_ITEM';
+export const ADDING_ITEM_SUCCESS = 'ADDING_ITEM_SUCCESS';
+export const ADDING_ITEM_ERROR = 'ADDING_ITEM_ERROR';
 
 export const getItems = () => (
   (dispatch) => {
@@ -17,6 +20,21 @@ export const getItems = () => (
       .catch((err) => {
         console.error(err);
         dispatch({ type: LOADING_ITEMS_ERROR, payload: err });
+      });
+  }
+);
+
+export const addItem = (item) => (
+  (dispatch) => {
+    dispatch({ type: ADDING_ITEM });
+    axios
+      .post(`${serverURI}/api/items/add`, item)
+      .then((res) => {
+        dispatch({ type: ADDING_ITEM_SUCCESS, payload: res.data.item });
+      })
+      .catch((err) => {
+        console.error(err);
+        dispatch({ type: ADDING_ITEM_ERROR, payload: err });
       });
   }
 );
