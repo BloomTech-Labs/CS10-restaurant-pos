@@ -16,6 +16,7 @@ import { RESTAURANT_AUTH } from '../actions/restaurant';
 const jwt = localStorage.getItem('jwt');
 
 let role = { admin: false, manager: false };
+let membership = false;
 let restaurant = '';
 
 if (jwt) {
@@ -27,6 +28,7 @@ if (jwt) {
   } else {
     role = decodedJwt.role; // eslint-disable-line prefer-destructuring
     restaurant = decodedJwt.restaurant; // eslint-disable-line prefer-destructuring
+    membership = decodedJwt.membership; // eslint-disable-line prefer-destructuring
   }
 }
 
@@ -35,7 +37,8 @@ const initialState = {
   pin: '',
   jwt,
   role,
-  restaurant
+  restaurant,
+  membership,
 };
 
 const AuthReducer = (auth = initialState, action) => {
@@ -49,6 +52,7 @@ const AuthReducer = (auth = initialState, action) => {
         loading: false,
         jwt: action.payload.jwt,
         restaurant: action.payload.restaurant,
+        membership: action.payload.restaurant,
       };
 
     case LOGIN_FAILURE:
@@ -77,6 +81,7 @@ const AuthReducer = (auth = initialState, action) => {
         loading: false,
         jwt: action.payload.jwt,
         restaurant: action.payload.restaurant,
+        membership: action.payload.restaurant,
       };
 
     case EMPLOYEE_REGISTER_SUCCESS:
