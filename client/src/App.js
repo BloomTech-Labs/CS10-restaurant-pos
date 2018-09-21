@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
+import { setInitialAuth } from './redux/actions/auth';
 import { saveTopbarRef, saveSidebarRef } from './redux/actions/tables';
 import { clearParty } from './redux/actions/party';
 import * as s from './styles';
@@ -29,6 +30,10 @@ import { theme } from './global-styles/variables';
 const SidebarWithRouter = withRouter((props) => <Sidebar {...props} />);
 
 class App extends Component {
+  componentDidMount() {
+    this.props.setInitialAuth();
+  }
+
   render() {
     const getUserConfirmation = (message, callback) => {
       // TODO: use custom modal instead of an alert
@@ -82,25 +87,27 @@ App.propTypes = {
     admin: PropTypes.bool,
     manager: PropTypes.bool
   }),
+  setInitialAuth: PropTypes.func,
   saveSidebarRef: PropTypes.func,
   saveTopbarRef: PropTypes.func,
-  clearParty: PropTypes.func,
+  clearParty: PropTypes.func
 };
 
 App.defaultProps = {
   modalIsOpen: false,
   role: { admin: false, manager: false },
+  setInitialAuth: () => {},
   saveSidebarRef: () => {},
   saveTopbarRef: () => {},
-  clearParty: () => {},
+  clearParty: () => {}
 };
 
 const mapStateToProps = (state) => ({
   modalIsOpen: state.modal.isOpen,
-  role: state.auth.role,
+  role: state.auth.role
 });
 
 export default connect(
   mapStateToProps,
-  { saveSidebarRef, saveTopbarRef, clearParty }
+  { setInitialAuth, saveSidebarRef, saveTopbarRef, clearParty }
 )(App);
