@@ -9,7 +9,11 @@ const adminRegister = (req, res) => {
   const { name, pass, email } = req.body;
 
   // Validate Fields
-  verifyFields(['name', 'pass'], req.body, res);
+  const missingFields = verifyFields(['name', 'pass'], req.body, res);
+
+  if (missingFields.length > 0) {
+    return res.status(422).json({ msg: `Fields missing: ${missingFields.join(', ')}` });
+  }
 
   // Create an initial PIN
   const pin = '0000';

@@ -13,5 +13,5 @@ module.exports = (server, validation) => {
   server.route('/api/tables/:id').get(validation, getTable);
   server.route('/api/tables/update').post(validation, updateAllTables);
   server.route('/api/tables/deactivate/:id').put(validation, deactivateTable);
-  server.route('/api/tables/deactivate/:id').delete(validation, deleteTable);
+  server.route('/api/tables/delete/:id').delete(validation, deleteTable);
 };

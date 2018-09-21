@@ -8,11 +8,16 @@ const Item = require('../../models/Item');
 const deleteItem = (req, res) => {
   const { id } = req.params;
 
-  // Verify Roles
-  verifyRole(req.user, res);
+  // Verify roles
+  if (!verifyRole(req.user)) {
+    return res.status(401).json({ msg: 'You are not authorized to do this.' });
+  }
 
   Item.findOneAndRemove({ _id: id })
     .then((removedItem) => {
+      if (!removedItem) {
+        return res.status(404).json({ msg: 'Item was not found.' });
+      }
       res.status(200).json({ removedItem, msg: 'Item deleted from the database.' });
     })
     .catch((err) => {

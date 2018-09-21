@@ -8,7 +8,12 @@ const verifyFields = require('../../validation/verifyFields');
 // @access  Private
 const addOrder = (req, res) => {
   const orderData = { ...req.body };
-  verifyFields(['party', 'server', 'food'], req.body, res);
+
+  const missingFields = verifyFields(['server', 'party', 'food'], req.body);
+
+  if (missingFields.length > 0) {
+    return res.status(422).json({ msg: `Fields missing: ${missingFields.join(', ')}` });
+  }
 
   // pull restaurant id from req.user and assign to the new order
   orderData.restaurant = req.user.restaurant;

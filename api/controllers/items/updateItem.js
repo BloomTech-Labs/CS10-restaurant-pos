@@ -9,8 +9,10 @@ const updateItem = (req, res) => {
   const { id } = req.params;
   const itemToUpdate = req.body;
 
-  // Verify Roles
-  verifyRole(req.user, res);
+  // Verify roles
+  if (!verifyRole(req.user)) {
+    return res.status(401).json({ msg: 'You are not authorized to do this.' });
+  }
 
   // updates the item and sends back the updated document
   Item.findOneAndUpdate({ _id: id }, itemToUpdate, { new: true })

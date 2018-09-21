@@ -7,11 +7,17 @@ const verifyRole = require('../../validation/verifyRole');
 // @desc    Update all tables in the database
 // @access  Private
 const updateAllTables = (req, res) => {
-  // Verify Roles
-  verifyRole(req.user, res);
+  // Verify roles
+  if (!verifyRole(req.user)) {
+    return res.status(401).json({ msg: 'You are not authorized to do this.' });
+  }
 
-  // checks if the required fields exist on the request, sends an error back if not
-  verifyFields(['tables'], req.body, res);
+  // checks if any required fields are missing
+  const missingFields = verifyFields(['tables'], req.body);
+
+  if (missingFields.length > 0) {
+    return res.status(422).json({ msg: `Fields missing: ${missingFields.join(', ')}` });
+  }
 
   const { tables } = req.body;
 
