@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 
-import { flexCenterMixin } from '../../global-styles/mixins';
+import { Boxes } from '../../global-styles/styledComponents';
 
-export const TableDiv = styled.div`
-  ${flexCenterMixin}
-  flex-direction: column;
-  height: 
+export const TableBoxes = styled(Boxes)`
+  /* Style modifications go here */
 `;
