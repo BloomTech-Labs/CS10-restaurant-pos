@@ -4,14 +4,8 @@ import { flexCenterMixin } from '../../global-styles/mixins';
 
 export const Container = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-export const ItemsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+flex-wrap: wrap;
+justify-content: space-evenly;
   width: 100%;
 `;
 
