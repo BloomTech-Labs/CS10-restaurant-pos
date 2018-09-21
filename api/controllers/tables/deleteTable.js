@@ -8,8 +8,10 @@ const verifyRole = require('../../validation/verifyRole');
 const deleteTable = (req, res) => {
   const { id } = req.params;
 
-  // Verify Roles
-  verifyRole(req.user, res);
+  // Verify roles
+  if (!verifyRole(req.user)) {
+    return res.status(401).json({ msg: 'You are not authorized to do this.' });
+  }
 
   Table.findOneAndRemove({ _id: id })
     .then((removedTable) => {
@@ -36,7 +38,7 @@ const deleteTable = (req, res) => {
         });
     })
     .catch((err) => {
-      res.status(500).catch({
+      res.status(500).json({
         err,
         msg: 'There was an error removing the table from the DB.',
       });
