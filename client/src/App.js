@@ -8,6 +8,7 @@ import { saveTopbarRef, saveSidebarRef } from './redux/actions/tables';
 import { clearParty } from './redux/actions/party';
 import * as s from './styles';
 import Landing from './components/Landing';
+import Logout from './components/Logout';
 import Login from './components/Login';
 import Register from './components/Register';
 import RegistrationSuccess from './components/RegistrationSuccess';
@@ -53,6 +54,7 @@ class App extends Component {
               />
               <Switch>
                 <Route path="/" component={Landing} exact />
+                <Route path="/logout" component={Logout} />
                 <Route path="/login" component={RequireNotAuth(Login)} />
                 <Route path="/register" component={RequireNotAuth(Register)} />
                 <Route path="/success" component={RegistrationSuccess} />

@@ -4,6 +4,7 @@ import jwtDecode from 'jwt-decode';
 // URIs
 import serverURI from '../../config/URI';
 
+export const LOGOUT = 'LOGOUT';
 export const AUTH_LOADING = 'AUTH_LOADING';
 export const PASSWORD_MATCH_ERROR = 'PASSWORD_MATCH_ERROR';
 export const PASSWORD_MATCH_SUCCESS = 'PASSWORD_MATCH_SUCCESS';
@@ -15,6 +16,8 @@ export const EMPLOYEE_LOGIN_FAILURE = 'EMPLOYEE_LOGIN_FAILURE';
 export const EMPLOYEE_LOGIN_SUCCESS = 'EMPLOYEE_LOGIN_SUCCESS';
 export const EMPLOYEE_REGISTER_SUCCESS = 'EMPLOYEE_REGISTER_SUCCESS';
 export const EMPLOYEE_REGISTER_FAILURE = 'EMPLOYEE_REGISTER_FAILURE';
+
+export const logout = () => ({ type: LOGOUT });
 
 export const login = ({ email, pass }, push) => dispatch => {
   dispatch({ type: AUTH_LOADING });
