@@ -35,7 +35,7 @@ const employeeRegister = (req, res) => {
     restaurant = currentUser.restaurant;
 
     // Verify roles
-    if (!verifyRole(currentUser, res)) {
+    if (!verifyRole(currentUser)) {
       return res.status(401).json({ msg: 'You are not authorized to do this.' });
     }
   } catch (err) {
