@@ -11,7 +11,7 @@ const Table = (props) => (
 Table.propTypes = {
   selected: PropTypes.bool,
   table: PropTypes.shape({
-    number: PropTypes.bool.isRequired
+    number: PropTypes.number.isRequired
   }),
   toggleTable: PropTypes.func
 };
