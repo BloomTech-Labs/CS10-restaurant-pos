@@ -16,7 +16,12 @@ const updatePin = (req, res) => {
     return res.status(401).json({ msg: 'You are not authorized to do this.' });
   }
 
-  verifyFields(['oldPassword', 'newPassword'], req.body, res);
+  // Validate Fields
+  const missingFields = verifyFields(['oldPassword', 'newPassword'], req.body, res);
+
+  if (missingFields.length > 0) {
+    return res.status(422).json({ msg: `Fields missing: ${missingFields.join(', ')}` });
+  }
 
   // Locate the employee
   Employee.findOne({ pin, restaurant: req.user.restaurant })

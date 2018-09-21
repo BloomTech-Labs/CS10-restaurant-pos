@@ -10,7 +10,11 @@ const getParty = (req, res) => {
   const { id } = req.params;
 
   // Verify Fields
-  verifyFields(['id'], req.params, res);
+  const missingFields = verifyFields(['id'], req.body);
+
+  if (missingFields.length > 0) {
+    return res.status(422).json({ msg: `Fields missing: ${missingFields.join(', ')}` });
+  }
 
   Party.findOne({ _id: id })
     .populate('server', ['name'])

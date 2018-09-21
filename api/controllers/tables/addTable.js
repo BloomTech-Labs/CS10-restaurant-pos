@@ -7,14 +7,19 @@ const verifyRole = require('../../validation/verifyRole');
 // @desc    Adds a new table to the database
 // @access  Private
 const addTable = (req, res) => {
-  // Verify Role
-  verifyRole(req.user, res);
+  // Verify roles
+  if (!verifyRole(req.user)) {
+    return res.status(401).json({ msg: 'You are not authorized to do this.' });
+  }
 
   const { x, y, number } = req.body;
 
-  // this will send back an error response if the requirements are not met
-  // otherwise it will continue running the rest of the code
-  verifyFields(['x', 'y', 'number'], req.body, res);
+  // verifies that all required fields are provided
+  const missingFields = verifyFields(['x', 'y', 'number'], req.body);
+
+  if (missingFields.length > 0) {
+    return res.status(422).json({ msg: `Fields missing: ${missingFields.join(', ')}` });
+  }
 
   const newTable = new Table({
     x,

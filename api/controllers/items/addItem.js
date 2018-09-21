@@ -16,10 +16,16 @@ const addItem = (req, res) => {
   } = req.body;
 
   // Validate Fields
-  verifyFields(['name', 'price'], req.body, res);
+  const missingFields = verifyFields(['name', 'price'], req.body, res);
 
-  // Verify Roles
-  verifyRole(req.user, res);
+  if (missingFields.length > 0) {
+    return res.status(422).json({ msg: `Fields missing: ${missingFields.join(', ')}` });
+  }
+
+  // Verify roles
+  if (!verifyRole(req.user)) {
+    return res.status(401).json({ msg: 'You are not authorized to do this.' });
+  }
 
   // create the new Item
   const newItem = new Item({

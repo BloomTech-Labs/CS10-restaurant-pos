@@ -14,7 +14,12 @@ const employeeLogin = (req, res) => {
   // Token contains the restaurant source via logged in admin
   const token = jwt.verify(req.headers.authorization.slice(7), keys.secretOrKey);
 
-  verifyFields(['pin'], req.body, res);
+  // Validate Fields
+  const missingFields = verifyFields(['pin'], req.body, res);
+
+  if (missingFields.length > 0) {
+    return res.status(422).json({ msg: `Fields missing: ${missingFields.join(', ')}` });
+  }
 
   // Find the employee in the DB
   Employee.findOne({ pin, restaurant: token.restaurant })

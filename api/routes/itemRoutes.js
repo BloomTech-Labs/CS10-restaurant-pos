@@ -11,5 +11,5 @@ module.exports = (server, validation) => {
   server.route('/api/items/all').get(validation, getAllItems);
   server.route('/api/items/:id').get(validation, getItem);
   server.route('/api/items/update/:id').put(validation, updateItem);
-  server.route('/api/items/delete/:id').post(validation, deleteItem);
+  server.route('/api/items/delete/:id').delete(validation, deleteItem);
 };

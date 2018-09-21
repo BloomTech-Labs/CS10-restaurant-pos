@@ -12,7 +12,11 @@ const addParty = (req, res) => {
   const { tables, server } = req.body;
 
   // Verify Fields
-  verifyFields(['tables', 'server'], req.body, res);
+  const missingFields = verifyFields(['tables', 'server'], req.body);
+
+  if (missingFields.length > 0) {
+    return res.status(422).json({ msg: `Fields missing: ${missingFields.join(', ')}` });
+  }
 
   // Map over tables from req.body, update each and return the promise
   const promises = tables.map(table => (

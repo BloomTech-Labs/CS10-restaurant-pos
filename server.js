@@ -57,7 +57,7 @@ server.post('/api', (req, res) => {
 });
 
 // Routes
-employeeRoutes(server);
+employeeRoutes(server, passport.authenticate('jwt', { session: false }));
 itemRoutes(server, passport.authenticate('jwt', { session: false }));
 restaurantRoutes(server, passport.authenticate('jwt', { session: false }));
 orderRoutes(server, passport.authenticate('jwt', { session: false }));
