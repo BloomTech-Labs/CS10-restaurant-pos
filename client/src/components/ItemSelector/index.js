@@ -8,11 +8,11 @@ class ItemSelector extends React.Component {
     return (
       <s.Container>
         {this.props.items.map((item) => (
-          <s.Boxes key={item._id} onClick={() => this.props.addItemToOrder(item)}>
+          <s.ItemBoxes key={item._id} onClick={() => this.props.addItemToOrder(item)}>
             <s.ItemTitle>{item.name}</s.ItemTitle>
             <s.ItemDescription>{item.description}</s.ItemDescription>
             <s.ItemPrice>{item.price}</s.ItemPrice>
-          </s.Boxes>
+          </s.ItemBoxes>
         ))}
       </s.Container>
     );

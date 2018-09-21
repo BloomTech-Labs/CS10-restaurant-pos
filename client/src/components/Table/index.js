@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import * as s from './styles';
+
 const Table = (props) => {
   const toggleTable = () => props.toggleTable(props.table.number);
   return (
-    <div onClick={toggleTable}>
+    <s.TableDiv onClick={toggleTable}>
       {props.table.number}
       {props.selected && <div>I am selected!</div>}
-    </div>
+    </s.TableDiv>
   );
 };
 
