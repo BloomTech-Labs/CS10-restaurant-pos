@@ -8,7 +8,7 @@ import {
   PASSWORD_MATCH_ERROR,
   PASSWORD_MATCH_SUCCESS,
   EMPLOYEE_REGISTER_FAILURE,
-  EMPLOYEE_REGISTER_SUCCESS,
+  EMPLOYEE_REGISTER_SUCCESS
 } from '../actions/auth';
 import {
   LOADING_TABLES_ERROR,
@@ -18,7 +18,7 @@ import {
   SAVING_TABLES_ERROR,
   SAVING_TABLES_SUCCESS,
   DEACTIVATING_TABLE_ERROR,
-  DEACTIVATING_TABLE_SUCCESS,
+  DEACTIVATING_TABLE_SUCCESS
 } from '../actions/tables';
 import {
   LOADING_PARTIES_ERROR,
@@ -30,24 +30,22 @@ import {
   UPDATING_PARTY_ERROR,
   UPDATING_PARTY_SUCCESS,
   DELETING_PARTY_ERROR,
-  DELETING_PARTY_SUCCESS,
+  DELETING_PARTY_SUCCESS
 } from '../actions/party';
 import {
   LOADING_ITEMS_ERROR,
   LOADING_ITEMS_SUCCESS,
   ADDING_ITEM_ERROR,
-  ADDING_ITEM_SUCCESS,
+  ADDING_ITEM_SUCCESS
 } from '../actions/items';
 import {
   LOADING_RESTAURANT_ERROR,
   LOADING_RESTAURANT_SUCCESS,
   ADDING_RESTAURANT_ERROR,
-  ADDING_RESTAURANT_SUCCESS,
+  ADDING_RESTAURANT_SUCCESS
 } from '../actions/restaurant';
-import {
-  LOADING_SERVERS_ERROR,
-  LOADING_SERVERS_SUCCESS,
-} from '../actions/servers';
+import { LOADING_SERVERS_ERROR, LOADING_SERVERS_SUCCESS } from '../actions/servers';
+import { PAYMENT_ERROR, PAYMENT_SUCCESS } from '../actions/payments';
 
 const initialState = {
   loginError: false,
@@ -67,6 +65,7 @@ const initialState = {
   loadingRestaurantError: false,
   addingRestaurantError: false,
   loadingServersError: false,
+  paymentsError: false,
 };
 
 const ErrorReducer = (errors = initialState, action) => {
@@ -153,6 +152,11 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, loadingServersError: action.payload };
     case LOADING_SERVERS_SUCCESS:
       return { ...errors, loadingServersError: false };
+
+    case PAYMENT_ERROR:
+      return { ...errors, paymentsError: action.payload };
+    case PAYMENT_SUCCESS:
+      return { ...errors, paymentsError: false };
 
     default:
       return errors;

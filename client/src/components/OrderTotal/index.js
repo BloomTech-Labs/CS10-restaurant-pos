@@ -24,6 +24,8 @@ class OrderTotal extends React.Component {
         this.setState({
           tax: Number((price.total - price.price).toFixed(2)),
           total: Number(price.total.toFixed(2))
+        }, () => {
+          this.props.setTotal(this.state.total);
         });
       })
       .catch(error => {
@@ -48,17 +50,19 @@ class OrderTotal extends React.Component {
 
 const locationType = PropTypes.shape({
   country: PropTypes.string,
-  state: PropTypes.string
+  state: PropTypes.string,
 });
 
 OrderTotal.propTypes = {
   location: locationType,
-  subTotal: PropTypes.number
+  subTotal: PropTypes.number,
+  setTotal: PropTypes.func,
 };
 
 OrderTotal.defaultProps = {
   subTotal: 0,
-  location: { country: 'US', state: 'CA' }
+  location: { country: 'US', state: 'CA' },
+  setTotal: () => {},
 };
 
 export default OrderTotal;

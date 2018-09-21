@@ -6,6 +6,7 @@ const razzmatazz = '#E30E58';
 const oxfordBlue = '#303B49';
 const comet = '#5F6273';
 const steelBlue = '#4381C1';
+const ebonyClay = '#202233';
 
 export const theme = {
   // * Misc. -----------------------------------
@@ -46,9 +47,7 @@ export const theme = {
   contentBackground: aquaHaze,
   textColorDark: white,
   // Top Bar
-  topBarHeader: white,
   topBarLink: comet,
-  topBarBgColor: null,
   // Side Bar
   linkSelectedBg: null,
   linkSelected: null,
@@ -59,4 +58,6 @@ export const theme = {
   buttonBorder: null,
   // Sub Headers
   subHeader: null,
+  // Text
+  primaryText: ebonyClay
 };
