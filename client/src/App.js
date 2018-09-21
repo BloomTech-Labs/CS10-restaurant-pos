@@ -97,7 +97,7 @@ App.defaultProps = {
 
 const mapStateToProps = (state) => ({
   modalIsOpen: state.modal.isOpen,
-  role: state.auth.role
+  role: state.auth.role,
 });
 
 export default connect(

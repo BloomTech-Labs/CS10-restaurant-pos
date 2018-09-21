@@ -24,7 +24,7 @@ const appReducer = combineReducers({
 
 const rootReducer = (state, action) => {
   if (action.type === 'LOGOUT') {
-    localStorage.removeItem('jwt');
+    localStorage.setItem('jwt', null);
     state = undefined;
   }
 

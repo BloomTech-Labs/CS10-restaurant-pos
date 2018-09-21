@@ -9,7 +9,7 @@ const Logout = (props) => {
 
   const logoutRedirect = () => props.history.push('/');
 
-  setTimeout(logoutRedirect, 2000);
+  setTimeout(logoutRedirect, 3000);
 
   return <div>You have logged out! :D</div>;
 };
