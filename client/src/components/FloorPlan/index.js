@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 import SetType from 'es6-set-proptypes';
 
 import { theme } from '../../global-styles/variables';
-
-import * as s from './styles';
+import { MainContainer } from '../../global-styles/styledComponents';
 
 class FloorPlan extends React.Component {
   constructor(props) {
@@ -280,7 +279,7 @@ class FloorPlan extends React.Component {
     // TODO: Stretch Goal: Use border-radius and arrows to fuck with shit
     return (
       <React.Fragment>
-        <s.FloorPlan innerRef={this.pixi} />
+        <MainContainer innerRef={this.pixi} />
         <div style={{ position: 'fixed', right: '100px' }}>
           {/* // ! make these not inline */}
           <label htmlFor="lock">

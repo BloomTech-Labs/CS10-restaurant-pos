@@ -4,10 +4,12 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
+import { setInitialAuth } from './redux/actions/auth';
 import { saveTopbarRef, saveSidebarRef } from './redux/actions/tables';
 import { clearParty } from './redux/actions/party';
 import * as s from './styles';
 import Landing from './components/Landing';
+import Logout from './components/Logout';
 import Login from './components/Login';
 import Register from './components/Register';
 import RegistrationSuccess from './components/RegistrationSuccess';
@@ -28,6 +30,10 @@ import { theme } from './global-styles/variables';
 const SidebarWithRouter = withRouter((props) => <Sidebar {...props} />);
 
 class App extends Component {
+  componentDidMount() {
+    this.props.setInitialAuth();
+  }
+
   render() {
     const getUserConfirmation = (message, callback) => {
       // TODO: use custom modal instead of an alert
@@ -53,6 +59,7 @@ class App extends Component {
               />
               <Switch>
                 <Route path="/" component={Landing} exact />
+                <Route path="/logout" component={Logout} />
                 <Route path="/login" component={RequireNotAuth(Login)} />
                 <Route path="/register" component={RequireNotAuth(Register)} />
                 <Route path="/success" component={RegistrationSuccess} />
@@ -80,17 +87,19 @@ App.propTypes = {
     admin: PropTypes.bool,
     manager: PropTypes.bool
   }),
+  setInitialAuth: PropTypes.func,
   saveSidebarRef: PropTypes.func,
   saveTopbarRef: PropTypes.func,
-  clearParty: PropTypes.func,
+  clearParty: PropTypes.func
 };
 
 App.defaultProps = {
   modalIsOpen: false,
   role: { admin: false, manager: false },
+  setInitialAuth: () => {},
   saveSidebarRef: () => {},
   saveTopbarRef: () => {},
-  clearParty: () => {},
+  clearParty: () => {}
 };
 
 const mapStateToProps = (state) => ({
@@ -100,5 +109,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { saveSidebarRef, saveTopbarRef, clearParty }
+  { setInitialAuth, saveSidebarRef, saveTopbarRef, clearParty }
 )(App);

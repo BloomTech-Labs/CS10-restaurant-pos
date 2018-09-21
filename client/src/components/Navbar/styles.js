@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom';
 import { modalBlur } from '../../global-styles/mixins';
 
 export const Navbar = styled.nav`
-  padding-right: 20px;
-  width: 100%;
-  height: ${props => props.theme.topBarHeight}px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  width: 100%;
+  height: ${props => props.theme.topBarHeight}px;
+  padding-right: 20px;
+  border-top: 4px solid ${(props) => props.theme.appSecondary};
   background: ${(props) => props.theme.appPrimary};
   ${(props) => props.modalIsOpen && modalBlur};
 `;

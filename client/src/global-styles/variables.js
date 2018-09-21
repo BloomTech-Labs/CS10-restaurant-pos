@@ -1,5 +1,6 @@
 // * Root Colors ----------------------
 const transparent = 'rgba(0, 0, 0, 0)';
+const lightGrey = 'rgba(255, 255, 255, 0.4)';
 const white = '#FFFFFF';
 const aquaHaze = '#F7F9FA';
 const razzmatazz = '#E30E58';
@@ -17,13 +18,18 @@ export const theme = {
   // * Default Dimensions ----------------------
   sideBarWidth: 265,
   topBarHeight: 125,
+  menuItemSize: 200,
+
+  // * Font Styles -----------------------------
+  ItemTitleSize: 2,
+  ItemTitleDescription: 1.4,
 
   // * Buttons ---------------------------------
   // Standard
-  btnWidth: 210,
-  btnHeight: 58,
+  btnWidth: 180,
+  btnHeight: 40,
   btnBorderRadius: 10,
-  btnFontSize: 2,
+  btnFontSize: 1.6,
   btnTextColor: white,
   btnBgColor: transparent,
   btnBorderColor: steelBlue,
@@ -59,5 +65,6 @@ export const theme = {
   // Sub Headers
   subHeader: null,
   // Text
-  primaryText: ebonyClay
+  primaryText: ebonyClay,
+  lightText: lightGrey
 };

@@ -3,7 +3,12 @@ import styled from 'styled-components';
 import { flexCenterMixin } from '../../global-styles/mixins';
 
 export const Container = styled.div`
-  border: 2px solid teal;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+export const ItemsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -11,17 +16,32 @@ export const Container = styled.div`
 `;
 
 export const Boxes = styled.div`
-  border: 2px solid red;
   ${flexCenterMixin};
   flex-direction: column;
-  justify-content: space-between;
-  height: 150px;
-  width: 150px;
-  margin: 7px;
-  padding: 15px;
+  justify-content: flex-start;
+  background: ${(props) => props.theme.appPrimary};
+  box-shadow: ${(props) => props.theme.boxShadow};
+  border-radius: ${(props) => props.theme.btnBorderRadius}px;
+  align-items: center;
+  height: ${(props) => props.theme.menuItemSize}px;
+  width: ${(props) => props.theme.menuItemSize}px;
+  margin: 10px;
+  padding: 25px 0 0 0;
   cursor: pointer;
 `;
 
-export const Items = styled.div`
-  border: 1px solid black;
+export const Item = styled.div`
+  padding-bottom: 5px;
+`;
+
+export const ItemTitle = styled(Item)`
+  font-size: ${(props) => props.theme.ItemTitleSize}rem;
+`;
+
+export const ItemDescription = styled(Item)`
+  font-size: ${(props) => props.theme.ItemTitlePrice}rem;
+`;
+
+export const ItemPrice = styled(Item)`
+  font-size: ${(props) => props.theme.ItemTitleSize}rem;
 `;

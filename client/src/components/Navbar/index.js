@@ -25,6 +25,7 @@ class Navbar extends React.Component {
         <s.StyledLink to="/party">(Party)</s.StyledLink>
         <s.StyledLink to="/servers">(Servers)</s.StyledLink>
         <s.StyledLink to="/settings">(Settings)</s.StyledLink>
+        <s.StyledLink to="/logout">(Logout)</s.StyledLink>
       </s.Navbar>
     );
   }
