@@ -265,10 +265,10 @@ class FloorPlan extends React.PureComponent {
 
     this.viewport
       .drag()
-      // .bounce({ time: 500 })
+      .bounce({ time: 300, friction: 0.6, ease: 'easeInOutQuad' })
       .pinch()
       .wheel()
-      .decelerate();
+      .decelerate({ friction: 0.9, bounce: 0.1 });
 
     this.border();
 
