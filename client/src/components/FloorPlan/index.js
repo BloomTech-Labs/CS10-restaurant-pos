@@ -6,6 +6,7 @@ import SetType from 'es6-set-proptypes';
 
 import { theme } from '../../global-styles/variables';
 import { MainContainer } from '../../global-styles/styledComponents';
+import * as tableImage from '../../assets/Path_33.png';
 
 class FloorPlan extends React.PureComponent {
   constructor(props) {
@@ -29,6 +30,7 @@ class FloorPlan extends React.PureComponent {
     });
     this.app.renderer.backgroundColor = parseInt(theme.contentBackground.slice(1), 16);
     this.tables = []; // TODO: investigate cleaner solutions
+    this.texture = null;
   }
 
   state = {
@@ -37,6 +39,13 @@ class FloorPlan extends React.PureComponent {
 
   componentDidMount() {
     // Lay the initial stage
+    if (!PIXI.loader.resources[tableImage]) {
+      PIXI.loader.add(tableImage).load(() => {
+        this.texture = PIXI.Texture.fromImage(tableImage);
+      });
+    } else {
+      this.texture = PIXI.Texture.fromImage(tableImage);
+    }
     this.pixi.current.appendChild(this.app.view);
     this.setup();
     this.resize();
@@ -66,7 +75,8 @@ class FloorPlan extends React.PureComponent {
   componentWillUnmount() {
     this.clear();
     this.pixi.current.removeChild(this.app.view);
-    this.app.stage.destroy(true);
+    // this.app.stage.destroy(true);
+    this.viewport.destroy();
     this.stage = null;
     this.app.renderer.destroy(true);
     // this.app.renderer = null;
@@ -120,16 +130,19 @@ class FloorPlan extends React.PureComponent {
   circleCreator = table => {
     // Create a circle, make it interactive,
     // and add `cursor: pointer` css style
-    const circle = new PIXI.Graphics();
+    // const circle = new PIXI.Graphics();
+    const circle = new PIXI.Sprite(this.texture);
+    circle.scale.set(0.7);
+    circle.anchor.set(0.5);
     circle.interactive = true;
     circle.buttonMode = true;
 
     // Determine the color, size,
     // and location of the circle.
     // But x and y shouldn't be set here
-    circle.beginFill(0xffffff);
-    circle.drawCircle(0, 0, 30);
-    circle.endFill();
+    // circle.beginFill(0xffffff);
+    // circle.drawCircle(0, 0, 30);
+    // circle.endFill();
 
     // Position the circle according to
     // its location from the database
@@ -147,7 +160,7 @@ class FloorPlan extends React.PureComponent {
       fontFamily: 'Nunito',
       fontWeight: '700',
       fill: 'white',
-      fontSize: '2rem'
+      fontSize: '3rem'
     });
     circle.addChild(tableNumber);
     tableNumber.anchor.set(0.5);
