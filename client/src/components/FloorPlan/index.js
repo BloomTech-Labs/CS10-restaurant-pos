@@ -223,6 +223,8 @@ class FloorPlan extends React.PureComponent {
       // circle.alpha = 0.5;
       circle.data = event.data;
       circle.dragging = true;
+      circle.sx = circle.data.getLocalPosition(circle).x * circle.scale.x;
+      circle.sy = circle.data.getLocalPosition(circle).y * circle.scale.y;
     } else {
       // If editing mode is off, a click should
       // toggle the table's active status
@@ -231,6 +233,18 @@ class FloorPlan extends React.PureComponent {
 
     this.viewport.pausePlugin('drag');
   };
+
+  onDragMove(circle) {
+    if (this.props.editing) {
+      if (circle.dragging) {
+        // If you are allowed to edit and the
+        // circle is moving then adjust the position
+        const newPosition = circle.data.getLocalPosition(circle.parent);
+        circle.x = newPosition.x - circle.sx;
+        circle.y = newPosition.y - circle.sy;
+      }
+    }
+  }
 
   onDragEnd(circle) {
     if (this.props.editing) {
@@ -254,18 +268,6 @@ class FloorPlan extends React.PureComponent {
       }
     }
     this.viewport.resumePlugin('drag');
-  }
-
-  onDragMove(circle) {
-    if (this.props.editing) {
-      if (circle.dragging) {
-        // If you are allowed to edit and the
-        // circle is moving then adjust the position
-        const newPosition = circle.data.getLocalPosition(circle.parent);
-        circle.x = newPosition.x;
-        circle.y = newPosition.y;
-      }
-    }
   }
 
   animate = () => {
