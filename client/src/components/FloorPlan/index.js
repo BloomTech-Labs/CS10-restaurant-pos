@@ -7,7 +7,7 @@ import SetType from 'es6-set-proptypes';
 import { theme } from '../../global-styles/variables';
 import { MainContainer } from '../../global-styles/styledComponents';
 
-class FloorPlan extends React.Component {
+class FloorPlan extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -42,10 +42,12 @@ class FloorPlan extends React.Component {
     this.resize();
 
     // initially draw the tables from redux state
-    this.props.tables.forEach((table) => {
+    this.props.tables.forEach(table => {
       this.tables.push(table);
       this.circleCreator(table);
     });
+
+    this.animate();
   }
 
   componentDidUpdate(prevProps) {
@@ -54,16 +56,25 @@ class FloorPlan extends React.Component {
       this.clear();
 
       // ...and redraw them on the stage
-      this.props.tables.forEach((table) => {
+      this.props.tables.forEach(table => {
         this.tables.push(table);
         this.circleCreator(table);
       });
     }
   }
 
+  componentWillUnmount() {
+    this.clear();
+    this.pixi.current.removeChild(this.app.view);
+    this.app.stage.destroy(true);
+    this.stage = null;
+    this.app.renderer.destroy(true);
+    // this.app.renderer = null;
+  }
+
   toggleLock = () => {
     this.setState(
-      (prev) => ({
+      prev => ({
         locked: !prev.locked
       }),
       () => {
@@ -92,7 +103,7 @@ class FloorPlan extends React.Component {
 
   line = (x, y, width, height) => {
     const l = this.viewport.addChild(new PIXI.Sprite(PIXI.Texture.WHITE));
-    l.tint = 0xDEDEDE;
+    l.tint = 0xdedede;
     l.position.set(x, y);
     l.width = width;
     l.height = height;
@@ -106,7 +117,7 @@ class FloorPlan extends React.Component {
     this.line(this.viewport.worldWidth - borderWidth, 0, borderWidth, this.viewport.worldHeight);
   };
 
-  circleCreator = (table) => {
+  circleCreator = table => {
     // Create a circle, make it interactive,
     // and add `cursor: pointer` css style
     const circle = new PIXI.Graphics();
@@ -116,7 +127,7 @@ class FloorPlan extends React.Component {
     // Determine the color, size,
     // and location of the circle.
     // But x and y shouldn't be set here
-    circle.beginFill(0xFFFFFF);
+    circle.beginFill(0xffffff);
     circle.drawCircle(0, 0, 30);
     circle.endFill();
 
@@ -126,12 +137,18 @@ class FloorPlan extends React.Component {
     circle.x = table.x;
     circle.y = table.y;
     circle.tableId = table._id;
+    circle.tableNumber = table.number;
     this.viewport.addChild(circle);
 
     // Adds the table number text,
     // adds it as a child to the circle,
     // and adjusts its position to be centered
-    const tableNumber = new PIXI.Text(table.number, { fontFamily: 'Nunito', fontWeight: '700', fill: 'white', fontSize: '2rem' });
+    const tableNumber = new PIXI.Text(table.number, {
+      fontFamily: 'Nunito',
+      fontWeight: '700',
+      fill: 'white',
+      fontSize: '2rem'
+    });
     circle.addChild(tableNumber);
     tableNumber.anchor.set(0.5);
 
@@ -139,118 +156,116 @@ class FloorPlan extends React.Component {
       // If the table doesn't exist in the active Set,
       // add it to the Set and adjust its appearance
       // circle.alpha = 1;
-      circle.tint = 0xE30E58;
+      circle.tint = 0xe30e58;
     } else {
       // If the table does exist in the active Set,
       // remove it from the Set and adjust its appearance
       // circle.alpha = 0.2;
-      circle.tint = 0x114B5F;
+      circle.tint = 0x114b5f;
     }
-
-    const toggleActive = () => {
-      if (!this.props.selected.has(table.number)) {
-        // If the table doesn't exist in the active Set,
-        // add it to the Set and adjust its appearance
-        // circle.alpha = 0.2;
-        circle.tint = 0x114B5F;
-      } else {
-        // If the table does exist in the active Set,
-        // remove it from the Set and adjust its appearance
-        // circle.alpha = 1;
-        circle.tint = 0xE30E58;
-      }
-      this.props.toggleTable(table.number);
-    };
-
-    const onDragStart = (event) => {
-      if (this.props.editing) {
-        // If editing mode is on:
-        // Make it transparent on drag, then store a
-        // reference to the data to track the movement
-        // of this particular touch for multitouch
-        // circle.alpha = 0.5;
-        circle.data = event.data;
-        circle.dragging = true;
-      } else {
-        // If editing mode is off, a click should
-        // toggle the table's active status
-        toggleActive();
-      }
-
-      this.viewport.pausePlugin('drag');
-    };
-
-    const onDragEnd = () => {
-      if (this.props.editing) {
-        // If editing mode is on:
-        // Update Redux Store's table location,
-        // set dragging to false and clear the data
-        this.props.moveTable({ x: circle.x, y: circle.y, tableId: circle.tableId });
-        circle.dragging = false;
-        circle.data = null;
-
-        if (this.props.selected.has(table.number)) {
-          // If the table is selected, it should
-          // adjust its appearance appropriately
-          // circle.alpha = 0.2;
-          circle.tint = 0x114B5F;
-        } else {
-          // Otherwise it should return to normal
-          // after completing the drag
-          // circle.alpha = 1;
-          circle.tint = 0xE30E58;
-        }
-      }
-      this.viewport.resumePlugin('drag');
-    };
-
-    const onDragMove = () => {
-      if (this.props.editing) {
-        if (circle.dragging) {
-          // If you are allowed to edit and the
-          // circle is moving then adjust the position
-          const newPosition = circle.data.getLocalPosition(circle.parent);
-          circle.x = newPosition.x;
-          circle.y = newPosition.y;
-        }
-      }
-    };
-
-    const deleteCircle = () => {
-      // This is called on 'mouseupoutside' so that,
-      // if you are in editing mode, dragging the
-      // circle out of bounds will destroy it
-      if (this.props.editing) {
-        circle.destroy();
-        // TODO: Call action to delete from the database
-      }
-    };
 
     // Run the render loop
     circle
-      .on('mousedown', onDragStart)
-      .on('touchstart', onDragStart)
-      .on('mouseup', onDragEnd)
-      .on('mouseupoutside', deleteCircle)
-      .on('touchend', onDragEnd)
-      .on('touchendoutside', deleteCircle)
-      .on('mousemove', onDragMove)
-      .on('touchmove', onDragMove);
+      .on('mousedown', e => this.onDragStart(e, circle))
+      .on('touchstart', e => this.onDragStart(e, circle))
+      .on('mouseup', () => this.onDragEnd(circle))
+      .on('mouseupoutside', () => this.deleteCircle(circle))
+      .on('touchend', () => this.onDragEnd(circle))
+      .on('touchendoutside', () => this.deleteCircle(circle))
+      .on('mousemove', () => this.onDragMove(circle))
+      .on('touchmove', () => this.onDragMove);
+  };
+
+  deleteCircle = circle => {
+    // This is called on 'mouseupoutside' so that,
+    // if you are in editing mode, dragging the
+    // circle out of bounds will destroy it
+    if (this.props.editing) {
+      circle.destroy();
+      // TODO: Call action to delete from the database
+    }
+  };
+
+  toggleActive = circle => {
+    if (!this.props.selected.has(circle.tableNumber)) {
+      // If the table doesn't exist in the active Set,
+      // add it to the Set and adjust its appearance
+      // circle.alpha = 0.2;
+      circle.tint = 0x114b5f;
+    } else {
+      // If the table does exist in the active Set,
+      // remove it from the Set and adjust its appearance
+      // circle.alpha = 1;
+      circle.tint = 0xe30e58;
+    }
+    this.props.toggleTable(circle.tableNumber);
+  };
+
+  onDragStart = (event, circle) => {
+    if (this.props.editing) {
+      // If editing mode is on:
+      // Make it transparent on drag, then store a
+      // reference to the data to track the movement
+      // of this particular touch for multitouch
+      // circle.alpha = 0.5;
+      circle.data = event.data;
+      circle.dragging = true;
+    } else {
+      // If editing mode is off, a click should
+      // toggle the table's active status
+      this.toggleActive(circle);
+    }
+
+    this.viewport.pausePlugin('drag');
+  };
+
+  onDragEnd(circle) {
+    if (this.props.editing) {
+      // If editing mode is on:
+      // Update Redux Store's table location,
+      // set dragging to false and clear the data
+      this.props.moveTable({ x: this.x, y: this.y, tableId: circle.tableId });
+      circle.dragging = false;
+      circle.data = null;
+
+      if (this.props.selected.has(circle.tableNumber)) {
+        // If the table is selected, it should
+        // adjust its appearance appropriately
+        // circle.alpha = 0.2;
+        circle.tint = 0x114b5f;
+      } else {
+        // Otherwise it should return to normal
+        // after completing the drag
+        // circle.alpha = 1;
+        circle.tint = 0xe30e58;
+      }
+    }
+    this.viewport.resumePlugin('drag');
+  }
+
+  onDragMove(circle) {
+    if (this.props.editing) {
+      if (circle.dragging) {
+        // If you are allowed to edit and the
+        // circle is moving then adjust the position
+        const newPosition = circle.data.getLocalPosition(circle.parent);
+        circle.x = newPosition.x;
+        circle.y = newPosition.y;
+      }
+    }
+  }
+
+  animate = () => {
+    this.app.render(this.app.stage);
+    requestAnimationFrame(this.animate);
   };
 
   setup = () => {
-    const animate = () => {
-      this.app.render(this.app.stage);
-      requestAnimationFrame(animate);
-    };
-
-    animate();
-
     this.app.stage.addChild(this.viewport);
 
     this.viewport
       .drag()
-      .bounce({ time: 500 })
+      // .bounce({ time: 500 })
       .pinch()
       .wheel()
       .decelerate();
@@ -267,10 +282,14 @@ class FloorPlan extends React.Component {
 
   resize = () => {
     const { sidebarRef, topbarRef } = this.props;
-    const w = window.innerWidth
-      - (sidebarRef ? sidebarRef.current.clientWidth : theme.sideBarWidth);
-    const h = window.innerHeight
-      - (topbarRef ? topbarRef.current.clientHeight : theme.topBarHeight);
+    const w = window.innerWidth - (
+      sidebarRef
+        ? sidebarRef.current.clientWidth
+        : theme.sideBarWidth);
+    const h = window.innerHeight - (
+      topbarRef
+        ? topbarRef.current.clientHeight
+        : theme.topBarHeight);
     this.app.renderer.resize(w, h);
     this.viewport.resize(w, h, 1000, 1000);
   };

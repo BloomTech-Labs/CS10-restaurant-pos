@@ -10,7 +10,7 @@ class Tables extends Component {
     return (
       <React.Fragment>
         {this.props.tables.map((table, i) => {
-          if (i >= 5) return;
+          if (i >= 5) return null;
           return (
             <Table
               key={shortId.generate()}
