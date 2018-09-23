@@ -12,15 +12,9 @@ class FloorPlan extends React.PureComponent {
   constructor(props) {
     super(props);
     const { sidebarRef, topbarRef } = this.props;
-    const width = window.innerWidth - (
-      sidebarRef
-        ? sidebarRef.current.clientWidth
-        : theme.sideBarWidth);
+    const width = window.innerWidth - sidebarRef.current.clientWidth;
 
-    const height = window.innerHeight - (
-      topbarRef
-        ? topbarRef.current.clientHeight
-        : theme.topBarHeight);
+    const height = window.innerHeight - topbarRef.current.clientHeight;
 
     this.pixi = React.createRef();
     this.app = new PIXI.Application({
@@ -53,34 +47,21 @@ class FloorPlan extends React.PureComponent {
     if (!PIXI.loader.resources[tableImage]) {
       PIXI.loader.add(tableImage).load(() => {
         this.texture = PIXI.Texture.fromImage(tableImage);
+        this.initialize();
       });
     } else {
       this.texture = PIXI.Texture.fromImage(tableImage);
+      this.initialize();
     }
-
-    // Lay the initial stage
-    this.pixi.current.appendChild(this.app.view);
-    this.setup();
-    // this.resize();
-
-    // initially draw the tables from redux state
-    this.props.tables.forEach(table => {
-      this.tables.push(table);
-      this.circleCreator(table);
-    });
-
-    this.animate();
   }
 
   componentDidUpdate() {
-    // If any tables were added or removed, clear the stage...
+    // upon update clear the tables
     this.clear();
 
     // ...and redraw them on the stage
-    this.props.tables.forEach(table => {
-      this.tables.push(table);
-      this.circleCreator(table);
-    });
+    // to keep sync with the database
+    this.drawTables();
   }
 
   componentWillUnmount() {
@@ -91,6 +72,25 @@ class FloorPlan extends React.PureComponent {
     this.stage = null;
     this.viewport.destroy();
     this.app.renderer.destroy(true);
+  }
+
+  initialize = () => {
+    // Lay the initial stage
+    this.pixi.current.appendChild(this.app.view);
+    this.setup();
+    // this.resize();
+
+    this.drawTables();
+
+    this.animate();
+  }
+
+  drawTables = () => {
+    console.warn(this.props.tables);
+    this.props.tables.forEach(table => {
+      this.tables.push(table);
+      this.circleCreator(table);
+    });
   }
 
   toggleLock = () => {
@@ -262,19 +262,9 @@ class FloorPlan extends React.PureComponent {
       // If editing mode is on:
       // Update Redux Store's table location,
       // set dragging to false and clear the data
-      this.props.moveTable({ x: this.x, y: this.y, tableId: circle.tableId });
+      this.props.moveTable({ x: circle.x, y: circle.y, tableId: circle.tableId });
       circle.dragging = false;
       circle.data = null;
-
-      if (this.props.selected.has(circle.tableNumber)) {
-        // If the table is selected, it should
-        // adjust its appearance appropriately
-        circle.tint = 0x114b5f;
-      } else {
-        // Otherwise it should return to normal
-        // after completing the drag
-        circle.tint = 0xe30e58;
-      }
       circle.alpha = 1;
     }
     this.viewport.resumePlugin('drag');
@@ -306,14 +296,8 @@ class FloorPlan extends React.PureComponent {
     // use refs of the sidebar and topbar
     // to calculate the size the viewer needs to be
     const { sidebarRef, topbarRef } = this.props;
-    const w = window.innerWidth - (
-      sidebarRef
-        ? sidebarRef.current.clientWidth
-        : theme.sideBarWidth);
-    const h = window.innerHeight - (
-      topbarRef
-        ? topbarRef.current.clientHeight
-        : theme.topBarHeight);
+    const w = window.innerWidth - sidebarRef.current.clientWidth;
+    const h = window.innerHeight - topbarRef.current.clientHeight;
     this.app.renderer.resize(w, h);
     this.viewport.resize(w, h, 1000, 1000);
   };

@@ -18,10 +18,11 @@ class TablesPage extends Component {
 
   render() {
     const authorized = this.props.role.admin || this.props.role.manager;
-    const { membership } = this.props;
+    const { membership, sidebarRef } = this.props;
     return (
       <React.Fragment>
         {membership ? (
+          sidebarRef.current.clientWidth && (
           <FloorPlan
             editing={this.props.editing && authorized}
             tables={this.props.tables}
@@ -31,6 +32,7 @@ class TablesPage extends Component {
             sidebarRef={this.props.sidebarRef}
             topbarRef={this.props.topbarRef}
           />
+          )
         ) : (
           <Tables
             membership={membership}
