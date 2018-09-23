@@ -11,18 +11,28 @@ import * as tableImage from '../../assets/Path_33.png';
 class FloorPlan extends React.PureComponent {
   constructor(props) {
     super(props);
+    const { sidebarRef, topbarRef } = this.props;
+    const width = window.innerWidth - (
+      sidebarRef
+        ? sidebarRef.current.clientWidth
+        : theme.sideBarWidth);
+
+    const height = window.innerHeight - (
+      topbarRef
+        ? topbarRef.current.clientHeight
+        : theme.topBarHeight);
 
     this.pixi = React.createRef();
     this.app = new PIXI.Application({
-      width: window.innerWidth,
-      height: window.innerHeight,
+      width,
+      height,
       transparent: false,
       antialias: true, // special filtering to look smoother
       resolution: window.devicePixelRatio // for different screen resolutions/types
     });
     this.viewport = new Viewport({
-      screenHeight: window.innerWidth,
-      screenWidth: window.innerHeight,
+      screenWidth: width,
+      screenHeight: height,
       worldHeight: 1000,
       worldWidth: 1000,
       interaction: this.app.renderer.interaction,
@@ -51,7 +61,7 @@ class FloorPlan extends React.PureComponent {
     // Lay the initial stage
     this.pixi.current.appendChild(this.app.view);
     this.setup();
-    this.resize();
+    // this.resize();
 
     // initially draw the tables from redux state
     this.props.tables.forEach(table => {
