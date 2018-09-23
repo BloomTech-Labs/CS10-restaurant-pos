@@ -130,20 +130,13 @@ class FloorPlan extends React.PureComponent {
 
   circleCreator = table => {
     // Create a circle, make it interactive,
+    // set its scale
     // and add `cursor: pointer` css style
-    // const circle = new PIXI.Graphics();
     const circle = new PIXI.Sprite(this.texture);
     circle.scale.set(0.7);
     circle.anchor.set(0.5);
     circle.interactive = true;
     circle.buttonMode = true;
-
-    // Determine the color, size,
-    // and location of the circle.
-    // But x and y shouldn't be set here
-    // circle.beginFill(0xffffff);
-    // circle.drawCircle(0, 0, 30);
-    // circle.endFill();
 
     // Position the circle according to
     // its location from the database
@@ -178,7 +171,7 @@ class FloorPlan extends React.PureComponent {
       circle.tint = 0x114b5f;
     }
 
-    // Run the render loop
+    // set event listeners
     circle
       .on('mousedown', e => this.onDragStart(e, circle))
       .on('touchstart', e => this.onDragStart(e, circle))
@@ -187,7 +180,7 @@ class FloorPlan extends React.PureComponent {
       .on('touchend', () => this.onDragEnd(circle))
       .on('touchendoutside', () => this.deleteCircle(circle))
       .on('mousemove', () => this.onDragMove(circle))
-      .on('touchmove', () => this.onDragMove);
+      .on('touchmove', () => this.onDragMove(circle));
   };
 
   deleteCircle = circle => {
@@ -221,7 +214,7 @@ class FloorPlan extends React.PureComponent {
       // Make it transparent on drag, then store a
       // reference to the data to track the movement
       // of this particular touch for multitouch
-      // circle.alpha = 0.5;
+      circle.alpha = 0.5;
       circle.data = event.data;
       circle.dragging = true;
 
@@ -265,14 +258,13 @@ class FloorPlan extends React.PureComponent {
       if (this.props.selected.has(circle.tableNumber)) {
         // If the table is selected, it should
         // adjust its appearance appropriately
-        // circle.alpha = 0.2;
         circle.tint = 0x114b5f;
       } else {
         // Otherwise it should return to normal
         // after completing the drag
-        // circle.alpha = 1;
         circle.tint = 0xe30e58;
       }
+      circle.alpha = 1;
     }
     this.viewport.resumePlugin('drag');
   }
@@ -293,9 +285,6 @@ class FloorPlan extends React.PureComponent {
       .decelerate({ friction: 0.9, bounce: 0.1 });
 
     this.border();
-
-    // TODO: Fix all this shit more
-    // TODO: and then comment thit shit!
 
     window.onresize = () => {
       this.resize();
@@ -319,7 +308,6 @@ class FloorPlan extends React.PureComponent {
   };
 
   render() {
-    // TODO: Stretch Goal: Use border-radius and arrows to fuck with shit
     return (
       <React.Fragment>
         <MainContainer innerRef={this.pixi} />
