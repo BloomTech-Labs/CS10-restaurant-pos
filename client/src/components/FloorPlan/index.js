@@ -38,7 +38,8 @@ class FloorPlan extends React.PureComponent {
   };
 
   componentDidMount() {
-    // Lay the initial stage
+    // load table sprite and set it as this.texture
+    // unless it was previously loaded
     if (!PIXI.loader.resources[tableImage]) {
       PIXI.loader.add(tableImage).load(() => {
         this.texture = PIXI.Texture.fromImage(tableImage);
@@ -46,6 +47,8 @@ class FloorPlan extends React.PureComponent {
     } else {
       this.texture = PIXI.Texture.fromImage(tableImage);
     }
+
+    // Lay the initial stage
     this.pixi.current.appendChild(this.app.view);
     this.setup();
     this.resize();
@@ -59,17 +62,15 @@ class FloorPlan extends React.PureComponent {
     this.animate();
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.tables.length !== prevProps.tables.length) {
-      // If any tables were added or removed, clear the stage...
-      this.clear();
+  componentDidUpdate() {
+    // If any tables were added or removed, clear the stage...
+    this.clear();
 
-      // ...and redraw them on the stage
-      this.props.tables.forEach(table => {
-        this.tables.push(table);
-        this.circleCreator(table);
-      });
-    }
+    // ...and redraw them on the stage
+    this.props.tables.forEach(table => {
+      this.tables.push(table);
+      this.circleCreator(table);
+    });
   }
 
   componentWillUnmount() {
