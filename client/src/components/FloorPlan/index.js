@@ -11,6 +11,8 @@ import * as tableImage from '../../assets/Path_33.png';
 class FloorPlan extends React.PureComponent {
   constructor(props) {
     super(props);
+    // use refs of the sidebar and topbar
+    // to calculate the size the viewer needs to be
     const { sidebarRef, topbarRef } = this.props;
     const width = window.innerWidth - sidebarRef.current.clientWidth;
 
@@ -44,6 +46,7 @@ class FloorPlan extends React.PureComponent {
   componentDidMount() {
     // load table sprite and set it as this.texture
     // unless it was previously loaded
+    // and start the initialization of the pixi app
     if (!PIXI.loader.resources[tableImage]) {
       PIXI.loader.add(tableImage).load(() => {
         this.texture = PIXI.Texture.fromImage(tableImage);
@@ -75,10 +78,9 @@ class FloorPlan extends React.PureComponent {
   }
 
   initialize = () => {
-    // Lay the initial stage
+    // add the app view to the page as a child of the rendered div
     this.pixi.current.appendChild(this.app.view);
     this.setup();
-    // this.resize();
 
     this.drawTables();
 
@@ -86,7 +88,6 @@ class FloorPlan extends React.PureComponent {
   }
 
   drawTables = () => {
-    console.warn(this.props.tables);
     this.props.tables.forEach(table => {
       this.tables.push(table);
       this.circleCreator(table);
