@@ -28,7 +28,7 @@ class Sidebar extends React.Component {
         <s.LinkGroup>
           <s.StyledLink to="/tables">Tables</s.StyledLink>
           <s.StyledLink to="/servers">Servers</s.StyledLink>
-          <TableEditPanel push={this.props.history.push} />
+          {pathname === '/tables' && <TableEditPanel push={this.props.history.push} />}
         </s.LinkGroup>
         <s.LinkGroup>
           <s.StyledLink to="/settings">Settings</s.StyledLink>

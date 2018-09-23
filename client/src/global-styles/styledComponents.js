@@ -48,7 +48,12 @@ export const Button = styled.button`
 
   &:hover {
     cursor: pointer;
-    margin-bottom: 2px;
     box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.1);
+    transform: translate(0, -1px);
+  }
+
+  &:active {
+    transform: translate(0, 0);
+    box-shadow: 0;
   }
 `;

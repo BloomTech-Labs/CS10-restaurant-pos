@@ -34,9 +34,6 @@ class TableEditPanel extends React.Component {
     const authorized = this.props.role.admin || this.props.role.manager;
     return (
       <s.Panel>
-        <Button primary type="button" onClick={this.createParty}>
-          Add Order
-        </Button>
         {authorized
           && !this.props.editing && (
             <React.Fragment>
@@ -45,13 +42,18 @@ class TableEditPanel extends React.Component {
               </Button>
             </React.Fragment>
         )}
+        {!this.props.editing && (
+        <Button primary type="button" onClick={this.createParty}>
+          Add Order
+        </Button>
+        )}
         {this.props.editing && (
           <React.Fragment>
-            <Button type="button" onClick={this.addTable}>
-              Add Table
-            </Button>
             <Button primary type="button" onClick={this.saveTables}>
               Save
+            </Button>
+            <Button type="button" onClick={this.addTable}>
+              Add Table
             </Button>
             <Button type="button" onClick={this.props.toggleEdit}>
               Cancel

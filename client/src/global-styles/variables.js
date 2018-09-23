@@ -27,7 +27,7 @@ export const theme = {
   // * Buttons ---------------------------------
   // Standard
   btnWidth: 180,
-  btnHeight: 40,
+  btnHeight: 45,
   btnBorderRadius: 10,
   btnFontSize: 1.6,
   btnTextColor: white,

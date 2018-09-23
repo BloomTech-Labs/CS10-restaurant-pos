@@ -10,6 +10,7 @@ export const Sidebar = styled.nav`
   align-items: center;
   padding-top: 75px;
   max-width: ${props => props.theme.sideBarHeight}px;
+  width: 250px;
   background: ${props => props.theme.appPrimary};
   ${(props) => props.modalIsOpen && modalBlur};
 `;
