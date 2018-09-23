@@ -73,16 +73,17 @@ class FloorPlan extends React.PureComponent {
   }
 
   componentWillUnmount() {
+    // clean up the remaining data when moving away from the page
     this.clear();
     this.pixi.current.removeChild(this.app.view);
-    // this.app.stage.destroy(true);
-    this.viewport.destroy();
+    this.app.stage.destroy(true);
     this.stage = null;
+    this.viewport.destroy();
     this.app.renderer.destroy(true);
-    // this.app.renderer = null;
   }
 
   toggleLock = () => {
+    // pause the dragging functionality when the lock box is checked
     this.setState(
       prev => ({
         locked: !prev.locked
@@ -223,6 +224,9 @@ class FloorPlan extends React.PureComponent {
       // circle.alpha = 0.5;
       circle.data = event.data;
       circle.dragging = true;
+
+      // store local mouse click position data for use in
+      // calculating the amount to move in onDragMove
       circle.sx = circle.data.getLocalPosition(circle).x * circle.scale.x;
       circle.sy = circle.data.getLocalPosition(circle).y * circle.scale.y;
     } else {
@@ -240,6 +244,9 @@ class FloorPlan extends React.PureComponent {
         // If you are allowed to edit and the
         // circle is moving then adjust the position
         const newPosition = circle.data.getLocalPosition(circle.parent);
+
+        // subtract the local mouse click stored earlier
+        // to eliminate annoying snapping behavior
         circle.x = newPosition.x - circle.sx;
         circle.y = newPosition.y - circle.sy;
       }
@@ -296,6 +303,8 @@ class FloorPlan extends React.PureComponent {
   };
 
   resize = () => {
+    // use refs of the sidebar and topbar
+    // to calculate the size the viewer needs to be
     const { sidebarRef, topbarRef } = this.props;
     const w = window.innerWidth - (
       sidebarRef
