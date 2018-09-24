@@ -4,18 +4,9 @@ import PropTypes from 'prop-types';
 import * as s from './styles';
 
 class Navbar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.ref = React.createRef();
-  }
-
-  componentDidMount() {
-    this.props.saveTopbarRef(this.ref);
-  }
-
   render() {
     return (
-      <s.Navbar innerRef={this.ref} modalIsOpen={this.props.modalIsOpen}>
+      <s.Navbar modalIsOpen={this.props.modalIsOpen}>
         <s.StyledLink to="/login-employee">(Employee Login)</s.StyledLink>
         <s.StyledLink to="/login">(Admin Login)</s.StyledLink>
         <s.StyledLink to="/register">(Register)</s.StyledLink>
@@ -33,12 +24,10 @@ class Navbar extends React.Component {
 
 Navbar.propTypes = {
   modalIsOpen: PropTypes.bool,
-  saveTopbarRef: PropTypes.func,
 };
 
 Navbar.defaultProps = {
   modalIsOpen: false,
-  saveTopbarRef: () => {},
 };
 
 export default Navbar;

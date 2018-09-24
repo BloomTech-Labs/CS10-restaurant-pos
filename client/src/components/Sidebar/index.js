@@ -8,20 +8,10 @@ import * as s from './styles';
 
 
 class Sidebar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.ref = React.createRef();
-  }
-
-  componentDidMount() {
-    this.props.saveSidebarRef(this.ref);
-  }
-
   render() {
     const { pathname } = this.props.location;
     return (
       <s.Sidebar
-        innerRef={this.ref}
         modalIsOpen={this.props.modalIsOpen}
         visible={!sidebar.includes(pathname)}
       >
@@ -47,14 +37,12 @@ Sidebar.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func
   }),
-  saveSidebarRef: PropTypes.func
 };
 
 Sidebar.defaultProps = {
   modalIsOpen: false,
   location: {},
   history: { push: () => {} },
-  saveSidebarRef: () => {}
 };
 
 export default Sidebar;
