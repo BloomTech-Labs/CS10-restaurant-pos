@@ -52,7 +52,7 @@ class CheckoutModal extends React.Component {
                 </Elements>
               ) : (
                 <React.Fragment>
-                  <Button inactive dark type="button" onClick={this.props.openSplitModal}>
+                  <Button inactive={!this.props.splitOrder.length} dark type="button" onClick={this.props.splitOrder.length && this.props.openSplitModal}>
                     Split Check
                   </Button>
                   <Button dark primary type="button" onClick={this.toggleCheckout}>

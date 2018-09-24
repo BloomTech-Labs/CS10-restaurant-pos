@@ -25,7 +25,7 @@ export const Boxes = styled.div`
   cursor: pointer;
 `;
 
-export const Button = styled.button`
+export const Button = styled.div`
   ${flexCenterMixin};
   position: relative;
   padding: 0;
