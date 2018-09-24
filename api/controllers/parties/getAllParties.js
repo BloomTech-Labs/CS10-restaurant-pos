@@ -10,7 +10,7 @@ const getAllParties = (req, res) => {
     .populate('food', ['name', 'price'])
     .populate('tables')
     .then((parties) => {
-      res.status(200).json(parties);
+      res.status(200).json({ parties });
     })
     .catch((err) => {
       res.status(500).json({

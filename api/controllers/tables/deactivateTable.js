@@ -43,7 +43,7 @@ const deactivateTable = async (req, res) => {
         .execPopulate()
         .then((populatedParty) => {
           res.status(200).json({
-            populatedParty,
+            updatedParty: populatedParty,
             msg: 'Table has been deactivated and removed from the party.',
             updatedTable,
           });

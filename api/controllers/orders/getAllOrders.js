@@ -8,8 +8,8 @@ const getAllOrders = (req, res) => {
   Order.find({ restaurant: req.user.restaurant })
     .populate('server', ['name'])
     .populate('food', ['name', 'price'])
-    .then((order) => {
-      res.status(200).json(order);
+    .then((orders) => {
+      res.status(200).json({ orders });
     })
     .catch((err) => {
       res

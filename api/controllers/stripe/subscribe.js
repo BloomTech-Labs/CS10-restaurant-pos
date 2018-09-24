@@ -25,7 +25,7 @@ const subscribe = (req, res) => {
             if (err) {
               res.status(400).json({
                 err,
-                message: 'Something went wrong creating the customer!'
+                msg: 'Something went wrong creating the customer!'
               });
             } else {
               const { id: customerId } = customer;
@@ -48,7 +48,7 @@ const subscribe = (req, res) => {
                     restaurant.subscription = subscription.id;
                     restaurant.membership = true;
                     restaurant.save();
-                    res.status(200).json({ message: 'Successfully Subscribed' });
+                    res.status(200).json({ msg: 'Successfully Subscribed' });
                   }
                 }
               );

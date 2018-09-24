@@ -30,8 +30,8 @@ const addTable = (req, res) => {
 
   newTable
     .save()
-    .then((addedTable) => {
-      res.status(201).json(addedTable);
+    .then((table) => {
+      res.status(201).json({ table });
     })
     .catch((err) => {
       res.status(500).json({

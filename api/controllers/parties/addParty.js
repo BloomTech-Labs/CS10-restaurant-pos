@@ -44,7 +44,7 @@ const addParty = (req, res) => {
         .populate('tables')
         .execPopulate()
         .then((party) => {
-          res.status(200).json(party);
+          res.status(200).json({ party });
         })
         .catch((err) => res.status(500).json({
           err,
