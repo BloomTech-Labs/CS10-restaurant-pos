@@ -7,7 +7,6 @@ import Modal from '../HOC/Modal';
 import OrderTotal from '../OrderTotal';
 import { Button } from '../../global-styles/styledComponents';
 
-
 import * as s from './styles';
 
 class CheckoutModal extends React.Component {

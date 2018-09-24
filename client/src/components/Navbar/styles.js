@@ -5,6 +5,7 @@ import { modalBlur } from '../../global-styles/mixins';
 
 export const Navbar = styled.nav`
   display: flex;
+  flex-shrink: 0;
   justify-content: flex-end;
   align-items: center;
   width: 100%;
