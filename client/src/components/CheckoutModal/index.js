@@ -1,15 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
-import StripeCheckout from 'react-stripe-checkout';
+import { Elements } from 'react-stripe-elements';
 
 import Modal from '../HOC/Modal';
+import StripeCheckoutForm from '../StripeCheckoutForm';
 import OrderTotal from '../OrderTotal';
 import { Button } from '../../global-styles/styledComponents';
 
 import * as s from './styles';
 
 class CheckoutModal extends React.Component {
+  state = {
+    showStripe: false,
+  }
+
+  toggleCheckout = () => {
+    this.setState(prev => ({
+      showStripe: !prev.showStripe,
+    }));
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -34,26 +45,20 @@ class CheckoutModal extends React.Component {
               />
             </div>
             <s.OrderButtons>
-              <Button dark type="button" onClick={this.props.openSplitModal}>
-                Split Check
-              </Button>
-              {/* TODO: break stripe pub key into env variable */}
-              <StripeCheckout
-                name="POS Checkout"
-                description="subtitle"
-                ComponentClass="div"
-                currency="USD"
-                email="test@test.com"
-                stripeKey="pk_test_0axArT8SI2u6aiUnuQH2lJzg"
-                image="https://beej.us/images/beejthumb.gif"
-                token={this.props.saveToken}
-                allowRememberMe={false}
-                amount={this.props.subTotal * 100}
-              >
-                <Button dark primary type="button">
-                  Checkout
-                </Button>
-              </StripeCheckout>
+              {this.state.showStripe ? (
+                <Elements>
+                  <StripeCheckoutForm />
+                </Elements>
+              ) : (
+                <React.Fragment>
+                  <Button dark type="button" onClick={this.props.openSplitModal}>
+                    Split Check
+                  </Button>
+                  <Button dark primary type="button" onClick={this.toggleCheckout}>
+                    Checkout
+                  </Button>
+                </React.Fragment>
+              )}
             </s.OrderButtons>
           </Modal>
         )}
@@ -64,10 +69,10 @@ class CheckoutModal extends React.Component {
             ))}
             <div>Split Modal</div>
             <Button dark type="button">
-              split modal button one
+              Cancel
             </Button>
             <Button dark primary type="button">
-              split modal button two
+              Checkout
             </Button>
           </Modal>
         )}
@@ -86,7 +91,6 @@ CheckoutModal.propTypes = {
   setTotal: PropTypes.func,
   addToSplitCheck: PropTypes.func,
   closeSplitModal: PropTypes.func,
-  saveToken: PropTypes.func,
   subTotal: PropTypes.number,
   modalIsOpen: PropTypes.bool,
   splitModalIsOpen: PropTypes.bool,
@@ -103,7 +107,6 @@ CheckoutModal.defaultProps = {
   setTotal: () => {},
   addToSplitCheck: () => {},
   closeSplitModal: () => {},
-  saveToken: () => {},
   history: { push: () => {} },
   subTotal: 0,
   modalIsOpen: false,

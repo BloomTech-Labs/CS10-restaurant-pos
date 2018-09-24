@@ -16,6 +16,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
     "react-stripe-checkout": "^2.6.3",
+    "react-stripe-elements": "^2.0.1",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
     "sales-tax": "^2.0.7",

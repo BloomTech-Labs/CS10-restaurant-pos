@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Prompt } from 'react-router-dom';
+import { StripeProvider } from 'react-stripe-elements';
 
 import ItemSelector from '../ItemSelector';
 import OrderScratchPad from '../OrderScratchPad';
@@ -84,33 +85,35 @@ class PartyPage extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        <Prompt when={!!this.props.order.length} message="Leave without saving changes?" />
-        <CheckoutModal
-          modalIsOpen={this.props.modalIsOpen}
-          splitModalIsOpen={this.props.splitModalIsOpen}
-          openSplitModal={this.openSplitModal}
-          closeSplitModal={this.props.closeSplitModal}
-          splitOrder={this.props.splitOrder}
-          addToSplitCheck={this.addToSplitCheck}
-          location={this.props.location}
-          subTotal={this.state.subTotal}
-          saveToken={this.saveToken}
-        />
-        <s.Container modalOpen={this.props.modalIsOpen}>
-          {/* // TODO: figure out how to name things */}
-          <ItemSelector items={this.props.items} addItemToOrder={this.addItemToOrder} />
-          <OrderScratchPad
-            tables={this.props.tables}
-            saveParty={this.saveParty}
-            order={this.state.order}
-            subTotal={this.state.subTotal}
-            removeItemFromOrder={this.removeItemFromOrder}
+      <StripeProvider apiKey="pk_test_0axArT8SI2u6aiUnuQH2lJzg">
+        <React.Fragment>
+          <Prompt when={!!this.props.order.length} message="Leave without saving changes?" />
+          <CheckoutModal
+            modalIsOpen={this.props.modalIsOpen}
+            splitModalIsOpen={this.props.splitModalIsOpen}
+            openSplitModal={this.openSplitModal}
+            closeSplitModal={this.props.closeSplitModal}
+            splitOrder={this.props.splitOrder}
+            addToSplitCheck={this.addToSplitCheck}
             location={this.props.location}
-            openModal={this.openModal}
+            subTotal={this.state.subTotal}
+            saveToken={this.saveToken}
           />
-        </s.Container>
-      </React.Fragment>
+          <s.Container modalOpen={this.props.modalIsOpen}>
+            {/* // TODO: figure out how to name things */}
+            <ItemSelector items={this.props.items} addItemToOrder={this.addItemToOrder} />
+            <OrderScratchPad
+              tables={this.props.tables}
+              saveParty={this.saveParty}
+              order={this.state.order}
+              subTotal={this.state.subTotal}
+              removeItemFromOrder={this.removeItemFromOrder}
+              location={this.props.location}
+              openModal={this.openModal}
+            />
+          </s.Container>
+        </React.Fragment>
+      </StripeProvider>
     );
   }
 }
