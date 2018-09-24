@@ -166,10 +166,11 @@ class FloorPlan extends React.PureComponent {
       fontFamily: 'Nunito',
       fontWeight: '700',
       fill: 'white',
-      fontSize: '3rem'
+      fontSize: '6rem'
     });
-    circle.addChild(tableNumber);
+    tableNumber.scale.set(0.5);
     tableNumber.anchor.set(0.5);
+    circle.addChild(tableNumber);
 
     if (!this.props.selected.has(table.number)) {
       // If the table doesn't exist in the active Set,
