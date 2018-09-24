@@ -37,7 +37,8 @@ const registerRestaurant = (req, res) => {
           admin: null,
           manager: null
         },
-        restaurant: savedRestaurant._id
+        restaurant: savedRestaurant._id,
+        membership: savedRestaurant.membership
       };
 
       // sign a new token with the restaurant id
