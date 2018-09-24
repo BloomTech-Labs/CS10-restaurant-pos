@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 're
 import { ThemeProvider } from 'styled-components';
 
 import { setInitialAuth } from './redux/actions/auth';
-import { saveTopbarRef, saveSidebarRef } from './redux/actions/tables';
 import { clearParty } from './redux/actions/party';
 import * as s from './styles';
 import Landing from './components/Landing';
@@ -50,10 +49,9 @@ class App extends Component {
       <Router getUserConfirmation={getUserConfirmation}>
         <ThemeProvider theme={theme}>
           <s.Container>
-            <Navbar modalIsOpen={this.props.modalIsOpen} saveTopbarRef={this.props.saveTopbarRef} />
+            <Navbar modalIsOpen={this.props.modalIsOpen} />
             <s.Main>
               <SidebarWithRouter
-                saveSidebarRef={this.props.saveSidebarRef}
                 modalIsOpen={this.props.modalIsOpen}
                 role={this.props.role}
               />
@@ -88,8 +86,6 @@ App.propTypes = {
     manager: PropTypes.bool
   }),
   setInitialAuth: PropTypes.func,
-  saveSidebarRef: PropTypes.func,
-  saveTopbarRef: PropTypes.func,
   clearParty: PropTypes.func
 };
 
@@ -97,8 +93,6 @@ App.defaultProps = {
   modalIsOpen: false,
   role: { admin: false, manager: false },
   setInitialAuth: () => {},
-  saveSidebarRef: () => {},
-  saveTopbarRef: () => {},
   clearParty: () => {}
 };
 
@@ -109,5 +103,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { setInitialAuth, saveSidebarRef, saveTopbarRef, clearParty }
+  { setInitialAuth, clearParty }
 )(App);

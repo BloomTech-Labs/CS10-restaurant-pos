@@ -150,11 +150,11 @@ class PartyPage extends React.Component {
         <s.Container modalOpen={this.props.modalIsOpen}>
           {/* // TODO: figure out how to name things */}
           <ItemSelector
-            tables={this.props.tables}
             items={this.props.items}
             addItemToOrder={this.addItemToOrder}
           />
           <OrderScratchPad
+            tables={this.props.tables}
             saveParty={this.saveParty}
             order={this.state.order}
             subTotal={this.state.subTotal}

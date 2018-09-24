@@ -5,7 +5,11 @@ const stripe = require('stripe')(stripeKey);
 const Restaurant = require('../models/Restaurant');
 
 // Validate the membership status of a Restaurant
-const verifyMembership = (id) => (
+const verifyMembership = (id) => {
+  if (!id) {
+    return false;
+  }
+
   Restaurant.findOne({ _id: id })
     .then((restaurant) => {
       if (!restaurant.subscription) return false;
@@ -21,7 +25,7 @@ const verifyMembership = (id) => (
           return subscription.status === 'active';
         })
         .catch();
-    })
-);
+    }).catch();
+};
 
 module.exports = verifyMembership;

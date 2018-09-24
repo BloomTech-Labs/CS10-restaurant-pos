@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
 
+import TablesPageTitle from '../TablesPageTitle';
 import OrderTotal from '../OrderTotal';
 import { Button } from '../../global-styles/styledComponents';
 
@@ -11,6 +12,7 @@ class OrderScratchPad extends React.Component {
   render() {
     return (
       <s.Container>
+        <TablesPageTitle tables={this.props.tables} />
         <s.Scroll>
           {this.props.order.map((item) => (
             <s.Items key={shortid.generate()}>
@@ -44,6 +46,7 @@ const locationType = PropTypes.shape({
 });
 
 OrderScratchPad.propTypes = {
+  tables: PropTypes.arrayOf(PropTypes.object), // TODO: define shape later
   order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape later
   removeItemFromOrder: PropTypes.func,
   location: locationType,
@@ -53,6 +56,7 @@ OrderScratchPad.propTypes = {
 };
 
 OrderScratchPad.defaultProps = {
+  tables: [],
   order: [],
   subTotal: 0,
   location: { country: 'US', state: 'CA' },

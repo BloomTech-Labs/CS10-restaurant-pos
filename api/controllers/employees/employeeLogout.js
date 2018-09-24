@@ -5,11 +5,15 @@ const keys = require('../../../config/keys');
 
 const employeeLogout = (req, res) => {
   // pull the restaurant ID off the token in the headers
-  const { restaurant } = jwt.verify(req.headers.authorization.slice(7), keys.secretOrKey);
+  const {
+    restaurant,
+    membership
+  } = jwt.verify(req.headers.authorization.slice(7), keys.secretOrKey);
 
   // remove all user information from the payload
   const payload = {
     restaurant,
+    membership,
     id: null,
     pin: null,
     role: {

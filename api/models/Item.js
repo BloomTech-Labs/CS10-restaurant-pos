@@ -6,8 +6,7 @@ const { ObjectId } = Schema.Types;
 const ItemSchema = new Schema({
   name: {
     type: String,
-    required: true,
-    unique: true,
+    required: true
   },
   price: {
     type: Number,

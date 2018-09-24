@@ -1,33 +1,16 @@
 import styled from 'styled-components';
 
-import { flexCenterMixin } from '../../global-styles/mixins';
+import { Boxes } from '../../global-styles/styledComponents';
 
 export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-export const ItemsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   width: 100%;
 `;
 
-export const Boxes = styled.div`
-  ${flexCenterMixin};
-  flex-direction: column;
-  justify-content: flex-start;
-  background: ${(props) => props.theme.appPrimary};
-  box-shadow: ${(props) => props.theme.boxShadow};
-  border-radius: ${(props) => props.theme.btnBorderRadius}px;
-  align-items: center;
-  height: ${(props) => props.theme.menuItemSize}px;
-  width: ${(props) => props.theme.menuItemSize}px;
-  margin: 10px;
-  padding: 25px 0 0 0;
-  cursor: pointer;
+export const ItemBoxes = styled(Boxes)`
+  /* Styles modifications go here */
 `;
 
 export const Item = styled.div`
