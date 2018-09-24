@@ -7,32 +7,43 @@ import FloorPlan from '../FloorPlan';
 import Tables from '../Tables';
 import { getTables, moveTable, toggleTable } from '../../redux/actions/tables';
 
+import * as s from './styles';
+
 class TablesPage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.floorplanParent = React.createRef();
+  }
+
   componentDidMount() {
     this.props.getTables();
   }
 
-  toggleTable = (table) => {
+  toggleTable = table => {
     this.props.toggleTable(table);
   };
 
   render() {
     const authorized = this.props.role.admin || this.props.role.manager;
-    const { membership, sidebarRef } = this.props;
+    const { membership } = this.props;
+
+    console.warn(this.floorplanParent);
     return (
       <React.Fragment>
         {membership ? (
-          sidebarRef.current.clientWidth && (
-          <FloorPlan
-            editing={this.props.editing && authorized}
-            tables={this.props.tables}
-            selected={this.props.selected}
-            moveTable={this.props.moveTable}
-            toggleTable={this.toggleTable}
-            sidebarRef={this.props.sidebarRef}
-            topbarRef={this.props.topbarRef}
-          />
-          )
+          <s.FloorPlanContainer innerRef={this.floorplanParent}>
+            {this.floorplanParent.current && (
+            <FloorPlan
+              editing={this.props.editing && authorized}
+              tables={this.props.tables}
+              selected={this.props.selected}
+              moveTable={this.props.moveTable}
+              toggleTable={this.toggleTable}
+              parent={this.floorplanParent}
+            />
+            )}
+          </s.FloorPlanContainer>
         ) : (
           <Tables
             membership={membership}
@@ -58,8 +69,6 @@ TablesPage.propTypes = {
   getTables: PropTypes.func,
   moveTable: PropTypes.func,
   toggleTable: PropTypes.func,
-  topbarRef: PropTypes.any, // eslint-disable-line react/forbid-prop-types
-  sidebarRef: PropTypes.any // eslint-disable-line react/forbid-prop-types
 };
 
 TablesPage.defaultProps = {
@@ -71,18 +80,14 @@ TablesPage.defaultProps = {
   getTables: () => {},
   moveTable: () => {},
   toggleTable: () => {},
-  topbarRef: false, // hack to let the ternary work
-  sidebarRef: false // hack to let the ternary work
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   selected: state.tables.selected,
   tables: state.tables.tableList,
   editing: state.tables.editing,
   role: state.auth.role,
   membership: state.auth.membership,
-  sidebarRef: state.tables.sidebarRef,
-  topbarRef: state.tables.topbarRef
 });
 
 export default connect(

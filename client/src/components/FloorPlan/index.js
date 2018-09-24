@@ -13,12 +13,13 @@ class FloorPlan extends React.PureComponent {
     super(props);
     // use refs of the sidebar and topbar
     // to calculate the size the viewer needs to be
-    const { sidebarRef, topbarRef } = this.props;
-    const width = window.innerWidth - sidebarRef.current.clientWidth;
 
-    const height = window.innerHeight - topbarRef.current.clientHeight;
+    const { parent } = this.props;
+    const width = parent.current.clientWidth;
+    const height = parent.current.clientHeight;
 
     this.pixi = React.createRef();
+
     this.app = new PIXI.Application({
       width,
       height,
@@ -295,11 +296,11 @@ class FloorPlan extends React.PureComponent {
   };
 
   resize = () => {
-    // use refs of the sidebar and topbar
-    // to calculate the size the viewer needs to be
-    const { sidebarRef, topbarRef } = this.props;
-    const w = window.innerWidth - sidebarRef.current.clientWidth;
-    const h = window.innerHeight - topbarRef.current.clientHeight;
+    // calculate the size the editor should
+    // resize to based on the parent div
+    const parent = this.pixi.current.parentNode;
+    const w = parent.clientWidth;
+    const h = parent.clientHeight;
     this.app.renderer.resize(w, h);
     this.viewport.resize(w, h, 1000, 1000);
   };
@@ -335,8 +336,7 @@ FloorPlan.propTypes = {
   tables: PropTypes.arrayOf(PropTypes.object),
   moveTable: PropTypes.func,
   toggleTable: PropTypes.func,
-  topbarRef: PropTypes.any, // eslint-disable-line react/forbid-prop-types
-  sidebarRef: PropTypes.any // eslint-disable-line react/forbid-prop-types
+  parent: PropTypes.node,
 };
 
 FloorPlan.defaultProps = {
@@ -345,8 +345,7 @@ FloorPlan.defaultProps = {
   tables: [],
   moveTable: () => {},
   toggleTable: () => {},
-  topbarRef: false, // hack to let the ternary work
-  sidebarRef: false // hack to let the ternary work
+  parent: false, // TODO: define as a node
 };
 
 export default FloorPlan;

@@ -11,3 +11,7 @@ export const Editor = styled.div`
   ${flexCenterMixin}
   flex-grow: 6;
 `;
+
+export const FloorPlanContainer = styled.div`
+  flex-grow: 1;
+`;
