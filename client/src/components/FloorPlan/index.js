@@ -309,14 +309,14 @@ class FloorPlan extends React.PureComponent {
     return (
       <React.Fragment>
         <MainContainer innerRef={this.pixi} />
-        <div style={{ position: 'fixed', right: '100px' }}>
+        <div style={{ position: 'fixed', right: '100px', top: '150px' }}>
           {/* // ! make these not inline */}
           <label htmlFor="lock">
             <input type="checkbox" id="lock" onClick={this.toggleLock} value={this.state.locked} />
             <span>Lock</span>
           </label>
         </div>
-        <div style={{ position: 'fixed', right: '40px' }}>
+        <div style={{ position: 'fixed', right: '40px', top: '150px' }}>
           {/* // ! make these not inline */}
           <button type="button" onClick={this.zoomIn}>
             +
