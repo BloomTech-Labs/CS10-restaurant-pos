@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Prompt } from 'react-router-dom';
 import { StripeProvider } from 'react-stripe-elements';
+import shortid from 'shortid';
 
 import ItemSelector from '../ItemSelector';
 import OrderScratchPad from '../OrderScratchPad';
@@ -22,12 +23,11 @@ class PartyPage extends React.Component {
   }
 
   state = {
-    splitCheck: [],
+    splitCheck: this.props.splitOrder,
     order: this.props.order,
     subTotal: Number(
       this.props.order.reduce((acc, foodItem) => acc + foodItem.price, 0).toFixed(2)
     ),
-    localRef: 0 // eslint-disable-line react/no-unused-state
   };
 
   componentDidMount() {
@@ -39,10 +39,17 @@ class PartyPage extends React.Component {
     this.props.openModal();
   };
 
-  addToSplitCheck = item => {
-    this.setState(prev => ({
-      splitCheck: [...prev.splitCheck, item]
-    }));
+  toggleSplitCheckItem = item => {
+    this.setState(prev => {
+      if (prev.splitCheck.find(element => element.localRef === item.localRef)) {
+        return {
+          splitCheck: prev.splitCheck.filter(element => element.localRef !== item.localRef),
+        };
+      }
+      return {
+        splitCheck: [...prev.splitCheck, item]
+      };
+    });
   };
 
   openSplitModal = () => {
@@ -53,8 +60,7 @@ class PartyPage extends React.Component {
 
   addItemToOrder = item => {
     this.setState(prev => ({
-      order: [...prev.order, { ...item, localRef: prev.localRef }],
-      localRef: prev.localRef + 1,
+      order: [...prev.order, { ...item, localRef: shortid.generate() }],
       subTotal: Number(
         (prev.order.reduce((acc, foodItem) => acc + foodItem.price, 0) + item.price).toFixed(2)
       )
@@ -89,12 +95,13 @@ class PartyPage extends React.Component {
         <React.Fragment>
           <Prompt when={!!this.props.order.length} message="Leave without saving changes?" />
           <CheckoutModal
+            order={this.state.order}
             modalIsOpen={this.props.modalIsOpen}
             splitModalIsOpen={this.props.splitModalIsOpen}
             openSplitModal={this.openSplitModal}
             closeSplitModal={this.props.closeSplitModal}
-            splitOrder={this.props.splitOrder}
-            addToSplitCheck={this.addToSplitCheck}
+            splitOrder={this.state.splitCheck}
+            toggleSplitCheckItem={this.toggleSplitCheckItem}
             location={this.props.location}
             subTotal={this.state.subTotal}
             saveToken={this.saveToken}

@@ -26,17 +26,18 @@ class CheckoutModal extends React.Component {
       <React.Fragment>
         {this.props.modalIsOpen && (
           <Modal>
-            {this.props.order.map(item => (
-              <div key={shortid.generate()}>
-                {item.name}
-                <div onClick={() => this.props.addToSplitCheck(item)}>+</div>
-              </div>
-            ))}
+            <s.Order>
+              {this.props.order.map(item => (
+                <div key={shortid.generate()}>
+                  {item.name}
+                  <div onClick={() => this.props.toggleSplitCheckItem(item)}>+</div>
+                </div>
+              ))}
+            </s.Order>
             <s.Title>
               <h2>Checkout Modal</h2>
               <div>Server Name</div>
             </s.Title>
-            <s.Order>your order and shit</s.Order>
             <div>
               <OrderTotal
                 subTotal={this.props.subTotal}
@@ -89,7 +90,7 @@ const locationType = PropTypes.shape({
 CheckoutModal.propTypes = {
   openSplitModal: PropTypes.func,
   setTotal: PropTypes.func,
-  addToSplitCheck: PropTypes.func,
+  toggleSplitCheckItem: PropTypes.func,
   closeSplitModal: PropTypes.func,
   subTotal: PropTypes.number,
   modalIsOpen: PropTypes.bool,
@@ -105,7 +106,7 @@ CheckoutModal.propTypes = {
 CheckoutModal.defaultProps = {
   openSplitModal: () => {},
   setTotal: () => {},
-  addToSplitCheck: () => {},
+  toggleSplitCheckItem: () => {},
   closeSplitModal: () => {},
   history: { push: () => {} },
   subTotal: 0,
