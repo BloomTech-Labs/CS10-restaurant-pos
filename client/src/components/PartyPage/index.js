@@ -58,6 +58,11 @@ class PartyPage extends React.Component {
     this.props.openSplitModal();
   };
 
+  closeSplitModal = () => {
+    this.props.closeSplitModal();
+    this.props.openModal();
+  }
+
   addItemToOrder = item => {
     this.setState(prev => ({
       order: [...prev.order, { ...item, localRef: shortid.generate() }],
@@ -99,7 +104,7 @@ class PartyPage extends React.Component {
             modalIsOpen={this.props.modalIsOpen}
             splitModalIsOpen={this.props.splitModalIsOpen}
             openSplitModal={this.openSplitModal}
-            closeSplitModal={this.props.closeSplitModal}
+            closeSplitModal={this.closeSplitModal}
             splitOrder={this.state.splitCheck}
             toggleSplitCheckItem={this.toggleSplitCheckItem}
             location={this.props.location}

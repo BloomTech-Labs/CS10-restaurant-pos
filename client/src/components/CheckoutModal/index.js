@@ -52,7 +52,7 @@ class CheckoutModal extends React.Component {
                 </Elements>
               ) : (
                 <React.Fragment>
-                  <Button dark type="button" onClick={this.props.openSplitModal}>
+                  <Button inactive dark type="button" onClick={this.props.openSplitModal}>
                     Split Check
                   </Button>
                   <Button dark primary type="button" onClick={this.toggleCheckout}>
@@ -69,7 +69,7 @@ class CheckoutModal extends React.Component {
               <div key={shortid.generate()}>{item.name} : {item.localRef}</div>
             ))}
             <div>Split Modal</div>
-            <Button dark type="button">
+            <Button dark type="button" onClick={this.props.closeSplitModal}>
               Cancel
             </Button>
             <Button dark primary type="button">
