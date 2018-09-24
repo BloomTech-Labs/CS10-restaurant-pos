@@ -14,7 +14,6 @@ export const Button = styled.button`
   ${flexCenterMixin};
   padding: 0;
   font-weight: 600;
-  letter-spacing: 2px;
   color: ${(props) => {
     if (!props.primary && !props.dark) {
       return props.theme.btnPrimaryBgColor;
