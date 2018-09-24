@@ -12,7 +12,9 @@
     - [Register Employee](#register-employee)
     - [Login Admin](#login-admin)
     - [Login Employee](#login-employee)
+    - [Get All Employees](#get-all-employees)
     - [Change Password](#change-password)
+    - [Employee Logout](#employee-logout)
   - [Item Routes](#item-routes)
     - [Get All Items](#get-all-items)
     - [Get A Specific Item](#get-a-specific-item)
@@ -29,7 +31,7 @@
     - [Get All Tables](#get-all-tables)
     - [Get A Specific Table](#get-a-specific-table)
     - [Add Table](#add-table)
-    - [Update Table](#update-table)
+    - [Update Tables](#update-tables)
     - [Deactivate Table](#deactivate-table)
     - [Delete Table](#delete-table)
   - [Order Routes](#order-routes)
@@ -78,7 +80,8 @@ The JWT payload will look like this:
     admin: true,
     manager: false
   },
-  restaurant: '0987654321'
+  restaurant: '0987654321',
+  membership: false
 };
 ```
 
@@ -105,9 +108,9 @@ Request body should look like this:
 
 ```
 {
-  "name": "First Last",
-  "pass": "asdfghjkl",
-  "email": "user@email.com"
+  "email": "admin@user.com",
+  "pass": "password",
+  "name": "Admin User"
 }
 ```
 
@@ -141,8 +144,8 @@ Request body should look like this:
 
 ```
 {
-  "name": "First Last",
-  "pass": "asdfghjkl",
+  "name": "First Server",
+  "pass": "password",
   "role": {
     "manager": "true"
   }
@@ -178,8 +181,8 @@ Request body should look like this:
 
 ```
 {
-  "email": "user@email.com",
-  "pass": "asdfghjkl"
+  "email": "admin@user.com",
+  "pass": "password"
 }
 ```
 
@@ -207,8 +210,8 @@ Request body should look like this:
 
 ```
 {
-  "pin": "1234",
-  "pass": "asdfghjkl"
+  "pin": "0000",
+  "pass": "password"
 }
 ```
 
@@ -226,6 +229,48 @@ Response:
 }
 ```
 
+### Get All Employees
+
+GET `/api/employees/all`
+
+**Requires Authorization**
+
+Retrieves a list of employees from the database. Admins can see all employees in the restaurant, managers can see only servers.
+
+Response:
+
+```
+{
+  "employees": [
+    {
+      "role": {
+        "admin": true,
+        "manager": false
+      },
+      "_id": "5ba6c050df4d147ee8cf9003",
+      "name": "Admin User",
+      "password": "(hashed password. should be changed)",
+      "email": "admin@user.com",
+      "pin": "0000",
+      "__v": 0,
+      "restaurant": "5ba6c19f0c6f7f7f7e859dc4"
+    },
+    {
+      "role": {
+        "admin": false,
+        "manager": false
+      },
+      "_id": "5ba6c30a0c6f7f7f7e859dc5",
+      "name": "First Server",
+      "password": "(hashed password. should be changed)",
+      "pin": "7350",
+      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+      "__v": 0
+    }
+  ]
+}
+```
+
 
 ### Change Password
 
@@ -239,8 +284,8 @@ Request body should look like this:
 
 ```
 {
-  "oldPassword": "asdfghjkl",
-  "newPassword": "lkjhgfdsa"
+  "oldPassword": "password",
+  "newPassword": "password1"
 }
 ```
 
@@ -257,6 +302,12 @@ Response:
   "msg": "Succesfully changed the password."
 }
 ```
+
+### Employee Logout
+
+GET `/api/employees/logout`
+
+Response will be a new token with all the user information fields replaced with `null`. It will still have the restaurant information.
 
 ## Item Routes
 
@@ -280,19 +331,21 @@ Response:
 ```
 [
   {
-    "_id": "5b9564a0ed2e4d86346d6c83",
-    "name": "Sweet Potato Roll",
-    "description": "A yummy delight for all sane mortals",
-    "category": "food",
-    "price": 4.99,
+    "_id": "5ba6c9f8914dc082011a1657",
+    "name": "Spaghetti",
+    "price": 10.99,
+    "description": "Noodles and red stuff",
+    "category": "entrees",
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
     "__v": 0
   },
   {
-    "_id": "5b983d7a26d91bbaec2fea19",
-    "name": "Wow Burger Bro",
-    "price": 59.99,
-    "category": "burgers",
-    "description": "A delish nutrish",
+    "_id": "5ba6caaf914dc082011a1658",
+    "name": "Salad",
+    "price": 6.75,
+    "description": "Lettuce and various other things",
+    "category": "sides",
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
     "__v": 0
   }
 ]
@@ -311,19 +364,20 @@ Response includes the item's:
 - name
 - price
 - description
+- category
 
 Response:
 
 ```
-[
-  {
-    "_id": "5b983d7a26d91bbaec2fea19",
-    "name": "Wow Burger Bro",
-    "price": 59.99,
-    "description": "A delish nutrish",
-    "__v": 0
-  }
-]
+{
+  "_id": "5ba6c9f8914dc082011a1657",
+  "name": "Spaghetti",
+  "price": 10.99,
+  "description": "Noodles and red stuff",
+  "category": "entrees",
+  "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+  "__v": 0
+}
 ```
 
 ### Add Item
@@ -338,10 +392,10 @@ Request body should look like this:
 
 ```
 {
-  "name": "burger",
-  "description": "It's a burger.",
-  "price": "11.99",
-  "category": "sandwiches"
+  "name": "Spaghetti",
+  "price": "7.99",
+  "category": "entrees",
+  "description": "Noodles and red stuff"
 }
 ```
 
@@ -364,12 +418,15 @@ Response:
 
 ```
 {
-  "_id": "5b984988b345de51f0587d2e",
-  "name": "burger",
-  "price": 11.99,
-  "category": "sandwiches",
-  "description": "It's a burger.",
-  "__v": 0
+  "item": {
+    "_id": "5ba6c9f8914dc082011a1657",
+    "name": "Spaghetti",
+    "price": 7.99,
+    "description": "Noodles and red stuff",
+    "category": "entrees",
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 0
+  }
 }
 ```
 
@@ -385,9 +442,7 @@ Request body should look like this:
 
 ```
 {
-  "name": "burger",
-  "description": "New description",
-  "price": "13.99"
+  "price": "10.99"
 }
 ```
 
@@ -412,11 +467,12 @@ Response:khttps://zoom.us/j/762844869https://zoom.us/j/762844869
 
 ```
 {
-  "_id": "5b9850813689155850e79c75",
-  "name": "burger",
-  "price": 13.99,
-  "category": "sandwiches",
-  "description": "New description",
+  "_id": "5ba6c9f8914dc082011a1657",
+  "name": "Spaghetti",
+  "price": 10.99,
+  "description": "Noodles and red stuff",
+  "category": "entrees",
+  "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
   "__v": 0
 }
 ```
@@ -441,13 +497,14 @@ Response:
 ```
 {
   "removedItem": {
-    "_id": "5b9850813689155850e79c75",
-    "name": "burger",
-    "price": 13.99,
-    "category": "sandwiches",
-    "description": "New description",
+    "_id": "5ba6caaf914dc082011a1658",
+    "name": "Salad",
+    "price": 6.75,
+    "description": "Lettuce and various other things",
+    "category": "sides",
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
     "__v": 0
-},
+  },
   "msg": "Item deleted from the database."
 }
 ```
@@ -566,8 +623,8 @@ Request body should look like this:
 
 ```
 {
-  "tables": ["5b99a5d5603385aece3e367a"],
-  "server": "5b993879366d2671bcba0e02"
+  "tables": ["5ba6c6860c6f7f7f7e859dc6"],
+  "server": "5ba6c30a0c6f7f7f7e859dc5"
 }
 ```
 
@@ -589,13 +646,22 @@ Response:
 {
   "food": [],
   "tables": [
-    "5b99a5d5603385aece3e367a"
+    {
+      "active": true,
+      "_id": "5ba6c6860c6f7f7f7e859dc6",
+      "x": 400,
+      "y": 100,
+      "number": 1,
+      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+      "__v": 0
+    }
   ],
-  "_id": "5b9a9ccdf825ebe79e0c03c8",
+  "_id": "5ba6c8070c6f7f7f7e859dc8",
   "server": {
-    "_id": "5b9a8a1f8e08cedb09ea9fef",
-    "name": "First Last"
+    "_id": "5ba6c30a0c6f7f7f7e859dc5",
+    "name": "First Server"
   },
+  "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
   "__v": 0
 }
 ```
@@ -688,16 +754,20 @@ Response:
 [
   {
     "active": false,
-    "_id": "5b9ab81aef8a6528509439dc",
-    "x": 1,
-    "y": 2,
+    "_id": "5ba6c6860c6f7f7f7e859dc6",
+    "x": 100,
+    "y": 250,
+    "number": 1,
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
     "__v": 0
   },
   {
     "active": false,
-    "_id": "5b9ab84cef8a6528509439dd",
-    "x": 2,
-    "y": 4,
+    "_id": "5ba6c6b00c6f7f7f7e859dc7",
+    "x": 250,
+    "y": 300,
+    "number": 2,
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
     "__v": 0
   }
 ]
@@ -716,9 +786,11 @@ Response:
 ```
 {
   "active": false,
-  "_id": "5b9ab84cef8a6528509439dd",
-  "x": 2,
-  "y": 4,
+  "_id": "5ba6c6860c6f7f7f7e859dc6",
+  "x": 100,
+  "y": 250,
+  "number": 1,
+  "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
   "__v": 0
 }
 ```
@@ -735,53 +807,67 @@ Request body should look like this:
 
 ```
 {
-  "x": 12,
-  "y": 45
+  "x": "100",
+  "y": "250",
+  "number": "1"
 }
 ```
 
-`x`: Number
+`x`: Number, required
 
-`y`: Number
+`y`: Number, required
+
+`number`: Number, required
 
 Response includes the added item's:
 
 - x coordinate
 - y coordinate
 - active status (defaults to true)
+- number
 
 Response:
 
 ```
 {
-  "_id": "5b99a5d5603385aece3e367a",
   "active": false,
-  "x": 0,
-  "y": 0,
+  "_id": "5ba6c6860c6f7f7f7e859dc6",
+  "x": 100,
+  "y": 250,
+  "number": 1,
+  "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
   "__v": 0
 }
 ```
 
-### Update Table
+### Update Tables
 
-PUT `api/tables/update/:id`
+POST `api/tables/update`
 
 **Requires Authorization**
 
-Updates a table by it's ID. The ID will be pulled off of the request parameters.
+Updates all the tables in array in the request body.
 
 Request body should look like this:
 
 ```
 {
- "x": 15,
- "y": 16
+	"tables": [
+    {
+      "_id": "5ba6c6860c6f7f7f7e859dc6",
+      "x": 400,
+      "y": 100
+    },
+    {
+      "_id": "5ba6c6b00c6f7f7f7e859dc7",
+      "x": 100,
+      "y": 250
+    }
+  ]
 }
 ```
 
-`x`: Number
-
-`y`: Number
+`tables`: Array of Objects with Table information
 
 Response includes the added item's:
 
@@ -792,13 +878,26 @@ Response includes the added item's:
 Response:
 
 ```
-{
-  "active": false,
-  "_id": "5b9ab84cef8a6528509439dd",
-  "x": 15,
-  "y": 16,
-  "__v": 0
-}
+[
+  {
+    "active": false,
+    "_id": "5ba6c6860c6f7f7f7e859dc6",
+    "x": 400,
+    "y": 100,
+    "number": 1,
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 0
+  },
+  {
+    "active": false,
+    "_id": "5ba6c6b00c6f7f7f7e859dc7",
+    "x": 100,
+    "y": 250,
+    "number": 2,
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 0
+  }
+]
 ```
 
 ### Deactivate Table
@@ -807,7 +906,7 @@ PUT `api/tables/deactivate/:id`
 
 **Requires Authorization**
 
-Deactivates a table by it's ID and removes the table from any connected party.
+Deactivates a table by its ID and removes the table from any connected party.
 
 Response includes:
 
@@ -820,21 +919,26 @@ Response:
 {
   "populatedParty": {
     "food": [],
-    "tables": [],
-    "_id": "5b9ac52a39325b3af4e974be",
-      "server": {
-         "_id": "5b9a9b556524cfe684c945ca",
-         "name": "first last"
+    "tables": [
+      "5ba6c6b00c6f7f7f7e859dc7"
+    ],
+    "_id": "5ba6c8070c6f7f7f7e859dc8",
+    "server": {
+      "_id": "5ba6c30a0c6f7f7f7e859dc5",
+      "name": "First Server"
     },
-      "__v": 2
-    },
-    "msg": "Table has been deactivated and removed from the party.",
-    "updatedTable": {
-      "active": false,
-      "_id": "5b9ab81aef8a6528509439dc",
-      "x": 1,
-      "y": 2,
-      "__v": 0
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 1
+  },
+  "msg": "Table has been deactivated and removed from the party.",
+  "updatedTable": {
+    "active": true,
+    "_id": "5ba6c6860c6f7f7f7e859dc6",
+    "x": 400,
+    "y": 100,
+    "number": 1,
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 0
   }
 }
 ```
@@ -851,7 +955,17 @@ Response:
 
 ```
 {
-  "removedTable": null,
+  "tables": [
+    {
+      "active": false,
+      "_id": "5ba6c6860c6f7f7f7e859dc6",
+      "x": 400,
+      "y": 100,
+      "number": 1,
+      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+      "__v": 0
+    }
+  ],
   "msg": "Table deleted from the database."
 }
 ```
