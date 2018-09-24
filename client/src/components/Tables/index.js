@@ -5,12 +5,14 @@ import shortId from 'shortid';
 
 import Table from '../Table';
 
+import * as s from './styles';
+
 class Tables extends Component {
   render() {
     return (
-      <React.Fragment>
+      <s.Container>
         {this.props.tables.map((table, i) => {
-          if (i >= 5) return;
+          if (i >= 5) return null;
           return (
             <Table
               key={shortId.generate()}
@@ -20,7 +22,7 @@ class Tables extends Component {
             />
           );
         })}
-      </React.Fragment>
+      </s.Container>
     );
   }
 }

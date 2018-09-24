@@ -31,7 +31,8 @@ const AuthReducer = (auth = initialState, action) => {
       const jwt = localStorage.getItem('jwt');
 
       let role = { admin: false, manager: false };
-      let membership = true; // ! Change back to false
+
+      let membership = false;
       let restaurant = '';
 
       if (jwt) {
@@ -43,10 +44,10 @@ const AuthReducer = (auth = initialState, action) => {
         } else {
           role = decodedJwt.role; // eslint-disable-line prefer-destructuring
           restaurant = decodedJwt.restaurant; // eslint-disable-line prefer-destructuring
-          // membership = decodedJwt.membership; // eslint-disable-line prefer-destructuring // ! Uncomment me
+          membership = decodedJwt.membership; // eslint-disable-line prefer-destructuring
         }
       }
-      return { ...auth, jwt, role, membership, restaurant };
+      return { ...auth, jwt, role, membership: true, restaurant };
 
     case AUTH_LOADING:
       return { ...auth, loading: true };
