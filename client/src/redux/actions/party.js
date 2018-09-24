@@ -20,6 +20,7 @@ export const UPDATING_PARTY_ERROR = 'UPDATING_PARTY_ERROR';
 export const DELETING_PARTY = 'DELETING_PARTY';
 export const DELETING_PARTY_SUCCESS = 'DELETING_PARTY_SUCCESS';
 export const DELETING_PARTY_ERROR = 'DELETING_PARTY_ERROR';
+export const CLEAR_PARTY = 'CLEAR_PARTY';
 
 // Saves the Order on the ScratchPad
 export const createParty = (tables, push) => {
@@ -108,3 +109,7 @@ export const deleteParty = (id) => (dispatch) => {
       dispatch({ type: DELETING_PARTY_ERROR, payload: err });
     });
 };
+
+export const clearParty = () => ({
+  type: CLEAR_PARTY,
+});

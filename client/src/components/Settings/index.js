@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import RestaurantInfo from '../RestaurantInfo';
 import Billing from '../Billing';
 import ChangePassword from '../ChangePassword';
+import CreateItem from '../CreateItem';
 
 import * as s from './styles';
 
@@ -16,12 +17,18 @@ class Settings extends React.Component {
     </React.Fragment>
   );
 
+  managerDisplay = () => (
+    <React.Fragment>
+      <CreateItem />
+    </React.Fragment>
+  );
+
   render() {
     const { manager, admin } = this.props.role;
     return (
       <s.Container>
-        {/* // ! change to admin */}
-        {(manager || admin) && this.adminDisplay()}
+        {(admin) && this.adminDisplay()}
+        {(manager || admin) && this.managerDisplay()}
         <ChangePassword />
       </s.Container>);
   }

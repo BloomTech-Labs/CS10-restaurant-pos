@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SetType from 'es6-set-proptypes';
 
+import { Button } from '../../global-styles/styledComponents';
 import { addTable, toggleEdit, saveTables } from '../../redux/actions/tables';
 import { createParty } from '../../redux/actions/party';
 // TODO: create save button action
@@ -11,12 +12,16 @@ import * as s from './styles';
 
 class TableEditPanel extends React.Component {
   addTable = () => {
+    const { membership, tables } = this.props;
+
+    if (!membership && tables.length >= 5) return;
     const newTableNumber = this.props.tables.length + 1;
     this.props.addTable(newTableNumber);
   };
 
   saveTables = () => {
     this.props.saveTables(this.props.tables);
+    this.props.toggleEdit();
   };
 
   createParty = () => {
@@ -29,28 +34,28 @@ class TableEditPanel extends React.Component {
     const authorized = this.props.role.admin || this.props.role.manager;
     return (
       <s.Panel>
+        <Button primary type="button" onClick={this.createParty}>
+          Add Order
+        </Button>
         {authorized
           && !this.props.editing && (
             <React.Fragment>
-              <button type="button" onClick={this.createParty}>
-                Add Order
-              </button>
-              <button type="button" onClick={this.props.toggleEdit}>
+              <Button type="button" onClick={this.props.toggleEdit}>
                 Edit
-              </button>
+              </Button>
             </React.Fragment>
         )}
         {this.props.editing && (
           <React.Fragment>
-            <button type="button" onClick={this.addTable}>
+            <Button type="button" onClick={this.addTable}>
               Add Table
-            </button>
-            <button type="button" onClick={this.saveTables}>
+            </Button>
+            <Button primary type="button" onClick={this.saveTables}>
               Save
-            </button>
-            <button type="button" onClick={this.props.toggleEdit}>
+            </Button>
+            <Button type="button" onClick={this.props.toggleEdit}>
               Cancel
-            </button>
+            </Button>
           </React.Fragment>
         )}
       </s.Panel>
@@ -62,6 +67,7 @@ TableEditPanel.propTypes = {
   tables: PropTypes.arrayOf(PropTypes.object),
   editing: PropTypes.bool,
   selected: SetType,
+  membership: PropTypes.bool,
   role: PropTypes.shape({
     admin: PropTypes.bool,
     manager: PropTypes.bool
@@ -77,6 +83,7 @@ TableEditPanel.defaultProps = {
   tables: [],
   editing: false,
   selected: new Set(),
+  membership: false,
   role: { admin: false, manager: false },
   createParty: () => {},
   addTable: () => {},
@@ -89,6 +96,7 @@ const mapStateToProps = (state) => ({
   tables: state.tables.tableList,
   editing: state.tables.editing,
   selected: state.tables.selected,
+  membership: state.auth.membership,
   role: state.auth.role
 });
 

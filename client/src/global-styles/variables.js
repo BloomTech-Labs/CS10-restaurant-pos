@@ -1,43 +1,59 @@
 // * Root Colors ----------------------
 const transparent = 'rgba(0, 0, 0, 0)';
+const lightGrey = 'rgba(255, 255, 255, 0.4)';
 const white = '#FFFFFF';
 const aquaHaze = '#F7F9FA';
 const razzmatazz = '#E30E58';
 const oxfordBlue = '#303B49';
 const comet = '#5F6273';
 const steelBlue = '#4381C1';
+const ebonyClay = '#202233';
 
 export const theme = {
   // * Misc. -----------------------------------
   menuOpacity: null,
   lineHeight: null,
+  boxShadow: '0 2px 4px 1px rgba(0, 0, 0, 0.15)',
 
   // * Default Dimensions ----------------------
   sideBarWidth: 265,
   topBarHeight: 125,
+  menuItemSize: 200,
+
+  // * Font Styles -----------------------------
+  ItemTitleSize: 2,
+  ItemTitleDescription: 1.4,
 
   // * Buttons ---------------------------------
   // Standard
-  btnWidth: 210,
-  btnHeight: 60,
+  btnWidth: 180,
+  btnHeight: 40,
   btnBorderRadius: 10,
-  btnFontSize: 2,
-  btnColor: white,
+  btnFontSize: 1.6,
+  btnTextColor: white,
   btnBgColor: transparent,
+  btnBorderColor: steelBlue,
 
-  // Main
-  btnMainBgColor: steelBlue,
+  // Primary
+  btnPrimaryBgColor: steelBlue,
+
+
+  // Dark Primary
+  btnDarkPrimaryBgColor: razzmatazz,
+
+  // Dark
+  btnDarkBorderColor: white,
+
 
   // * Color Theme Variables -------------------
-  // Main Styles
+  // Primary Styles
   appPrimary: white,
   appSecondary: razzmatazz,
   appTertiary: oxfordBlue,
   contentBackground: aquaHaze,
+  textColorDark: white,
   // Top Bar
-  topBarHeader: white,
   topBarLink: comet,
-  topBarBgColor: null,
   // Side Bar
   linkSelectedBg: null,
   linkSelected: null,
@@ -48,4 +64,7 @@ export const theme = {
   buttonBorder: null,
   // Sub Headers
   subHeader: null,
+  // Text
+  primaryText: ebonyClay,
+  lightText: lightGrey
 };

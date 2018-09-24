@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { Button } from '../../global-styles/styledComponents';
+
 import * as s from './styles';
 
 class NotFound extends Component {
@@ -9,10 +11,12 @@ class NotFound extends Component {
         404
         <s.Test>
           Test text
-          <s.Bg>
-            <s.Button>Here is a Test Button</s.Button>
-            <s.Button main>Here is a Test Button</s.Button>
-          </s.Bg>
+          <Button>Edit</Button>
+          <Button primary>Save</Button>
+          <div style={{ background: '#303B49' }}>
+            <Button dark>Checkout</Button>
+            <Button primary dark>Save</Button>
+          </div>
         </s.Test>
       </div>
     );

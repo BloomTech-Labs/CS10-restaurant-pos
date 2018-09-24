@@ -8,7 +8,7 @@ import {
   PASSWORD_MATCH_ERROR,
   PASSWORD_MATCH_SUCCESS,
   EMPLOYEE_REGISTER_FAILURE,
-  EMPLOYEE_REGISTER_SUCCESS,
+  EMPLOYEE_REGISTER_SUCCESS
 } from '../actions/auth';
 import {
   LOADING_TABLES_ERROR,
@@ -32,7 +32,12 @@ import {
   DELETING_PARTY_ERROR,
   DELETING_PARTY_SUCCESS
 } from '../actions/party';
-import { LOADING_ITEMS_ERROR, LOADING_ITEMS_SUCCESS } from '../actions/items';
+import {
+  LOADING_ITEMS_ERROR,
+  LOADING_ITEMS_SUCCESS,
+  ADDING_ITEM_ERROR,
+  ADDING_ITEM_SUCCESS
+} from '../actions/items';
 import {
   LOADING_RESTAURANT_ERROR,
   LOADING_RESTAURANT_SUCCESS,
@@ -40,6 +45,7 @@ import {
   ADDING_RESTAURANT_SUCCESS
 } from '../actions/restaurant';
 import { LOADING_SERVERS_ERROR, LOADING_SERVERS_SUCCESS } from '../actions/servers';
+import { PAYMENT_ERROR, PAYMENT_SUCCESS } from '../actions/payments';
 
 const initialState = {
   loginError: false,
@@ -58,7 +64,8 @@ const initialState = {
   loadingItemsError: false,
   loadingRestaurantError: false,
   addingRestaurantError: false,
-  loadingServersError: false
+  loadingServersError: false,
+  paymentsError: false,
 };
 
 const ErrorReducer = (errors = initialState, action) => {
@@ -126,6 +133,10 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, loadingItemsError: action.payload };
     case LOADING_ITEMS_SUCCESS:
       return { ...errors, loadingItemsError: false };
+    case ADDING_ITEM_ERROR:
+      return { ...errors, addingItemError: action.payload };
+    case ADDING_ITEM_SUCCESS:
+      return { ...errors, addingItemError: false };
 
     case LOADING_RESTAURANT_ERROR:
       return { ...errors, loadingRestaurantError: action.payload };
@@ -141,6 +152,11 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, loadingServersError: action.payload };
     case LOADING_SERVERS_SUCCESS:
       return { ...errors, loadingServersError: false };
+
+    case PAYMENT_ERROR:
+      return { ...errors, paymentsError: action.payload };
+    case PAYMENT_SUCCESS:
+      return { ...errors, paymentsError: false };
 
     default:
       return errors;

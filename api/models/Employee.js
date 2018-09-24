@@ -31,11 +31,6 @@ const Employee = new Schema({
     admin: {
       type: Boolean,
       default: false,
-      subscription: String,
-      membership: {
-        type: Boolean,
-        default: false,
-      },
     },
     manager: {
       type: Boolean,

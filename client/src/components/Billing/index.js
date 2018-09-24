@@ -1,35 +1,41 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import StripeCheckout from 'react-stripe-checkout';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-// import { addRestaurant } from '../../redux/actions/restaurant';
+import { subscribe } from '../../redux/actions/payments';
+import { Button } from '../../global-styles/styledComponents';
 
 import * as s from './styles';
 
 class Billing extends React.Component {
   state = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    cc: '',
-    expiry: '',
-    cvv: ''
+    // firstName: '',
+    // lastName: '',
+    // email: '',
+    // cc: '',
+    // expiry: '',
+    // cvv: ''
   };
 
-  handleChange = (event) => {
+  handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = event => {
     event.preventDefault();
     // this.props.addRestaurant(this.state);
   };
+
+  saveToken = (token) => {
+    this.props.subscribe(token);
+  }
 
   render() {
     return (
       <s.Container>
         Billing
-        <s.Form onSubmit={this.handleSubmit}>
+        {/* <s.Form onSubmit={this.handleSubmit}>
           <input
             placeholder="John"
             type="text"
@@ -75,21 +81,36 @@ class Billing extends React.Component {
             value={this.state.cvv}
           />
           <button type="submit">Submit</button>
-        </s.Form>
+        </s.Form> */}
+        {/* // TODO: add support for multiple subscription term options */}
+        <StripeCheckout
+          name="POS Checkout"
+          description="Subscribe"
+          ComponentClass="div"
+          currency="USD"
+          stripeKey="pk_test_0axArT8SI2u6aiUnuQH2lJzg"
+          image="https://beej.us/images/beejthumb.gif"
+          token={this.saveToken}
+          allowRememberMe={false}
+        >
+          <Button primary type="button">
+            Subscribe
+          </Button>
+        </StripeCheckout>
       </s.Container>
     );
   }
 }
 
 Billing.propTypes = {
-  // addRestaurant: PropTypes.func
+  subscribe: PropTypes.func
 };
 
 Billing.defaultProps = {
-  // addRestaurant: () => {}
+  subscribe: () => {}
 };
 
 export default connect(
   null,
-  // { addRestaurant }
+  { subscribe }
 )(Billing);

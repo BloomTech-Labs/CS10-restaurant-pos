@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 import SetType from 'es6-set-proptypes';
 
 import { theme } from '../../global-styles/variables';
-
-import * as s from './styles';
+import { MainContainer } from '../../global-styles/styledComponents';
 
 class FloorPlan extends React.Component {
   constructor(props) {
@@ -93,17 +92,18 @@ class FloorPlan extends React.Component {
 
   line = (x, y, width, height) => {
     const l = this.viewport.addChild(new PIXI.Sprite(PIXI.Texture.WHITE));
-    l.tint = 0xff0000;
+    l.tint = 0xDEDEDE;
     l.position.set(x, y);
     l.width = width;
     l.height = height;
   };
 
   border = () => {
-    this.line(0, 0, this.viewport.worldWidth, 10);
-    this.line(0, this.viewport.worldHeight - 10, this.viewport.worldWidth, 10);
-    this.line(0, 0, 10, this.viewport.worldHeight);
-    this.line(this.viewport.worldWidth - 10, 0, 10, this.viewport.worldHeight);
+    const borderWidth = 1;
+    this.line(0, 0, this.viewport.worldWidth, borderWidth);
+    this.line(0, this.viewport.worldHeight - borderWidth, this.viewport.worldWidth, borderWidth);
+    this.line(0, 0, borderWidth, this.viewport.worldHeight);
+    this.line(this.viewport.worldWidth - borderWidth, 0, borderWidth, this.viewport.worldHeight);
   };
 
   circleCreator = (table) => {
@@ -116,7 +116,7 @@ class FloorPlan extends React.Component {
     // Determine the color, size,
     // and location of the circle.
     // But x and y shouldn't be set here
-    circle.beginFill(0xf7f9fa);
+    circle.beginFill(0xFFFFFF);
     circle.drawCircle(0, 0, 30);
     circle.endFill();
 
@@ -131,19 +131,33 @@ class FloorPlan extends React.Component {
     // Adds the table number text,
     // adds it as a child to the circle,
     // and adjusts its position to be centered
-    const tableNumber = new PIXI.Text(table.number);
+    const tableNumber = new PIXI.Text(table.number, { fontFamily: 'Nunito', fontWeight: '700', fill: 'white', fontSize: '2rem' });
     circle.addChild(tableNumber);
     tableNumber.anchor.set(0.5);
+
+    if (!this.props.selected.has(table.number)) {
+      // If the table doesn't exist in the active Set,
+      // add it to the Set and adjust its appearance
+      // circle.alpha = 1;
+      circle.tint = 0xE30E58;
+    } else {
+      // If the table does exist in the active Set,
+      // remove it from the Set and adjust its appearance
+      // circle.alpha = 0.2;
+      circle.tint = 0x114B5F;
+    }
 
     const toggleActive = () => {
       if (!this.props.selected.has(table.number)) {
         // If the table doesn't exist in the active Set,
         // add it to the Set and adjust its appearance
-        circle.alpha = 0.2;
+        // circle.alpha = 0.2;
+        circle.tint = 0x114B5F;
       } else {
         // If the table does exist in the active Set,
         // remove it from the Set and adjust its appearance
-        circle.alpha = 1;
+        // circle.alpha = 1;
+        circle.tint = 0xE30E58;
       }
       this.props.toggleTable(table.number);
     };
@@ -154,7 +168,7 @@ class FloorPlan extends React.Component {
         // Make it transparent on drag, then store a
         // reference to the data to track the movement
         // of this particular touch for multitouch
-        circle.alpha = 0.5;
+        // circle.alpha = 0.5;
         circle.data = event.data;
         circle.dragging = true;
       } else {
@@ -178,11 +192,13 @@ class FloorPlan extends React.Component {
         if (this.props.selected.has(table.number)) {
           // If the table is selected, it should
           // adjust its appearance appropriately
-          circle.alpha = 0.2;
+          // circle.alpha = 0.2;
+          circle.tint = 0x114B5F;
         } else {
           // Otherwise it should return to normal
           // after completing the drag
-          circle.alpha = 1;
+          // circle.alpha = 1;
+          circle.tint = 0xE30E58;
         }
       }
       this.viewport.resumePlugin('drag');
@@ -263,7 +279,7 @@ class FloorPlan extends React.Component {
     // TODO: Stretch Goal: Use border-radius and arrows to fuck with shit
     return (
       <React.Fragment>
-        <s.FloorPlan innerRef={this.pixi} />
+        <MainContainer innerRef={this.pixi} />
         <div style={{ position: 'fixed', right: '100px' }}>
           {/* // ! make these not inline */}
           <label htmlFor="lock">
