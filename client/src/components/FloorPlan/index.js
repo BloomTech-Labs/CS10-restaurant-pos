@@ -73,7 +73,6 @@ class FloorPlan extends React.PureComponent {
     this.clear();
     this.pixi.current.removeChild(this.app.view);
     this.app.stage.destroy(true);
-    this.stage = null;
     this.viewport.destroy();
     this.app.renderer.destroy(true);
   }
@@ -169,6 +168,9 @@ class FloorPlan extends React.PureComponent {
       fill: 'white',
       fontSize: '6rem'
     });
+
+    // scale the large text back down for clarity
+    // and set its anchor point to the center
     tableNumber.scale.set(0.5);
     tableNumber.anchor.set(0.5);
     circle.addChild(tableNumber);
