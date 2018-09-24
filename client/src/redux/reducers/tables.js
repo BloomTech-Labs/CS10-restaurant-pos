@@ -12,8 +12,6 @@ import {
   DEACTIVATING_TABLE_SUCCESS,
   TOGGLE_TABLE,
   TOGGLE_EDIT,
-  SIDEBAR_REF,
-  TOPBAR_REF
 } from '../actions/tables';
 import {
   CLEAR_PARTY,
@@ -85,12 +83,6 @@ const TablesReducer = (state = initialState, action) => {
 
     case TOGGLE_EDIT:
       return { ...state, editing: !state.editing };
-
-    case SIDEBAR_REF:
-      return { ...state, sidebarRef: action.payload };
-
-    case TOPBAR_REF:
-      return { ...state, topbarRef: action.payload };
 
     case CLEAR_PARTY:
       return { ...state, selected: new Set() };

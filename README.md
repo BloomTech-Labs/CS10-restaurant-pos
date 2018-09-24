@@ -5,11 +5,16 @@
   - [Linting](#linting)
   - [Running](#running)
 - [Environment Variables](#environment-variables)
+- [Auth Token Payload](#auth-token-payload)
 - [Backend Endpoints](#backend-endpoints)
   - [Employee Routes](#employee-routes)
-    - [Register](#register)
-    - [Login](#login)
+    - [Register Admin](#register-admin)
+    - [Register Employee](#register-employee)
+    - [Login Admin](#login-admin)
+    - [Login Employee](#login-employee)
+    - [Get All Employees](#get-all-employees)
     - [Change Password](#change-password)
+    - [Employee Logout](#employee-logout)
   - [Item Routes](#item-routes)
     - [Get All Items](#get-all-items)
     - [Get A Specific Item](#get-a-specific-item)
@@ -26,13 +31,14 @@
     - [Get All Tables](#get-all-tables)
     - [Get A Specific Table](#get-a-specific-table)
     - [Add Table](#add-table)
-    - [Update Table](#update-table)
+    - [Update Tables](#update-tables)
     - [Deactivate Table](#deactivate-table)
     - [Delete Table](#delete-table)
   - [Order Routes](#order-routes)
     - [Add a New Order](#add-a-new-order)
     - [Get All Orders](#get-all-orders)
     - [Get a Specific Order](#get-a-specific-order)
+    - [Restaurant Routes](#restaurant-routes)
 
 # Scripts
 
@@ -62,26 +68,87 @@ When committing, `npm run lint-all` will automatically be run.
 
 `SECRET_OR_KEY`: secret key for bcryptjs
 
+# Auth Token Payload
+
+The JWT payload will look like this:
+
+```
+{
+  id: '1234567890',
+  pin: '1234,
+  role: {
+    admin: true,
+    manager: false
+  },
+  restaurant: '0987654321',
+  membership: false
+};
+```
+
+When the admin signs in these fields will be null:
+
+- pin
+- role
+
+If the restaurant field is not defined, that means that the admin has not created a restaurant yet, and should be prompted to make one. Otherwise, the restaurant field will be populated with the ObjectId of the admin's restaurant.
+
+When an employee logs in to the POS system through the employee login, the id, pin and role fields will be populated with the employee's data.
+
 # Backend Endpoints
 
 ## Employee Routes
 
-### Register
+### Register Admin
 
-POST `/api/employees/register`
+POST `/api/employees/admin/register`
 
-Registers a new user. If the user is the first in the database, it will automatically be made into an admin account. Only administrators and managers can register a new employee.
+Registers a new admin. It will automatically assign the user a PIN of `0000` and set admin status as true.
 
 Request body should look like this:
 
 ```
 {
-  "name": "First Last",
-  "pass": "asdfghjkl",
+  "email": "admin@user.com",
+  "pass": "password",
+  "name": "Admin User"
+}
+```
+
+`name`: String, required
+
+`pass`: String, required, min 8 characters
+
+`email`: Email, required, must be unique (should be unique)
+
+Response includes the admin's PIN.
+
+Response:
+
+```
+{
+  "pin": "0000"
+}
+```
+
+### Register Employee
+
+POST `/api/employees/register`
+
+**Requires Authentication**
+
+**Admin/Manager only**
+
+Registers a new employee. The `restaurant` field for the Employee will automatically be pulled from the JWT.
+
+Request body should look like this:
+
+```
+{
+  "name": "First Server",
+  "pass": "password",
   "role": {
     "manager": "true"
-  },
-  "administrator": "5b98371f09563dc8dca06af3"
+  }
 }
 ```
 
@@ -91,36 +158,66 @@ Request body should look like this:
 
 `role`: Object, optional
 
-`administrator`: Admin's Employee ObjectId, required for all employees that are not the administrator.
+  - `admin`: Boolean
+  - `manager`: Boolean
 
-Response includes a Bearer token for authorization.
+Response includes the new employee's PIN.
 
 Response:
 
 ```
 {
-  "token": "Bearer (token)"
+  "pin": "1234"
 }
 ```
 
-### Login
+### Login Admin
 
-POST `/api/employees/login`
+POST `/api/employees/admin/login`
 
-Logs in an existing user.
+Logs in an existing administrator. This will bring the user to the employee login screen.
 
 Request body should look like this:
 
 ```
 {
-  "pin": "1234",
-  "pass": "asdfghjkl"
+  "email": "admin@user.com",
+  "pass": "password"
 }
 ```
 
-`pin`: String, required, min 4 characters
+`email`: Email, required
 
 `pass`: String, required
+
+Response includes a success message and a Bearer token for authorization. This token will NOT have user information on it, it will only contain the restaurant id!
+
+Response:
+
+```
+{
+  "token": "Bearer (token)"
+}
+```
+
+### Login Employee
+
+POST `/api/employees/login`
+
+Logs an existing user into the application. If the user is a manager or admin, they need to provide their password.
+
+Request body should look like this:
+
+```
+{
+  "pin": "0000",
+  "pass": "password"
+}
+```
+
+`pin`: String, required, 4 characters
+
+`pass`: String, required only for admin/managers
 
 Response includes a Bearer token for authorization.
 
@@ -131,6 +228,49 @@ Response:
   "token": "Bearer (token)"
 }
 ```
+
+### Get All Employees
+
+GET `/api/employees/all`
+
+**Requires Authorization**
+
+Retrieves a list of employees from the database. Admins can see all employees in the restaurant, managers can see only servers.
+
+Response:
+
+```
+{
+  "employees": [
+    {
+      "role": {
+        "admin": true,
+        "manager": false
+      },
+      "_id": "5ba6c050df4d147ee8cf9003",
+      "name": "Admin User",
+      "password": "(hashed password. should be changed)",
+      "email": "admin@user.com",
+      "pin": "0000",
+      "__v": 0,
+      "restaurant": "5ba6c19f0c6f7f7f7e859dc4"
+    },
+    {
+      "role": {
+        "admin": false,
+        "manager": false
+      },
+      "_id": "5ba6c30a0c6f7f7f7e859dc5",
+      "name": "First Server",
+      "password": "(hashed password. should be changed)",
+      "pin": "7350",
+      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+      "__v": 0
+    }
+  ]
+}
+```
+
 
 ### Change Password
 
@@ -144,8 +284,8 @@ Request body should look like this:
 
 ```
 {
-  "oldPassword": "asdfghjkl",
-  "newPassword": "lkjhgfdsa"
+  "oldPassword": "password",
+  "newPassword": "password1"
 }
 ```
 
@@ -163,6 +303,12 @@ Response:
 }
 ```
 
+### Employee Logout
+
+GET `/api/employees/logout`
+
+Response will be a new token with all the user information fields replaced with `null`. It will still have the restaurant information.
+
 ## Item Routes
 
 ### Get All Items
@@ -177,6 +323,7 @@ Each element in the response array includes and item's:
 
 - name
 - description
+- category
 - price
 
 Response:
@@ -184,17 +331,21 @@ Response:
 ```
 [
   {
-    "_id": "5b9564a0ed2e4d86346d6c83",
-    "name": "Sweet Potato Roll",
-    "description": "A yummy delight for all sane mortals",
-    "price": 4.99,
+    "_id": "5ba6c9f8914dc082011a1657",
+    "name": "Spaghetti",
+    "price": 10.99,
+    "description": "Noodles and red stuff",
+    "category": "entrees",
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
     "__v": 0
   },
   {
-    "_id": "5b983d7a26d91bbaec2fea19",
-    "name": "Wow Burger Bro",
-    "price": 59.99,
-    "description": "A delish nutrish",
+    "_id": "5ba6caaf914dc082011a1658",
+    "name": "Salad",
+    "price": 6.75,
+    "description": "Lettuce and various other things",
+    "category": "sides",
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
     "__v": 0
   }
 ]
@@ -213,19 +364,20 @@ Response includes the item's:
 - name
 - price
 - description
+- category
 
 Response:
 
 ```
-[
-  {
-    "_id": "5b983d7a26d91bbaec2fea19",
-    "name": "Wow Burger Bro",
-    "price": 59.99,
-    "description": "A delish nutrish",
-    "__v": 0
-  }
-]
+{
+  "_id": "5ba6c9f8914dc082011a1657",
+  "name": "Spaghetti",
+  "price": 10.99,
+  "description": "Noodles and red stuff",
+  "category": "entrees",
+  "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+  "__v": 0
+}
 ```
 
 ### Add Item
@@ -234,15 +386,16 @@ POST `/api/items/add`
 
 **Requires Authorization**
 
-Adds a new food item to the database.
+Adds a new food item to the database. Only managers and admins can do this.
 
 Request body should look like this:
 
 ```
 {
-  "name": "burger",
-  "description": "It's a burger.",
-  "price": "11.99"
+  "name": "Spaghetti",
+  "price": "7.99",
+  "category": "entrees",
+  "description": "Noodles and red stuff"
 }
 ```
 
@@ -252,21 +405,28 @@ Request body should look like this:
 
 `price`: Number, required
 
+`category`: String, optional
+
 Response includes the added item's:
 
 - name
 - price
+- category
 - description
 
 Response:
 
 ```
 {
-  "_id": "5b984988b345de51f0587d2e",
-  "name": "burger",
-  "price": 11.99,
-  "description": "It's a burger.",
-  "__v": 0
+  "item": {
+    "_id": "5ba6c9f8914dc082011a1657",
+    "name": "Spaghetti",
+    "price": 7.99,
+    "description": "Noodles and red stuff",
+    "category": "entrees",
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 0
+  }
 }
 ```
 
@@ -276,15 +436,13 @@ PUT `/api/items/update/:id`
 
 **Requires Authorization**
 
-Updates information for an existing food item.
+Updates information for an existing food item. Only managers and admins can do this.
 
 Request body should look like this:
 
 ```
 {
-  "name": "burger",
-  "description": "New description",
-  "price": "13.99"
+  "price": "10.99"
 }
 ```
 
@@ -294,22 +452,27 @@ Request body should look like this:
 
 `price`: Number
 
+`category`: String
+
 You only need one field!
 
 Response includes the updated item's:
 
 - name
 - price
+- category
 - description
 
 Response:khttps://zoom.us/j/762844869https://zoom.us/j/762844869
 
 ```
 {
-  "_id": "5b9850813689155850e79c75",
-  "name": "burger",
-  "price": 13.99,
-  "description": "New description",
+  "_id": "5ba6c9f8914dc082011a1657",
+  "name": "Spaghetti",
+  "price": 10.99,
+  "description": "Noodles and red stuff",
+  "category": "entrees",
+  "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
   "__v": 0
 }
 ```
@@ -320,12 +483,13 @@ DELETE `/api/items/delete/:id`
 
 **Requires Authorization**
 
-Deletes an item from the database.
+Deletes an item from the database. Only managers and admins can do this.
 
 Response includes a success message and the deleted item's:
 
 - name
 - price
+- category
 - description
 
 Response:
@@ -333,12 +497,14 @@ Response:
 ```
 {
   "removedItem": {
-    "_id": "5b9850813689155850e79c75",
-    "name": "burger",
-    "price": 13.99,
-    "description": "New description",
+    "_id": "5ba6caaf914dc082011a1658",
+    "name": "Salad",
+    "price": 6.75,
+    "description": "Lettuce and various other things",
+    "category": "sides",
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
     "__v": 0
-},
+  },
   "msg": "Item deleted from the database."
 }
 ```
@@ -457,8 +623,8 @@ Request body should look like this:
 
 ```
 {
-  "tables": ["5b99a5d5603385aece3e367a"],
-  "server": "5b993879366d2671bcba0e02"
+  "tables": ["5ba6c6860c6f7f7f7e859dc6"],
+  "server": "5ba6c30a0c6f7f7f7e859dc5"
 }
 ```
 
@@ -480,13 +646,22 @@ Response:
 {
   "food": [],
   "tables": [
-    "5b99a5d5603385aece3e367a"
+    {
+      "active": true,
+      "_id": "5ba6c6860c6f7f7f7e859dc6",
+      "x": 400,
+      "y": 100,
+      "number": 1,
+      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+      "__v": 0
+    }
   ],
-  "_id": "5b9a9ccdf825ebe79e0c03c8",
+  "_id": "5ba6c8070c6f7f7f7e859dc8",
   "server": {
-    "_id": "5b9a8a1f8e08cedb09ea9fef",
-    "name": "First Last"
+    "_id": "5ba6c30a0c6f7f7f7e859dc5",
+    "name": "First Server"
   },
+  "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
   "__v": 0
 }
 ```
@@ -579,16 +754,20 @@ Response:
 [
   {
     "active": false,
-    "_id": "5b9ab81aef8a6528509439dc",
-    "x": 1,
-    "y": 2,
+    "_id": "5ba6c6860c6f7f7f7e859dc6",
+    "x": 100,
+    "y": 250,
+    "number": 1,
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
     "__v": 0
   },
   {
     "active": false,
-    "_id": "5b9ab84cef8a6528509439dd",
-    "x": 2,
-    "y": 4,
+    "_id": "5ba6c6b00c6f7f7f7e859dc7",
+    "x": 250,
+    "y": 300,
+    "number": 2,
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
     "__v": 0
   }
 ]
@@ -607,9 +786,11 @@ Response:
 ```
 {
   "active": false,
-  "_id": "5b9ab84cef8a6528509439dd",
-  "x": 2,
-  "y": 4,
+  "_id": "5ba6c6860c6f7f7f7e859dc6",
+  "x": 100,
+  "y": 250,
+  "number": 1,
+  "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
   "__v": 0
 }
 ```
@@ -626,53 +807,67 @@ Request body should look like this:
 
 ```
 {
-  "x": 12,
-  "y": 45
+  "x": "100",
+  "y": "250",
+  "number": "1"
 }
 ```
 
-`x`: Number
+`x`: Number, required
 
-`y`: Number
+`y`: Number, required
+
+`number`: Number, required
 
 Response includes the added item's:
 
 - x coordinate
 - y coordinate
 - active status (defaults to true)
+- number
 
 Response:
 
 ```
 {
-  "_id": "5b99a5d5603385aece3e367a",
   "active": false,
-  "x": 0,
-  "y": 0,
+  "_id": "5ba6c6860c6f7f7f7e859dc6",
+  "x": 100,
+  "y": 250,
+  "number": 1,
+  "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
   "__v": 0
 }
 ```
 
-### Update Table
+### Update Tables
 
-PUT `api/tables/update/:id`
+POST `api/tables/update`
 
 **Requires Authorization**
 
-Updates a table by it's ID. The ID will be pulled off of the request parameters.
+Updates all the tables in array in the request body.
 
 Request body should look like this:
 
 ```
 {
- "x": 15,
- "y": 16
+	"tables": [
+    {
+      "_id": "5ba6c6860c6f7f7f7e859dc6",
+      "x": 400,
+      "y": 100
+    },
+    {
+      "_id": "5ba6c6b00c6f7f7f7e859dc7",
+      "x": 100,
+      "y": 250
+    }
+  ]
 }
 ```
 
-`x`: Number
-
-`y`: Number
+`tables`: Array of Objects with Table information
 
 Response includes the added item's:
 
@@ -683,13 +878,26 @@ Response includes the added item's:
 Response:
 
 ```
-{
-  "active": false,
-  "_id": "5b9ab84cef8a6528509439dd",
-  "x": 15,
-  "y": 16,
-  "__v": 0
-}
+[
+  {
+    "active": false,
+    "_id": "5ba6c6860c6f7f7f7e859dc6",
+    "x": 400,
+    "y": 100,
+    "number": 1,
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 0
+  },
+  {
+    "active": false,
+    "_id": "5ba6c6b00c6f7f7f7e859dc7",
+    "x": 100,
+    "y": 250,
+    "number": 2,
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 0
+  }
+]
 ```
 
 ### Deactivate Table
@@ -698,7 +906,12 @@ PUT `api/tables/deactivate/:id`
 
 **Requires Authorization**
 
-Deactivates a table by it's ID and removes the table from any connected party. The response will contain the aforementioned party and the newly updated table. The ID will be pulled off of the request parameters. No request body is required for this route.
+Deactivates a table by its ID and removes the table from any connected party.
+
+Response includes:
+
+- the associated party with an updated list of tables
+- the table that was just deactivated
 
 Response:
 
@@ -706,21 +919,26 @@ Response:
 {
   "populatedParty": {
     "food": [],
-    "tables": [],
-    "_id": "5b9ac52a39325b3af4e974be",
-      "server": {
-         "_id": "5b9a9b556524cfe684c945ca",
-         "name": "first last"
+    "tables": [
+      "5ba6c6b00c6f7f7f7e859dc7"
+    ],
+    "_id": "5ba6c8070c6f7f7f7e859dc8",
+    "server": {
+      "_id": "5ba6c30a0c6f7f7f7e859dc5",
+      "name": "First Server"
     },
-      "__v": 2
-    },
-    "msg": "Table has been deactivated and removed from the party.",
-    "updatedTable": {
-      "active": false,
-      "_id": "5b9ab81aef8a6528509439dc",
-      "x": 1,
-      "y": 2,
-      "__v": 0
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 1
+  },
+  "msg": "Table has been deactivated and removed from the party.",
+  "updatedTable": {
+    "active": true,
+    "_id": "5ba6c6860c6f7f7f7e859dc6",
+    "x": 400,
+    "y": 100,
+    "number": 1,
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 0
   }
 }
 ```
@@ -731,13 +949,23 @@ Delete `api/tables/delete/:id`
 
 **Requires Authorization**
 
-Deletes a table by it's ID. The ID will be pulled off of the request parameters. No request body is required for this route.
+Deletes a table by its ID. The ID will be pulled off of the request parameters. No request body is required for this route. Only managers and admins can do this.
 
 Response:
 
 ```
 {
-  "removedTable": null,
+  "tables": [
+    {
+      "active": false,
+      "_id": "5ba6c6860c6f7f7f7e859dc6",
+      "x": 400,
+      "y": 100,
+      "number": 1,
+      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+      "__v": 0
+    }
+  ],
   "msg": "Table deleted from the database."
 }
 ```
@@ -874,5 +1102,44 @@ Response:
   "last4": "1234",
   "date": "2018-09-12T16:58:21.473Z",
   "__v": 0
+}
+```
+
+### Restaurant Routes
+
+POST `/api/restaurants/register`
+
+**Requires Authorization**
+
+Adds a new restaurant to the signed-in admin's account.
+
+Request body should look like this:
+
+```
+{
+  "name": "Rigby's Tacos",
+  "location": "Saint Paul, MN",
+  "billing": {
+    "address": "123 Main St"
+  }
+}
+```
+
+`name`: String, required, the name of the restaurant
+
+`location`: String, required
+
+`billing`: Object, some fields required:
+
+- `address`: String? required
+
+Response contains a success messages and a new bearer token. The token will contain the restaurant id.
+
+Response:
+
+```
+{
+  "token": "Bearer (token)",
+  "msg": "Successfully created"
 }
 ```

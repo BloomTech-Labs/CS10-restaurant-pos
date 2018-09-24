@@ -10,6 +10,21 @@ export const MainContainer = styled.div`
   overflow: hidden;
 `;
 
+export const Boxes = styled.div`
+  ${flexCenterMixin};
+  flex-direction: column;
+  justify-content: flex-start;
+  background: ${(props) => props.theme.appPrimary};
+  box-shadow: ${(props) => props.theme.boxShadow};
+  border-radius: ${(props) => props.theme.btnBorderRadius}px;
+  align-items: center;
+  height: ${(props) => props.theme.menuItemSize}px;
+  width: ${(props) => props.theme.menuItemSize}px;
+  margin: 10px;
+  padding: 25px 0 0 0;
+  cursor: pointer;
+`;
+
 export const Button = styled.button`
   ${flexCenterMixin};
   padding: 0;
