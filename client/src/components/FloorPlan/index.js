@@ -336,7 +336,7 @@ FloorPlan.propTypes = {
   tables: PropTypes.arrayOf(PropTypes.object),
   moveTable: PropTypes.func,
   toggleTable: PropTypes.func,
-  parent: PropTypes.node,
+  parent: PropTypes.any, // eslint-disable-line
 };
 
 FloorPlan.defaultProps = {
