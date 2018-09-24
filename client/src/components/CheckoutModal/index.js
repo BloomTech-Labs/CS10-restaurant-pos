@@ -29,7 +29,7 @@ class CheckoutModal extends React.Component {
             <s.Order>
               {this.props.order.map(item => (
                 <div key={shortid.generate()}>
-                  {item.name}
+                  {item.name} : {item.localRef}
                   <div onClick={() => this.props.toggleSplitCheckItem(item)}>+</div>
                 </div>
               ))}
@@ -66,7 +66,7 @@ class CheckoutModal extends React.Component {
         {this.props.splitModalIsOpen && (
           <Modal closeSplitModal={this.props.closeSplitModal}>
             {this.props.splitOrder.map(item => (
-              <div key={shortid.generate()}>{item.name}</div>
+              <div key={shortid.generate()}>{item.name} : {item.localRef}</div>
             ))}
             <div>Split Modal</div>
             <Button dark type="button">

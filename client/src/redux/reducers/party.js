@@ -15,6 +15,7 @@ import {
   CLEAR_PARTY
 } from '../actions/party';
 import { DEACTIVATING_TABLE_SUCCESS } from '../actions/tables';
+import { CLEAR_SPLIT_ORDER } from '../actions/modal';
 
 const initialState = {
   tables: [],
@@ -94,6 +95,9 @@ const PartyReducer = (state = initialState, action) => {
 
     case CLEAR_PARTY:
       return { ...initialState };
+
+    case CLEAR_SPLIT_ORDER:
+      return { ...state, splitOrder: [] };
 
     default:
       return state;
