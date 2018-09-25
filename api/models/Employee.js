@@ -25,7 +25,8 @@ const Employee = new Schema({
   },
   email: {
     type: Email,
-    unique: true
+    unique: true,
+    sparse: true
   },
   role: {
     admin: {
