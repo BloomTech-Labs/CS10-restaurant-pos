@@ -24,8 +24,8 @@ const Employee = new Schema({
     max: 4,
   },
   email: {
-    // ! should be unique but it doesn't seem to work!?
-    type: Email
+    type: Email,
+    unique: true
   },
   role: {
     admin: {
