@@ -75,6 +75,7 @@ class FloorPlan extends React.PureComponent {
     this.app.stage.destroy(true);
     this.viewport.destroy();
     this.app.renderer.destroy(true);
+    window.onresize = null;
   }
 
   initialize = () => {

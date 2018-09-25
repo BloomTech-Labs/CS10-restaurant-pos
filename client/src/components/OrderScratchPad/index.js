@@ -14,7 +14,7 @@ class OrderScratchPad extends React.Component {
       <s.Container>
         <TablesPageTitle tables={this.props.tables} />
         <s.Scroll>
-          {this.props.order.map((item) => (
+          {this.props.order.map(item => (
             <s.Items key={shortid.generate()}>
               <s.DeleteButton onClick={() => this.props.removeItemFromOrder(item)}>
                 X
@@ -25,7 +25,11 @@ class OrderScratchPad extends React.Component {
           ))}
         </s.Scroll>
         <s.Checkout>
-          <OrderTotal location={this.props.location} subTotal={this.props.subTotal} />
+          <OrderTotal
+            location={this.props.location}
+            subTotal={this.props.subTotal}
+            setTotal={this.props.setTotal}
+          />
           <s.ButtonContainer>
             <Button primary dark type="button" onClick={this.props.saveParty}>
               Save
@@ -51,6 +55,7 @@ OrderScratchPad.propTypes = {
   removeItemFromOrder: PropTypes.func,
   location: locationType,
   subTotal: PropTypes.number,
+  setTotal: PropTypes.func,
   openModal: PropTypes.func,
   saveParty: PropTypes.func
 };
@@ -61,6 +66,7 @@ OrderScratchPad.defaultProps = {
   subTotal: 0,
   location: { country: 'US', state: 'CA' },
   removeItemFromOrder: () => {},
+  setTotal: () => {},
   openModal: () => {},
   saveParty: () => {}
 };
