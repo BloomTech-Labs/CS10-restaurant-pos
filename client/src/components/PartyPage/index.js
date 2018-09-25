@@ -90,8 +90,8 @@ class PartyPage extends React.Component {
     this.total = total;
   };
 
-  saveToken = token => {
-    this.props.sendPayment(token, this.total * 100, 'dgaishn');
+  sendPayment = token => {
+    this.props.sendPayment(token, this.total * 100, 'PAYMENT_DESCRIPTION_INTERESTING_AND_PROFESSIONAL');
   };
 
   render() {
@@ -109,7 +109,9 @@ class PartyPage extends React.Component {
             toggleSplitCheckItem={this.toggleSplitCheckItem}
             location={this.props.location}
             subTotal={this.state.subTotal}
-            saveToken={this.saveToken}
+            sendPayment={this.sendPayment}
+            setTotal={this.setTotal}
+            total={this.total}
           />
           <s.Container modalOpen={this.props.modalIsOpen}>
             {/* // TODO: figure out how to name things */}
@@ -198,6 +200,6 @@ export default connect(
     closeModal,
     openSplitModal,
     closeSplitModal,
-    sendPayment
+    sendPayment,
   }
 )(PartyPage);
