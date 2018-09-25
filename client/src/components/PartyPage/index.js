@@ -205,7 +205,6 @@ PartyPage.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  modalIsOpen: state.modal.isOpen,
   splitModalIsOpen: state.modal.splitModalIsOpen,
   items: state.items.itemList,
   order: state.party.order,

@@ -25,7 +25,8 @@ import RequireNotAuth from './components/HOC/RequireNotAuth';
 import RequireAuth from './components/HOC/RequireAuth';
 import { theme } from './global-styles/variables';
 
-const SidebarWithRouter = withRouter((props) => <Sidebar {...props} />);
+const SidebarWithRouter = withRouter(props => <Sidebar {...props} />);
+const AuthedPartyPage = RequireAuth(PartyPage);
 
 class App extends Component {
   componentDidMount() {
@@ -39,10 +40,7 @@ class App extends Component {
           <s.Container>
             <Navbar modalIsOpen={this.props.modalIsOpen} />
             <s.Main>
-              <SidebarWithRouter
-                modalIsOpen={this.props.modalIsOpen}
-                role={this.props.role}
-              />
+              <SidebarWithRouter modalIsOpen={this.props.modalIsOpen} role={this.props.role} />
               <Switch>
                 <Route path="/" component={Landing} exact />
                 <Route path="/logout" component={Logout} />
@@ -54,7 +52,12 @@ class App extends Component {
                 <Route path="/new-employee" component={RequireAuth(CreateEmployee)} />
                 <Route path="/tables" component={RequireAuth(TablesPage)} />
                 <Route path="/servers" component={RequireAuth(Servers)} />
-                <Route path="/party/:id" component={RequireAuth(PartyPage)} />
+                <Route
+                  path="/party/:id"
+                  render={props => (
+                    <AuthedPartyPage {...props} modalIsOpen={this.props.modalIsOpen} />
+                  )}
+                />
                 <Route path="/settings" component={RequireAuth(Settings)} />
                 <Route path="/404" component={NotFound} exact />
                 <Redirect to="/404" />
@@ -73,16 +76,16 @@ App.propTypes = {
     admin: PropTypes.bool,
     manager: PropTypes.bool
   }),
-  setInitialAuth: PropTypes.func,
+  setInitialAuth: PropTypes.func
 };
 
 App.defaultProps = {
   modalIsOpen: false,
   role: { admin: false, manager: false },
-  setInitialAuth: () => {},
+  setInitialAuth: () => {}
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   modalIsOpen: state.modal.isOpen,
   role: state.auth.role
 });
