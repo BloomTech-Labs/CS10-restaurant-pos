@@ -57,7 +57,7 @@ const PartyReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        partyList: [...state.partyList, action.payload]
+        partyList: [...state.partyList, action.payload],
       };
 
     case UPDATING_PARTY:

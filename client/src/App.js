@@ -66,7 +66,7 @@ class App extends Component {
                 <Route path="/new-employee" component={RequireAuth(CreateEmployee)} />
                 <Route path="/tables" component={RequireAuth(TablesPage)} />
                 <Route path="/servers" component={RequireAuth(Servers)} />
-                <Route path="/party" component={RequireAuth(PartyPage)} />
+                <Route path="/party/:id" component={RequireAuth(PartyPage)} />
                 <Route path="/settings" component={RequireAuth(Settings)} />
                 <Route path="/404" component={NotFound} exact />
                 <Redirect to="/404" />

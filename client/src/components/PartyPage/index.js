@@ -9,7 +9,7 @@ import ItemSelector from '../ItemSelector';
 import OrderScratchPad from '../OrderScratchPad';
 import CheckoutModal from '../CheckoutModal';
 import { getItems } from '../../redux/actions/items';
-import { addParty, saveOrder, saveSplitOrder } from '../../redux/actions/party';
+import { updateParty, saveOrder, saveSplitOrder } from '../../redux/actions/party';
 import { openModal, closeModal, openSplitModal, closeSplitModal } from '../../redux/actions/modal';
 import { sendPayment } from '../../redux/actions/payments';
 
@@ -82,7 +82,7 @@ class PartyPage extends React.Component {
   };
 
   saveParty = () => {
-    this.props.addParty({ tables: this.props.tables, order: this.state.order });
+    this.props.updateParty(this.props.match.params.id, { food: this.props.order });
     this.props.history.push('/tables');
   };
 
@@ -140,7 +140,7 @@ PartyPage.propTypes = {
   openModal: PropTypes.func,
   closeModal: PropTypes.func,
   openSplitModal: PropTypes.func,
-  addParty: PropTypes.func,
+  updateParty: PropTypes.func,
   saveOrder: PropTypes.func,
   saveSplitOrder: PropTypes.func,
   sendPayment: PropTypes.func,
@@ -152,6 +152,9 @@ PartyPage.propTypes = {
   order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   splitOrder: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   tables: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
+  match: PropTypes.shape({
+    params: PropTypes.object,
+  }),
   location: locationType,
   history: PropTypes.shape({
     push: PropTypes.func
@@ -162,7 +165,7 @@ PartyPage.defaultProps = {
   openModal: () => {},
   closeModal: () => {},
   openSplitModal: () => {},
-  addParty: () => {},
+  updateParty: () => {},
   saveOrder: () => {},
   saveSplitOrder: () => {},
   sendPayment: () => {},
@@ -175,6 +178,7 @@ PartyPage.defaultProps = {
   order: [],
   splitOrder: [],
   tables: [{ number: 4 }],
+  match: { params: {} },
   location: { country: 'US', state: 'CA' }
 };
 
@@ -191,7 +195,7 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    addParty,
+    updateParty,
     getItems,
     saveOrder,
     saveSplitOrder,
