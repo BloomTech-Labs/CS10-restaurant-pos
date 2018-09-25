@@ -23,4 +23,9 @@ export const Amount = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   height: 100%;
+
+  * {
+    display: flex;
+    justify-content: flex-end;
+  }
 `;
