@@ -9,11 +9,12 @@ export const PAYMENT_SUCCESS = 'PAYMENT_SUCCESS';
 export const PAYMENT_ERROR = 'PAYMENT_ERROR';
 export const REMOVE_SPLIT_CHECK_FROM_ORDER = 'REMOVE_SPLIT_CHECK_FROM_ORDER';
 
-export const sendPayment = (token, amount, description) => dispatch => {
+export const sendPayment = (stripe, amount, description) => async dispatch => {
   // const stripeToken =
   dispatch({ type: SENDING_PAYMENT });
+
   axios
-    .post(`${serverURI}/api/checkout`, { stripeToken: token.id, amount, description })
+    .post(`${serverURI}/api/checkout`, { stripeToken: stripe.token.id, amount, description })
     .then(res => {
       dispatch({ type: PAYMENT_SUCCESS, payload: res.data });
       dispatch({ type: REMOVE_SPLIT_CHECK_FROM_ORDER });

@@ -14,7 +14,7 @@ const createOptions = () => ({
       fontFamily: 'Source Code Pro, monospace',
       '::placeholder': {
         color: 'grey'
-      },
+      }
     },
     invalid: {
       color: '#9e2146'
@@ -24,14 +24,16 @@ const createOptions = () => ({
 
 class StripeCheckoutForm extends React.Component {
   handleSubmit = event => {
-    console.warn('wahhahaht');
     event.preventDefault();
     if (this.props.stripe) {
       this.props.stripe
         .createToken()
         .then(token => {
-          console.warn('token', token);
-          this.props.sendPayment(token, this.props.total * 100, 'PAYMENT_DESCRIPTION_INTERESTING_AND_PROFESSIONAL');
+          this.props.sendPayment(
+            token,
+            this.props.total * 100,
+            'PAYMENT_DESCRIPTION_INTERESTING_AND_PROFESSIONAL'
+          );
         })
         .catch(error => console.error(error));
     } else {
@@ -41,7 +43,7 @@ class StripeCheckoutForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <s.Form onSubmit={this.handleSubmit}>
         <s.Label htmlFor="card-element">
           Card details
           <CardElement
@@ -53,8 +55,8 @@ class StripeCheckoutForm extends React.Component {
             {...createOptions(this.props.fontSize)}
           />
         </s.Label>
-        <Button dark primary type="submit">Pay</Button>
-      </form>
+        <Button onClick={this.handleSubmit}>Pay</Button>
+      </s.Form>
     );
   }
 }
