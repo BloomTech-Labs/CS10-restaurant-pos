@@ -65,10 +65,12 @@ partyRoutes(server, passport.authenticate('jwt', { session: false }));
 stripeRoutes(server, passport.authenticate('jwt', { session: false }));
 tableRoutes(server, passport.authenticate('jwt', { session: false }));
 
-server.listen(PORT, (err) => {
-  if (err) console.error(err);
-  console.log(`Server running on port: ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  server.listen(PORT, (err) => {
+    if (err) console.error(err);
+    console.log(`Server running on port: ${PORT}`);
+  });
+}
 
 // * This must be at the bottom of the file
 // Server static assets if in production
