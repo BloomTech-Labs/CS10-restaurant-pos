@@ -3,9 +3,6 @@ const request = require('supertest');
 
 const server = require('../../../../server');
 
-// For Travis CI
-jest.setTimeout(10000);
-
 describe('adminRegister', () => {
   afterAll((done) => {
     mongoose.connection.db.dropDatabase(done);
