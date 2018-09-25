@@ -44,7 +44,7 @@ class TableEditPanel extends React.Component {
         )}
         {!this.props.editing && (
         <Button primary type="button" onClick={this.createParty}>
-          Add Order
+          {this.props.selected.size ? 'Create Party' : 'Add Order'}
         </Button>
         )}
         {this.props.editing && (
