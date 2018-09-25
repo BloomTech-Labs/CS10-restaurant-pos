@@ -15,6 +15,7 @@ const Container = styled.div`
   z-index: 10;
   height: 100vh;
   width: 100vw;
+  ${props => ((props.isOpen || props.isSplitOpen) ? 'display: flex' : 'display: none')};
 `;
 
 const Overlay = styled.div`
@@ -28,8 +29,8 @@ const Overlay = styled.div`
 
 // TODO: Make percents match max- width/height
 const Modal = styled.div`
-  background: ${(props) => props.theme.appTertiary};
-  color: ${(props) => props.theme.textColorDark};
+  background: ${props => props.theme.appTertiary};
+  color: ${props => props.theme.textColorDark};
   ${flexCenterMixin};
   position: fixed;
   flex-direction: column;
@@ -41,7 +42,7 @@ const Modal = styled.div`
   max-height: 715px;
   height: 66%;
   border-radius: 25px;
-  box-shadow: ${(props) => props.theme.boxShadow};
+  box-shadow: ${props => props.theme.boxShadow};
   padding: 40px;
 `;
 
@@ -50,10 +51,15 @@ class ModalComponent extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container isOpen={this.props.isOpen} isSplitOpen={this.props.isSplitOpen}>
         <Overlay onClick={this.close()} />
         <Modal>
-          <div style={{ position: 'absolute', top: '20px', right: '20px', cursor: 'pointer' }} onClick={this.close()}>x</div>
+          <div
+            style={{ position: 'absolute', top: '20px', right: '20px', cursor: 'pointer' }}
+            onClick={this.close()}
+          >
+            x
+          </div>
           {this.props.children}
         </Modal>
       </Container>
@@ -64,13 +70,17 @@ class ModalComponent extends React.Component {
 ModalComponent.propTypes = {
   closeModal: PropTypes.func,
   closeSplitModal: PropTypes.any, // eslint-disable-line react/forbid-prop-types
-  children: PropTypes.arrayOf(PropTypes.node)
+  children: PropTypes.arrayOf(PropTypes.node),
+  isOpen: PropTypes.bool,
+  isSplitOpen: PropTypes.bool,
 };
 
 ModalComponent.defaultProps = {
   closeModal: () => {},
   closeSplitModal: undefined,
-  children: []
+  children: [],
+  isOpen: false,
+  isSplitOpen: false,
 };
 
 export default connect(

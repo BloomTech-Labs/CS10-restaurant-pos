@@ -16,7 +16,20 @@ const updateParty = (req, res) => {
 
   Party.findOneAndUpdate({ _id: id }, updatedFields, { new: true })
     .then((updatedParty) => {
-      res.status(200).json({ updatedParty });
+      updatedParty
+        .populate('food')
+        .populate('server', ['name'])
+        .populate('tables')
+        .execPopulate()
+        .then(populatedParty => {
+          res.status(200).json({ updatedParty: populatedParty });
+        })
+        .catch(err => {
+          res.status(500).json({
+            err,
+            msg: 'There was an error populating the party.'
+          });
+        });
     })
     .catch((err) => {
       res.status(500).json({

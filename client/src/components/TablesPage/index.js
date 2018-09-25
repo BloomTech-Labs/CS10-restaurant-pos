@@ -6,6 +6,7 @@ import SetType from 'es6-set-proptypes';
 import FloorPlan from '../FloorPlan';
 import Tables from '../Tables';
 import { getTables, moveTable, toggleTable } from '../../redux/actions/tables';
+import { getParties, clearSelected } from '../../redux/actions/party';
 
 import * as s from './styles';
 
@@ -18,7 +19,24 @@ class TablesPage extends Component {
 
   componentDidMount() {
     this.props.getTables();
+    this.props.getParties();
   }
+
+  componentWillUnmount() {
+    this.props.clearSelected();
+  }
+
+  openParty = tableNumber => {
+    const foundParty = this.props.partyList
+      .find(party => party.tables
+        .find(table => table.number === tableNumber));
+
+    if (foundParty) {
+      this.props.history.push(`/party/${foundParty._id}`);
+    } else {
+      console.error('some stuff reallllly went wrong here');
+    }
+  };
 
   toggleTable = table => {
     this.props.toggleTable(table);
@@ -28,20 +46,20 @@ class TablesPage extends Component {
     const authorized = this.props.role.admin || this.props.role.manager;
     const { membership } = this.props;
 
-    console.warn(this.floorplanParent);
     return (
       <React.Fragment>
         {membership ? (
           <s.FloorPlanContainer innerRef={this.floorplanParent}>
             {this.floorplanParent.current && (
-            <FloorPlan
-              editing={this.props.editing && authorized}
-              tables={this.props.tables}
-              selected={this.props.selected}
-              moveTable={this.props.moveTable}
-              toggleTable={this.toggleTable}
-              parent={this.floorplanParent}
-            />
+              <FloorPlan
+                editing={this.props.editing && authorized}
+                tables={this.props.tables}
+                selected={this.props.selected}
+                moveTable={this.props.moveTable}
+                toggleTable={this.toggleTable}
+                parent={this.floorplanParent}
+                openParty={this.openParty}
+              />
             )}
           </s.FloorPlanContainer>
         ) : (
@@ -50,6 +68,7 @@ class TablesPage extends Component {
             tables={this.props.tables}
             selected={this.props.selected}
             toggleTable={this.toggleTable}
+            openParty={this.openParty}
           />
         )}
       </React.Fragment>
@@ -66,9 +85,15 @@ TablesPage.propTypes = {
   }),
   membership: PropTypes.bool,
   tables: PropTypes.arrayOf(PropTypes.object),
+  partyList: PropTypes.arrayOf(PropTypes.object),
   getTables: PropTypes.func,
   moveTable: PropTypes.func,
+  getParties: PropTypes.func,
   toggleTable: PropTypes.func,
+  clearSelected: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func
+  })
 };
 
 TablesPage.defaultProps = {
@@ -77,9 +102,13 @@ TablesPage.defaultProps = {
   role: { admin: false, manager: false },
   membership: false,
   tables: [],
+  partyList: [{ _id: 'defaultpartyid' }],
   getTables: () => {},
   moveTable: () => {},
+  getParties: () => {},
   toggleTable: () => {},
+  clearSelected: () => {},
+  history: { push: () => {} }
 };
 
 const mapStateToProps = state => ({
@@ -87,10 +116,11 @@ const mapStateToProps = state => ({
   tables: state.tables.tableList,
   editing: state.tables.editing,
   role: state.auth.role,
-  membership: state.auth.membership,
+  partyList: state.party.partyList,
+  membership: state.auth.membership
 });
 
 export default connect(
   mapStateToProps,
-  { getTables, moveTable, toggleTable }
+  { getTables, moveTable, toggleTable, getParties, clearSelected }
 )(TablesPage);

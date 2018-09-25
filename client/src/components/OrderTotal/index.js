@@ -11,13 +11,9 @@ class OrderTotal extends React.Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
+    if (prevProps.subTotal !== this.props.subTotal) {
       this.updateTaxes();
     }
-  }
-
-  componentWillUnmount() {
-    console.log('fucking umounted', this.state);
   }
 
   updateTaxes = () => {
@@ -27,8 +23,8 @@ class OrderTotal extends React.Component {
       .then((price) => {
         this.setState(
           {
-            tax: Number((price.total - price.price).toFixed(2)),
-            total: Number(price.total.toFixed(2))
+            tax: price.total - price.price,
+            total: price.total
           },
           () => {
             this.props.setTotal(this.state.total);
@@ -49,9 +45,9 @@ class OrderTotal extends React.Component {
           <div>Total</div>
         </s.Label>
         <s.Amount>
-          <div>{this.props.subTotal}</div>
-          <div>{this.state.tax}</div>
-          <div>{this.state.total}</div>
+          <div>{this.props.subTotal.toFixed(2)}</div>
+          <div>{this.state.tax.toFixed(2)}</div>
+          <div>{this.state.total.toFixed(2)}</div>
         </s.Amount>
       </s.Display>
     );

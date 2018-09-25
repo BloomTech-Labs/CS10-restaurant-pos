@@ -17,6 +17,6 @@ export const openSplitModal = () => ({
 });
 
 export const closeSplitModal = () => dispatch => {
-  dispatch({ type: CLOSE_SPLIT_MODAL });
   dispatch({ type: CLEAR_SPLIT_ORDER });
+  dispatch({ type: CLOSE_SPLIT_MODAL });
 };

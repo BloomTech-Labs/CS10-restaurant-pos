@@ -23,7 +23,7 @@ export const getTables = () => (dispatch) => {
   axios
     .get(`${serverURI}/api/tables/all`)
     .then((res) => {
-      dispatch({ type: LOADING_TABLES_SUCCESS, payload: res.data });
+      dispatch({ type: LOADING_TABLES_SUCCESS, payload: res.data.tables });
     })
     .catch((err) => {
       dispatch({ type: LOADING_TABLES_ERROR, payload: err });
@@ -35,7 +35,7 @@ export const addTable = (number) => (dispatch) => {
   axios
     .post(`${serverURI}/api/tables/add`, { number, x: 50, y: 50 })
     .then((res) => {
-      dispatch({ type: ADDING_TABLE_SUCCESS, payload: res.data });
+      dispatch({ type: ADDING_TABLE_SUCCESS, payload: res.data.table });
     })
     .catch((err) => {
       dispatch({ type: ADDING_TABLE_ERROR, payload: err });

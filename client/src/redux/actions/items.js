@@ -15,7 +15,7 @@ export const getItems = () => (
     axios
       .get(`${serverURI}/api/items/all`)
       .then((res) => {
-        dispatch({ type: LOADING_ITEMS_SUCCESS, payload: res.data });
+        dispatch({ type: LOADING_ITEMS_SUCCESS, payload: res.data.items });
       })
       .catch((err) => {
         console.error(err);

@@ -10,7 +10,6 @@ const createOptions = () => ({
     base: {
       fontSize: '17px',
       color: 'white',
-      letterSpacing: '0.025em',
       fontFamily: 'Source Code Pro, monospace',
       '::placeholder': {
         color: 'grey'
@@ -33,7 +32,9 @@ class StripeCheckoutForm extends React.Component {
           this.props.sendPayment(
             token,
             amount,
-            'PAYMENT_DESCRIPTION_INTERESTING_AND_PROFESSIONAL'
+            'sneaky_snake_case',
+            this.props.isSplit,
+            this.props.partyId,
           );
         })
         .catch(error => console.error(error));
@@ -57,7 +58,7 @@ class StripeCheckoutForm extends React.Component {
             {...createOptions(this.props.fontSize)}
           />
         </s.Label>
-        <Button onClick={this.handleSubmit}>Pay</Button>
+        <Button dark onClick={this.handleSubmit}>Pay</Button>
       </s.Form>
     );
   }
