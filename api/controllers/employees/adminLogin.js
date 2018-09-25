@@ -5,6 +5,8 @@ const keys = require('../../../config/keys');
 const Employee = require('../../models/Employee');
 // import field validation function
 const verifyFields = require('../../validation/verifyFields');
+// Verify Membership
+const verifyMembership = require('../../validation/verifyMembership');
 
 // @route   POST api/employees/admin/login
 // @desc    Lets an admin login
@@ -24,7 +26,7 @@ const adminLogin = (req, res) => {
     .then(user => {
       // check the provided password against the password in the db
       user.checkPassword(pass)
-        .then((verified) => {
+        .then(async (verified) => {
           // check if password matches
           if (verified) {
             // add the restaurant and user's id to the payload
@@ -35,7 +37,8 @@ const adminLogin = (req, res) => {
                 admin: null,
                 manager: null
               },
-              restaurant: user.restaurant
+              restaurant: user.restaurant,
+              membership: await verifyMembership(user.restaurant)
             };
 
             // sign a new token with the restaurant id

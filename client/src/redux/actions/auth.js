@@ -22,7 +22,7 @@ export const setInitialAuth = () => ({ type: SET_INITIAL_AUTH });
 
 export const logout = () => ({ type: LOGOUT });
 
-export const login = ({ email, pass }, push) => (dispatch) => {
+export const login = ({ email, pass }, push) => (dispatch, getState) => {
   dispatch({ type: AUTH_LOADING });
   axios // TODO: Determine the name of this route
     .post(`${serverURI}/api/employees/admin/login`, { email, pass })
@@ -44,7 +44,11 @@ export const login = ({ email, pass }, push) => (dispatch) => {
 
       localStorage.setItem('jwt', res.data.token);
 
-      push('/login-employee');
+      if (getState().auth.restaurant) {
+        push('/login-employee');
+      } else {
+        push('/new-restaurant');
+      }
     })
     .catch((err) => {
       dispatch({ type: LOGIN_FAILURE, payload: err });

@@ -2,20 +2,18 @@
 const Party = require('../../models/Party');
 const Table = require('../../models/Table');
 // Auth Checking
-const verifyFields = require('../../validation/verifyFields');
+// const verifyFields = require('../../validation/verifyFields');
 
 // @route   POST api/party/add
 // @desc    Adds a new party to the database
 // @access  Private
 const addParty = (req, res) => {
   // tables SHOULD BE AN ARRAY of Table ObjectIds!
-  const { tables, server } = req.body;
+  let { tables } = req.body;
+  const { id: server } = req.user;
 
-  // Verify Fields
-  const missingFields = verifyFields(['tables', 'server'], req.body);
-
-  if (missingFields.length > 0) {
-    return res.status(422).json({ msg: `Fields missing: ${missingFields.join(', ')}` });
+  if (!tables) {
+    tables = [];
   }
 
   // Map over tables from req.body, update each and return the promise
@@ -44,7 +42,7 @@ const addParty = (req, res) => {
         .populate('tables')
         .execPopulate()
         .then((party) => {
-          res.status(200).json(party);
+          res.status(200).json({ party });
         })
         .catch((err) => res.status(500).json({
           err,

@@ -15,7 +15,7 @@ const updateOrder = (req, res) => {
           .status(404)
           .json({ message: 'No order with the specified ID exists.' });
       }
-      res.status(200).json(updatedOrder);
+      res.status(200).json({ updatedOrder });
     })
     .catch((err) => {
       res

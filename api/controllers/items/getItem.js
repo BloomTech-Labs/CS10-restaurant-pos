@@ -8,7 +8,7 @@ const getItem = (req, res) => {
 
   Item.findOne({ _id: id })
     .then((item) => {
-      res.status(200).json(item);
+      res.status(200).json({ item });
     })
     .catch((err) => {
       res.status(500).json({ err, msg: 'Error communication with the database.' });

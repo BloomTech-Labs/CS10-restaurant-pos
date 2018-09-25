@@ -9,7 +9,7 @@ const getTable = (req, res) => {
 
   Table.findOne({ _id: id })
     .then((table) => {
-      res.status(200).json(table);
+      res.status(200).json({ table });
     })
     .catch((err) => {
       res.status(500).json({

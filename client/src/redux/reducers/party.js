@@ -12,9 +12,11 @@ import {
   UPDATING_PARTY_SUCCESS,
   DELETING_PARTY,
   DELETING_PARTY_SUCCESS,
-  CLEAR_PARTY
+  CLEAR_SELECTED
 } from '../actions/party';
+import { CLEAR_ORDER_CLIENT } from '../actions/payments';
 import { DEACTIVATING_TABLE_SUCCESS } from '../actions/tables';
+import { CLEAR_SPLIT_ORDER } from '../actions/modal';
 
 const initialState = {
   tables: [],
@@ -55,7 +57,7 @@ const PartyReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        partyList: [...state.partyList, action.payload]
+        partyList: [...state.partyList, action.payload],
       };
 
     case UPDATING_PARTY:
@@ -92,8 +94,22 @@ const PartyReducer = (state = initialState, action) => {
         })
       };
 
-    case CLEAR_PARTY:
-      return { ...initialState };
+    case CLEAR_SELECTED:
+      return { ...initialState, partyList: state.partyList };
+
+    case CLEAR_SPLIT_ORDER:
+      return { ...state, splitOrder: [] };
+
+    case CLEAR_ORDER_CLIENT:
+      return {
+        ...state,
+        order: []
+      };
+      // return {
+      //   order: state.order.filter(
+      //     element => !state.splitOrder.find(split => split.localRef === element.localRef)
+      //   )
+      // };
 
     default:
       return state;

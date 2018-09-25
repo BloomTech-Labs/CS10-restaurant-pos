@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 're
 import { ThemeProvider } from 'styled-components';
 
 import { setInitialAuth } from './redux/actions/auth';
-import { clearParty } from './redux/actions/party';
 import * as s from './styles';
 import Landing from './components/Landing';
 import Logout from './components/Logout';
@@ -26,7 +25,18 @@ import RequireNotAuth from './components/HOC/RequireNotAuth';
 import RequireAuth from './components/HOC/RequireAuth';
 import { theme } from './global-styles/variables';
 
-const SidebarWithRouter = withRouter((props) => <Sidebar {...props} />);
+const SidebarWithRouter = withRouter(props => <Sidebar {...props} />);
+
+const AuthedPartyPage = RequireAuth(PartyPage);
+const AuthedLoginEmployee = RequireAuth(LoginEmployee);
+const AuthedNewRestaurant = RequireAuth(NewRestaurant);
+const AuthedCreateEmployee = RequireAuth(CreateEmployee);
+const AuthedTablesPage = RequireAuth(TablesPage);
+const AuthedServers = RequireAuth(Servers);
+const AuthedSettings = RequireAuth(Settings);
+
+const NotAuthedLogin = RequireNotAuth(Login);
+const NotAuthedRegsiter = RequireNotAuth(Register);
 
 class App extends Component {
   componentDidMount() {
@@ -34,40 +44,31 @@ class App extends Component {
   }
 
   render() {
-    const getUserConfirmation = (message, callback) => {
-      // TODO: use custom modal instead of an alert
-      const result = window.confirm(message); // eslint-disable-line no-alert
-
-      if (result) {
-        this.props.clearParty();
-      }
-
-      callback(result);
-    };
-
     return (
-      <Router getUserConfirmation={getUserConfirmation}>
+      <Router>
         <ThemeProvider theme={theme}>
           <s.Container>
             <Navbar modalIsOpen={this.props.modalIsOpen} />
             <s.Main>
-              <SidebarWithRouter
-                modalIsOpen={this.props.modalIsOpen}
-                role={this.props.role}
-              />
+              <SidebarWithRouter modalIsOpen={this.props.modalIsOpen} role={this.props.role} />
               <Switch>
                 <Route path="/" component={Landing} exact />
                 <Route path="/logout" component={Logout} />
-                <Route path="/login" component={RequireNotAuth(Login)} />
-                <Route path="/register" component={RequireNotAuth(Register)} />
+                <Route path="/login" component={NotAuthedLogin} />
+                <Route path="/register" component={NotAuthedRegsiter} />
                 <Route path="/success" component={RegistrationSuccess} />
-                <Route path="/login-employee" component={RequireAuth(LoginEmployee)} />
-                <Route path="/new-restaurant" component={RequireAuth(NewRestaurant)} />
-                <Route path="/new-employee" component={RequireAuth(CreateEmployee)} />
-                <Route path="/tables" component={RequireAuth(TablesPage)} />
-                <Route path="/servers" component={RequireAuth(Servers)} />
-                <Route path="/party" component={RequireAuth(PartyPage)} />
-                <Route path="/settings" component={RequireAuth(Settings)} />
+                <Route path="/login-employee" component={AuthedLoginEmployee} />
+                <Route path="/new-restaurant" component={AuthedNewRestaurant} />
+                <Route path="/new-employee" component={AuthedCreateEmployee} />
+                <Route path="/tables" component={AuthedTablesPage} />
+                <Route path="/servers" component={AuthedServers} />
+                <Route
+                  path="/party/:id"
+                  render={props => (
+                    <AuthedPartyPage {...props} modalIsOpen={this.props.modalIsOpen} />
+                  )}
+                />
+                <Route path="/settings" component={AuthedSettings} />
                 <Route path="/404" component={NotFound} exact />
                 <Redirect to="/404" />
               </Switch>
@@ -85,23 +86,21 @@ App.propTypes = {
     admin: PropTypes.bool,
     manager: PropTypes.bool
   }),
-  setInitialAuth: PropTypes.func,
-  clearParty: PropTypes.func
+  setInitialAuth: PropTypes.func
 };
 
 App.defaultProps = {
   modalIsOpen: false,
   role: { admin: false, manager: false },
-  setInitialAuth: () => {},
-  clearParty: () => {}
+  setInitialAuth: () => {}
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   modalIsOpen: state.modal.isOpen,
   role: state.auth.role
 });
 
 export default connect(
   mapStateToProps,
-  { setInitialAuth, clearParty }
+  { setInitialAuth }
 )(App);

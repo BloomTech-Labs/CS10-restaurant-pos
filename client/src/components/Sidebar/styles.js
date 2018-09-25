@@ -9,7 +9,9 @@ export const Sidebar = styled.nav`
   justify-content: space-between;
   align-items: center;
   padding-top: 75px;
-  max-width: ${props => props.theme.sideBarHeight}px;
+  width: 15%;
+  min-width: 150px;
+  max-width: ${props => props.theme.sideBarWidth}px;
   background: ${props => props.theme.appPrimary};
   ${(props) => props.modalIsOpen && modalBlur};
 `;
@@ -20,7 +22,7 @@ export const StyledLink = styled(NavLink).attrs({ activeClassName })`
   color: grey;
   text-decoration: none;
   margin-left: 10px;
-  height: 65px;
+  height: 55px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -29,9 +31,9 @@ export const StyledLink = styled(NavLink).attrs({ activeClassName })`
   &.${activeClassName} {
     color: black;
     font-weight: 700;
-    padding-left: 15px;
+    padding-left: 17px;
     background: ${props => props.theme.contentBackground};
-    border-left: 10px solid ${props => props.theme.oxfordBlue};
+    border-left: 8px solid ${props => props.theme.oxfordBlue};
     border-radius: 10px 0 0 10px;
   }
 `;

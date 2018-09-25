@@ -25,11 +25,11 @@ export const Boxes = styled.div`
   cursor: pointer;
 `;
 
-export const Button = styled.button`
+export const Button = styled.div`
   ${flexCenterMixin};
+  position: relative;
   padding: 0;
   font-weight: 600;
-  letter-spacing: 2px;
   color: ${(props) => {
     if (!props.primary && !props.dark) {
       return props.theme.btnPrimaryBgColor;
@@ -42,6 +42,10 @@ export const Button = styled.button`
   border-radius: ${(props) => props.theme.btnBorderRadius}px;
   ${(props) => {
     let color = '';
+    if (props.inactive) {
+      return 'border: 0';
+    }
+
     if (!props.primary && props.dark) {
       color = props.theme.btnDarkBorderColor;
     } else if (!props.primary) {
@@ -51,6 +55,7 @@ export const Button = styled.button`
     }
     return `border: 2px solid ${color}`;
   }};
+  overflow: hidden;
   background: ${(props) => {
     if (props.primary && props.dark) {
       return props.theme.btnDarkPrimaryBgColor;
@@ -61,9 +66,28 @@ export const Button = styled.button`
     return props.theme.btnBgColor;
   }};
 
+  /* stylelint-disable comment-empty-line-before */
   &:hover {
-    cursor: pointer;
-    margin-bottom: 2px;
-    box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.1);
+    ${(props) => !props.inactive && (`
+      cursor: pointer;
+      box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.1);
+      transform: translate(0, -1px);
+    `)}
+  }
+  /* stylelint-enable comment-empty-line-before */
+
+  &:active {
+    transform: translate(0, 0);
+    box-shadow: 0;
+  }
+
+  &::before {
+    position: absolute;
+    z-index: 10;
+    content: "";
+    background: rgba(0, 0, 0, 0.4);
+    width: ${(props) => props.theme.btnWidth + 5}px;
+    height: ${(props) => props.theme.btnHeight + 5}px;
+    display: ${(props) => !props.inactive && 'none'};
   }
 `;

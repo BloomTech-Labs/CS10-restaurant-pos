@@ -7,7 +7,7 @@ const Table = require('../../models/Table');
 const getAllTables = (req, res) => {
   Table.find({ restaurant: req.user.restaurant })
     .then((tables) => {
-      res.status(200).json(tables);
+      res.status(200).json({ tables });
     })
     .catch((err) => {
       res.status(500).json({

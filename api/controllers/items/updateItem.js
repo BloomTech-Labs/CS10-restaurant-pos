@@ -17,7 +17,7 @@ const updateItem = (req, res) => {
   // updates the item and sends back the updated document
   Item.findOneAndUpdate({ _id: id }, itemToUpdate, { new: true })
     .then((updatedItem) => {
-      res.status(200).json(updatedItem);
+      res.status(200).json({ updatedItem });
     })
     .catch((err) => {
       res.status(500).json({ err, msg: 'Error communicating with the database.' });

@@ -1,19 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Prompt } from 'react-router-dom';
+import { StripeProvider } from 'react-stripe-elements';
 import shortid from 'shortid';
-import StripeCheckout from 'react-stripe-checkout';
 
 import ItemSelector from '../ItemSelector';
 import OrderScratchPad from '../OrderScratchPad';
-import OrderTotal from '../OrderTotal';
-import Modal from '../HOC/Modal';
+import CheckoutModal from '../CheckoutModal';
 import { getItems } from '../../redux/actions/items';
-import { addParty, saveOrder, saveSplitOrder } from '../../redux/actions/party';
+import { updateParty, saveOrder, saveSplitOrder } from '../../redux/actions/party';
 import { openModal, closeModal, openSplitModal, closeSplitModal } from '../../redux/actions/modal';
 import { sendPayment } from '../../redux/actions/payments';
-import { Button } from '../../global-styles/styledComponents';
 
 import * as s from './styles';
 
@@ -25,27 +22,66 @@ class PartyPage extends React.Component {
   }
 
   state = {
-    splitCheck: [],
-    order: this.props.order,
-    subTotal: Number(
-      this.props.order.reduce((acc, foodItem) => acc + foodItem.price, 0).toFixed(2)
-    ),
-    localRef: 0 // eslint-disable-line react/no-unused-state
+    splitCheck: this.props.splitOrder,
+    order: [],
+    subTotal: 0,
+    party: {}
   };
 
   componentDidMount() {
     this.props.getItems();
+    this.findParty();
   }
+
+  componentDidUpdate(prev) {
+    const foundParty = this.props.partyList.find(party => party._id === this.props.match.params.id);
+
+    if (!foundParty) {
+      this.props.history.push('/tables');
+    } else if (this.state.order.length !== foundParty.food.length
+      && this.props.splitModalIsOpen !== prev.splitModalIsOpen) {
+      this.setState({ // eslint-disable-line react/no-did-update-set-state
+        order: foundParty.food,
+      });
+    }
+  }
+
+  findParty = () => {
+    const foundParty = this.props.partyList.find(party => party._id === this.props.match.params.id);
+    if (foundParty) {
+      this.setState(prev => {
+        const newOrder = prev.order.concat(foundParty.food).map(item => {
+          item.localRef = shortid.generate();
+          return item;
+        });
+
+        return {
+          party: foundParty,
+          order: newOrder,
+          subTotal: Number(
+            newOrder.reduce((acc, foodItem) => acc + foodItem.price, 0).toFixed(2)
+          ),
+        };
+      });
+    }
+  };
 
   openModal = () => {
     this.props.saveOrder(this.state.order);
     this.props.openModal();
   };
 
-  addToSplitCheck = (item) => {
-    this.setState((prev) => ({
-      splitCheck: [...prev.splitCheck, item]
-    }));
+  toggleSplitCheckItem = item => {
+    this.setState(prev => {
+      if (prev.splitCheck.find(element => element.localRef === item.localRef)) {
+        return {
+          splitCheck: prev.splitCheck.filter(element => element.localRef !== item.localRef)
+        };
+      }
+      return {
+        splitCheck: [...prev.splitCheck, item]
+      };
+    });
   };
 
   openSplitModal = () => {
@@ -54,19 +90,23 @@ class PartyPage extends React.Component {
     this.props.openSplitModal();
   };
 
-  addItemToOrder = (item) => {
-    this.setState((prev) => ({
-      order: [...prev.order, { ...item, localRef: prev.localRef }],
-      localRef: prev.localRef + 1,
+  closeSplitModal = () => {
+    this.props.closeSplitModal();
+    this.props.openModal();
+  };
+
+  addItemToOrder = item => {
+    this.setState(prev => ({
+      order: [...prev.order, { ...item, localRef: shortid.generate() }],
       subTotal: Number(
         (prev.order.reduce((acc, foodItem) => acc + foodItem.price, 0) + item.price).toFixed(2)
       )
     }));
   };
 
-  removeItemFromOrder = (item) => {
-    this.setState((prev) => ({
-      order: prev.order.filter((orderItem) => orderItem.localRef !== item.localRef),
+  removeItemFromOrder = item => {
+    this.setState(prev => ({
+      order: prev.order.filter(orderItem => orderItem.localRef !== item.localRef),
       subTotal: Number(
         (prev.order.reduce((acc, foodItem) => acc + foodItem.price, 0) - item.price).toFixed(2)
       )
@@ -74,96 +114,52 @@ class PartyPage extends React.Component {
   };
 
   saveParty = () => {
-    this.props.addParty({ tables: this.props.tables, order: this.state.order });
+    this.props.updateParty(this.props.match.params.id, { food: this.state.order });
     this.props.history.push('/tables');
   };
 
-  setTotal = (total) => {
+  setTotal = total => {
+    console.log('total', total);
     this.total = total;
   };
 
-  saveToken = (token) => {
-    this.props.sendPayment(token, this.total * 100, 'dgaishn');
-  };
-
   render() {
+    console.warn('hhhhhhhhhhhhh', this.props.match.params.id);
     return (
-      <React.Fragment>
-        <Prompt when={!!this.props.order.length} message="Leave?" />
-        {this.props.modalIsOpen && (
-          <Modal>
-            {this.props.order.map((item) => (
-              <div key={shortid.generate()}>
-                {item.name}
-                <div onClick={() => this.addToSplitCheck(item)}>+</div>
-              </div>
-            ))}
-            <s.Title>
-              <h2>Checkout Modal</h2>
-              <div>Server Name</div>
-            </s.Title>
-            <s.Order>your order and shit</s.Order>
-            <div>
-              <OrderTotal
-                subTotal={this.state.subTotal}
-                location={this.props.location}
-                setTotal={this.setTotal}
-              />
-            </div>
-            <s.OrderButtons>
-              <Button dark type="button" onClick={this.openSplitModal}>
-                Split Check
-              </Button>
-              <StripeCheckout
-                name="POS Checkout"
-                description="subtitle"
-                ComponentClass="div"
-                currency="USD"
-                email="test@test.com"
-                stripeKey="pk_test_0axArT8SI2u6aiUnuQH2lJzg"
-                image="https://beej.us/images/beejthumb.gif"
-                token={this.saveToken}
-                allowRememberMe={false}
-                amount={this.state.subTotal * 100}
-              >
-                <Button dark primary type="button">
-                  Checkout
-                </Button>
-              </StripeCheckout>
-            </s.OrderButtons>
-          </Modal>
-        )}
-        {this.props.splitModalIsOpen && (
-          <Modal closeSplitModal={this.props.closeSplitModal}>
-            {this.props.splitOrder.map((item) => (
-              <div key={shortid.generate()}>{item.name}</div>
-            ))}
-            <div>Split Modal</div>
-            <Button dark type="button">
-              split modal button one
-            </Button>
-            <Button dark primary type="button">
-              split modal button two
-            </Button>
-          </Modal>
-        )}
-        <s.Container modalOpen={this.props.modalIsOpen}>
-          {/* // TODO: figure out how to name things */}
-          <ItemSelector
-            items={this.props.items}
-            addItemToOrder={this.addItemToOrder}
-          />
-          <OrderScratchPad
-            tables={this.props.tables}
-            saveParty={this.saveParty}
+      <StripeProvider apiKey="pk_test_0axArT8SI2u6aiUnuQH2lJzg">
+        <React.Fragment>
+          <CheckoutModal
             order={this.state.order}
-            subTotal={this.state.subTotal}
-            removeItemFromOrder={this.removeItemFromOrder}
+            modalIsOpen={this.props.modalIsOpen}
+            splitModalIsOpen={this.props.splitModalIsOpen}
+            openSplitModal={this.openSplitModal}
+            closeSplitModal={this.closeSplitModal}
+            splitOrder={this.state.splitCheck}
+            toggleSplitCheckItem={this.toggleSplitCheckItem}
             location={this.props.location}
-            openModal={this.openModal}
+            subTotal={this.state.subTotal}
+            sendPayment={this.props.sendPayment}
+            setTotal={this.setTotal}
+            total={this.total}
+            tables={this.state.party.tables}
+            partyId={this.props.match.params.id}
           />
-        </s.Container>
-      </React.Fragment>
+          <s.Container modalOpen={this.props.modalIsOpen}>
+            {/* // TODO: figure out how to name things */}
+            <ItemSelector items={this.props.items} addItemToOrder={this.addItemToOrder} />
+            <OrderScratchPad
+              tables={this.state.party.tables}
+              saveParty={this.saveParty}
+              order={this.state.order}
+              subTotal={this.state.subTotal}
+              setTotal={this.setTotal}
+              removeItemFromOrder={this.removeItemFromOrder}
+              location={this.props.location}
+              openModal={this.openModal}
+            />
+          </s.Container>
+        </React.Fragment>
+      </StripeProvider>
     );
   }
 }
@@ -177,7 +173,7 @@ PartyPage.propTypes = {
   openModal: PropTypes.func,
   closeModal: PropTypes.func,
   openSplitModal: PropTypes.func,
-  addParty: PropTypes.func,
+  updateParty: PropTypes.func,
   saveOrder: PropTypes.func,
   saveSplitOrder: PropTypes.func,
   sendPayment: PropTypes.func,
@@ -186,9 +182,11 @@ PartyPage.propTypes = {
   splitModalIsOpen: PropTypes.bool,
   closeSplitModal: PropTypes.func,
   items: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
-  order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   splitOrder: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
-  tables: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
+  match: PropTypes.shape({
+    params: PropTypes.object
+  }),
+  partyList: PropTypes.arrayOf(PropTypes.object),
   location: locationType,
   history: PropTypes.shape({
     push: PropTypes.func
@@ -199,7 +197,7 @@ PartyPage.defaultProps = {
   openModal: () => {},
   closeModal: () => {},
   openSplitModal: () => {},
-  addParty: () => {},
+  updateParty: () => {},
   saveOrder: () => {},
   saveSplitOrder: () => {},
   sendPayment: () => {},
@@ -209,26 +207,25 @@ PartyPage.defaultProps = {
   modalIsOpen: false,
   splitModalIsOpen: false,
   items: [],
-  order: [],
   splitOrder: [],
-  tables: [{ number: 4 }],
+  partyList: [{ _id: 'defaultpartyid' }],
+  match: { params: {} },
   location: { country: 'US', state: 'CA' }
 };
 
-const mapStateToProps = (state) => ({
-  modalIsOpen: state.modal.isOpen,
+const mapStateToProps = state => ({
   splitModalIsOpen: state.modal.splitModalIsOpen,
   items: state.items.itemList,
-  order: state.party.order,
   tables: state.party.tables,
   splitOrder: state.party.splitOrder,
+  partyList: state.party.partyList,
   location: state.restaurant.restaurantInfo.location
 });
 
 export default connect(
   mapStateToProps,
   {
-    addParty,
+    updateParty,
     getItems,
     saveOrder,
     saveSplitOrder,
