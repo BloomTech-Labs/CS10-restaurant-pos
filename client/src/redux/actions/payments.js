@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import serverURI from '../../config/URI';
 
+import { SET_INITIAL_AUTH } from './auth';
 import { closeSplitModal, openModal, closeModal } from './modal';
 
 export const SENDING_PAYMENT = 'SENDING_PAYMENT';
@@ -40,7 +41,9 @@ export const subscribe = token => dispatch => {
   axios
     .post(`${serverURI}/api/subscribe`, { stripeToken: token.id, email: token.email })
     .then(res => {
-      dispatch({ type: PAYMENT_SUCCESS, payload: res.data });
+      localStorage.setItem('jwt', res.data.token);
+      dispatch({ type: SET_INITIAL_AUTH });
+      dispatch({ type: PAYMENT_SUCCESS, payload: res.data.token });
     })
     .catch(err => {
       console.error(err);
