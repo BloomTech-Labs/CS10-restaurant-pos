@@ -10,6 +10,8 @@ export const OrderButtons = styled.div`
 
 export const Title = styled.div`
   display: flex;
+  width: 100%;
+  justify-content: space-around;
 `;
 
 export const Order = styled.div`

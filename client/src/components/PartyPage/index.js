@@ -112,6 +112,7 @@ class PartyPage extends React.Component {
             sendPayment={this.sendPayment}
             setTotal={this.setTotal}
             total={this.total}
+            tables={this.props.tables}
           />
           <s.Container modalOpen={this.props.modalIsOpen}>
             {/* // TODO: figure out how to name things */}

@@ -6,6 +6,7 @@ import { Elements } from 'react-stripe-elements';
 import Modal from '../HOC/Modal';
 import StripeCheckoutForm from '../StripeCheckoutForm';
 import OrderTotal from '../OrderTotal';
+import TablesPageTitle from '../TablesPageTitle';
 import { Button } from '../../global-styles/styledComponents';
 
 import * as s from './styles';
@@ -33,7 +34,7 @@ class CheckoutModal extends React.Component {
         {this.props.modalIsOpen && (
           <Modal>
             <s.Title>
-              <h2>Checkout Modal</h2>
+              <TablesPageTitle tables={this.props.tables} />
               <div>Server Name</div>
             </s.Title>
             <s.Order>
@@ -119,6 +120,7 @@ CheckoutModal.propTypes = {
   splitModalIsOpen: PropTypes.bool,
   order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   splitOrder: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
+  tables: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   location: locationType,
   history: PropTypes.shape({
     push: PropTypes.func
@@ -137,6 +139,7 @@ CheckoutModal.defaultProps = {
   splitModalIsOpen: false,
   order: [],
   splitOrder: [],
+  tables: [{ number: 4 }],
   location: { country: 'US', state: 'CA' }
 };
 
