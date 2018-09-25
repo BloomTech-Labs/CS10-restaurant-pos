@@ -38,6 +38,7 @@
     - [Add a New Order](#add-a-new-order)
     - [Get All Orders](#get-all-orders)
     - [Get a Specific Order](#get-a-specific-order)
+    - [Update Order](#update-order)
     - [Restaurant Routes](#restaurant-routes)
 
 # Scripts
@@ -329,26 +330,28 @@ Each element in the response array includes and item's:
 Response:
 
 ```
-[
-  {
-    "_id": "5ba6c9f8914dc082011a1657",
-    "name": "Spaghetti",
-    "price": 10.99,
-    "description": "Noodles and red stuff",
-    "category": "entrees",
-    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-    "__v": 0
-  },
-  {
-    "_id": "5ba6caaf914dc082011a1658",
-    "name": "Salad",
-    "price": 6.75,
-    "description": "Lettuce and various other things",
-    "category": "sides",
-    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-    "__v": 0
-  }
-]
+{
+  "items": [
+    {
+      "_id": "5ba6c9f8914dc082011a1657",
+      "name": "Spaghetti",
+      "price": 10.99,
+      "description": "Noodles and red stuff",
+      "category": "entrees",
+      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+      "__v": 0
+    },
+    {
+      "_id": "5ba6caaf914dc082011a1658",
+      "name": "Salad",
+      "price": 6.75,
+      "description": "Lettuce and various other things",
+      "category": "sides",
+      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+      "__v": 0
+    }
+  ]
+}
 ```
 
 ### Get A Specific Item
@@ -370,13 +373,15 @@ Response:
 
 ```
 {
-  "_id": "5ba6c9f8914dc082011a1657",
-  "name": "Spaghetti",
-  "price": 10.99,
-  "description": "Noodles and red stuff",
-  "category": "entrees",
-  "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-  "__v": 0
+  "item": {
+    "_id": "5ba6c9f8914dc082011a1657",
+    "name": "Spaghetti",
+    "price": 10.99,
+    "description": "Noodles and red stuff",
+    "category": "entrees",
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 0
+  }
 }
 ```
 
@@ -463,17 +468,19 @@ Response includes the updated item's:
 - category
 - description
 
-Response:khttps://zoom.us/j/762844869https://zoom.us/j/762844869
+Response:
 
 ```
 {
-  "_id": "5ba6c9f8914dc082011a1657",
-  "name": "Spaghetti",
-  "price": 10.99,
-  "description": "Noodles and red stuff",
-  "category": "entrees",
-  "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-  "__v": 0
+  "updatedItem": {
+    "_id": "5ba6c9f8914dc082011a1657",
+    "name": "Spaghetti",
+    "price": 10.99,
+    "description": "Noodles and red stuff",
+    "category": "entrees",
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 0
+  }
 }
 ```
 
@@ -528,46 +535,48 @@ Each element in the response array includes:
 Response:
 
 ```
-[
-  {
-    "food": [],
-    "tables": [
-      {
-        "active": false,
-        "_id": "5b99a5d5603385aece3e367a",
-        "x": 0,
-        "y": 0,
-        "__v": 0
-      }
-    ],
-    "_id": "5b99a5fc603385aece3e367b",
-    "__v": 0
-  },
-  {
-    "food": [
-      {
-        "_id": "5b956483ed2e4d86346d6c82",
-        "name": "Shrimp Tempura",
-        "price": 5.99,
-      }
-    ],
-    "tables": [
-      {
-        "active": false,
-        "_id": "5b99a5d5603385aece3e367a",
-        "x": 0,
-        "y": 0,
-        "__v": 0
-      }
-    ],
-    "_id": "5b99cfe927dac3c57eda73e6",
-    "server": {
-      "_id": "5b993879366d2671bcba0e02",
-      "name": "Rigby Bird"
+{
+  "parties": [
+    {
+      "food": [],
+      "tables": [
+        {
+          "active": false,
+          "_id": "5b99a5d5603385aece3e367a",
+          "x": 0,
+          "y": 0,
+          "__v": 0
+        }
+      ],
+      "_id": "5b99a5fc603385aece3e367b",
+      "__v": 0
     },
-    "__v": 0
-  }
-]
+    {
+      "food": [
+        {
+          "_id": "5b956483ed2e4d86346d6c82",
+          "name": "Shrimp Tempura",
+          "price": 5.99,
+        }
+      ],
+      "tables": [
+        {
+          "active": false,
+          "_id": "5b99a5d5603385aece3e367a",
+          "x": 0,
+          "y": 0,
+          "__v": 0
+        }
+      ],
+      "_id": "5b99cfe927dac3c57eda73e6",
+      "server": {
+        "_id": "5b993879366d2671bcba0e02",
+        "name": "Rigby Bird"
+      },
+      "__v": 0
+    }
+  ]
+}
 ```
 
 ### Get a Specific Party
@@ -587,8 +596,8 @@ Response includes the specified party's:
 Response:
 
 ```
-[
-  {
+{
+  "party": {
     "food": [
       {
         "_id": "5b956483ed2e4d86346d6c82",
@@ -608,7 +617,7 @@ Response:
     "_id": "5b99a5fc603385aece3e367b",
     "__v": 0
   }
-]
+}
 ```
 
 ### Add a New Party
@@ -644,25 +653,27 @@ Response:
 
 ```
 {
-  "food": [],
-  "tables": [
-    {
-      "active": true,
-      "_id": "5ba6c6860c6f7f7f7e859dc6",
-      "x": 400,
-      "y": 100,
-      "number": 1,
-      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-      "__v": 0
-    }
-  ],
-  "_id": "5ba6c8070c6f7f7f7e859dc8",
-  "server": {
-    "_id": "5ba6c30a0c6f7f7f7e859dc5",
-    "name": "First Server"
-  },
-  "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-  "__v": 0
+  "party": {
+    "food": [],
+    "tables": [
+      {
+        "active": true,
+        "_id": "5ba6c6860c6f7f7f7e859dc6",
+        "x": 400,
+        "y": 100,
+        "number": 1,
+        "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+        "__v": 0
+      }
+    ],
+    "_id": "5ba6c8070c6f7f7f7e859dc8",
+    "server": {
+      "_id": "5ba6c30a0c6f7f7f7e859dc5",
+      "name": "First Server"
+    },
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 0
+  }
 }
 ```
 
@@ -678,12 +689,14 @@ Request body should look like this:
 
 ```
 {
-  "tables": ["5b99a5d5603385aece3e367a"],
-  "food": [
-    "5b956483ed2e4d86346d6c82",
-    "5b9564a0ed2e4d86346d6c83"
-  ],
-  "server": "5b98371f09563dc8dca06af3"
+  "updatedParty": {
+    "tables": ["5b99a5d5603385aece3e367a"],
+    "food": [
+      "5b956483ed2e4d86346d6c82",
+      "5b9564a0ed2e4d86346d6c83"
+    ],
+    "server": "5b98371f09563dc8dca06af3"
+  }
 }
 ```
 
@@ -751,26 +764,28 @@ Get all tables.
 Response:
 
 ```
-[
-  {
-    "active": false,
-    "_id": "5ba6c6860c6f7f7f7e859dc6",
-    "x": 100,
-    "y": 250,
-    "number": 1,
-    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-    "__v": 0
-  },
-  {
-    "active": false,
-    "_id": "5ba6c6b00c6f7f7f7e859dc7",
-    "x": 250,
-    "y": 300,
-    "number": 2,
-    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-    "__v": 0
-  }
-]
+{
+  "tables": [
+    {
+      "active": false,
+      "_id": "5ba6c6860c6f7f7f7e859dc6",
+      "x": 100,
+      "y": 250,
+      "number": 1,
+      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+      "__v": 0
+    },
+    {
+      "active": false,
+      "_id": "5ba6c6b00c6f7f7f7e859dc7",
+      "x": 250,
+      "y": 300,
+      "number": 2,
+      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+      "__v": 0
+    }
+  ]
+}
 ```
 
 ### Get A Specific Table
@@ -785,13 +800,15 @@ Response:
 
 ```
 {
-  "active": false,
-  "_id": "5ba6c6860c6f7f7f7e859dc6",
-  "x": 100,
-  "y": 250,
-  "number": 1,
-  "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-  "__v": 0
+  "table": {
+    "active": false,
+    "_id": "5ba6c6860c6f7f7f7e859dc6",
+    "x": 100,
+    "y": 250,
+    "number": 1,
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 0
+  }
 }
 ```
 
@@ -830,13 +847,15 @@ Response:
 
 ```
 {
-  "active": false,
-  "_id": "5ba6c6860c6f7f7f7e859dc6",
-  "x": 100,
-  "y": 250,
-  "number": 1,
-  "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-  "__v": 0
+  "table": {
+    "active": false,
+    "_id": "5ba6c6860c6f7f7f7e859dc6",
+    "x": 100,
+    "y": 250,
+    "number": 1,
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 0
+  }
 }
 ```
 
@@ -852,7 +871,7 @@ Request body should look like this:
 
 ```
 {
-	"tables": [
+	"updatedTables": [
     {
       "_id": "5ba6c6860c6f7f7f7e859dc6",
       "x": 400,
@@ -976,7 +995,7 @@ Response:
 
 POST `/api/orders/add`
 
-Requires Authorization
+**Requires Authorization**
 
 Adds a new order to the selected table.
 
@@ -984,15 +1003,17 @@ Request body should look like this:
 
 ```
 {
-  "table": "5b983e0726d91bbaec2fea1b",
-  "server": "5b993879366d2671bcba0e02",
-  "food": [
-    "5b956483ed2e4d86346d6c82",
-    "5b9564a0ed2e4d86346d6c83"
-  ],
-  "firstName": "First",
-  "lastName": "Last",
-  "last4": "1234"
+  "order": {
+    "table": "5b983e0726d91bbaec2fea1b",
+    "server": "5b993879366d2671bcba0e02",
+    "food": [
+      "5b956483ed2e4d86346d6c82",
+      "5b9564a0ed2e4d86346d6c83"
+    ],
+    "firstName": "First",
+    "lastName": "Last",
+    "last4": "1234"
+  }
 }
 ```
 
@@ -1031,15 +1052,57 @@ Response:
 
 GET `/api/orders/all`
 
-Requires Authorization
+**Requires Authorization**
 
 Retrieves all of the orders from the database.
 
 Response:
 
 ```
-[
-  {
+{
+  "orders": [
+    {
+      "food": [
+        {
+          "_id": "5b956483ed2e4d86346d6c82",
+          "name": "Shrimp Tempura",
+          "price": 5.99
+        },
+        {
+          "_id": "5b9564a0ed2e4d86346d6c83",
+          "name": "Sweet Potato Roll",
+          "price": 4.99
+        }
+      ],
+      "_id": "5b9945ad15c2eab76ccc78b1",
+      "table": "5b983e0726d91bbaec2fea1b",
+      "server": {
+        "_id": "5b993879366d2671bcba0e02",
+        "name": "Rigby Bird"
+      },
+      "lastName": "Last Name",
+      "firstName": "first name",
+      "last4": "1234",
+      "date": "2018-09-12T16:58:21.473Z",
+      "__v": 0
+    }
+  ]
+}
+```
+
+### Get a Specific Order
+
+GET `/api/orders/:id`
+
+**Requires Authorization**
+
+Retrieves a specific order from the database by the id provided.
+
+Response:
+
+```
+{
+  "order": {
     "food": [
       {
         "_id": "5b956483ed2e4d86346d6c82",
@@ -1064,44 +1127,55 @@ Response:
     "date": "2018-09-12T16:58:21.473Z",
     "__v": 0
   }
-]
+}
 ```
 
-### Get a Specific Order
+### Update Order
 
-GET `/api/orders/:id`
+PUT `/api/orders/:id`
 
-Requires Authorization
+**Requires Authorization**
 
-Retrieves a specific order from the database by the id provided.
+Updates an existing order.
+
+Request body should look like this:
+
+```
+{
+  "food": ["5b956483ed2e4d86346d6c82", "5b9564a0ed2e4d86346d6c83"],
+  "table
+}
+```
 
 Response:
 
 ```
 {
-  "food": [
-    {
-      "_id": "5b956483ed2e4d86346d6c82",
-      "name": "Shrimp Tempura",
-      "price": 5.99
+  "updatedOrder": {
+    "food": [
+      {
+        "_id": "5b956483ed2e4d86346d6c82",
+        "name": "Shrimp Tempura",
+        "price": 5.99
+      },
+      {
+        "_id": "5b9564a0ed2e4d86346d6c83",
+        "name": "Sweet Potato Roll",
+        "price": 4.99
+      }
+    ],
+    "_id": "5b9945ad15c2eab76ccc78b1",
+    "party": "5b983e0726d91bbaec2fea1b",
+    "server": {
+      "_id": "5b993879366d2671bcba0e02",
+      "name": "Rigby Bird"
     },
-    {
-      "_id": "5b9564a0ed2e4d86346d6c83",
-      "name": "Sweet Potato Roll",
-      "price": 4.99
-    }
-  ],
-  "_id": "5b9945ad15c2eab76ccc78b1",
-  "table": "5b983e0726d91bbaec2fea1b",
-  "server": {
-    "_id": "5b993879366d2671bcba0e02",
-    "name": "Rigby Bird"
-  },
-  "lastName": "Last Name",
-  "firstName": "first name",
-  "last4": "1234",
-  "date": "2018-09-12T16:58:21.473Z",
-  "__v": 0
+    "lastName": "Last Name",
+    "firstName": "first name",
+    "last4": "1234",
+    "date": "2018-09-12T16:58:21.473Z",
+    "__v": 0
+  }
 }
 ```
 

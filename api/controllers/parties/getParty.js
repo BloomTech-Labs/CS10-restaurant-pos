@@ -21,7 +21,7 @@ const getParty = (req, res) => {
     .populate('food', ['name', 'price'])
     .populate('tables')
     .then((party) => {
-      res.status(200).json(party);
+      res.status(200).json({ party });
     })
     .catch((err) => {
       res.status(500).json({
