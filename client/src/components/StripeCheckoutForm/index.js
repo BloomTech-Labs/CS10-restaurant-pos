@@ -32,7 +32,8 @@ class StripeCheckoutForm extends React.Component {
           this.props.sendPayment(
             token,
             amount,
-            'sneaky_snake_case'
+            'sneaky_snake_case',
+            this.props.isSplit
           );
         })
         .catch(error => console.error(error));

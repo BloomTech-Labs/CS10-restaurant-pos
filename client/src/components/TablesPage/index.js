@@ -28,7 +28,6 @@ class TablesPage extends Component {
     const authorized = this.props.role.admin || this.props.role.manager;
     const { membership } = this.props;
 
-    console.warn(this.floorplanParent);
     return (
       <React.Fragment>
         {membership ? (

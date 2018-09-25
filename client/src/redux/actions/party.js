@@ -49,7 +49,7 @@ export const getParties = () => (dispatch) => {
   axios
     .get(`${serverURI}/api/party/all`)
     .then((res) => {
-      dispatch({ type: LOADING_PARTIES_SUCCESS, payload: res.data });
+      dispatch({ type: LOADING_PARTIES_SUCCESS, payload: res.data.parties });
     })
     .catch((err) => {
       dispatch({ type: LOADING_PARTIES_ERROR, payload: err });
@@ -62,7 +62,7 @@ export const getParty = (id) => (dispatch) => {
   axios
     .get(`${serverURI}/api/party/${id}`)
     .then((res) => {
-      dispatch({ type: LOADING_PARTY_SUCCESS, payload: res.data });
+      dispatch({ type: LOADING_PARTY_SUCCESS, payload: res.data.party });
     })
     .catch((err) => {
       dispatch({ type: LOADING_PARTY_ERROR, payload: err });
@@ -75,7 +75,7 @@ export const addParty = (party) => (dispatch) => {
   axios
     .post(`${serverURI}/api/party/add`, party)
     .then((res) => {
-      dispatch({ type: ADDING_PARTY_SUCCESS, payload: res.data });
+      dispatch({ type: ADDING_PARTY_SUCCESS, payload: res.data.party });
     })
     .catch((err) => {
       dispatch({ type: ADDING_PARTY_ERROR, payload: err });
@@ -89,7 +89,7 @@ export const updateParty = (id, updatedInfo) => (dispatch) => {
   axios
     .put(`${serverURI}/api/party/update/${id}`, updatedInfo)
     .then((res) => {
-      dispatch({ type: UPDATING_PARTY_SUCCESS, payload: res.data });
+      dispatch({ type: UPDATING_PARTY_SUCCESS, payload: res.data.updatedParty });
     })
     .catch((err) => {
       dispatch({ type: UPDATING_PARTY_ERROR, payload: err });
