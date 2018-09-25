@@ -14,7 +14,7 @@ import {
   TOGGLE_EDIT,
 } from '../actions/tables';
 import {
-  CLEAR_PARTY,
+  CLEAR_SELECTED,
 } from '../actions/party';
 
 const initialState = {
@@ -84,7 +84,7 @@ const TablesReducer = (state = initialState, action) => {
     case TOGGLE_EDIT:
       return { ...state, editing: !state.editing };
 
-    case CLEAR_PARTY:
+    case CLEAR_SELECTED:
       return { ...state, selected: new Set() };
 
     default:

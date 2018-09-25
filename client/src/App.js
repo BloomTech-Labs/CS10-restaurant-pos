@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 're
 import { ThemeProvider } from 'styled-components';
 
 import { setInitialAuth } from './redux/actions/auth';
-import { clearParty } from './redux/actions/party';
 import * as s from './styles';
 import Landing from './components/Landing';
 import Logout from './components/Logout';
@@ -34,19 +33,8 @@ class App extends Component {
   }
 
   render() {
-    const getUserConfirmation = (message, callback) => {
-      // TODO: use custom modal instead of an alert
-      const result = window.confirm(message); // eslint-disable-line no-alert
-
-      if (result) {
-        this.props.clearParty();
-      }
-
-      callback(result);
-    };
-
     return (
-      <Router getUserConfirmation={getUserConfirmation}>
+      <Router>
         <ThemeProvider theme={theme}>
           <s.Container>
             <Navbar modalIsOpen={this.props.modalIsOpen} />
@@ -86,14 +74,12 @@ App.propTypes = {
     manager: PropTypes.bool
   }),
   setInitialAuth: PropTypes.func,
-  clearParty: PropTypes.func
 };
 
 App.defaultProps = {
   modalIsOpen: false,
   role: { admin: false, manager: false },
   setInitialAuth: () => {},
-  clearParty: () => {}
 };
 
 const mapStateToProps = (state) => ({
@@ -103,5 +89,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { setInitialAuth, clearParty }
+  { setInitialAuth }
 )(App);

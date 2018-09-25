@@ -12,7 +12,7 @@ import {
   UPDATING_PARTY_SUCCESS,
   DELETING_PARTY,
   DELETING_PARTY_SUCCESS,
-  CLEAR_PARTY
+  CLEAR_SELECTED
 } from '../actions/party';
 import { REMOVE_SPLIT_CHECK_FROM_ORDER } from '../actions/payments';
 import { DEACTIVATING_TABLE_SUCCESS } from '../actions/tables';
@@ -94,8 +94,8 @@ const PartyReducer = (state = initialState, action) => {
         })
       };
 
-    case CLEAR_PARTY:
-      return { ...initialState };
+    case CLEAR_SELECTED:
+      return { ...initialState, partyList: state.partyList };
 
     case CLEAR_SPLIT_ORDER:
       return { ...state, splitOrder: [] };

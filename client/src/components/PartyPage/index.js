@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Prompt } from 'react-router-dom';
 import { StripeProvider } from 'react-stripe-elements';
 import shortid from 'shortid';
 
@@ -28,7 +27,7 @@ class PartyPage extends React.Component {
     subTotal: Number(
       this.props.order.reduce((acc, foodItem) => acc + foodItem.price, 0).toFixed(2)
     ),
-    party: {},
+    party: {}
   };
 
   componentDidMount() {
@@ -40,12 +39,22 @@ class PartyPage extends React.Component {
     const foundParty = this.props.partyList.find(party => party._id === this.props.match.params.id);
     if (foundParty) {
       console.log('uhh', this.state);
-      this.setState(prev => ({
-        party: foundParty,
-        order: prev.order.concat(foundParty.food),
-      }));
+      this.setState(prev => {
+        const newOrder = prev.order.concat(foundParty.food).map(item => {
+          item.localRef = shortid.generate();
+          return item;
+        });
+
+        return {
+          party: foundParty,
+          order: newOrder,
+          subTotal: Number(
+            newOrder.reduce((acc, foodItem) => acc + foodItem.price, 0).toFixed(2)
+          ),
+        };
+      });
     }
-  }
+  };
 
   openModal = () => {
     this.props.saveOrder(this.state.order);
@@ -56,7 +65,7 @@ class PartyPage extends React.Component {
     this.setState(prev => {
       if (prev.splitCheck.find(element => element.localRef === item.localRef)) {
         return {
-          splitCheck: prev.splitCheck.filter(element => element.localRef !== item.localRef),
+          splitCheck: prev.splitCheck.filter(element => element.localRef !== item.localRef)
         };
       }
       return {
@@ -74,7 +83,7 @@ class PartyPage extends React.Component {
   closeSplitModal = () => {
     this.props.closeSplitModal();
     this.props.openModal();
-  }
+  };
 
   addItemToOrder = item => {
     this.setState(prev => ({
@@ -109,7 +118,6 @@ class PartyPage extends React.Component {
     return (
       <StripeProvider apiKey="pk_test_0axArT8SI2u6aiUnuQH2lJzg">
         <React.Fragment>
-          <Prompt when={!!this.props.order.length} message="Leave without saving changes?" />
           <CheckoutModal
             order={this.state.order}
             modalIsOpen={this.props.modalIsOpen}
@@ -123,13 +131,13 @@ class PartyPage extends React.Component {
             sendPayment={this.props.sendPayment}
             setTotal={this.setTotal}
             total={this.total}
-            tables={this.props.tables}
+            tables={this.state.party.tables}
           />
           <s.Container modalOpen={this.props.modalIsOpen}>
             {/* // TODO: figure out how to name things */}
             <ItemSelector items={this.props.items} addItemToOrder={this.addItemToOrder} />
             <OrderScratchPad
-              tables={this.props.tables}
+              tables={this.state.party.tables}
               saveParty={this.saveParty}
               order={this.state.order}
               subTotal={this.state.subTotal}
@@ -165,9 +173,8 @@ PartyPage.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   splitOrder: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
-  tables: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   match: PropTypes.shape({
-    params: PropTypes.object,
+    params: PropTypes.object
   }),
   partyList: PropTypes.arrayOf(PropTypes.object),
   location: locationType,
@@ -192,8 +199,7 @@ PartyPage.defaultProps = {
   items: [],
   order: [],
   splitOrder: [],
-  tables: [{ number: 4 }],
-  partyList: [ { _id: 'defaultpartyid' } ],
+  partyList: [{ _id: 'defaultpartyid' }],
   match: { params: {} },
   location: { country: 'US', state: 'CA' }
 };
@@ -220,6 +226,6 @@ export default connect(
     closeModal,
     openSplitModal,
     closeSplitModal,
-    sendPayment,
+    sendPayment
   }
 )(PartyPage);

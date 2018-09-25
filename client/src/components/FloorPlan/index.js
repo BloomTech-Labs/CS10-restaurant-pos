@@ -158,6 +158,7 @@ class FloorPlan extends React.PureComponent {
     circle.y = table.y;
     circle.tableId = table._id;
     circle.tableNumber = table.number;
+    circle.tableActive = table.active;
     this.viewport.addChild(circle);
 
     // Adds the table number text,
@@ -186,6 +187,10 @@ class FloorPlan extends React.PureComponent {
       // remove it from the Set and adjust its appearance
       // circle.alpha = 0.2;
       circle.tint = 0x114b5f;
+    }
+
+    if (circle.tableActive) {
+      circle.alpha = 0.3;
     }
 
     // set event listeners
@@ -239,10 +244,12 @@ class FloorPlan extends React.PureComponent {
       // calculating the amount to move in onDragMove
       circle.sx = circle.data.getLocalPosition(circle).x * circle.scale.x;
       circle.sy = circle.data.getLocalPosition(circle).y * circle.scale.y;
-    } else {
+    } else if (!circle.tableActive) {
       // If editing mode is off, a click should
       // toggle the table's active status
       this.toggleActive(circle);
+    } else {
+      this.props.openParty(circle.tableNumber);
     }
 
     this.viewport.pausePlugin('drag');
@@ -339,6 +346,7 @@ FloorPlan.propTypes = {
   tables: PropTypes.arrayOf(PropTypes.object),
   moveTable: PropTypes.func,
   toggleTable: PropTypes.func,
+  openParty: PropTypes.func,
   parent: PropTypes.any, // eslint-disable-line
 };
 
@@ -348,6 +356,7 @@ FloorPlan.defaultProps = {
   tables: [],
   moveTable: () => {},
   toggleTable: () => {},
+  openParty: () => {},
   parent: false, // TODO: define as a node
 };
 
