@@ -14,7 +14,9 @@ import {
   DELETING_PARTY_SUCCESS,
   CLEAR_PARTY
 } from '../actions/party';
+import { REMOVE_SPLIT_CHECK_FROM_ORDER } from '../actions/payments';
 import { DEACTIVATING_TABLE_SUCCESS } from '../actions/tables';
+import { CLEAR_SPLIT_ORDER } from '../actions/modal';
 
 const initialState = {
   tables: [],
@@ -94,6 +96,16 @@ const PartyReducer = (state = initialState, action) => {
 
     case CLEAR_PARTY:
       return { ...initialState };
+
+    case CLEAR_SPLIT_ORDER:
+      return { ...state, splitOrder: [] };
+
+    case REMOVE_SPLIT_CHECK_FROM_ORDER:
+      return {
+        order: state.order.filter(
+          element => !state.splitOrder.find(split => split.localRef === element.localRef)
+        )
+      };
 
     default:
       return state;

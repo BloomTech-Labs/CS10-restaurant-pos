@@ -31,8 +31,7 @@ const AuthReducer = (auth = initialState, action) => {
       const jwt = localStorage.getItem('jwt');
 
       let role = { admin: false, manager: false };
-
-      let membership = false;
+      let membership = false; // eslint-disable-line
       let restaurant = '';
 
       if (jwt) {

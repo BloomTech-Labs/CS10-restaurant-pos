@@ -16,6 +16,10 @@ class OrderTotal extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    console.log('fucking umounted', this.state);
+  }
+
   updateTaxes = () => {
     const { location, subTotal } = this.props;
     salesTax
