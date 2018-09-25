@@ -87,11 +87,8 @@ class PartyPage extends React.Component {
   };
 
   setTotal = total => {
+    console.log('total', total);
     this.total = total;
-  };
-
-  sendPayment = token => {
-    this.props.sendPayment(token, this.total * 100, 'PAYMENT_DESCRIPTION_INTERESTING_AND_PROFESSIONAL');
   };
 
   render() {
@@ -109,7 +106,7 @@ class PartyPage extends React.Component {
             toggleSplitCheckItem={this.toggleSplitCheckItem}
             location={this.props.location}
             subTotal={this.state.subTotal}
-            sendPayment={this.sendPayment}
+            sendPayment={this.props.sendPayment}
             setTotal={this.setTotal}
             total={this.total}
             tables={this.props.tables}
@@ -122,6 +119,7 @@ class PartyPage extends React.Component {
               saveParty={this.saveParty}
               order={this.state.order}
               subTotal={this.state.subTotal}
+              setTotal={this.setTotal}
               removeItemFromOrder={this.removeItemFromOrder}
               location={this.props.location}
               openModal={this.openModal}

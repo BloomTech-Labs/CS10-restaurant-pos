@@ -25,8 +25,7 @@ class CheckoutModal extends React.Component {
   checkoutSplitOrder = () => {
     this.toggleCheckout();
     // this.props.checkoutSplitOrder
-  }
-
+  };
 
   render() {
     return (
@@ -55,7 +54,10 @@ class CheckoutModal extends React.Component {
             <s.OrderButtons>
               {this.state.showStripe ? (
                 <Elements>
-                  <StripeCheckoutForm sendPayment={this.props.sendPayment} total={this.total} />
+                  <StripeCheckoutForm
+                    sendPayment={this.props.sendPayment}
+                    total={this.props.total}
+                  />
                 </Elements>
               ) : (
                 <React.Fragment>
@@ -85,7 +87,10 @@ class CheckoutModal extends React.Component {
 
             {this.state.showStripe ? (
               <Elements>
-                <StripeCheckoutForm />
+                <StripeCheckoutForm
+                  sendPayment={this.props.sendPayment}
+                  total={this.props.splitOrder.reduce((acc, item) => acc + item.price, 0)}
+                />
               </Elements>
             ) : (
               <React.Fragment>
@@ -122,6 +127,7 @@ CheckoutModal.propTypes = {
   splitOrder: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   tables: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   location: locationType,
+  total: PropTypes.number,
   history: PropTypes.shape({
     push: PropTypes.func
   })
@@ -140,6 +146,7 @@ CheckoutModal.defaultProps = {
   order: [],
   splitOrder: [],
   tables: [{ number: 4 }],
+  total: 0,
   location: { country: 'US', state: 'CA' }
 };
 

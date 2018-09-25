@@ -24,6 +24,7 @@ const createOptions = () => ({
 
 class StripeCheckoutForm extends React.Component {
   handleSubmit = event => {
+    const amount = Math.trunc(this.props.total * 100);
     event.preventDefault();
     if (this.props.stripe) {
       this.props.stripe
@@ -31,7 +32,7 @@ class StripeCheckoutForm extends React.Component {
         .then(token => {
           this.props.sendPayment(
             token,
-            this.props.total * 100,
+            amount,
             'PAYMENT_DESCRIPTION_INTERESTING_AND_PROFESSIONAL'
           );
         })
@@ -42,6 +43,7 @@ class StripeCheckoutForm extends React.Component {
   };
 
   render() {
+    console.warn('title', this.props.total);
     return (
       <s.Form onSubmit={this.handleSubmit}>
         <s.Label htmlFor="card-element">
