@@ -33,7 +33,8 @@ class StripeCheckoutForm extends React.Component {
             token,
             amount,
             'sneaky_snake_case',
-            this.props.isSplit
+            this.props.isSplit,
+            this.props.partyId,
           );
         })
         .catch(error => console.error(error));
@@ -57,7 +58,7 @@ class StripeCheckoutForm extends React.Component {
             {...createOptions(this.props.fontSize)}
           />
         </s.Label>
-        <Button onClick={this.handleSubmit}>Pay</Button>
+        <Button dark onClick={this.handleSubmit}>Pay</Button>
       </s.Form>
     );
   }

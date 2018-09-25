@@ -114,7 +114,7 @@ class PartyPage extends React.Component {
   };
 
   render() {
-    console.log('statteee', this.state);
+    console.warn('hhhhhhhhhhhhh', this.props.match.params.id);
     return (
       <StripeProvider apiKey="pk_test_0axArT8SI2u6aiUnuQH2lJzg">
         <React.Fragment>
@@ -132,6 +132,7 @@ class PartyPage extends React.Component {
             setTotal={this.setTotal}
             total={this.total}
             tables={this.state.party.tables}
+            partyId={this.props.match.params.id}
           />
           <s.Container modalOpen={this.props.modalIsOpen}>
             {/* // TODO: figure out how to name things */}

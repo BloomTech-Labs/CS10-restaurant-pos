@@ -26,7 +26,17 @@ import RequireAuth from './components/HOC/RequireAuth';
 import { theme } from './global-styles/variables';
 
 const SidebarWithRouter = withRouter(props => <Sidebar {...props} />);
+
 const AuthedPartyPage = RequireAuth(PartyPage);
+const AuthedLoginEmployee = RequireAuth(LoginEmployee);
+const AuthedNewRestaurant = RequireAuth(NewRestaurant);
+const AuthedCreateEmployee = RequireAuth(CreateEmployee);
+const AuthedTablesPage = RequireAuth(TablesPage);
+const AuthedServers = RequireAuth(Servers);
+const AuthedSettings = RequireAuth(Settings);
+
+const NotAuthedLogin = RequireNotAuth(Login);
+const NotAuthedRegsiter = RequireNotAuth(Register);
 
 class App extends Component {
   componentDidMount() {
@@ -44,21 +54,21 @@ class App extends Component {
               <Switch>
                 <Route path="/" component={Landing} exact />
                 <Route path="/logout" component={Logout} />
-                <Route path="/login" component={RequireNotAuth(Login)} />
-                <Route path="/register" component={RequireNotAuth(Register)} />
+                <Route path="/login" component={NotAuthedLogin} />
+                <Route path="/register" component={NotAuthedRegsiter} />
                 <Route path="/success" component={RegistrationSuccess} />
-                <Route path="/login-employee" component={RequireAuth(LoginEmployee)} />
-                <Route path="/new-restaurant" component={RequireAuth(NewRestaurant)} />
-                <Route path="/new-employee" component={RequireAuth(CreateEmployee)} />
-                <Route path="/tables" component={RequireAuth(TablesPage)} />
-                <Route path="/servers" component={RequireAuth(Servers)} />
+                <Route path="/login-employee" component={AuthedLoginEmployee} />
+                <Route path="/new-restaurant" component={AuthedNewRestaurant} />
+                <Route path="/new-employee" component={AuthedCreateEmployee} />
+                <Route path="/tables" component={AuthedTablesPage} />
+                <Route path="/servers" component={AuthedServers} />
                 <Route
                   path="/party/:id"
                   render={props => (
                     <AuthedPartyPage {...props} modalIsOpen={this.props.modalIsOpen} />
                   )}
                 />
-                <Route path="/settings" component={RequireAuth(Settings)} />
+                <Route path="/settings" component={AuthedSettings} />
                 <Route path="/404" component={NotFound} exact />
                 <Redirect to="/404" />
               </Switch>

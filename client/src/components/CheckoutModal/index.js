@@ -56,6 +56,8 @@ class CheckoutModal extends React.Component {
                 <StripeCheckoutForm
                   sendPayment={this.props.sendPayment}
                   total={this.props.order.reduce((acc, item) => acc + item.price, 0)}
+                  isSplit={false}
+                  partyId={this.props.partyId}
                 />
               </Elements>
             ) : (
@@ -91,6 +93,7 @@ class CheckoutModal extends React.Component {
                 sendPayment={this.props.sendPayment}
                 total={this.props.splitOrder.reduce((acc, item) => acc + item.price, 0)}
                 isSplit
+                partyId={this.props.partyId}
               />
             </Elements>
           ) : (
@@ -123,6 +126,7 @@ CheckoutModal.propTypes = {
   subTotal: PropTypes.number,
   modalIsOpen: PropTypes.bool,
   splitModalIsOpen: PropTypes.bool,
+  partyId: PropTypes.string,
   order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   splitOrder: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   tables: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
@@ -142,6 +146,7 @@ CheckoutModal.defaultProps = {
   subTotal: 0,
   modalIsOpen: false,
   splitModalIsOpen: false,
+  partyId: 'defaultpartyid',
   order: [],
   splitOrder: [],
   tables: [{ number: 4 }],
