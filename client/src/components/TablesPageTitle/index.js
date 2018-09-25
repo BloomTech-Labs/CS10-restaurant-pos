@@ -4,6 +4,14 @@ import PropTypes from 'prop-types';
 import * as s from './styles';
 
 function TablesPageTitle(props) {
+  if (props.tables.length === 0) {
+    return (
+      <s.Title>
+        <span>Takeout</span>
+      </s.Title>
+    );
+  }
+
   return (
     <s.Title>
       {props.tables.length === 1 ? <span>Table:&nbsp;</span> : <span>Tables:&nbsp;</span>}
