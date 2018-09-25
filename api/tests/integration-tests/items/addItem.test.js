@@ -5,6 +5,9 @@ const server = require('../../../../server');
 
 let token;
 
+// For Travis CI
+jest.setTimeout(10000);
+
 describe('addItem', () => {
   beforeAll((done) => {
     request(server)
