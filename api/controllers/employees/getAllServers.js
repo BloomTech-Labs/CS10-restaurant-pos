@@ -19,6 +19,7 @@ const getAllServers = (req, res) => {
 
   // find tall employees based on searchQuery
   Employee.find(searchQuery)
+    .select(['name', 'email', 'role', 'pin'])
     .then((employees) => {
       res.status(200).json({ employees });
     })

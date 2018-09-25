@@ -34,7 +34,7 @@ const updateAllTables = (req, res) => {
   // eslint-disable-next-line compat/compat
   Promise.all(promises)
     .then((updatedTables) => {
-      res.status(200).json(updatedTables);
+      res.status(200).json({ updatedTables });
     })
     .catch((err) => {
       res.status(500).json({

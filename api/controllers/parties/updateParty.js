@@ -16,7 +16,7 @@ const updateParty = (req, res) => {
 
   Party.findOneAndUpdate({ _id: id }, updatedFields, { new: true })
     .then((updatedParty) => {
-      res.status(200).json(updatedParty);
+      res.status(200).json({ updatedParty });
     })
     .catch((err) => {
       res.status(500).json({

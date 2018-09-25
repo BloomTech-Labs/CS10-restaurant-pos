@@ -6,7 +6,7 @@ const Item = require('../../models/Item');
 const getAllItems = (req, res) => {
   Item.find({ restaurant: req.user.restaurant })
     .then((items) => {
-      res.status(200).json(items);
+      res.status(200).json({ items });
     })
     .catch((err) => {
       res.status(500).json({ err, msg: 'Error communicating with the database.' });

@@ -47,7 +47,8 @@ const employeeLogin = (req, res) => {
             admin: employee.role.admin,
             manager: employee.role.manager
           },
-          restaurant: employee.restaurant
+          restaurant: employee.restaurant,
+          membership: token.membership
         };
 
         // Sign the token
