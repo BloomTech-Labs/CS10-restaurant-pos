@@ -23,10 +23,8 @@ class PartyPage extends React.Component {
 
   state = {
     splitCheck: this.props.splitOrder,
-    order: this.props.order,
-    subTotal: Number(
-      this.props.order.reduce((acc, foodItem) => acc + foodItem.price, 0).toFixed(2)
-    ),
+    order: [],
+    subTotal: 0,
     party: {}
   };
 
@@ -35,10 +33,22 @@ class PartyPage extends React.Component {
     this.findParty();
   }
 
+  componentDidUpdate(prev) {
+    const foundParty = this.props.partyList.find(party => party._id === this.props.match.params.id);
+
+    if (!foundParty) {
+      this.props.history.push('/tables');
+    } else if (this.state.order.length !== foundParty.food.length
+      && this.props.splitModalIsOpen !== prev.splitModalIsOpen) {
+      this.setState({ // eslint-disable-line react/no-did-update-set-state
+        order: foundParty.food,
+      });
+    }
+  }
+
   findParty = () => {
     const foundParty = this.props.partyList.find(party => party._id === this.props.match.params.id);
     if (foundParty) {
-      console.log('uhh', this.state);
       this.setState(prev => {
         const newOrder = prev.order.concat(foundParty.food).map(item => {
           item.localRef = shortid.generate();
@@ -172,7 +182,6 @@ PartyPage.propTypes = {
   splitModalIsOpen: PropTypes.bool,
   closeSplitModal: PropTypes.func,
   items: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
-  order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   splitOrder: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   match: PropTypes.shape({
     params: PropTypes.object
@@ -198,7 +207,6 @@ PartyPage.defaultProps = {
   modalIsOpen: false,
   splitModalIsOpen: false,
   items: [],
-  order: [],
   splitOrder: [],
   partyList: [{ _id: 'defaultpartyid' }],
   match: { params: {} },
@@ -208,7 +216,6 @@ PartyPage.defaultProps = {
 const mapStateToProps = state => ({
   splitModalIsOpen: state.modal.splitModalIsOpen,
   items: state.items.itemList,
-  order: state.party.order,
   tables: state.party.tables,
   splitOrder: state.party.splitOrder,
   partyList: state.party.partyList,

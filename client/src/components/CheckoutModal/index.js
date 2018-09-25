@@ -24,7 +24,6 @@ class CheckoutModal extends React.Component {
 
   checkoutSplitOrder = () => {
     this.toggleCheckout();
-    // this.props.checkoutSplitOrder
   };
 
   render() {

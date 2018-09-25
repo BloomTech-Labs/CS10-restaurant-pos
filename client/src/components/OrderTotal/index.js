@@ -11,13 +11,9 @@ class OrderTotal extends React.Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
+    if (prevProps.subTotal !== this.props.subTotal) {
       this.updateTaxes();
     }
-  }
-
-  componentWillUnmount() {
-    console.log('fucking umounted', this.state);
   }
 
   updateTaxes = () => {

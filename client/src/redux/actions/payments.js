@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import serverURI from '../../config/URI';
 
-import { updateParty } from './party';
+import { updateParty, deleteParty } from './party';
 import { SET_INITIAL_AUTH } from './auth';
 import { closeSplitModal, openModal, closeModal } from './modal';
 
@@ -34,8 +34,8 @@ export const sendPayment = (stripe, amount, description, isSplit, partyId) => {
           dispatch(closeSplitModal());
           dispatch(openModal());
         } else {
+          dispatch(deleteParty(partyId));
           dispatch(closeModal());
-          // TODO: CLear the order
         }
       })
       .catch(err => {
