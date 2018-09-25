@@ -66,9 +66,9 @@ export const createParty = (tables, push) => dispatch => {
   axios
     .post(`${serverURI}/api/party/add`, { tables })
     .then(res => {
-      push(`/party/${res.data.party._id}`);
       dispatch({ type: CREATE_PARTY, payload: tables });
       dispatch({ type: ADDING_PARTY_SUCCESS, payload: res.data.party });
+      push(`/party/${res.data.party._id}`);
     })
     .catch(err => {
       dispatch({ type: ADDING_PARTY_ERROR, payload: err });

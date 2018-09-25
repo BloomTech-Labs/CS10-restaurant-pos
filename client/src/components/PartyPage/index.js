@@ -28,10 +28,23 @@ class PartyPage extends React.Component {
     subTotal: Number(
       this.props.order.reduce((acc, foodItem) => acc + foodItem.price, 0).toFixed(2)
     ),
+    party: {},
   };
 
   componentDidMount() {
     this.props.getItems();
+    this.findParty();
+  }
+
+  findParty = () => {
+    const foundParty = this.props.partyList.find(party => party._id === this.props.match.params.id);
+    if (foundParty) {
+      console.log('uhh', this.state);
+      this.setState(prev => ({
+        party: foundParty,
+        order: prev.order.concat(foundParty.food),
+      }));
+    }
   }
 
   openModal = () => {
@@ -82,7 +95,7 @@ class PartyPage extends React.Component {
   };
 
   saveParty = () => {
-    this.props.updateParty(this.props.match.params.id, { food: this.props.order });
+    this.props.updateParty(this.props.match.params.id, { food: this.state.order });
     this.props.history.push('/tables');
   };
 
@@ -92,6 +105,7 @@ class PartyPage extends React.Component {
   };
 
   render() {
+    console.log('statteee', this.state);
     return (
       <StripeProvider apiKey="pk_test_0axArT8SI2u6aiUnuQH2lJzg">
         <React.Fragment>
@@ -155,6 +169,7 @@ PartyPage.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.object,
   }),
+  partyList: PropTypes.arrayOf(PropTypes.object),
   location: locationType,
   history: PropTypes.shape({
     push: PropTypes.func
@@ -178,6 +193,7 @@ PartyPage.defaultProps = {
   order: [],
   splitOrder: [],
   tables: [{ number: 4 }],
+  partyList: [ { _id: 'defaultpartyid' } ],
   match: { params: {} },
   location: { country: 'US', state: 'CA' }
 };
@@ -189,6 +205,7 @@ const mapStateToProps = state => ({
   order: state.party.order,
   tables: state.party.tables,
   splitOrder: state.party.splitOrder,
+  partyList: state.party.partyList,
   location: state.restaurant.restaurantInfo.location
 });
 
