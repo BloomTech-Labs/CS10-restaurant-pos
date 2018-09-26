@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { loginEmployee } from '../../../redux/actions/auth';
-import LoginEmployeePresentational from '../../Presentational/Login';
+import LoginEmployeePresentational from '../../Presentational/LoginEmployee';
 
 class LoginEmployee extends React.PureComponent {
   loginEmployee = (info) => {

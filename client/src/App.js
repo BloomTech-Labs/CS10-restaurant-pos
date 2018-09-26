@@ -10,7 +10,7 @@ import Logout from './components/Logout';
 import Login from './components/Container/Login';
 import Register from './components/Register';
 import RegistrationSuccess from './components/RegistrationSuccess';
-import LoginEmployee from './components/LoginEmployee';
+import LoginEmployee from './components/Container/LoginEmployee';
 import CreateEmployee from './components/Container/CreateEmployee';
 import Servers from './components/Servers';
 import TablesPage from './components/TablesPage';
