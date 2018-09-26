@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 import { subscribe } from '../../../redux/actions/payments';
 import { addItem } from '../../../redux/actions/items';
-import RestaurantInfo from '../../RestaurantInfo';
+import RestaurantInfo from '../../Presentational/RestaurantInfo';
 import Billing from '../../Presentational/Billing';
-import ChangePassword from '../../ChangePassword';
+import ChangePassword from '../../Presentational/ChangePassword';
 import CreateItem from '../../Presentational/CreateItem';
 
 import * as s from './styles';

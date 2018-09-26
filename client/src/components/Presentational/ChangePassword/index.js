@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import * as s from './styles';
 
@@ -17,7 +16,7 @@ class ChangePassword extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    // this.props.register(this.state);
+    this.props.changePassword(this.state);
   };
 
   render() {
@@ -57,12 +56,12 @@ class ChangePassword extends React.Component {
   }
 }
 
-// ChangePassword.propTypes = {
-// };
+ChangePassword.propTypes = {
+  changePassword: PropTypes.func,
+};
 
-// ChangePassword.defaultProps = {
-// };
+ChangePassword.defaultProps = {
+  changePassword: () => {},
+};
 
-export default connect(
-  null
-)(ChangePassword);
+export default ChangePassword;

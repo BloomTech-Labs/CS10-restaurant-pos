@@ -1,6 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import * as s from './styles';
 
@@ -18,6 +17,7 @@ class RestaurantInfo extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    this.props.changeRestaurantInfo(this.state);
   };
 
   render() {
@@ -61,4 +61,12 @@ class RestaurantInfo extends React.Component {
   }
 }
 
-export default connect(null)(RestaurantInfo);
+RestaurantInfo.propTypes = {
+  changeRestaurantInfo: PropTypes.func,
+};
+
+RestaurantInfo.defaultProps = {
+  changeRestaurantInfo: () => {},
+};
+
+export default RestaurantInfo;
