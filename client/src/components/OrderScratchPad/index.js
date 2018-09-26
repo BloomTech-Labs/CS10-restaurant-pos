@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import shortid from 'shortid';
 
 import TablesPageTitle from '../TablesPageTitle';
-import OrderTotal from '../OrderTotal';
+import OrderTotal from '../Presentational/OrderTotal';
 import { Button } from '../../global-styles/styledComponents';
 
 import * as s from './styles';

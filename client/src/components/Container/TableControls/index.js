@@ -5,7 +5,6 @@ import SetType from 'es6-set-proptypes';
 
 import { addTable, toggleEdit, saveTables } from '../../../redux/actions/tables';
 import { createParty } from '../../../redux/actions/party';
-// TODO: create save button action
 import TableControlButtons from '../../Presentational/TableControlButtons';
 
 import * as s from './styles';
@@ -25,7 +24,6 @@ class TableControls extends React.Component {
   };
 
   createParty = () => {
-    // TODO: this.props.saveParty or some shit
     const tablesArray = this.props.tables.filter(table => this.props.selected.has(table.number));
     this.props.createParty(tablesArray, this.props.push);
   };
