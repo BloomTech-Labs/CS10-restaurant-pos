@@ -4,6 +4,7 @@ import shortid from 'shortid';
 
 import TablesPageTitle from '../../TablesPageTitle';
 import OrderTotal from '../OrderTotal';
+import OrderItem from '../OrderItem';
 import { Button } from '../../../global-styles/styledComponents';
 
 import * as s from './styles';
@@ -14,13 +15,11 @@ export default function OrderScratchPad(props) {
       <TablesPageTitle tables={props.tables} />
       <s.Scroll>
         {props.order.map(item => (
-          <s.Items key={shortid.generate()}>
-            <s.DeleteButton onClick={() => props.removeItemFromOrder(item)}>
-              X
-            </s.DeleteButton>
-            <span>{item.name}</span>
-            <span>{item.price}</span>
-          </s.Items>
+          <OrderItem
+            key={shortid.generate()}
+            item={item}
+            removeItemFromOrder={props.removeItemFromOrder}
+          />
         ))}
       </s.Scroll>
       <s.Checkout>
