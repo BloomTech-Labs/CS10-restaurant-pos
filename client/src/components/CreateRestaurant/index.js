@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-
-import { addRestaurant } from '../../redux/actions/restaurant';
 
 import * as s from './styles';
 
-class NewRestaurant extends React.Component {
+class CreateRestaurant extends React.Component {
   state = {
     restaurantName: '',
     location: '',
@@ -19,7 +16,7 @@ class NewRestaurant extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.addRestaurant(this.state, this.props.history.push);
+    this.props.addRestaurant(this.state);
   };
 
   render() {
@@ -56,20 +53,13 @@ class NewRestaurant extends React.Component {
   }
 }
 
-NewRestaurant.propTypes = {
+CreateRestaurant.propTypes = {
   addRestaurant: PropTypes.func,
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
 };
 
-NewRestaurant.defaultProps = {
+CreateRestaurant.defaultProps = {
   addRestaurant: () => {},
-  history: { push: () => {} },
 };
 
 
-export default connect(
-  null,
-  { addRestaurant }
-)(NewRestaurant);
+export default CreateRestaurant;

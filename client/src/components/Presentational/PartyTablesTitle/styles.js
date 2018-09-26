@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { flexCenterMixin } from '../../global-styles/mixins';
+import { flexCenterMixin } from '../../../global-styles/mixins';
 
 export const Title = styled.div`
   ${flexCenterMixin};

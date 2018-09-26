@@ -19,7 +19,7 @@ import Navbar from './components/Presentational/Navbar';
 import PartyPage from './components/Container/PartyPage';
 import Settings from './components/Container/SettingsPage';
 import Sidebar from './components/Presentational/Sidebar';
-import NewRestaurant from './components/NewRestaurant';
+import NewRestaurant from './components/Container/CreateRestaurantPage';
 import RequireNotAuth from './components/HOC/RequireNotAuth';
 import RequireAuth from './components/HOC/RequireAuth';
 import { sidebar } from './config/conditionalPathnames';

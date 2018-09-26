@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
 
-import PartyTablesTitle from '../../PartyTablesTitle';
+import PartyTablesTitle from '../PartyTablesTitle';
 import OrderTotal from '../OrderTotal';
 import OrderItem from '../OrderItem';
 import { Button } from '../../../global-styles/styledComponents';

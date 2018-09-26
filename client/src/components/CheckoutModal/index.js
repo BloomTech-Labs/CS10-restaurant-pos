@@ -6,7 +6,7 @@ import { Elements } from 'react-stripe-elements';
 import Modal from '../HOC/Modal';
 import StripeCheckoutForm from '../StripeCheckoutForm';
 import OrderTotal from '../Presentational/OrderTotal';
-import PartyTablesTitle from '../PartyTablesTitle';
+import PartyTablesTitle from '../Presentational/PartyTablesTitle';
 import { Button } from '../../global-styles/styledComponents';
 
 import * as s from './styles';
