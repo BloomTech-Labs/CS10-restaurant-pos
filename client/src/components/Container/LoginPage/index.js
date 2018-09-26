@@ -3,28 +3,28 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { login } from '../../../redux/actions/auth';
-import LoginPresentational from '../../Presentational/Login';
+import Login from '../../Presentational/Login';
 
-class Login extends React.PureComponent {
+class LoginPage extends React.PureComponent {
   login = (info) => {
     this.props.login(info, this.props.history.push);
   }
 
   render() {
     return (
-      <LoginPresentational login={this.login} />
+      <Login login={this.login} />
     );
   }
 }
 
-Login.propTypes = {
+LoginPage.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func
   }),
   login: PropTypes.func
 };
 
-Login.defaultProps = {
+LoginPage.defaultProps = {
   history: { push: () => {} },
   login: () => {}
 };
@@ -32,4 +32,4 @@ Login.defaultProps = {
 export default connect(
   null,
   { login }
-)(Login);
+)(LoginPage);

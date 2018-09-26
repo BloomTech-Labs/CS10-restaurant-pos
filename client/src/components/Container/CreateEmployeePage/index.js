@@ -3,29 +3,29 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { addEmployee } from '../../../redux/actions/auth';
-import CreateEmployeePresentational from '../../Presentational/CreateEmployee';
+import CreateEmployee from '../../Presentational/CreateEmployee';
 
-class CreateEmployee extends React.PureComponent {
+class CreateEmployeePage extends React.PureComponent {
   addEmployee = (info) => {
     this.props.addEmployee(info, this.props.history.push);
   }
 
   render() {
     return (
-      <CreateEmployeePresentational addEmployee={this.addEmployee} />
+      <CreateEmployee addEmployee={this.addEmployee} />
     );
   }
 }
 
 
-CreateEmployee.propTypes = {
+CreateEmployeePage.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func
   }),
   addEmployee: PropTypes.func
 };
 
-CreateEmployee.defaultProps = {
+CreateEmployeePage.defaultProps = {
   history: { push: () => {} },
   addEmployee: () => {}
 };
@@ -33,4 +33,4 @@ CreateEmployee.defaultProps = {
 export default connect(
   null,
   { addEmployee }
-)(CreateEmployee);
+)(CreateEmployeePage);

@@ -11,7 +11,7 @@ import CreateItem from '../../Presentational/CreateItem';
 
 import * as s from './styles';
 
-class Settings extends React.Component {
+class SettingsPage extends React.Component {
   adminDisplay = () => (
     <React.Fragment>
       <RestaurantInfo />
@@ -36,7 +36,7 @@ class Settings extends React.Component {
   }
 }
 
-Settings.propTypes = {
+SettingsPage.propTypes = {
   role: PropTypes.shape({
     admin: PropTypes.bool,
     manager: PropTypes.bool,
@@ -45,7 +45,7 @@ Settings.propTypes = {
   subscribe: PropTypes.func,
 };
 
-Settings.defaultProps = {
+SettingsPage.defaultProps = {
   role: {
     admin: false,
     manager: false,
@@ -58,4 +58,4 @@ const mapStateToProps = (state) => ({
   role: state.auth.role,
 });
 
-export default connect(mapStateToProps, { addItem, subscribe })(Settings);
+export default connect(mapStateToProps, { addItem, subscribe })(SettingsPage);
