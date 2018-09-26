@@ -38,7 +38,7 @@ class TableControls extends React.Component {
 
   render() {
     const authorized = this.props.role.admin || this.props.role.manager;
-    const { selected, editing } = this.props;
+    const { selected, editing, visible } = this.props;
     return (
       <s.Panel>
         <TableControlButtons
@@ -49,6 +49,7 @@ class TableControls extends React.Component {
           saveTables={this.saveTables}
           createParty={this.createParty}
           addTable={this.addTable}
+          visible={visible}
         />
       </s.Panel>
     );
@@ -60,6 +61,7 @@ TableControls.propTypes = {
   editing: PropTypes.bool,
   selected: SetType,
   membership: PropTypes.bool,
+  visible: PropTypes.bool,
   role: PropTypes.shape({
     admin: PropTypes.bool,
     manager: PropTypes.bool
@@ -76,6 +78,7 @@ TableControls.defaultProps = {
   editing: false,
   selected: new Set(),
   membership: false,
+  visible: false,
   role: { admin: false, manager: false },
   createParty: () => {},
   addTable: () => {},

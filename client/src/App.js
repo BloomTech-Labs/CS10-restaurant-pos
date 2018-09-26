@@ -11,7 +11,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import RegistrationSuccess from './components/RegistrationSuccess';
 import LoginEmployee from './components/LoginEmployee';
-import CreateEmployee from './components/CreateEmployee';
+import CreateEmployee from './components/Container/CreateEmployee';
 import Servers from './components/Servers';
 import TablesPage from './components/TablesPage';
 import NotFound from './components/Presentational/NotFound';

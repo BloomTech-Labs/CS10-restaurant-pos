@@ -1,8 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { addEmployee } from '../../redux/actions/auth';
 
 import * as s from './styles';
 
@@ -14,19 +12,13 @@ class CreateEmployee extends React.Component {
     confirmPass: ''
   };
 
-  componentDidMount() {
-    if (!this.props.role.admin && !this.props.role.manager) {
-      this.props.history.push('/tables');
-    }
-  }
-
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.addEmployee(this.state, this.props.history.push);
+    this.props.addEmployee(this.state);
   };
 
   render() {
@@ -76,27 +68,12 @@ class CreateEmployee extends React.Component {
 }
 
 CreateEmployee.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func
-  }),
-  role: PropTypes.shape({
-    admin: PropTypes.bool,
-    manager: PropTypes.bool
-  }),
   addEmployee: PropTypes.func
 };
 
 CreateEmployee.defaultProps = {
-  history: { push: () => {} },
-  role: { admin: false, manager: false },
   addEmployee: () => {}
 };
 
-const mapStateToProps = (state) => ({
-  role: state.auth.role
-});
 
-export default connect(
-  mapStateToProps,
-  { addEmployee }
-)(CreateEmployee);
+export default CreateEmployee;

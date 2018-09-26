@@ -33,14 +33,18 @@ class TableControlButtons extends React.PureComponent {
   )
 
   render() {
-    const { editing, authorized } = this.props;
-    return (
-      <React.Fragment>
-        {authorized && !editing && this.authorized()}
-        {!editing && this.notEditing()}
-        {editing && this.editing()}
-      </React.Fragment>
-    );
+    const { editing, authorized, visible } = this.props;
+
+    if (visible) {
+      return (
+        <div>
+          {authorized && !editing && this.authorized()}
+          {!editing && this.notEditing()}
+          {editing && this.editing()}
+        </div>
+      );
+    }
+    return null;
   }
 }
 
@@ -48,6 +52,7 @@ TableControlButtons.propTypes = {
   takeout: PropTypes.bool,
   editing: PropTypes.bool,
   authorized: PropTypes.bool,
+  visible: PropTypes.bool,
   toggleEdit: PropTypes.func,
   saveTables: PropTypes.func,
   createParty: PropTypes.func,
@@ -58,6 +63,7 @@ TableControlButtons.defaultProps = {
   takeout: false,
   editing: false,
   authorized: false,
+  visible: false,
   toggleEdit: () => {},
   saveTables: () => {},
   createParty: () => {},
