@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SetType from 'es6-set-proptypes';
 
-import FloorPlan from '../FloorPlan';
-import Tables from '../Tables';
-import { getTables, moveTable, toggleTable } from '../../redux/actions/tables';
-import { getParties, clearSelected } from '../../redux/actions/party';
+import FloorPlan from '../../FloorPlan';
+import Tables from '../../Tables';
+import { getTables, moveTable, toggleTable } from '../../../redux/actions/tables';
+import { getParties, clearSelected } from '../../../redux/actions/party';
 
 import * as s from './styles';
 
@@ -44,7 +44,13 @@ class TablesPage extends Component {
 
   render() {
     const authorized = this.props.role.admin || this.props.role.manager;
-    const { membership } = this.props;
+    const {
+      membership,
+      editing,
+      tables,
+      selected,
+      moveTable: moveTableAction,
+    } = this.props;
 
     return (
       <React.Fragment>
@@ -52,10 +58,10 @@ class TablesPage extends Component {
           <s.FloorPlanContainer innerRef={this.floorplanParent}>
             {this.floorplanParent.current && (
               <FloorPlan
-                editing={this.props.editing && authorized}
-                tables={this.props.tables}
-                selected={this.props.selected}
-                moveTable={this.props.moveTable}
+                editing={editing && authorized}
+                tables={tables}
+                selected={selected}
+                moveTable={moveTableAction}
                 toggleTable={this.toggleTable}
                 parent={this.floorplanParent}
                 openParty={this.openParty}
@@ -65,8 +71,8 @@ class TablesPage extends Component {
         ) : (
           <Tables
             membership={membership}
-            tables={this.props.tables}
-            selected={this.props.selected}
+            tables={tables}
+            selected={selected}
             toggleTable={this.toggleTable}
             openParty={this.openParty}
           />

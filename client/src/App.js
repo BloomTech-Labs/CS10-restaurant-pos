@@ -13,7 +13,7 @@ import RegistrationSuccess from './components/RegistrationSuccess';
 import LoginEmployee from './components/Container/LoginEmployee';
 import CreateEmployee from './components/Container/CreateEmployee';
 import Servers from './components/Servers';
-import TablesPage from './components/TablesPage';
+import TablesPage from './components/Container/TablesPage';
 import NotFound from './components/Presentational/NotFound';
 import Navbar from './components/Presentational/Navbar';
 import PartyPage from './components/Container/PartyPage';
