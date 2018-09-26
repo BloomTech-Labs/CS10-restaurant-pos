@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import TableEditPanel from '../../TableEditPanel';
+import TableControls from '../../Container/TableControls';
 
 import * as s from './styles';
-
 
 class Sidebar extends React.Component {
   render() {
@@ -17,7 +16,7 @@ class Sidebar extends React.Component {
         <s.LinkGroup>
           <s.StyledLink to="/tables">Tables</s.StyledLink>
           <s.StyledLink to="/servers">Servers</s.StyledLink>
-          <TableEditPanel push={push} visible={pathname === '/tables'} />
+          <TableControls push={push} visible={pathname === '/tables'} />
         </s.LinkGroup>
         <s.LinkGroup>
           <s.StyledLink to="/settings">Settings</s.StyledLink>
