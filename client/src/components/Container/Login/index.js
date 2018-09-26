@@ -6,7 +6,7 @@ import { login } from '../../../redux/actions/auth';
 import LoginPresentational from '../../Presentational/Login';
 
 class Login extends React.PureComponent {
-  addEmployee = (info) => {
+  login = (info) => {
     this.props.login(info, this.props.history.push);
   }
 

@@ -1,8 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
-import { loginEmployee } from '../../redux/actions/auth';
 
 import * as s from './styles';
 
@@ -15,7 +12,7 @@ class LoginEmployee extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.loginEmployee(this.state, this.props.history.push);
+    this.props.loginEmployee(this.state);
   };
 
   render() {
@@ -52,16 +49,11 @@ class LoginEmployee extends React.Component {
 
 LoginEmployee.propTypes = {
   loginEmployee: PropTypes.func,
-  history: PropTypes.objectOf(PropTypes.any),
 };
 
 LoginEmployee.defaultProps = {
   loginEmployee: () => {},
-  history: {}
 };
 
 
-export default connect(
-  null,
-  { loginEmployee }
-)(LoginEmployee);
+export default LoginEmployee;
