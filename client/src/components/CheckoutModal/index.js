@@ -6,7 +6,7 @@ import { Elements } from 'react-stripe-elements';
 import Modal from '../HOC/Modal';
 import StripeCheckoutForm from '../StripeCheckoutForm';
 import OrderTotal from '../Presentational/OrderTotal';
-import TablesPageTitle from '../TablesPageTitle';
+import PartyTablesTitle from '../PartyTablesTitle';
 import { Button } from '../../global-styles/styledComponents';
 
 import * as s from './styles';
@@ -31,7 +31,7 @@ class CheckoutModal extends React.Component {
       <React.Fragment>
         <Modal isOpen={this.props.modalIsOpen}>
           <s.Title>
-            <TablesPageTitle tables={this.props.tables} />
+            <PartyTablesTitle tables={this.props.tables} />
             <div>Server Name</div>
           </s.Title>
           <s.Order>

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
 
-import TablesPageTitle from '../../TablesPageTitle';
+import PartyTablesTitle from '../../PartyTablesTitle';
 import OrderTotal from '../OrderTotal';
 import OrderItem from '../OrderItem';
 import { Button } from '../../../global-styles/styledComponents';
@@ -12,7 +12,7 @@ import * as s from './styles';
 export default function OrderScratchPad(props) {
   return (
     <s.Container>
-      <TablesPageTitle tables={props.tables} />
+      <PartyTablesTitle tables={props.tables} />
       <s.Scroll>
         {props.order.map(item => (
           <OrderItem

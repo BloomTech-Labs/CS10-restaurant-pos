@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import * as s from './styles';
 
-function TablesPageTitle(props) {
+function PartyTablesTitle(props) {
   if (props.tables.length === 0) {
     return (
       <s.Title>
@@ -25,12 +25,12 @@ function TablesPageTitle(props) {
   );
 }
 
-TablesPageTitle.propTypes = {
+PartyTablesTitle.propTypes = {
   tables: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of object
 };
 
-TablesPageTitle.defaultProps = {
+PartyTablesTitle.defaultProps = {
   tables: [],
 };
 
-export default TablesPageTitle;
+export default PartyTablesTitle;
