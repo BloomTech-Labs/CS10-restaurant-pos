@@ -2,17 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-class RegistrationSuccess extends React.Component {
+class RegistrationSuccessPage extends React.Component {
   render() {
     return <div>Here is your pin: {this.props.pin}</div>;
   }
 }
 
-RegistrationSuccess.propTypes = {
+RegistrationSuccessPage.propTypes = {
   pin: PropTypes.string
 };
 
-RegistrationSuccess.defaultProps = {
+RegistrationSuccessPage.defaultProps = {
   pin: ''
 };
 
@@ -20,4 +20,4 @@ const mapStateToProps = (state) => ({
   pin: state.auth.pin
 });
 
-export default connect(mapStateToProps)(RegistrationSuccess);
+export default connect(mapStateToProps)(RegistrationSuccessPage);

@@ -9,7 +9,7 @@ import Landing from './components/Presentational/Landing';
 import Logout from './components/LogoutPage';
 import Login from './components/Container/LoginPage';
 import Register from './components/Container/RegisterPage';
-import RegistrationSuccess from './components/RegistrationSuccess';
+import RegistrationSuccess from './components/Presentational/RegistrationSuccessPage';
 import LoginEmployee from './components/Container/LoginEmployeePage';
 import CreateEmployee from './components/Container/CreateEmployeePage';
 import Servers from './components/Servers';
