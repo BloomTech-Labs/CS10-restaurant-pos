@@ -14,7 +14,7 @@ import LoginEmployee from './components/LoginEmployee';
 import CreateEmployee from './components/CreateEmployee';
 import Servers from './components/Servers';
 import TablesPage from './components/TablesPage';
-import NotFound from './components/NotFound';
+import NotFound from './components/Presentational/NotFound';
 import Navbar from './components/Presentational/Navbar';
 import PartyPage from './components/Container/PartyPage';
 import Settings from './components/Container/Settings';
