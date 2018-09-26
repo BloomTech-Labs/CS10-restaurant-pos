@@ -16,7 +16,7 @@ import Servers from './components/Servers';
 import TablesPage from './components/TablesPage';
 import NotFound from './components/NotFound';
 import Navbar from './components/Presentational/Navbar';
-import PartyPage from './components/PartyPage';
+import PartyPage from './components/Container/PartyPage';
 import Settings from './components/Container/Settings';
 import Sidebar from './components/Presentational/Sidebar';
 import NewRestaurant from './components/NewRestaurant';

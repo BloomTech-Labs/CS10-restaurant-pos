@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import { modalBlur } from '../../global-styles/mixins';
-import { MainContainer } from '../../global-styles/styledComponents';
+import { modalBlur } from '../../../global-styles/mixins';
+import { MainContainer } from '../../../global-styles/styledComponents';
 
 export const Container = styled(MainContainer)`
   display: flex;

@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import { StripeProvider } from 'react-stripe-elements';
 import shortid from 'shortid';
 
-import ItemSelector from '../ItemSelector';
-import OrderScratchPad from '../OrderScratchPad';
-import CheckoutModal from '../CheckoutModal';
-import { getItems } from '../../redux/actions/items';
-import { updateParty, saveOrder, saveSplitOrder } from '../../redux/actions/party';
-import { openModal, closeModal, openSplitModal, closeSplitModal } from '../../redux/actions/modal';
-import { sendPayment } from '../../redux/actions/payments';
+import ItemSelector from '../../ItemSelector';
+import OrderScratchPad from '../../OrderScratchPad';
+import CheckoutModal from '../../CheckoutModal';
+import { getItems } from '../../../redux/actions/items';
+import { updateParty, saveOrder, saveSplitOrder } from '../../../redux/actions/party';
+import { openModal, closeModal, openSplitModal, closeSplitModal } from '../../../redux/actions/modal';
+import { sendPayment } from '../../../redux/actions/payments';
 
 import * as s from './styles';
 
@@ -124,7 +124,6 @@ class PartyPage extends React.Component {
   };
 
   render() {
-    console.warn('hhhhhhhhhhhhh', this.props.match.params.id);
     return (
       <StripeProvider apiKey="pk_test_0axArT8SI2u6aiUnuQH2lJzg">
         <React.Fragment>
@@ -145,7 +144,6 @@ class PartyPage extends React.Component {
             partyId={this.props.match.params.id}
           />
           <s.Container modalOpen={this.props.modalIsOpen}>
-            {/* // TODO: figure out how to name things */}
             <ItemSelector items={this.props.items} addItemToOrder={this.addItemToOrder} />
             <OrderScratchPad
               tables={this.state.party.tables}
