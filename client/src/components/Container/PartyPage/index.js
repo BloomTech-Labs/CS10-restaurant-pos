@@ -5,7 +5,7 @@ import { StripeProvider } from 'react-stripe-elements';
 import shortid from 'shortid';
 
 import ItemSelector from '../ItemSelector';
-import OrderScratchPad from '../../OrderScratchPad';
+import OrderScratchPad from '../../Presentational/OrderScratchPad';
 import CheckoutModal from '../../CheckoutModal';
 import { getItems } from '../../../redux/actions/items';
 import { updateParty, saveOrder, saveSplitOrder } from '../../../redux/actions/party';
