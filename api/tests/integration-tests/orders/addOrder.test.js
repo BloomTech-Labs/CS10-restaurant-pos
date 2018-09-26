@@ -41,4 +41,21 @@ describe('addOrder', () => {
 
     expect(res.status).toBe(201);
   });
+
+  // [Not Authorized] Adds an order to the DB
+  it('[No Auth] POST: Fails adding a new order to the DB', async () => {
+    const res = await request(server)
+      .post('/api/orders/add')
+      .send(
+        {
+          party: '5b993879366d2671bcba0e02',
+          server: '5b993879366d2671bcba0e02',
+          food: [
+            '5b956483ed2e4d86346d6c82',
+          ],
+        }
+      );
+
+    expect(res.status).toBe(401);
+  });
 });
