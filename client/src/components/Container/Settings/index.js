@@ -2,10 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import RestaurantInfo from '../RestaurantInfo';
-import Billing from '../Billing';
-import ChangePassword from '../ChangePassword';
-import CreateItem from '../CreateItem';
+import { subscribe } from '../../../redux/actions/payments';
+import { addItem } from '../../../redux/actions/items';
+import RestaurantInfo from '../../RestaurantInfo';
+import Billing from '../../Presentational/Billing';
+import ChangePassword from '../../ChangePassword';
+import CreateItem from '../../Presentational/CreateItem';
 
 import * as s from './styles';
 
@@ -13,13 +15,13 @@ class Settings extends React.Component {
   adminDisplay = () => (
     <React.Fragment>
       <RestaurantInfo />
-      <Billing />
+      <Billing subscribe={this.props.subscribe} />
     </React.Fragment>
   );
 
   managerDisplay = () => (
     <React.Fragment>
-      <CreateItem />
+      <CreateItem addItem={this.props.addItem} />
     </React.Fragment>
   );
 
@@ -39,6 +41,8 @@ Settings.propTypes = {
     admin: PropTypes.bool,
     manager: PropTypes.bool,
   }),
+  addItem: PropTypes.func,
+  subscribe: PropTypes.func,
 };
 
 Settings.defaultProps = {
@@ -46,10 +50,12 @@ Settings.defaultProps = {
     admin: false,
     manager: false,
   },
+  addItem: () => {},
+  subscribe: () => {},
 };
 
 const mapStateToProps = (state) => ({
   role: state.auth.role,
 });
 
-export default connect(mapStateToProps)(Settings);
+export default connect(mapStateToProps, { addItem, subscribe })(Settings);

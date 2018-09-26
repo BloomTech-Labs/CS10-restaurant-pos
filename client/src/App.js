@@ -18,7 +18,7 @@ import TablesPage from './components/TablesPage';
 import NotFound from './components/NotFound';
 import Navbar from './components/Navbar';
 import PartyPage from './components/PartyPage';
-import Settings from './components/Settings';
+import Settings from './components/Container/Settings';
 import Sidebar from './components/Sidebar';
 import NewRestaurant from './components/NewRestaurant';
 import RequireNotAuth from './components/HOC/RequireNotAuth';

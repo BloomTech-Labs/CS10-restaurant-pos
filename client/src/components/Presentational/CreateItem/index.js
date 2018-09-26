@@ -1,8 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-
-import { addItem } from '../../redux/actions/items';
 
 import * as s from './styles';
 
@@ -20,6 +17,11 @@ class CreateItem extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.addItem(this.state);
+    this.setState({
+      name: '',
+      description: '',
+      price: '',
+    });
   };
 
   render() {
@@ -63,7 +65,4 @@ CreateItem.defaultProps = {
   addItem: () => {}
 };
 
-export default connect(
-  null,
-  { addItem }
-)(CreateItem);
+export default CreateItem;

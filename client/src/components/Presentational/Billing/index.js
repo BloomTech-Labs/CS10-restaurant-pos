@@ -1,10 +1,8 @@
 import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
-import { subscribe } from '../../redux/actions/payments';
-import { Button } from '../../global-styles/styledComponents';
+import { Button } from '../../../global-styles/styledComponents';
 
 import * as s from './styles';
 
@@ -110,7 +108,4 @@ Billing.defaultProps = {
   subscribe: () => {}
 };
 
-export default connect(
-  null,
-  { subscribe }
-)(Billing);
+export default Billing;
