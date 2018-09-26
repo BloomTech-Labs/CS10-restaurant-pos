@@ -29,16 +29,26 @@ const adminLogin = (req, res) => {
         .then(async (verified) => {
           // check if password matches
           if (verified) {
+            let membership;
+            // check the membership status for the restaurant
+            try {
+              membership = await verifyMembership(user.restaurant);
+              if (typeof membership === 'object') throw membership;
+            } catch (err) {
+              return res.status(500).json(err);
+            }
+
             // add the restaurant and user's id to the payload
             const payload = {
-              id: user._id,
+              membership,
+              // if a restaurant exists on the user, don't send the id
+              id: user.restaurant ? null : user.id,
               pin: null,
               role: {
                 admin: null,
                 manager: null
               },
-              restaurant: user.restaurant,
-              membership: await verifyMembership(user.restaurant)
+              restaurant: user.restaurant
             };
 
             // sign a new token with the restaurant id
