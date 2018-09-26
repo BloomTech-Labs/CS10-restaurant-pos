@@ -5,7 +5,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 import { setInitialAuth } from './redux/actions/auth';
 import * as s from './styles';
-import Landing from './components/Landing';
+import Landing from './components/Presentational/Landing';
 import Logout from './components/Logout';
 import Login from './components/Login';
 import Register from './components/Register';
