@@ -43,7 +43,7 @@ describe('getAllOrders', () => {
     mongoose.disconnect();
   });
 
-  // [Authorized] Deletes an order from the DB
+  // [Authorized] Gets an order from the DB
   it('[Auth] GET: Gets all orders from the DB', async () => {
     const res = await request(server)
       .get('/api/orders/all')
@@ -52,7 +52,16 @@ describe('getAllOrders', () => {
     expect(res.status).toBe(200);
   });
 
-  // [Not Authorized] Deletes an order from the DB
+  // [Authorized] Returns as an array
+  it('[Auth] GET: Returns as type array', async () => {
+    const res = await request(server)
+      .get('/api/orders/all')
+      .set('Authorization', `${token}`);
+
+    expect(Array.isArray(res.body.orders)).toBe(true);
+  });
+
+  // [Not Authorized] Fails to get an order from the DB
   it('[No Auth] GET: Fails to get all orders from the DB', async () => {
     const res = await request(server)
       .get('/api/orders/all');
