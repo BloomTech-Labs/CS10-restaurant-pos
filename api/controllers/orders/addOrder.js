@@ -25,7 +25,7 @@ const addOrder = (req, res) => {
   newOrder
     .save()
     .then((order) => {
-      res.status(200).json({ order });
+      res.status(201).json({ order });
     })
     .catch((err) => {
       res
