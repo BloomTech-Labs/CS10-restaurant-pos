@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { login } from '../../redux/actions/auth';
 
 import * as s from './styles';
 
@@ -16,7 +14,7 @@ class Login extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.login(this.state, this.props.history.push);
+    this.props.login(this.state);
   };
 
   render() {
@@ -51,16 +49,11 @@ class Login extends React.Component {
 
 Login.propTypes = {
   login: PropTypes.func,
-  history: PropTypes.objectOf(PropTypes.any),
 };
 
 Login.defaultProps = {
   login: () => {},
-  history: {}
 };
 
 
-export default connect(
-  null,
-  { login }
-)(Login);
+export default Login;

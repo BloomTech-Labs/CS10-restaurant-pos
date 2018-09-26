@@ -7,7 +7,7 @@ import { setInitialAuth } from './redux/actions/auth';
 import * as s from './styles';
 import Landing from './components/Presentational/Landing';
 import Logout from './components/Logout';
-import Login from './components/Login';
+import Login from './components/Container/Login';
 import Register from './components/Register';
 import RegistrationSuccess from './components/RegistrationSuccess';
 import LoginEmployee from './components/LoginEmployee';
