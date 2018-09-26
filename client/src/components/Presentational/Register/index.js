@@ -1,8 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
-import { register } from '../../redux/actions/auth';
 
 import * as s from './styles';
 
@@ -21,7 +18,7 @@ class Register extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.register(this.state, this.props.history.push);
+    this.props.register(this.state);
   };
 
   // TODO: Send out the PIN in an email
@@ -81,17 +78,10 @@ class Register extends React.Component {
 
 Register.propTypes = {
   register: PropTypes.func,
-  history: PropTypes.shape({
-    push: PropTypes.func
-  })
 };
 
 Register.defaultProps = {
   register: () => {},
-  history: { push: () => {} }
 };
 
-export default connect(
-  null,
-  { register }
-)(Register);
+export default Register;

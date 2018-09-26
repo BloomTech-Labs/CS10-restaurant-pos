@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { logout } from '../../redux/actions/auth';
 
-const Logout = (props) => {
+const LogoutPage = (props) => {
   props.logout();
 
   const logoutRedirect = () => props.history.push('/');
@@ -14,14 +14,14 @@ const Logout = (props) => {
   return <div>You have logged out! :D</div>;
 };
 
-Logout.propTypes = {
+LogoutPage.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func
   }),
   logout: PropTypes.func
 };
 
-Logout.defaultProps = {
+LogoutPage.defaultProps = {
   history: { push: () => {} },
   logout: () => {}
 };
@@ -29,4 +29,4 @@ Logout.defaultProps = {
 export default connect(
   null,
   { logout }
-)(Logout);
+)(LogoutPage);
