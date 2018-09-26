@@ -1,24 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { sidebar } from '../../config/conditionalPathnames';
-import TableEditPanel from '../TableEditPanel';
+import TableEditPanel from '../../TableEditPanel';
 
 import * as s from './styles';
 
 
 class Sidebar extends React.Component {
   render() {
-    const { pathname } = this.props.location;
+    const { blur, visible, push, pathname } = this.props;
     return (
       <s.Sidebar
-        modalIsOpen={this.props.modalIsOpen}
-        visible={!sidebar.includes(pathname)}
+        blur={blur}
+        visible={visible}
       >
         <s.LinkGroup>
           <s.StyledLink to="/tables">Tables</s.StyledLink>
           <s.StyledLink to="/servers">Servers</s.StyledLink>
-          {pathname === '/tables' && <TableEditPanel push={this.props.history.push} />}
+          <TableEditPanel push={push} visible={pathname === '/tables'} />
         </s.LinkGroup>
         <s.LinkGroup>
           <s.StyledLink to="/settings">Settings</s.StyledLink>
@@ -30,19 +29,17 @@ class Sidebar extends React.Component {
 }
 
 Sidebar.propTypes = {
-  modalIsOpen: PropTypes.bool,
-  location: PropTypes.shape({
-    pathname: PropTypes.string
-  }),
-  history: PropTypes.shape({
-    push: PropTypes.func
-  }),
+  blur: PropTypes.bool,
+  visible: PropTypes.bool,
+  push: PropTypes.func,
+  pathname: PropTypes.string,
 };
 
 Sidebar.defaultProps = {
-  modalIsOpen: false,
-  location: {},
-  history: { push: () => {} },
+  blur: false,
+  visible: false,
+  push: () => {},
+  pathname: 'defaultpathname',
 };
 
 export default Sidebar;
