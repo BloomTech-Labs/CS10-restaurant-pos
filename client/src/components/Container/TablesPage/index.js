@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SetType from 'es6-set-proptypes';
 
-import FloorPlan from '../../FloorPlan';
+import FloorPlan from '../../Presentational/FloorPlan';
 import Tables from '../../Tables';
 import { getTables, moveTable, toggleTable } from '../../../redux/actions/tables';
 import { getParties, clearSelected } from '../../../redux/actions/party';

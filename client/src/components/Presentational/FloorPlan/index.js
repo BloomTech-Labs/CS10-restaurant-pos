@@ -4,16 +4,15 @@ import Viewport from 'pixi-viewport';
 import PropTypes from 'prop-types';
 import SetType from 'es6-set-proptypes';
 
-import { theme } from '../../global-styles/variables';
-import { MainContainer } from '../../global-styles/styledComponents';
-import * as tableImage from '../../assets/Path_33.png';
+import { theme } from '../../../global-styles/variables';
+import { MainContainer } from '../../../global-styles/styledComponents';
+import * as tableImage from '../../../assets/Path_33.png';
 
 class FloorPlan extends React.PureComponent {
   constructor(props) {
     super(props);
-    // use refs of the sidebar and topbar
-    // to calculate the size the viewer needs to be
 
+    // use ref of parent div and use its width and height
     const { parent } = this.props;
     const width = parent.current.clientWidth;
     const height = parent.current.clientHeight;
