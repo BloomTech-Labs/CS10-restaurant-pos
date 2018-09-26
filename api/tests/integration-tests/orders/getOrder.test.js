@@ -56,10 +56,10 @@ describe('getOrder', () => {
   });
 
   // [Not Authorized] Fails to get an order from the DB
-  // it('[No Auth] GET: Fails to get an order from the DB', async () => {
-  //   const res = await request(server)
-  //     .get('/api/orders/all');
+  it('[No Auth] GET: Fails to get an order from the DB', async () => {
+    const res = await request(server)
+      .get(`/api/orders/${orderId}`);
 
-  //   expect(res.status).toBe(401);
-  // });
+    expect(res.status).toBe(401);
+  });
 });
