@@ -24,6 +24,7 @@ describe('addItem', () => {
     mongoose.disconnect();
   });
 
+  // [Authorized] Adds an item to the DB
   it('POST: Adds a new item to the DB', async () => {
     const res = await request(server)
       .post('/api/items/add')
@@ -34,5 +35,17 @@ describe('addItem', () => {
       });
 
     expect(res.status).toBe(201);
+  });
+
+  // [Not Authorized] Fails at adding an item to the DB
+  it('[No Auth] POST: Fails adding a new item to the DB', async () => {
+    const res = await request(server)
+      .post('/api/items/add')
+      .send({
+        name: 'Cheese Wontons',
+        price: 4.99
+      });
+
+    expect(res.status).toBe(401);
   });
 });
