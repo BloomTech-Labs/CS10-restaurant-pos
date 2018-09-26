@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Clock from '../Clock';
+
 import * as s from './styles';
 
 class Navbar extends React.Component {
   render() {
     return (
       <s.Navbar modalIsOpen={this.props.modalIsOpen}>
+        <Clock />
         <s.StyledLink to="/login-employee">(Employee Login)</s.StyledLink>
         <s.StyledLink to="/login">(Admin Login)</s.StyledLink>
         <s.StyledLink to="/register">(Register)</s.StyledLink>
