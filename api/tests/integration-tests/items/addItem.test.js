@@ -7,6 +7,7 @@ let token;
 
 describe('addItem', () => {
   beforeAll((done) => {
+    // register the admin
     request(server)
       .post('/api/employees/admin/register')
       .send({
@@ -15,6 +16,7 @@ describe('addItem', () => {
         pass: 'password'
       })
       .then(() => {
+        // login the admin
         request(server)
           .post('/api/employees/admin/login')
           .send({
@@ -22,7 +24,9 @@ describe('addItem', () => {
             pass: 'password'
           })
           .then((res) => {
-            token = res.body.token; // eslint-disable-line 
+            // set the token to admin logged in
+            token = res.body.token; // eslint-disable-line
+            // create restaurant
             request(server)
               .post('/api/restaurants/register')
               .set('Authorization', `${token}`)
@@ -33,15 +37,19 @@ describe('addItem', () => {
                   address: 'null'
                 }
               })
-              .then(() => {
+              .then((restaurantRes) => {
+              // set new token with restaurant info
+                token = restaurantRes.body.token; // eslint-disable-line
+                // login admin as employee
                 request(server)
-                  .post('/api/employees/admin/login')
+                  .post('/api/employees/login')
+                  .set('Authorization', `${token}`)
                   .send({
-                    email: 'admin@admin.com',
+                    pin: '0000',
                     pass: 'password'
                   })
                   .end((err, loginRes) => {
-                    token = loginRes.body.token; // eslint-disable-line 
+                    token = loginRes.body.token; // eslint-disable-line
                     done();
                   });
               })

@@ -12,7 +12,9 @@ const verifyMembership = (id) => {
   }
 
   return Restaurant.findOne({ _id: id })
-    .then((restaurant) => (
+    .then((restaurant) => {
+      // if the restaurant doesn't have a subscription token, return false
+      if (!restaurant.subscription) return false;
       // Retrieve the membership status from Stripe
       stripe.subscriptions
         .retrieve(restaurant.subscription)
@@ -23,9 +25,7 @@ const verifyMembership = (id) => {
             restaurant.membership = subscription.status === 'active';
             return restaurant
               .save()
-              .then(() => (
-                subscription.status === 'active'
-              ))
+              .then(() => subscription.status === 'active')
               .catch((err) => ({
                 err,
                 msg:
@@ -34,13 +34,15 @@ const verifyMembership = (id) => {
           }
           return subscription.status === 'active';
         })
-        .catch(err => (
-          { err, msg: 'There was an error retrieving the stripe subscription.' }
-        ))
-    ))
-    .catch(err => (
-      { err, msg: 'There was an error retrieving the restaurant from the database.' }
-    ));
+        .catch((err) => ({
+          err,
+          msg: 'There was an error retrieving the stripe subscription.',
+        }));
+    })
+    .catch((err) => ({
+      err,
+      msg: 'There was an error retrieving the restaurant from the database.',
+    }));
 };
 
 module.exports = verifyMembership;

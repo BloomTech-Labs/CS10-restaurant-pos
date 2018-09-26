@@ -41,7 +41,8 @@ const adminLogin = (req, res) => {
             // add the restaurant and user's id to the payload
             const payload = {
               membership,
-              id: user._id,
+              // if a restaurant exists on the user, don't send the id
+              id: user.restaurant ? null : user.id,
               pin: null,
               role: {
                 admin: null,
