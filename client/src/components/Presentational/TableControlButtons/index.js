@@ -34,7 +34,6 @@ class TableControlButtons extends React.PureComponent {
 
   render() {
     const { editing, authorized, visible } = this.props;
-
     if (visible) {
       return (
         <div>

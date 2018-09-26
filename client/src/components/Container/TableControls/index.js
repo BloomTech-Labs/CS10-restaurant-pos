@@ -30,12 +30,6 @@ class TableControls extends React.Component {
 
   toggleEdit = () => this.props.toggleEdit();
 
-  saveTables = () => this.props.saveTables();
-
-  createParty = () => this.props.createParty();
-
-  addTable = () => this.props.addTable();
-
   render() {
     const authorized = this.props.role.admin || this.props.role.manager;
     const { selected, editing, visible } = this.props;

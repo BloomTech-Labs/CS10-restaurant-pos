@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { StripeProvider } from 'react-stripe-elements';
 import shortid from 'shortid';
 
-import ItemSelector from '../../ItemSelector';
+import ItemSelector from '../ItemSelector';
 import OrderScratchPad from '../../OrderScratchPad';
 import CheckoutModal from '../../CheckoutModal';
 import { getItems } from '../../../redux/actions/items';

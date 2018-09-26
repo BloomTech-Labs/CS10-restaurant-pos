@@ -1,18 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Item from '../../Presentational/Item';
+
 import * as s from './styles';
 
 class ItemSelector extends React.Component {
+  addItemToOrder = (item) => {
+    this.props.addItemToOrder(item);
+  }
+
   render() {
     return (
       <s.Container>
         {this.props.items.map((item) => (
-          <s.ItemBoxes key={item._id} onClick={() => this.props.addItemToOrder(item)}>
-            <s.ItemTitle>{item.name}</s.ItemTitle>
-            <s.ItemDescription>{item.description}</s.ItemDescription>
-            <s.ItemPrice>{item.price}</s.ItemPrice>
-          </s.ItemBoxes>
+          <Item key={item._id} addItemToOrder={this.addItemToOrder} item={item} />
         ))}
       </s.Container>
     );
