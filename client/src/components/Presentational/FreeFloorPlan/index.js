@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import SetType from 'es6-set-proptypes';
 import shortId from 'shortid';
@@ -7,7 +7,7 @@ import Table from '../Table';
 
 import * as s from './styles';
 
-class Tables extends Component {
+class FreeFloorPlan extends React.Component {
   render() {
     return (
       <s.Container>
@@ -27,16 +27,16 @@ class Tables extends Component {
   }
 }
 
-Tables.propTypes = {
+FreeFloorPlan.propTypes = {
   selected: SetType,
   tables: PropTypes.arrayOf(PropTypes.object),
   toggleTable: PropTypes.func
 };
 
-Tables.defaultProps = {
+FreeFloorPlan.defaultProps = {
   selected: new Set(),
   tables: [],
   toggleTable: () => {}
 };
 
-export default Tables;
+export default FreeFloorPlan;

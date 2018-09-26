@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import SetType from 'es6-set-proptypes';
 
 import FloorPlan from '../../Presentational/FloorPlan';
-import Tables from '../../Tables';
+import FreeFloorPlan from '../../Presentational/FreeFloorPlan';
 import { getTables, moveTable, toggleTable } from '../../../redux/actions/tables';
 import { getParties, clearSelected } from '../../../redux/actions/party';
 
@@ -69,7 +69,7 @@ class TablesPage extends Component {
             )}
           </s.FloorPlanContainer>
         ) : (
-          <Tables
+          <FreeFloorPlan
             membership={membership}
             tables={tables}
             selected={selected}
