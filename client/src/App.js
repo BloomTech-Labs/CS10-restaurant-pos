@@ -12,7 +12,7 @@ import Register from './components/Container/RegisterPage';
 import RegistrationSuccess from './components/Presentational/RegistrationSuccessPage';
 import LoginEmployee from './components/Container/LoginEmployeePage';
 import CreateEmployee from './components/Container/CreateEmployeePage';
-import Servers from './components/Servers';
+import Servers from './components/Container/ServersPage';
 import TablesPage from './components/Container/TablesPage';
 import NotFound from './components/Presentational/NotFound';
 import Navbar from './components/Presentational/Navbar';
