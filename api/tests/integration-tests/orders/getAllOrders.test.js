@@ -51,4 +51,12 @@ describe('getAllOrders', () => {
 
     expect(res.status).toBe(200);
   });
+
+  // [Not Authorized] Deletes an order from the DB
+  it('[No Auth] GET: Fails to get all orders from the DB', async () => {
+    const res = await request(server)
+      .get('/api/orders/all');
+
+    expect(res.status).toBe(401);
+  });
 });
