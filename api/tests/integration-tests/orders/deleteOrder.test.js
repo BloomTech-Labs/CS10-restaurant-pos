@@ -54,4 +54,12 @@ describe('deleteOrder', () => {
 
     expect(res.status).toBe(202);
   });
+
+  // [Not Authorized] Deletes an order from the DB
+  it('[No Auth] DELETE: Fails deleting an order from the DB', async () => {
+    const res = await request(server)
+      .delete(`/api/orders/delete/${orderId}`);
+
+    expect(res.status).toBe(401);
+  });
 });
