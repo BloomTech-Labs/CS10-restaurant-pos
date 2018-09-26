@@ -16,7 +16,7 @@ import CreateEmployee from './components/CreateEmployee';
 import Servers from './components/Servers';
 import TablesPage from './components/TablesPage';
 import NotFound from './components/NotFound';
-import Navbar from './components/Navbar';
+import Navbar from './components/Presentational/Navbar';
 import PartyPage from './components/PartyPage';
 import Settings from './components/Container/Settings';
 import Sidebar from './components/Sidebar';
@@ -48,7 +48,7 @@ class App extends Component {
       <Router>
         <ThemeProvider theme={theme}>
           <s.Container>
-            <Navbar modalIsOpen={this.props.modalIsOpen} />
+            <Navbar blur={this.props.modalIsOpen} />
             <s.Main>
               <SidebarWithRouter modalIsOpen={this.props.modalIsOpen} role={this.props.role} />
               <Switch>

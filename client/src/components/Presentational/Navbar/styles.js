@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { modalBlur } from '../../global-styles/mixins';
+import { modalBlur } from '../../../global-styles/mixins';
 
 export const Navbar = styled.nav`
   display: flex;
@@ -13,7 +13,7 @@ export const Navbar = styled.nav`
   padding-right: 20px;
   border-top: 4px solid ${(props) => props.theme.appSecondary};
   background: ${(props) => props.theme.appPrimary};
-  ${(props) => props.modalIsOpen && modalBlur};
+  ${(props) => props.blur && modalBlur};
 `;
 
 export const StyledLink = styled(Link)`

@@ -8,7 +8,7 @@ import * as s from './styles';
 class Navbar extends React.Component {
   render() {
     return (
-      <s.Navbar modalIsOpen={this.props.modalIsOpen}>
+      <s.Navbar blur={this.props.blur}>
         <Clock />
         <s.StyledLink to="/login-employee">(Employee Login)</s.StyledLink>
         <s.StyledLink to="/login">(Admin Login)</s.StyledLink>
@@ -26,11 +26,11 @@ class Navbar extends React.Component {
 }
 
 Navbar.propTypes = {
-  modalIsOpen: PropTypes.bool,
+  blur: PropTypes.bool,
 };
 
 Navbar.defaultProps = {
-  modalIsOpen: false,
+  blur: false,
 };
 
 export default Navbar;
