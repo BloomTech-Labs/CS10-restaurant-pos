@@ -8,7 +8,7 @@ let token;
 
 jest.setTimeout(30000);
 
-xdescribe('getAllOrders', () => {
+describe('getAllOrders', () => {
   beforeAll(async (done) => {
     // register the admin
     await loginAdmin(server)
