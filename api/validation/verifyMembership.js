@@ -16,7 +16,7 @@ const verifyMembership = (id) => {
       // if the restaurant doesn't have a subscription token, return false
       if (!restaurant.subscription) return false;
       // Retrieve the membership status from Stripe
-      stripe.subscriptions
+      return stripe.subscriptions
         .retrieve(restaurant.subscription)
         .then((subscription) => {
           // Check whether or not the subscription is active
