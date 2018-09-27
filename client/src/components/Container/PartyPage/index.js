@@ -6,7 +6,7 @@ import shortid from 'shortid';
 
 import ItemSelector from '../ItemSelector';
 import OrderScratchPad from '../../Presentational/OrderScratchPad';
-import CheckoutModal from '../../CheckoutModal';
+import CheckoutModal from '../../Presentational/CheckoutModal';
 import { getItems } from '../../../redux/actions/items';
 import { updateParty, saveOrder, saveSplitOrder } from '../../../redux/actions/party';
 import { openModal, closeModal, openSplitModal, closeSplitModal } from '../../../redux/actions/modal';
