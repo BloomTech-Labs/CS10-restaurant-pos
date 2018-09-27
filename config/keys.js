@@ -3,5 +3,6 @@ module.exports = {
   clientURI: process.env.HEROKU_URI || 'http://localhost:3000',
   secretOrKey: process.env.SECRET_OR_KEY,
   stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
-  stripeSecretKey: process.env.STRIPE_SECRET_KEY
+  stripeSecretKey: process.env.STRIPE_SECRET_KEY,
+  sendGrid: process.env.SENDGRID_API_KEY
 };

@@ -11,38 +11,37 @@ export const PAYMENT_SUCCESS = 'PAYMENT_SUCCESS';
 export const PAYMENT_ERROR = 'PAYMENT_ERROR';
 export const CLEAR_ORDER_CLIENT = 'CLEAR_ORDER_CLIENT';
 
-export const sendPayment = (stripe, amount, description, isSplit, partyId) => {
-  console.warn('bleh', partyId);
-  return (dispatch, getState) => {
-    // const stripeToken =
-    dispatch({ type: SENDING_PAYMENT });
-    axios
-      .post(`${serverURI}/api/checkout`, { stripeToken: stripe.token.id, amount, description })
-      .then(res => {
-        dispatch({ type: PAYMENT_SUCCESS, payload: res.data });
+export const sendPayment = (stripe, amount, description, isSplit, partyId) => (
+  dispatch,
+  getState
+) => {
+  // const stripeToken =
+  dispatch({ type: SENDING_PAYMENT });
+  axios
+    .post(`${serverURI}/api/checkout`, { stripeToken: stripe.token.id, amount, description })
+    .then(res => {
+      dispatch({ type: PAYMENT_SUCCESS, payload: res.data });
 
-        if (isSplit) {
-          const { order, splitOrder } = getState().party;
+      if (isSplit) {
+        const { order, splitOrder } = getState().party;
 
-          const food = order
-            .filter(item => splitOrder
-              .find(splitItem => item.localRef !== splitItem.localRef));
+        const food = order
+          .filter(item => splitOrder
+            .find(splitItem => item.localRef !== splitItem.localRef));
 
-          dispatch(updateParty(partyId, { food }));
-
-          dispatch({ type: CLEAR_ORDER_CLIENT });
-          dispatch(closeSplitModal());
-          dispatch(openModal());
-        } else {
-          dispatch(deleteParty(partyId));
-          dispatch(closeModal());
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        dispatch({ type: PAYMENT_ERROR, payload: err });
-      });
-  };
+        dispatch(updateParty(partyId, { food }));
+        dispatch(closeSplitModal());
+        dispatch(openModal());
+      } else {
+        dispatch({ type: CLEAR_ORDER_CLIENT });
+        dispatch(deleteParty(partyId));
+        dispatch(closeModal());
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      dispatch({ type: PAYMENT_ERROR, payload: err });
+    });
 };
 
 export const subscribe = token => dispatch => {
