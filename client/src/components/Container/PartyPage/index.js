@@ -9,7 +9,12 @@ import OrderScratchPad from '../../Presentational/OrderScratchPad';
 import CheckoutModal from '../../Presentational/CheckoutModal';
 import { getItems } from '../../../redux/actions/items';
 import { updateParty, saveOrder, saveSplitOrder } from '../../../redux/actions/party';
-import { openModal, closeModal, openSplitModal, closeSplitModal } from '../../../redux/actions/modal';
+import {
+  openModal,
+  closeModal,
+  openSplitModal,
+  closeSplitModal
+} from '../../../redux/actions/modal';
 import { sendPayment } from '../../../redux/actions/payments';
 
 import * as s from './styles';
@@ -24,44 +29,46 @@ class PartyPage extends React.Component {
   state = {
     splitCheck: this.props.splitOrder,
     order: [],
-    party: {},
+    party: {}
   };
 
   componentDidMount() {
     this.props.getItems();
 
-    const foundParty = this.props.partyList.find(party => party._id === this.props.match.params.id);
+    const foundParty = this.props.partyList.find(
+      (party) => party._id === this.props.match.params.id
+    );
     if (!foundParty) {
-      console.error('something went wrong with creating the parties man');
       this.props.history.push('/tables');
     } else {
       this.setState({
-        order: foundParty.food,
+        order: foundParty.food
       });
     }
   }
 
   componentDidUpdate(prev) {
-    if (this.state.order.length !== prev.order.length
-      && this.props.splitModalIsOpen !== prev.splitModalIsOpen) {
-      console.log('updating early??', this.state.order);
-      this.setState({ // eslint-disable-line react/no-did-update-set-state
-        order: this.props.order,
+    if (
+      this.state.order.length !== prev.order.length
+      && this.props.splitModalIsOpen !== prev.splitModalIsOpen
+    ) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({
+        order: this.props.order
       });
     }
   }
-
 
   openModal = () => {
     this.props.saveOrder(this.state.order);
     this.props.openModal();
   };
 
-  toggleSplitCheckItem = item => {
-    this.setState(prev => {
-      if (prev.splitCheck.find(element => element.localRef === item.localRef)) {
+  toggleSplitCheckItem = (item) => {
+    this.setState((prev) => {
+      if (prev.splitCheck.find((element) => element.localRef === item.localRef)) {
         return {
-          splitCheck: prev.splitCheck.filter(element => element.localRef !== item.localRef)
+          splitCheck: prev.splitCheck.filter((element) => element.localRef !== item.localRef)
         };
       }
       return {
@@ -81,16 +88,23 @@ class PartyPage extends React.Component {
     this.props.openModal();
   };
 
-  addItemToOrder = item => {
-    this.setState(prev => ({
-      order: [...prev.order, { ...item, localRef: shortid.generate() }],
+  addItemToOrder = (item) => {
+    this.setState((prev) => ({
+      order: [...prev.order, { ...item, localRef: shortid.generate() }]
     }));
   };
 
-  removeItemFromOrder = item => {
-    console.log('this.total: ', this.total, 'item: ', item, 'this.state.order[0]: ', this.state.order[0]);
-    this.setState(prev => ({
-      order: prev.order.filter(orderItem => orderItem.localRef !== item.localRef),
+  removeItemFromOrder = (item) => {
+    console.log(
+      'this.total: ',
+      this.total,
+      'item: ',
+      item,
+      'this.state.order[0]: ',
+      this.state.order[0]
+    );
+    this.setState((prev) => ({
+      order: prev.order.filter((orderItem) => orderItem.localRef !== item.localRef)
     }));
   };
 
@@ -99,7 +113,7 @@ class PartyPage extends React.Component {
     this.props.history.push('/tables');
   };
 
-  setTotal = total => {
+  setTotal = (total) => {
     console.log('total', total);
     this.total = total;
   };
@@ -194,7 +208,7 @@ PartyPage.defaultProps = {
   location: { country: 'US', state: 'CA' }
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   splitModalIsOpen: state.modal.splitModalIsOpen,
   items: state.items.itemList,
   tables: state.party.tables,

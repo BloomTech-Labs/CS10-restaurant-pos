@@ -9,6 +9,16 @@ class CheckoutModal extends React.Component {
     showStripe: false
   };
 
+  componentDidUpdate(prev) {
+    if (
+      this.props.modalIsOpen !== prev.modalIsOpen
+      || this.props.splitModalIsOpen !== prev.splitModalIsOpen
+    ) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ showStripe: false });
+    }
+  }
+
   toggleCheckout = () => {
     this.setState((prev) => ({
       showStripe: !prev.showStripe
