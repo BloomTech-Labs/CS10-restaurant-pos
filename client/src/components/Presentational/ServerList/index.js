@@ -20,6 +20,8 @@ export default function ServerList(props) {
     return { ...server, parties: [{ tables: [] }] };
   });
 
+  console.log(serverInfo);
+
   return (
     <s.Container>
       <h2>Servers</h2>
