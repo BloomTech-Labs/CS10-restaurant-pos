@@ -6,6 +6,8 @@ const { loginAdmin } = require('../../helpers/loginAdmin');
 
 let token;
 
+jest.setTimeout(30000);
+
 describe('addItem', () => {
   beforeAll(async (done) => {
     // register the admin
