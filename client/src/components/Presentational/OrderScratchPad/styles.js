@@ -11,13 +11,6 @@ export const Container = styled.div`
   padding: 0 35px;
 `;
 
-export const Scroll = styled.div`
-  display: inline-block;
-  width: 300px;
-  height: 60%;
-  overflow-y: scroll;
-`;
-
 export const Checkout = styled.div`
   ${flexCenterMixin};
   flex-direction: column;

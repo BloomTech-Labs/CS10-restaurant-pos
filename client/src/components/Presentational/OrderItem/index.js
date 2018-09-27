@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import * as s from './styles';
 
 export default function OrderItem(props) {
-  const { item } = props;
+  const { ItemButton, itemAction, item, checked } = props;
   return (
     <s.Items>
-      <s.DeleteButton onClick={() => props.removeItemFromOrder(item)}>X</s.DeleteButton>
+      <ItemButton action={itemAction} item={item} checked={checked} />
       <span>{item.name}</span>
       <span>{item.price}</span>
     </s.Items>
@@ -15,17 +15,21 @@ export default function OrderItem(props) {
 }
 
 OrderItem.propTypes = {
+  checked: PropTypes.bool,
   item: PropTypes.shape({
     name: PropTypes.string,
     price: PropTypes.number
   }), // TODO: define shape later
-  removeItemFromOrder: PropTypes.func
+  itemAction: PropTypes.func,
+  ItemButton: PropTypes.func,
 };
 
 OrderItem.defaultProps = {
+  checked: false,
   item: {
     name: 'defaultitem',
     price: '555.00'
   },
-  removeItemFromOrder: () => {}
+  itemAction: () => {},
+  ItemButton: () => <div />,
 };

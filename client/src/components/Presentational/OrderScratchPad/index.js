@@ -1,38 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import shortid from 'shortid';
 
+import DeleteButton from '../DeleteButton';
 import PartyTablesTitle from '../PartyTablesTitle';
 import OrderTotal from '../OrderTotal';
-import OrderItem from '../OrderItem';
+import OrderList from '../OrderList';
 import { Button } from '../../../global-styles/styledComponents';
 
 import * as s from './styles';
 
 export default function OrderScratchPad(props) {
+  const {
+    tables,
+    order,
+    removeItemFromOrder,
+    location,
+    subTotal,
+    setTotal,
+    saveParty,
+    openModal
+  } = props;
+
+  console.log(DeleteButton);
   return (
     <s.Container>
-      <PartyTablesTitle tables={props.tables} />
-      <s.Scroll>
-        {props.order.map(item => (
-          <OrderItem
-            key={shortid.generate()}
-            item={item}
-            removeItemFromOrder={props.removeItemFromOrder}
-          />
-        ))}
-      </s.Scroll>
+      <PartyTablesTitle tables={tables} />
+      <OrderList order={order} ItemButton={DeleteButton} itemAction={removeItemFromOrder} />
       <s.Checkout>
-        <OrderTotal
-          location={props.location}
-          subTotal={props.subTotal}
-          setTotal={props.setTotal}
-        />
+        <OrderTotal location={location} subTotal={subTotal} setTotal={setTotal} />
         <s.ButtonContainer>
-          <Button primary dark type="button" onClick={props.saveParty}>
+          <Button primary dark type="button" onClick={saveParty}>
             Save
           </Button>
-          <Button dark type="button" onClick={props.openModal}>
+          <Button dark type="button" onClick={openModal}>
             Checkout Now
           </Button>
         </s.ButtonContainer>

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Servers(props) {
+export default function ServerList(props) {
   const { serverList } = props;
   return (
     <div>
@@ -13,11 +13,11 @@ export default function Servers(props) {
   );
 }
 
-Servers.propTypes = {
+ServerList.propTypes = {
   serverList: PropTypes.arrayOf(PropTypes.object) // TODO: Define object shape
 };
 
-Servers.defaultProps = {
+ServerList.defaultProps = {
   serverList: [
     { name: 'Jimmy', _id: '38hiodsn' },
     { name: 'Randy', _id: 'dgas98yh3n2' },

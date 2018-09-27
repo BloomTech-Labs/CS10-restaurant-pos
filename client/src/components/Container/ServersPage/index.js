@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { getServers } from '../../../redux/actions/servers';
-import Servers from '../../Presentational/Servers';
+import ServerList from '../../Presentational/ServerList';
 
 // import * as s from './styles';
 
@@ -16,7 +16,7 @@ class ServersPage extends React.Component {
     const { serverList } = this.props;
     return (
       <div>
-        <Servers serverList={serverList} />
+        <ServerList serverList={serverList} />
       </div>
     );
   }

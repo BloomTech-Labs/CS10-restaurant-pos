@@ -105,6 +105,7 @@ class PartyPage extends React.Component {
   };
 
   removeItemFromOrder = item => {
+    console.log('this.total: ', this.total, 'item: ', item, 'this.state.order[0]: ', this.state.order[0]);
     this.setState(prev => ({
       order: prev.order.filter(orderItem => orderItem.localRef !== item.localRef),
       subTotal: Number(
