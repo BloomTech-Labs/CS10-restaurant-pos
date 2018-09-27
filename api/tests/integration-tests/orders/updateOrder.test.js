@@ -69,4 +69,13 @@ describe('updateOrder', () => {
     expect(res.status).toBe(200);
     expect(res.body.updatedOrder.food.length).toEqual(3);
   });
+
+  // [Not Authorized] Fails to update an order without auth
+  it('[No Auth] PUT: Fails to update an order in the DB', async () => {
+    const res = await request(server)
+      .put(`/api/orders/update/${orderId}`)
+      .send(testOrder);
+
+    expect(res.status).toBe(401);
+  });
 });
