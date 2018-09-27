@@ -52,6 +52,11 @@ class TablesPage extends Component {
       moveTable: moveTableAction,
     } = this.props;
 
+    let tablesToDisplay = tables;
+    if (!membership) {
+      tablesToDisplay = tables.slice(0, 5);
+    }
+
     return (
       <React.Fragment>
         {membership ? (
@@ -59,7 +64,7 @@ class TablesPage extends Component {
             {this.floorplanParent.current && (
               <FloorPlan
                 editing={editing && authorized}
-                tables={tables}
+                tables={tablesToDisplay}
                 selected={selected}
                 moveTable={moveTableAction}
                 toggleTable={this.toggleTable}
@@ -71,7 +76,7 @@ class TablesPage extends Component {
         ) : (
           <FreeFloorPlan
             membership={membership}
-            tables={tables}
+            tables={tablesToDisplay}
             selected={selected}
             toggleTable={this.toggleTable}
             openParty={this.openParty}

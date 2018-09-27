@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 import SetType from 'es6-set-proptypes';
 
 import { theme } from '../../../global-styles/variables';
-import { MainContainer } from '../../../global-styles/styledComponents';
 import * as tableImage from '../../../assets/Path_33.png';
+
+import * as s from './styles';
 
 class FloorPlan extends React.PureComponent {
   constructor(props) {
@@ -317,7 +318,7 @@ class FloorPlan extends React.PureComponent {
   render() {
     return (
       <React.Fragment>
-        <MainContainer innerRef={this.pixi} />
+        <s.Container innerRef={this.pixi} />
         <div style={{ position: 'fixed', right: '100px', top: '150px' }}>
           {/* // ! make these not inline */}
           <label htmlFor="lock">
