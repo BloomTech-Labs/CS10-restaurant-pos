@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Server from '../Server';
+
 export default function ServerList(props) {
   const { serverList } = props;
   return (
     <div>
       <h2>Servers</h2>
       {serverList.map(server => (
-        <div key={server._id}>{server.name}</div>
+        <Server key={server._id} server={server} />
       ))}
     </div>
   );

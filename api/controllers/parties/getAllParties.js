@@ -7,7 +7,6 @@ const Party = require('../../models/Party');
 const getAllParties = (req, res) => {
   Party.find({ restaurant: req.user.restaurant })
     .populate('server', ['name'])
-    // .populate('food.id', ['name', 'price'])
     .populate({ path: 'food._id', model: 'Item' })
     .populate('tables')
     .then((parties) => {
