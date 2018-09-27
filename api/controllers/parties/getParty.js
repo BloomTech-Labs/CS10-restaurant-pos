@@ -18,7 +18,7 @@ const getParty = (req, res) => {
 
   Party.findOne({ _id: id })
     .populate('server', ['name'])
-    .populate('food', ['name', 'price'])
+    .populate({ path: 'food._id', model: 'Item' })
     .populate('tables')
     .then((party) => {
       res.status(200).json({ party });

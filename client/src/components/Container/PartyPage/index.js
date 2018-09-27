@@ -66,9 +66,9 @@ class PartyPage extends React.Component {
 
   toggleSplitCheckItem = (item) => {
     this.setState((prev) => {
-      if (prev.splitCheck.find((element) => element.localRef === item.localRef)) {
+      if (prev.splitCheck.find((element) => element.uniqueId === item.uniqueId)) {
         return {
-          splitCheck: prev.splitCheck.filter((element) => element.localRef !== item.localRef)
+          splitCheck: prev.splitCheck.filter((element) => element.uniqueId !== item.uniqueId)
         };
       }
       return {
@@ -90,7 +90,7 @@ class PartyPage extends React.Component {
 
   addItemToOrder = (item) => {
     this.setState((prev) => ({
-      order: [...prev.order, { ...item, localRef: shortid.generate() }]
+      order: [...prev.order, { ...item, uniqueId: shortid.generate() }]
     }));
   };
 
@@ -104,7 +104,7 @@ class PartyPage extends React.Component {
       this.state.order[0]
     );
     this.setState((prev) => ({
-      order: prev.order.filter((orderItem) => orderItem.localRef !== item.localRef)
+      order: prev.order.filter((orderItem) => orderItem.uniqueId !== item.uniqueId)
     }));
   };
 
