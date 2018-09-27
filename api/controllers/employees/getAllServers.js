@@ -13,7 +13,7 @@ const getAllServers = (req, res) => {
 
   // if the user is a manager, they will only see servers.
   // admins can see all employees
-  if (req.user.manager && !req.user.admin) {
+  if (req.user.role.manager && !req.user.role.admin) {
     searchQuery.role = { admin: false, manager: false };
   }
 
