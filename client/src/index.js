@@ -11,10 +11,11 @@ import { axiosAuth } from './redux/middleware/axios';
 import reducer from './redux/reducers';
 import App from './App';
 import { theme } from './global-styles/variables';
+import registerServiceWorker from './registerServiceWorker';
 
 import './index.css';
 
-// import registerServiceWorker from './registerServiceWorker';
+
 let store;
 if (process.env.NODE_ENV === 'production') {
   store = createStore(reducer, applyMiddleware(thunk, requireManager, axiosAuth));
@@ -41,3 +42,4 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+registerServiceWorker();
