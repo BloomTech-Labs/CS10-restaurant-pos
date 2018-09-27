@@ -24,47 +24,33 @@ class PartyPage extends React.Component {
   state = {
     splitCheck: this.props.splitOrder,
     order: [],
-    subTotal: 0,
-    party: {}
+    party: {},
   };
 
   componentDidMount() {
     this.props.getItems();
-    this.findParty();
-  }
 
-  componentDidUpdate(prev) {
     const foundParty = this.props.partyList.find(party => party._id === this.props.match.params.id);
-
     if (!foundParty) {
+      console.error('something went wrong with creating the parties man');
       this.props.history.push('/tables');
-    } else if (this.state.order.length !== foundParty.food.length
-      && this.props.splitModalIsOpen !== prev.splitModalIsOpen) {
-      this.setState({ // eslint-disable-line react/no-did-update-set-state
+    } else {
+      this.setState({
         order: foundParty.food,
       });
     }
   }
 
-  findParty = () => {
-    const foundParty = this.props.partyList.find(party => party._id === this.props.match.params.id);
-    if (foundParty) {
-      this.setState(prev => {
-        const newOrder = prev.order.concat(foundParty.food).map(item => {
-          item.localRef = shortid.generate();
-          return item;
-        });
-
-        return {
-          party: foundParty,
-          order: newOrder,
-          subTotal: Number(
-            newOrder.reduce((acc, foodItem) => acc + foodItem.price, 0).toFixed(2)
-          ),
-        };
+  componentDidUpdate(prev) {
+    if (this.state.order.length !== prev.order.length
+      && this.props.splitModalIsOpen !== prev.splitModalIsOpen) {
+      console.log('updating early??', this.state.order);
+      this.setState({ // eslint-disable-line react/no-did-update-set-state
+        order: this.props.order,
       });
     }
-  };
+  }
+
 
   openModal = () => {
     this.props.saveOrder(this.state.order);
@@ -98,9 +84,6 @@ class PartyPage extends React.Component {
   addItemToOrder = item => {
     this.setState(prev => ({
       order: [...prev.order, { ...item, localRef: shortid.generate() }],
-      subTotal: Number(
-        (prev.order.reduce((acc, foodItem) => acc + foodItem.price, 0) + item.price).toFixed(2)
-      )
     }));
   };
 
@@ -108,9 +91,6 @@ class PartyPage extends React.Component {
     console.log('this.total: ', this.total, 'item: ', item, 'this.state.order[0]: ', this.state.order[0]);
     this.setState(prev => ({
       order: prev.order.filter(orderItem => orderItem.localRef !== item.localRef),
-      subTotal: Number(
-        (prev.order.reduce((acc, foodItem) => acc + foodItem.price, 0) - item.price).toFixed(2)
-      )
     }));
   };
 
@@ -180,6 +160,7 @@ PartyPage.propTypes = {
   modalIsOpen: PropTypes.bool,
   splitModalIsOpen: PropTypes.bool,
   closeSplitModal: PropTypes.func,
+  order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   items: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   splitOrder: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   match: PropTypes.shape({
@@ -205,6 +186,7 @@ PartyPage.defaultProps = {
   closeSplitModal: () => {},
   modalIsOpen: false,
   splitModalIsOpen: false,
+  order: [{}],
   items: [],
   splitOrder: [],
   partyList: [{ _id: 'defaultpartyid' }],
@@ -218,6 +200,7 @@ const mapStateToProps = state => ({
   tables: state.party.tables,
   splitOrder: state.party.splitOrder,
   partyList: state.party.partyList,
+  order: state.party.order,
   location: state.restaurant.restaurantInfo.location
 });
 

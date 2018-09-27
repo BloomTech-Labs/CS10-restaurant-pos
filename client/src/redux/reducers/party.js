@@ -98,7 +98,13 @@ const PartyReducer = (state = initialState, action) => {
       return { ...initialState, partyList: state.partyList };
 
     case CLEAR_SPLIT_ORDER:
-      return { ...state, splitOrder: [] };
+      return {
+        ...state,
+        splitOrder: [],
+        order: state.order
+          .filter(item => state.splitOrder
+            .find(splitItem => item.localRef !== splitItem.localRef))
+      };
 
     case CLEAR_ORDER_CLIENT:
       return {

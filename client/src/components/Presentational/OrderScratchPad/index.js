@@ -20,14 +20,13 @@ export default function OrderScratchPad(props) {
     saveParty,
     openModal
   } = props;
-
-  console.log(DeleteButton);
+  console.log('scratchpad ordr:', order);
   return (
     <s.Container>
       <PartyTablesTitle tables={tables} />
       <OrderList order={order} ItemButton={DeleteButton} itemAction={removeItemFromOrder} />
       <s.Checkout>
-        <OrderTotal location={location} subTotal={subTotal} setTotal={setTotal} />
+        <OrderTotal location={location} order={order} subTotal={subTotal} setTotal={setTotal} />
         <s.ButtonContainer>
           <Button primary dark type="button" onClick={saveParty}>
             Save

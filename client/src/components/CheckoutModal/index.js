@@ -32,7 +32,6 @@ class CheckoutModal extends React.Component {
     const {
       modalIsOpen,
       tables,
-      subTotal,
       location,
       setTotal,
       sendPayment,
@@ -44,6 +43,7 @@ class CheckoutModal extends React.Component {
       toggleSplitCheckItem,
       splitModalIsOpen
     } = this.props;
+    console.log('modal', order);
     return (
       <React.Fragment>
         <Modal isOpen={modalIsOpen}>
@@ -51,14 +51,6 @@ class CheckoutModal extends React.Component {
             <PartyTablesTitle tables={tables} />
             <div>Server Name</div>
           </s.Title>
-          {/* <s.Order>
-            {order.map(item => (
-              <div key={shortid.generate()}>
-                {item.name} : {item.localRef}
-                <div onClick={() => toggleSplitCheckItem(item)}>+</div>
-              </div>
-            ))}
-          </s.Order> */}
           <OrderList
             splitOrder={splitOrder}
             order={order}
@@ -66,7 +58,7 @@ class CheckoutModal extends React.Component {
             itemAction={toggleSplitCheckItem}
           />
           <s.Checkout>
-            <OrderTotal subTotal={subTotal} location={location} setTotal={setTotal} />
+            <OrderTotal order={order} location={location} setTotal={setTotal} />
           </s.Checkout>
           <s.OrderButtons>
             {this.state.showStripe ? (
@@ -138,7 +130,6 @@ CheckoutModal.propTypes = {
   toggleSplitCheckItem: PropTypes.func,
   closeSplitModal: PropTypes.func,
   sendPayment: PropTypes.func,
-  subTotal: PropTypes.number,
   modalIsOpen: PropTypes.bool,
   splitModalIsOpen: PropTypes.bool,
   partyId: PropTypes.string,
@@ -158,7 +149,6 @@ CheckoutModal.defaultProps = {
   closeSplitModal: () => {},
   sendPayment: () => {},
   history: { push: () => {} },
-  subTotal: 0,
   modalIsOpen: false,
   splitModalIsOpen: false,
   partyId: 'defaultpartyid',
