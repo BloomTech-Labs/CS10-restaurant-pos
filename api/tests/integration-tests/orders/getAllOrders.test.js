@@ -10,6 +10,7 @@ jest.setTimeout(30000);
 
 describe('getAllOrders', () => {
   beforeAll(async (done) => {
+    jest.setTimeout(30000);
     // register the admin
     await loginAdmin(server)
       .then((loginRes) => {
