@@ -1,5 +1,7 @@
 const verifyFields = require('../../validation/verifyFields');
 
+jest.setTimeout(30000);
+
 describe('verifyFields', () => {
   // [Valid] Testing with no missing fields
   it('Returns an empty array if no fields are missing', () => {

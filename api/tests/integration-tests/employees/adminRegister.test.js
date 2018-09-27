@@ -3,6 +3,8 @@ const request = require('supertest');
 
 const server = require('../../../../server');
 
+jest.setTimeout(30000);
+
 describe('adminRegister', () => {
   afterAll((done) => {
     mongoose.connection.db.dropDatabase(done);
