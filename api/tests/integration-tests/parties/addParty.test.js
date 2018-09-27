@@ -56,4 +56,14 @@ describe('addParty', () => {
 
     expect(res.status).toBe(200);
   });
+
+  // [Authorized] Changes a tables active status to true
+  it('[Auth] POST: Changes the tables active status to true when added to a party', async () => {
+    const res = await request(server)
+      .post('/api/party/add')
+      .set('Authorization', `${token}`)
+      .send({ tables: [tableId] });
+
+    expect(res.body.party.tables[0].active).toEqual(true);
+  });
 });
