@@ -69,4 +69,12 @@ describe('deleteParty', () => {
 
     expect(res.status).toBe(200);
   });
+
+  // [Not Authorized] deletes a party
+  it('[No Auth] DELETE: fails to delete a party from the DB', async () => {
+    const res = await request(server)
+      .delete(`/api/party/delete/${partyId}`);
+
+    expect(res.status).toBe(401);
+  });
 });
