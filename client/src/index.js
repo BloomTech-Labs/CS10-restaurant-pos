@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import thunk from 'redux-thunk';
+import { BrowserRouter as Router, withRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 
@@ -8,10 +10,12 @@ import { requireManager } from './redux/middleware/permissions';
 import { axiosAuth } from './redux/middleware/axios';
 import reducer from './redux/reducers';
 import App from './App';
+import { theme } from './global-styles/variables';
+import registerServiceWorker from './registerServiceWorker';
 
 import './index.css';
 
-// import registerServiceWorker from './registerServiceWorker';
+
 let store;
 if (process.env.NODE_ENV === 'production') {
   store = createStore(reducer, applyMiddleware(thunk, requireManager, axiosAuth));
@@ -26,9 +30,16 @@ if (process.env.NODE_ENV === 'production') {
   );
 }
 
+const AppWithRouter = withRouter(props => <App {...props} />);
+
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <ThemeProvider theme={theme}>
+        <AppWithRouter />
+      </ThemeProvider>
+    </Router>
   </Provider>,
   document.getElementById('root')
 );
+registerServiceWorker();

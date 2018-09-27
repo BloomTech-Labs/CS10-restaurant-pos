@@ -44,7 +44,6 @@ class StripeCheckoutForm extends React.Component {
   };
 
   render() {
-    console.warn('title', this.props.total);
     return (
       <s.Form onSubmit={this.handleSubmit}>
         <s.Label htmlFor="card-element">

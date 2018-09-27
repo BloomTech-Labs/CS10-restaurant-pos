@@ -5,8 +5,10 @@ import { Elements } from 'react-stripe-elements';
 
 import Modal from '../HOC/Modal';
 import StripeCheckoutForm from '../StripeCheckoutForm';
-import OrderTotal from '../OrderTotal';
-import TablesPageTitle from '../TablesPageTitle';
+import OrderTotal from '../Presentational/OrderTotal';
+import OrderList from '../Presentational/OrderList';
+import CheckBox from '../Presentational/CheckBox';
+import PartyTablesTitle from '../Presentational/PartyTablesTitle';
 import { Button } from '../../global-styles/styledComponents';
 
 import * as s from './styles';
@@ -27,45 +29,54 @@ class CheckoutModal extends React.Component {
   };
 
   render() {
+    const {
+      modalIsOpen,
+      tables,
+      location,
+      setTotal,
+      sendPayment,
+      partyId,
+      order,
+      splitOrder,
+      openSplitModal,
+      closeSplitModal,
+      toggleSplitCheckItem,
+      splitModalIsOpen
+    } = this.props;
+    console.log('modal', order);
     return (
       <React.Fragment>
-        <Modal isOpen={this.props.modalIsOpen}>
+        <Modal isOpen={modalIsOpen}>
           <s.Title>
-            <TablesPageTitle tables={this.props.tables} />
+            <PartyTablesTitle tables={tables} />
             <div>Server Name</div>
           </s.Title>
-          <s.Order>
-            {this.props.order.map(item => (
-              <div key={shortid.generate()}>
-                {item.name} : {item.localRef}
-                <div onClick={() => this.props.toggleSplitCheckItem(item)}>+</div>
-              </div>
-            ))}
-          </s.Order>
+          <OrderList
+            splitOrder={splitOrder}
+            order={order}
+            ItemButton={CheckBox}
+            itemAction={toggleSplitCheckItem}
+          />
           <s.Checkout>
-            <OrderTotal
-              subTotal={this.props.subTotal}
-              location={this.props.location}
-              setTotal={this.props.setTotal}
-            />
+            <OrderTotal order={order} location={location} setTotal={setTotal} />
           </s.Checkout>
           <s.OrderButtons>
             {this.state.showStripe ? (
               <Elements>
                 <StripeCheckoutForm
-                  sendPayment={this.props.sendPayment}
-                  total={this.props.order.reduce((acc, item) => acc + item.price, 0)}
+                  sendPayment={sendPayment}
+                  total={order.reduce((acc, item) => acc + item.price, 0)}
                   isSplit={false}
-                  partyId={this.props.partyId}
+                  partyId={partyId}
                 />
               </Elements>
             ) : (
               <React.Fragment>
                 <Button
-                  inactive={!this.props.splitOrder.length}
+                  inactive={!splitOrder.length}
                   dark
                   type="button"
-                  onClick={this.props.splitOrder.length ? this.props.openSplitModal : undefined}
+                  onClick={splitOrder.length ? openSplitModal : undefined}
                 >
                   Split Check
                 </Button>
@@ -76,11 +87,8 @@ class CheckoutModal extends React.Component {
             )}
           </s.OrderButtons>
         </Modal>
-        <Modal
-          closeSplitModal={this.props.closeSplitModal}
-          isSplitOpen={this.props.splitModalIsOpen}
-        >
-          {this.props.splitOrder.map(item => (
+        <Modal closeSplitModal={closeSplitModal} isSplitOpen={splitModalIsOpen}>
+          {splitOrder.map(item => (
             <div key={shortid.generate()}>
               {item.name} : {item.localRef}
             </div>
@@ -89,15 +97,15 @@ class CheckoutModal extends React.Component {
           {this.state.showStripe ? (
             <Elements>
               <StripeCheckoutForm
-                sendPayment={this.props.sendPayment}
-                total={this.props.splitOrder.reduce((acc, item) => acc + item.price, 0)}
+                sendPayment={sendPayment}
+                total={splitOrder.reduce((acc, item) => acc + item.price, 0)}
                 isSplit
-                partyId={this.props.partyId}
+                partyId={partyId}
               />
             </Elements>
           ) : (
             <React.Fragment>
-              <Button dark type="button" onClick={this.props.closeSplitModal}>
+              <Button dark type="button" onClick={closeSplitModal}>
                 Cancel
               </Button>
               <Button dark primary type="button" onClick={this.checkoutSplitOrder}>
@@ -122,7 +130,6 @@ CheckoutModal.propTypes = {
   toggleSplitCheckItem: PropTypes.func,
   closeSplitModal: PropTypes.func,
   sendPayment: PropTypes.func,
-  subTotal: PropTypes.number,
   modalIsOpen: PropTypes.bool,
   splitModalIsOpen: PropTypes.bool,
   partyId: PropTypes.string,
@@ -142,7 +149,6 @@ CheckoutModal.defaultProps = {
   closeSplitModal: () => {},
   sendPayment: () => {},
   history: { push: () => {} },
-  subTotal: 0,
   modalIsOpen: false,
   splitModalIsOpen: false,
   partyId: 'defaultpartyid',
