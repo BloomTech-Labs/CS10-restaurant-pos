@@ -25,28 +25,32 @@ const initialState = {
   membership: false
 };
 
+const getJWTInfo = (jwt) => {
+  let role = { admin: false, manager: false };
+  let membership = false; // eslint-disable-line
+  let restaurant = '';
+
+  if (jwt) {
+    const currentTime = Date.now() / 1000;
+    const decodedJwt = jwtDecode(jwt);
+
+    if (decodedJwt.exp < currentTime) {
+      localStorage.removeItem('jwt');
+    } else {
+      role = decodedJwt.role; // eslint-disable-line prefer-destructuring
+      restaurant = decodedJwt.restaurant; // eslint-disable-line prefer-destructuring
+      membership = decodedJwt.membership; // eslint-disable-line prefer-destructuring
+    }
+  }
+  return { jwt, role, membership, restaurant };
+};
+
 const AuthReducer = (auth = initialState, action) => {
   switch (action.type) {
     case SET_INITIAL_AUTH:
       const jwt = localStorage.getItem('jwt');
 
-      let role = { admin: false, manager: false };
-      let membership = false; // eslint-disable-line
-      let restaurant = '';
-
-      if (jwt) {
-        const currentTime = Date.now() / 1000;
-        const decodedJwt = jwtDecode(jwt);
-
-        if (decodedJwt.exp < currentTime) {
-          localStorage.removeItem('jwt');
-        } else {
-          role = decodedJwt.role; // eslint-disable-line prefer-destructuring
-          restaurant = decodedJwt.restaurant; // eslint-disable-line prefer-destructuring
-          membership = decodedJwt.membership; // eslint-disable-line prefer-destructuring
-        }
-      }
-      return { ...auth, jwt, role, membership, restaurant };
+      return { ...auth, ...getJWTInfo(jwt) };
 
     case AUTH_LOADING:
       return { ...auth, loading: true };
@@ -54,10 +58,8 @@ const AuthReducer = (auth = initialState, action) => {
     case LOGIN_SUCCESS:
       return {
         ...auth,
+        ...getJWTInfo(action.payload.jwt),
         loading: false,
-        jwt: action.payload.jwt,
-        restaurant: action.payload.restaurant,
-        membership: action.payload.membership
       };
 
     case LOGIN_FAILURE:
@@ -83,10 +85,8 @@ const AuthReducer = (auth = initialState, action) => {
     case RESTAURANT_AUTH:
       return {
         ...auth,
+        ...getJWTInfo(action.payload.jwt),
         loading: false,
-        jwt: action.payload.jwt,
-        restaurant: action.payload.restaurant,
-        membership: action.payload.membership
       };
 
     case EMPLOYEE_REGISTER_SUCCESS:
