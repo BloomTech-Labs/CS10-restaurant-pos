@@ -3,6 +3,8 @@ const request = require('supertest');
 
 const server = require('../../../../server');
 
+jest.setTimeout(30000);
+
 describe('adminRegister', () => {
   afterAll((done) => {
     mongoose.connection.db.dropDatabase(done);
@@ -13,10 +15,8 @@ describe('adminRegister', () => {
     const res = await request(server)
       .post('/api/employees/admin/register')
       .send({
-        body: {
-          name: 'John',
-          email: 'john@test.com'
-        }
+        name: 'John',
+        email: 'john@test.com'
       });
 
     expect(res.status).toEqual(422);
