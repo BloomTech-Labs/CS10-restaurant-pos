@@ -7,7 +7,7 @@ const { loginAdmin } = require('../../helpers/loginAdmin');
 let token;
 let pin;
 
-describe('employeeLogin', () => {
+describe('employeeLogout', () => {
   beforeAll(async (done) => {
     loginAdmin(server)
       .then(async resToken => {

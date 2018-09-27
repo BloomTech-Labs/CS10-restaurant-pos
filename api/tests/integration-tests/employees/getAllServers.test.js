@@ -8,7 +8,7 @@ let token;
 let employeePin;
 let managerPin;
 
-describe('employeeRegister', () => {
+describe('getAllServers', () => {
   beforeAll(async (done) => {
     await loginAdmin(server)
       .then(async (resToken) => {
