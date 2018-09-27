@@ -3,17 +3,15 @@ import PropTypes from 'prop-types';
 
 import * as s from './styles';
 
-class Item extends React.Component {
-  render() {
-    const { item } = this.props;
-    return (
-      <s.ItemBoxes key={item._id} onClick={() => this.props.addItemToOrder(item)}>
-        <s.ItemTitle>{item.name}</s.ItemTitle>
-        <s.ItemDescription>{item.description}</s.ItemDescription>
-        <s.ItemPrice>{item.price}</s.ItemPrice>
-      </s.ItemBoxes>
-    );
-  }
+export default function Item(props) {
+  const { item } = props;
+  return (
+    <s.ItemBoxes key={item._id} onClick={() => props.addItemToOrder(item)}>
+      <s.ItemTitle>{item.name}</s.ItemTitle>
+      <s.ItemDescription>{item.description}</s.ItemDescription>
+      <s.ItemPrice>{item.price}</s.ItemPrice>
+    </s.ItemBoxes>
+  );
 }
 
 Item.propTypes = {
@@ -33,5 +31,3 @@ Item.defaultProps = {
   },
   addItemToOrder: () => {}
 };
-
-export default Item;
