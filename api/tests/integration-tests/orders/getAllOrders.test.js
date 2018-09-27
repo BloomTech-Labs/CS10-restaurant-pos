@@ -8,9 +8,8 @@ let token;
 
 jest.setTimeout(30000);
 
-describe('getAllOrders', () => {
+xdescribe('getAllOrders', () => {
   beforeAll(async (done) => {
-    jest.setTimeout(30000);
     // register the admin
     await loginAdmin(server)
       .then((loginRes) => {
@@ -48,7 +47,6 @@ describe('getAllOrders', () => {
 
   // [Authorized] Gets an order from the DB
   it('[Auth] GET: Gets all orders from the DB', async () => {
-    jest.setTimeout(30000);
     const res = await request(server)
       .get('/api/orders/all')
       .set('Authorization', `${token}`);
@@ -58,7 +56,6 @@ describe('getAllOrders', () => {
 
   // [Authorized] Returns as an array
   it('[Auth] GET: Returns as type array', async () => {
-    jest.setTimeout(30000);
     const res = await request(server)
       .get('/api/orders/all')
       .set('Authorization', `${token}`);
@@ -68,7 +65,6 @@ describe('getAllOrders', () => {
 
   // [Not Authorized] Fails to get an order from the DB
   it('[No Auth] GET: Fails to get all orders from the DB', async () => {
-    jest.setTimeout(30000);
     const res = await request(server)
       .get('/api/orders/all');
 
