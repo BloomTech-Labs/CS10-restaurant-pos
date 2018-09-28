@@ -12,7 +12,8 @@ import {
   EMPLOYEE_LOGIN_SUCCESS,
   EMPLOYEE_LOGIN_FAILURE,
   EMPLOYEE_REGISTER_SUCCESS,
-  EMPLOYEE_REGISTER_FAILURE
+  EMPLOYEE_REGISTER_FAILURE,
+  CHANGE_PASSWORD_SUCCESS
 } from '../actions/auth';
 import { RESTAURANT_AUTH } from '../actions/restaurant';
 import { SUBSCRIBING_SUCCESS, UNSUBSCRIBING_SUCCESS } from '../actions/payments';
@@ -66,6 +67,9 @@ const AuthReducer = (auth = initialState, action) => {
     case LOGIN_FAILURE:
       return { ...auth, loading: false };
 
+    case CHANGE_PASSWORD_SUCCESS:
+      return { ...auth, loading: false };
+
     case REGISTRATION_SUCCESS:
       return { ...auth, loading: false, pin: action.payload };
 
@@ -95,7 +99,6 @@ const AuthReducer = (auth = initialState, action) => {
 
     case EMPLOYEE_REGISTER_FAILURE:
       return { ...auth, loading: false };
-
 
     case SUBSCRIBING_SUCCESS:
       return { ...auth, jwt: action.payload };
