@@ -101,7 +101,7 @@ const AuthReducer = (auth = initialState, action) => {
       return { ...auth, jwt: action.payload };
 
     case UNSUBSCRIBING_SUCCESS:
-      return { ...auth, jwt: action.payload };
+      return { ...auth };
 
     default:
       return auth;

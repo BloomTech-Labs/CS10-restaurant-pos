@@ -83,7 +83,7 @@ class Billing extends React.Component {
         </s.Form> */}
         {/* // TODO: add support for multiple subscription term options */}
         {membership ? (
-          <Button type="button" onClick={unsubscribe} />
+          <Button type="button" onClick={unsubscribe}>Unsubscribe</Button>
         ) : (
           <StripeCheckout
             name="POS Checkout"

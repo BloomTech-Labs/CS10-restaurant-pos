@@ -69,10 +69,9 @@ export const unsubscribe = () => dispatch => {
   dispatch({ type: UNSUBSCRIBING });
   axios
     .get(`${serverURI}/api/cancel`)
-    .then(res => {
-      localStorage.setItem('jwt', res.data.token);
+    .then(() => {
       dispatch({ type: SET_INITIAL_AUTH });
-      dispatch({ type: UNSUBSCRIBING_SUCCESS, payload: res.data.token });
+      dispatch({ type: UNSUBSCRIBING_SUCCESS });
     })
     .catch(err => {
       console.error(err);
