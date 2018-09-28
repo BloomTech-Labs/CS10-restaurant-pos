@@ -16,7 +16,7 @@ import CreateEmployee from './components/Container/CreateEmployeePage';
 import Servers from './components/Container/ServersPage';
 import TablesPage from './components/Container/TablesPage';
 import NotFound from './components/Presentational/NotFound';
-import Navbar from './components/Presentational/Navbar';
+import Topbar from './components/Presentational/Topbar';
 import PartyPage from './components/Container/PartyPage';
 import Settings from './components/Container/SettingsPage';
 import Sidebar from './components/Presentational/Sidebar';
@@ -45,7 +45,7 @@ class App extends Component {
     const { modalIsOpen, role, location, history } = this.props;
     return (
       <s.Container>
-        <Navbar blur={modalIsOpen} />
+        <Topbar blur={modalIsOpen} />
         <s.Main>
           <Sidebar
             blur={modalIsOpen}

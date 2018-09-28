@@ -5,6 +5,8 @@ import jwtDecode from 'jwt-decode';
 import serverURI from '../../config/URI';
 
 export const SET_INITIAL_AUTH = 'SET_INITIAL_AUTH';
+export const GET_CURRENT_USER_ERROR = 'GET_CURRENT_USER_ERROR';
+export const GET_CURRENT_USER_SUCCESS = 'GET_CURRENT_USER_SUCCESS';
 export const LOGOUT = 'LOGOUT';
 export const AUTH_LOADING = 'AUTH_LOADING';
 export const PASSWORD_MATCH_ERROR = 'PASSWORD_MATCH_ERROR';
@@ -21,6 +23,17 @@ export const EMPLOYEE_REGISTER_SUCCESS = 'EMPLOYEE_REGISTER_SUCCESS';
 export const EMPLOYEE_REGISTER_FAILURE = 'EMPLOYEE_REGISTER_FAILURE';
 
 export const setInitialAuth = () => ({ type: SET_INITIAL_AUTH });
+
+export const getCurrentUser = () => (dispatch) => {
+  axios
+    .get(`${serverURI}/api/employees/current`)
+    .then((res) => {
+      dispatch({ type: GET_CURRENT_USER_SUCCESS, payload: res.data });
+    })
+    .catch((err) => {
+      dispatch({ type: GET_CURRENT_USER_ERROR, payload: err });
+    });
+};
 
 export const logout = () => ({ type: LOGOUT });
 

@@ -5,10 +5,10 @@ import Clock from '../Clock';
 
 import * as s from './styles';
 
-class Navbar extends React.Component {
+class Topbar extends React.Component {
   render() {
     return (
-      <s.Navbar blur={this.props.blur}>
+      <s.Topbar blur={this.props.blur}>
         <Clock />
         <s.StyledLink to="/login-employee">(Employee Login)</s.StyledLink>
         <s.StyledLink to="/login">(Admin Login)</s.StyledLink>
@@ -20,17 +20,17 @@ class Navbar extends React.Component {
         <s.StyledLink to="/servers">(Servers)</s.StyledLink>
         <s.StyledLink to="/settings">(Settings)</s.StyledLink>
         <s.StyledLink to="/logout">(Logout)</s.StyledLink>
-      </s.Navbar>
+      </s.Topbar>
     );
   }
 }
 
-Navbar.propTypes = {
+Topbar.propTypes = {
   blur: PropTypes.bool,
 };
 
-Navbar.defaultProps = {
+Topbar.defaultProps = {
   blur: false,
 };
 
-export default Navbar;
+export default Topbar;

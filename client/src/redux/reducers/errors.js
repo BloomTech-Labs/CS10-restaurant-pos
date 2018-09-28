@@ -1,6 +1,8 @@
 import {
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
+  GET_CURRENT_USER_ERROR,
+  GET_CURRENT_USER_SUCCESS,
   EMPLOYEE_LOGIN_FAILURE,
   EMPLOYEE_LOGIN_SUCCESS,
   REGISTRATION_FAILURE,
@@ -58,6 +60,7 @@ import {
 
 const initialState = {
   loginError: false,
+  getCurrentUser: false,
   employeeLoginError: false,
   registrationError: false,
   passMatchError: false,
@@ -86,6 +89,10 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, loginError: action.payload };
     case LOGIN_SUCCESS:
       return { ...errors, loginError: false };
+    case GET_CURRENT_USER_ERROR:
+      return { ...errors, getCurrentUser: action.payload };
+    case GET_CURRENT_USER_SUCCESS:
+      return { ...errors, getCurrentUser: false };
     case EMPLOYEE_LOGIN_FAILURE:
       return { ...errors, employeeLoginError: action.payload };
     case EMPLOYEE_LOGIN_SUCCESS:

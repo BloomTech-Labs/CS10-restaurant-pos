@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { modalBlur } from '../../../global-styles/mixins';
 
-export const Navbar = styled.nav`
+export const Topbar = styled.nav`
   display: flex;
   flex-shrink: 0;
   justify-content: flex-end;

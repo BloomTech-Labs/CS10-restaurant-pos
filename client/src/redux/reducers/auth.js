@@ -5,6 +5,7 @@ import jwtDecode from 'jwt-decode';
 import {
   SET_INITIAL_AUTH,
   AUTH_LOADING,
+  GET_CURRENT_USER_SUCCESS,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   REGISTRATION_SUCCESS,
@@ -22,6 +23,7 @@ const initialState = {
   loading: false,
   pin: '',
   jwt: false,
+  user: { name: 'Please login' },
   role: { admin: false, manager: false },
   restaurant: '',
   membership: false
@@ -53,6 +55,9 @@ const AuthReducer = (auth = initialState, action) => {
       const jwt = localStorage.getItem('jwt');
 
       return { ...auth, ...getJWTInfo(jwt) };
+
+    case GET_CURRENT_USER_SUCCESS:
+      return { ...auth, user: action.payload };
 
     case AUTH_LOADING:
       return { ...auth, loading: true };
