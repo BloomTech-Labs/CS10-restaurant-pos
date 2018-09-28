@@ -7,7 +7,7 @@ const { loginAdmin } = require('../../helpers/loginAdmin');
 let token;
 let orderId;
 
-jest.setTimeout(30000);
+jest.setTimeout(60000);
 
 describe('deleteOrder', () => {
   beforeAll(async (done) => {
