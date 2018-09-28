@@ -7,23 +7,25 @@ import Topbar from '../../Presentational/Topbar';
 
 class TopbarContainer extends React.Component {
   componentDidMount() {
-    this.props.getCurrentUser();
+    // this.props.getCurrentUser();
   }
 
   render() {
-    const { user } = this.props;
-    return <Topbar user={user} />;
+    const { blur, user } = this.props;
+    return <Topbar blur={blur} user={user} />;
   }
 }
 
 TopbarContainer.propTypes = {
-  user: PropTypes.shape({ name: PropTypes.string }),
-  getCurrentUser: PropTypes.func
+  blur: PropTypes.bool,
+  user: PropTypes.shape({ name: PropTypes.string })
+  // getCurrentUser: PropTypes.func
 };
 
 TopbarContainer.defaultProps = {
-  user: { name: 'Please login' },
-  getCurrentUser: () => {}
+  blur: false,
+  user: { name: 'Please login' }
+  // getCurrentUser: () => {}
 };
 
 const mapStateToProps = (state) => ({

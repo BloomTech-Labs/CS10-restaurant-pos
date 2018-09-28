@@ -6,11 +6,11 @@ import { modalBlur } from '../../../global-styles/mixins';
 export const Topbar = styled.nav`
   display: flex;
   flex-shrink: 0;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   height: ${props => props.theme.topBarHeight}px;
-  padding-right: 20px;
+  padding: 0 50px;
   border-top: 4px solid ${(props) => props.theme.appSecondary};
   background: ${(props) => props.theme.appPrimary};
   ${(props) => props.blur && modalBlur};
