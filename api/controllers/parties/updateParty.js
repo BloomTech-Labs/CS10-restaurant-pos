@@ -14,24 +14,35 @@ const updateParty = (req, res) => {
   if (food) updatedFields.food = food;
   if (tables) updatedFields.tables = tables;
 
+  console.log(updatedFields);
+  console.warn(id);
+
   Party.findOneAndUpdate({ _id: id }, updatedFields, { new: true })
-    .then((updatedParty) => {
+    .then(updatedParty => {
       updatedParty
-        .populate('food')
         .populate('server', ['name'])
+        .populate({ path: 'food._id', model: 'Item' })
         .populate('tables')
         .execPopulate()
-        .then(populatedParty => {
-          res.status(200).json({ updatedParty: populatedParty });
+        .then(party => {
+          // TODO: Revisit later with the time
+          const reformattedParty = {
+            ...party._doc,
+            food: party.food.map(foodItem => ({
+              uniqueId: foodItem.uniqueId,
+              ...foodItem._id._doc
+            }))
+          };
+          res.status(200).json({ updatedParty: reformattedParty });
         })
-        .catch(err => {
+        .catch((err) => {
           res.status(500).json({
             err,
-            msg: 'There was an error populating the party.'
+            msg: 'There was an error populating the parties from the DB.'
           });
         });
     })
-    .catch((err) => {
+    .catch(err => {
       res.status(500).json({
         err,
         msg: 'There was an error updating the party in the DB.'

@@ -10,8 +10,13 @@ const PartySchema = new Schema({
   },
   food: [
     {
-      type: ObjectId,
-      ref: 'Item',
+      id: {
+        type: ObjectId,
+        ref: 'Item'
+      },
+      uniqueId: {
+        type: String
+      }
     },
   ],
   tables: [

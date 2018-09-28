@@ -25,7 +25,10 @@ describe('deleteOrder', () => {
               party: '5b993879366d2671bcba0e02',
               server: '5b993879366d2671bcba0e02',
               food: [
-                '5b956483ed2e4d86346d6c82',
+                {
+                  id: '5b956483ed2e4d86346d6c82',
+                  uniqueId: 'thisIsTheUniqueId'
+                }
               ],
             }
           )

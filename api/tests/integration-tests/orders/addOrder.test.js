@@ -16,7 +16,7 @@ describe('addOrder', () => {
         token = loginRes;
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   });
@@ -31,15 +31,16 @@ describe('addOrder', () => {
     const res = await request(server)
       .post('/api/orders/add')
       .set('Authorization', `${token}`)
-      .send(
-        {
-          party: '5b993879366d2671bcba0e02',
-          server: '5b993879366d2671bcba0e02',
-          food: [
-            '5b956483ed2e4d86346d6c82',
-          ],
-        }
-      );
+      .send({
+        party: '5b993879366d2671bcba0e02',
+        server: '5b993879366d2671bcba0e02',
+        food: [
+          {
+            id: '5b956483ed2e4d86346d6c82',
+            uniqueId: 'thisIsTheUniqueId'
+          }
+        ]
+      });
 
     expect(res.status).toBe(201);
   });
@@ -48,15 +49,16 @@ describe('addOrder', () => {
   it('[No Auth] POST: Fails adding a new order to the DB', async () => {
     const res = await request(server)
       .post('/api/orders/add')
-      .send(
-        {
-          party: '5b993879366d2671bcba0e02',
-          server: '5b993879366d2671bcba0e02',
-          food: [
-            '5b956483ed2e4d86346d6c82',
-          ],
-        }
-      );
+      .send({
+        party: '5b993879366d2671bcba0e02',
+        server: '5b993879366d2671bcba0e02',
+        food: [
+          {
+            id: '5b956483ed2e4d86346d6c82',
+            uniqueId: 'thisIsTheUniqueId'
+          }
+        ]
+      });
 
     expect(res.status).toBe(401);
   });

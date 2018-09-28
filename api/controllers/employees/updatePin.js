@@ -5,6 +5,7 @@ const Employee = require('../../models/Employee');
 // @route   PUT api/employees/update/:pin
 // @desc    Allow a user to change their password
 // @access  Private
+// ! Rename this to updatePassword ???
 const updatePin = (req, res) => {
   // Pull off the pin, oldPassword, and newPassword from the request
   const { oldPassword, newPassword } = req.body;

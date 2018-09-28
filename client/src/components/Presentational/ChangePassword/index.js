@@ -5,8 +5,9 @@ import * as s from './styles';
 
 class ChangePassword extends React.Component {
   state = {
-    old: '',
-    new: '',
+    pin: '',
+    oldPassword: '',
+    newPassword: '',
     confirmNew: '',
   };
 
@@ -25,20 +26,28 @@ class ChangePassword extends React.Component {
         Change Password
         <s.Form onSubmit={this.handleSubmit}>
           <input
-            placeholder="Old Password"
+            placeholder="pin"
             type="text"
             onChange={this.handleChange}
-            name="old"
+            name="pin"
             maxLength="30"
-            value={this.state.old}
+            value={this.state.pin}
+          />
+          <input
+            placeholder="Old Password"
+            type="password"
+            onChange={this.handleChange}
+            name="oldPassword"
+            maxLength="30"
+            value={this.state.oldPassword}
           />
           <input
             placeholder="New Password"
-            type="text"
+            type="password"
             onChange={this.handleChange}
-            name="new"
+            name="newPassword"
             maxLength="30"
-            value={this.state.new}
+            value={this.state.newPassword}
           />
           <input
             placeholder="Confirm password"

@@ -7,6 +7,8 @@ import {
   REGISTRATION_SUCCESS,
   PASSWORD_MATCH_ERROR,
   PASSWORD_MATCH_SUCCESS,
+  CHANGE_PASSWORD_ERROR,
+  CHANGE_PASSWORD_SUCCESS,
   EMPLOYEE_REGISTER_FAILURE,
   EMPLOYEE_REGISTER_SUCCESS
 } from '../actions/auth';
@@ -45,13 +47,21 @@ import {
   ADDING_RESTAURANT_SUCCESS
 } from '../actions/restaurant';
 import { LOADING_SERVERS_ERROR, LOADING_SERVERS_SUCCESS } from '../actions/servers';
-import { PAYMENT_ERROR, PAYMENT_SUCCESS } from '../actions/payments';
+import {
+  PAYMENT_ERROR,
+  PAYMENT_SUCCESS,
+  SUBSCRIBING_ERROR,
+  SUBSCRIBING_SUCCESS,
+  UNSUBSCRIBING_ERROR,
+  UNSUBSCRIBING_SUCCESS
+} from '../actions/payments';
 
 const initialState = {
   loginError: false,
   employeeLoginError: false,
   registrationError: false,
   passMatchError: false,
+  changePasswordError: false,
   loadingTablesError: false,
   addingTablesError: false,
   savingTablesError: false,
@@ -66,6 +76,8 @@ const initialState = {
   addingRestaurantError: false,
   loadingServersError: false,
   paymentsError: false,
+  subscribingError: false,
+  unsubscribingError: false,
 };
 
 const ErrorReducer = (errors = initialState, action) => {
@@ -86,6 +98,10 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, passMatchError: action.payload };
     case PASSWORD_MATCH_SUCCESS:
       return { ...errors, passMatchError: false };
+    case CHANGE_PASSWORD_ERROR:
+      return { ...errors, changePasswordError: action.payload };
+    case CHANGE_PASSWORD_SUCCESS:
+      return { ...errors, changePasswordError: false };
     case EMPLOYEE_REGISTER_FAILURE:
       return { ...errors, employeeRegisterError: action.payload };
     case EMPLOYEE_REGISTER_SUCCESS:
@@ -157,6 +173,16 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, paymentsError: action.payload };
     case PAYMENT_SUCCESS:
       return { ...errors, paymentsError: false };
+
+    case SUBSCRIBING_ERROR:
+      return { ...errors, subscribingError: action.payload };
+    case SUBSCRIBING_SUCCESS:
+      return { ...errors, subscribingError: false };
+
+    case UNSUBSCRIBING_ERROR:
+      return { ...errors, unsubscribingError: action.payload };
+    case UNSUBSCRIBING_SUCCESS:
+      return { ...errors, unsubscribingError: false };
 
     default:
       return errors;

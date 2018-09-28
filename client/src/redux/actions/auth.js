@@ -9,6 +9,8 @@ export const LOGOUT = 'LOGOUT';
 export const AUTH_LOADING = 'AUTH_LOADING';
 export const PASSWORD_MATCH_ERROR = 'PASSWORD_MATCH_ERROR';
 export const PASSWORD_MATCH_SUCCESS = 'PASSWORD_MATCH_SUCCESS';
+export const CHANGE_PASSWORD_ERROR = 'CHANGE_PASSWORD_ERROR';
+export const CHANGE_PASSWORD_SUCCESS = 'CHANGE_PASSWORD_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const REGISTRATION_FAILURE = 'REGISTRATION_FAILURE';
@@ -70,10 +72,33 @@ export const register = ({ firstName, lastName, email, pass, confirmPass }, push
     })
     .then((res) => {
       dispatch({ type: REGISTRATION_SUCCESS, payload: res.data.pin });
-      push('/success');
+      push('/registration-success');
     })
     .catch((err) => {
       dispatch({ type: REGISTRATION_FAILURE, payload: err });
+    });
+};
+
+export const changePassword = ({ pin, oldPassword, newPassword, confirmNew }, push) => (
+  dispatch
+) => {
+  if (newPassword !== confirmNew) {
+    dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
+    return;
+  }
+  dispatch({ type: PASSWORD_MATCH_SUCCESS });
+  dispatch({ type: AUTH_LOADING });
+  axios
+    .put(`${serverURI}/api/employees/update/${pin}`, {
+      oldPassword,
+      newPassword
+    })
+    .then(() => {
+      dispatch({ type: CHANGE_PASSWORD_SUCCESS });
+      push('/password-change-success');
+    })
+    .catch((err) => {
+      dispatch({ type: CHANGE_PASSWORD_ERROR, payload: err });
     });
 };
 
@@ -114,7 +139,7 @@ export const addEmployee = ({ firstName, lastName, pass, confirmPass }, push) =>
     .post(`${serverURI}/api/employees/register`, { name: `${firstName} ${lastName}`, pass })
     .then((res) => {
       dispatch({ type: EMPLOYEE_REGISTER_SUCCESS, payload: res.data.pin });
-      push('/success');
+      push('/registration-success');
     })
     .catch((err) => {
       dispatch({ type: EMPLOYEE_REGISTER_FAILURE, payload: err });

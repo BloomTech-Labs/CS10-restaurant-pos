@@ -6,10 +6,10 @@ import * as s from './styles';
 const Table = (props) => {
   const toggleTable = () => props.toggleTable(props.table.number);
   return (
-    <s.TableBoxes onClick={toggleTable}>
+    <s.TableBox onClick={toggleTable}>
       {props.table.number}
       {props.selected && <div>I am selected!</div>}
-    </s.TableBoxes>
+    </s.TableBox>
   );
 };
 
