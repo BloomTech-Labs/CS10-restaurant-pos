@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { subscribe } from '../../../redux/actions/payments';
+import { subscribe, unsubscribe } from '../../../redux/actions/payments';
 import { addItem } from '../../../redux/actions/items';
 import RestaurantInfo from '../../Presentational/RestaurantInfo';
 import Billing from '../../Presentational/Billing';
@@ -15,7 +15,11 @@ class SettingsPage extends React.Component {
   adminDisplay = () => (
     <React.Fragment>
       <RestaurantInfo />
-      <Billing subscribe={this.props.subscribe} />
+      <Billing
+        membership={this.props.membership}
+        subscribe={this.props.subscribe}
+        unsubscribe={this.props.unsubscribe}
+      />
     </React.Fragment>
   );
 
@@ -29,33 +33,42 @@ class SettingsPage extends React.Component {
     const { manager, admin } = this.props.role;
     return (
       <s.Container>
-        {(admin) && this.adminDisplay()}
+        {admin && this.adminDisplay()}
         {(manager || admin) && this.managerDisplay()}
         <ChangePassword />
-      </s.Container>);
+      </s.Container>
+    );
   }
 }
 
 SettingsPage.propTypes = {
   role: PropTypes.shape({
     admin: PropTypes.bool,
-    manager: PropTypes.bool,
+    manager: PropTypes.bool
   }),
+  membership: PropTypes.bool,
   addItem: PropTypes.func,
   subscribe: PropTypes.func,
+  unsubscribe: PropTypes.func
 };
 
 SettingsPage.defaultProps = {
   role: {
     admin: false,
-    manager: false,
+    manager: false
   },
+  membership: false,
   addItem: () => {},
   subscribe: () => {},
+  unsubscribe: () => {}
 };
 
 const mapStateToProps = (state) => ({
   role: state.auth.role,
+  membership: state.auth.membership
 });
 
-export default connect(mapStateToProps, { addItem, subscribe })(SettingsPage);
+export default connect(
+  mapStateToProps,
+  { addItem, subscribe, unsubscribe }
+)(SettingsPage);

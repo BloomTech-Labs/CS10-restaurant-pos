@@ -9,6 +9,12 @@ import { closeSplitModal, openModal, closeModal } from './modal';
 export const SENDING_PAYMENT = 'SENDING_PAYMENT';
 export const PAYMENT_SUCCESS = 'PAYMENT_SUCCESS';
 export const PAYMENT_ERROR = 'PAYMENT_ERROR';
+export const SUBSCRIBING = 'SUBSCRIBING';
+export const SUBSCRIBING_SUCCESS = 'SUBSCRIBING_SUCCESS';
+export const SUBSCRIBING_ERROR = 'SUBSCRIBING_ERROR';
+export const UNSUBSCRIBING = 'UNSUBSCRIBING';
+export const UNSUBSCRIBING_SUCCESS = 'UNSUBSCRIBING_SUCCESS';
+export const UNSUBSCRIBING_ERROR = 'UNSUBSCRIBING_ERROR';
 export const CLEAR_ORDER_CLIENT = 'CLEAR_ORDER_CLIENT';
 
 export const sendPayment = (stripe, amount, description, isSplit, partyId) => (
@@ -45,16 +51,31 @@ export const sendPayment = (stripe, amount, description, isSplit, partyId) => (
 };
 
 export const subscribe = token => dispatch => {
-  dispatch({ type: SENDING_PAYMENT });
+  dispatch({ type: SUBSCRIBING });
   axios
     .post(`${serverURI}/api/subscribe`, { stripeToken: token.id, email: token.email })
     .then(res => {
       localStorage.setItem('jwt', res.data.token);
       dispatch({ type: SET_INITIAL_AUTH });
-      dispatch({ type: PAYMENT_SUCCESS, payload: res.data.token });
+      dispatch({ type: SUBSCRIBING_SUCCESS, payload: res.data.token });
     })
     .catch(err => {
       console.error(err);
-      dispatch({ type: PAYMENT_ERROR, payload: err });
+      dispatch({ type: SUBSCRIBING_ERROR, payload: err });
+    });
+};
+
+export const unsubscribe = () => dispatch => {
+  dispatch({ type: UNSUBSCRIBING });
+  axios
+    .get(`${serverURI}/api/cancel`)
+    .then(res => {
+      localStorage.setItem('jwt', res.data.token);
+      dispatch({ type: SET_INITIAL_AUTH });
+      dispatch({ type: UNSUBSCRIBING_SUCCESS, payload: res.data.token });
+    })
+    .catch(err => {
+      console.error(err);
+      dispatch({ type: UNSUBSCRIBING_ERROR, payload: err });
     });
 };

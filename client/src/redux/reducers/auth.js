@@ -15,6 +15,7 @@ import {
   EMPLOYEE_REGISTER_FAILURE
 } from '../actions/auth';
 import { RESTAURANT_AUTH } from '../actions/restaurant';
+import { SUBSCRIBING_SUCCESS, UNSUBSCRIBING_SUCCESS } from '../actions/payments';
 
 const initialState = {
   loading: false,
@@ -59,7 +60,7 @@ const AuthReducer = (auth = initialState, action) => {
       return {
         ...auth,
         ...getJWTInfo(action.payload.jwt),
-        loading: false,
+        loading: false
       };
 
     case LOGIN_FAILURE:
@@ -86,7 +87,7 @@ const AuthReducer = (auth = initialState, action) => {
       return {
         ...auth,
         ...getJWTInfo(action.payload.jwt),
-        loading: false,
+        loading: false
       };
 
     case EMPLOYEE_REGISTER_SUCCESS:
@@ -94,6 +95,13 @@ const AuthReducer = (auth = initialState, action) => {
 
     case EMPLOYEE_REGISTER_FAILURE:
       return { ...auth, loading: false };
+
+
+    case SUBSCRIBING_SUCCESS:
+      return { ...auth, jwt: action.payload };
+
+    case UNSUBSCRIBING_SUCCESS:
+      return { ...auth, jwt: action.payload };
 
     default:
       return auth;

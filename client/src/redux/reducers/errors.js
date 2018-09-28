@@ -45,7 +45,14 @@ import {
   ADDING_RESTAURANT_SUCCESS
 } from '../actions/restaurant';
 import { LOADING_SERVERS_ERROR, LOADING_SERVERS_SUCCESS } from '../actions/servers';
-import { PAYMENT_ERROR, PAYMENT_SUCCESS } from '../actions/payments';
+import {
+  PAYMENT_ERROR,
+  PAYMENT_SUCCESS,
+  SUBSCRIBING_ERROR,
+  SUBSCRIBING_SUCCESS,
+  UNSUBSCRIBING_ERROR,
+  UNSUBSCRIBING_SUCCESS
+} from '../actions/payments';
 
 const initialState = {
   loginError: false,
@@ -66,6 +73,8 @@ const initialState = {
   addingRestaurantError: false,
   loadingServersError: false,
   paymentsError: false,
+  subscribingError: false,
+  unsubscribingError: false,
 };
 
 const ErrorReducer = (errors = initialState, action) => {
@@ -157,6 +166,16 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, paymentsError: action.payload };
     case PAYMENT_SUCCESS:
       return { ...errors, paymentsError: false };
+
+    case SUBSCRIBING_ERROR:
+      return { ...errors, subscribingError: action.payload };
+    case SUBSCRIBING_SUCCESS:
+      return { ...errors, subscribingError: false };
+
+    case UNSUBSCRIBING_ERROR:
+      return { ...errors, unsubscribingError: action.payload };
+    case UNSUBSCRIBING_SUCCESS:
+      return { ...errors, unsubscribingError: false };
 
     default:
       return errors;

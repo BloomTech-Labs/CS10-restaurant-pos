@@ -16,18 +16,18 @@ class Billing extends React.Component {
     // cvv: ''
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     // this.props.addRestaurant(this.state);
   };
 
   saveToken = (token) => {
     this.props.subscribe(token);
-  }
+  };
 
   render() {
     return (
