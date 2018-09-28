@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { addRestaurant } from '../../../redux/actions/restaurant';
-import Login from '../../Presentational/Login';
+import CreateRestaurant from '../../Presentational/CreateRestaurant';
 
 class CreateRestaurantPage extends React.PureComponent {
   createRestaurant = (info) => {
@@ -12,7 +12,7 @@ class CreateRestaurantPage extends React.PureComponent {
 
   render() {
     return (
-      <Login login={this.login} />
+      <CreateRestaurant addRestaurant={this.createRestaurant} />
     );
   }
 }

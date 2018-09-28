@@ -16,20 +16,21 @@ class Billing extends React.Component {
     // cvv: ''
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     // this.props.addRestaurant(this.state);
   };
 
-  saveToken = (token) => {
+  subscribe = (token) => {
     this.props.subscribe(token);
-  }
+  };
 
   render() {
+    const { membership, unsubscribe } = this.props;
     return (
       <s.Container>
         Billing
@@ -81,31 +82,39 @@ class Billing extends React.Component {
           <button type="submit">Submit</button>
         </s.Form> */}
         {/* // TODO: add support for multiple subscription term options */}
-        <StripeCheckout
-          name="POS Checkout"
-          description="Subscribe"
-          ComponentClass="div"
-          currency="USD"
-          stripeKey="pk_test_0axArT8SI2u6aiUnuQH2lJzg"
-          image="https://beej.us/images/beejthumb.gif"
-          token={this.saveToken}
-          allowRememberMe={false}
-        >
-          <Button primary type="button">
-            Subscribe
-          </Button>
-        </StripeCheckout>
+        {membership ? (
+          <Button type="button" onClick={unsubscribe}>Unsubscribe</Button>
+        ) : (
+          <StripeCheckout
+            name="POS Checkout"
+            description="Subscribe"
+            ComponentClass="div"
+            currency="USD"
+            stripeKey="pk_test_0axArT8SI2u6aiUnuQH2lJzg"
+            image="https://beej.us/images/beejthumb.gif"
+            token={this.subscribe}
+            allowRememberMe={false}
+          >
+            <Button primary type="button">
+              Subscribe
+            </Button>
+          </StripeCheckout>
+        )}
       </s.Container>
     );
   }
 }
 
 Billing.propTypes = {
-  subscribe: PropTypes.func
+  membership: PropTypes.bool,
+  subscribe: PropTypes.func,
+  unsubscribe: PropTypes.func
 };
 
 Billing.defaultProps = {
-  subscribe: () => {}
+  membership: false,
+  subscribe: () => {},
+  unsubscribe: () => {}
 };
 
 export default Billing;

@@ -103,7 +103,7 @@ const PartyReducer = (state = initialState, action) => {
         splitOrder: [],
         order: state.order
           .filter(item => state.splitOrder
-            .find(splitItem => item.localRef !== splitItem.localRef))
+            .find(splitItem => item.uniqueId !== splitItem.uniqueId))
       };
 
     case CLEAR_ORDER_CLIENT:
@@ -113,7 +113,7 @@ const PartyReducer = (state = initialState, action) => {
       };
       // return {
       //   order: state.order.filter(
-      //     element => !state.splitOrder.find(split => split.localRef === element.localRef)
+      //     element => !state.splitOrder.find(split => split.uniqueId === element.uniqueId)
       //   )
       // };
 

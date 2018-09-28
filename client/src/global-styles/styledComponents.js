@@ -7,6 +7,9 @@ import { flexCenterMixin } from './mixins';
 export const MainContainer = styled.div`
   background: ${(props) => props.theme.contentBackground};
   border-radius: 50px 0 0 0;
+  flex-grow: 2;
+  width: 100%;
+  padding: 35px;
   overflow: hidden;
 `;
 

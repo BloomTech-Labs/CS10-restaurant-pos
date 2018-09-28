@@ -20,25 +20,26 @@ describe('updateOrder', () => {
         request(server)
           .post('/api/orders/add')
           .set('Authorization', `${token}`)
-          .send(
-            {
-              party: '5b993879366d2671bcba0e02',
-              server: '5b993879366d2671bcba0e02',
-              food: [
-                '5b956483ed2e4d86346d6c82',
-              ],
-            }
-          )
-          .then(orderRes => {
+          .send({
+            party: '5b993879366d2671bcba0e02',
+            server: '5b993879366d2671bcba0e02',
+            food: [
+              {
+                id: '5b956483ed2e4d86346d6c82',
+                uniqueId: 'thisIsTheUniqueId'
+              }
+            ]
+          })
+          .then((orderRes) => {
             // Assigns the _id of the new order to orderId
             orderId = orderRes.body.order._id;
             done();
           })
-          .catch(err => {
+          .catch((err) => {
             console.error(err);
           });
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   });
@@ -53,10 +54,19 @@ describe('updateOrder', () => {
     party: '5b993879366d2671bcba0e02',
     server: '5b993879366d2671bcba0e02',
     food: [
-      '5b956483ed2e4d86346d6c82',
-      '5b956483ed2e4d86346d6c82',
-      '5b956483ed2e4d86346d6c82',
-    ],
+      {
+        id: '5b956483ed2e4d86346d6c82',
+        uniqueId: 'thisIsTheUniqueId1'
+      },
+      {
+        id: '5b956483ed2e4d86346d6c82',
+        uniqueId: 'thisIsTheUniqueId2'
+      },
+      {
+        id: '5b956483ed2e4d86346d6c82',
+        uniqueId: 'thisIsTheUniqueId3'
+      }
+    ]
   };
 
   // [Authorized] Updates an order

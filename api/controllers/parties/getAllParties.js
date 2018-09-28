@@ -7,10 +7,18 @@ const Party = require('../../models/Party');
 const getAllParties = (req, res) => {
   Party.find({ restaurant: req.user.restaurant })
     .populate('server', ['name'])
-    .populate('food', ['name', 'price'])
+    .populate({ path: 'food._id', model: 'Item' })
     .populate('tables')
     .then((parties) => {
-      res.status(200).json({ parties });
+      // TODO: Revisit later with the time
+      const reformattedParties = parties.map(party => ({
+        ...party._doc,
+        food: party.food.map(food => ({
+          uniqueId: food.uniqueId,
+          ...food._id._doc,
+        }))
+      }));
+      res.status(200).json({ parties: reformattedParties });
     })
     .catch((err) => {
       res.status(500).json({

@@ -11,17 +11,14 @@ class FreeFloorPlan extends React.Component {
   render() {
     return (
       <s.Container>
-        {this.props.tables.map((table, i) => {
-          if (i >= 5) return null;
-          return (
-            <Table
-              key={shortId.generate()}
-              table={table}
-              selected={this.props.selected.has(table.number)}
-              toggleTable={this.props.toggleTable}
-            />
-          );
-        })}
+        {this.props.tables.map((table) => (
+          <Table
+            key={shortId.generate()}
+            table={table}
+            selected={this.props.selected.has(table.number)}
+            toggleTable={this.props.toggleTable}
+          />
+        ))}
       </s.Container>
     );
   }

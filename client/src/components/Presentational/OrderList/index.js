@@ -19,7 +19,7 @@ export default function OrderList(props) {
           item={item}
           ItemButton={ItemButton}
           itemAction={itemAction}
-          checked={!!splitOrder.find(splitItem => splitItem.localRef === item.localRef)}
+          checked={!!splitOrder.find(splitItem => splitItem.uniqueId === item.uniqueId)}
         />
       ))}
     </s.Scroll>

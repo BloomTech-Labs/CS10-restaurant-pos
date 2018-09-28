@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const { ObjectId } = Schema.Types;
 
-// Create Schema
 const Order = new Schema({
   party: {
     type: ObjectId,
@@ -17,9 +16,15 @@ const Order = new Schema({
   },
   food: [
     {
-      type: ObjectId,
-      ref: 'Item',
-      required: true,
+      id: {
+        type: ObjectId,
+        ref: 'Item',
+        required: true
+      },
+      uniqueId: {
+        type: String,
+        required: true
+      }
     },
   ],
   firstName: {
