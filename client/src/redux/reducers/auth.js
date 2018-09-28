@@ -5,14 +5,16 @@ import jwtDecode from 'jwt-decode';
 import {
   SET_INITIAL_AUTH,
   AUTH_LOADING,
-  GETTING_CURRENT_USER,
   GETTING_CURRENT_USER_SUCCESS,
+  GETTING_CURRENT_USER_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   REGISTRATION_SUCCESS,
   REGISTRATION_FAILURE,
   EMPLOYEE_LOGIN_SUCCESS,
   EMPLOYEE_LOGIN_FAILURE,
+  EMPLOYEE_LOGOUT_SUCCESS,
+  EMPLOYEE_LOGOUT_FAILURE,
   EMPLOYEE_REGISTER_SUCCESS,
   EMPLOYEE_REGISTER_FAILURE,
   CHANGE_PASSWORD_SUCCESS
@@ -52,18 +54,19 @@ const getJWTInfo = (jwt) => {
 
 const AuthReducer = (auth = initialState, action) => {
   switch (action.type) {
+    case AUTH_LOADING:
+      return { ...auth, loading: true };
+
     case SET_INITIAL_AUTH:
       const jwt = localStorage.getItem('jwt');
 
       return { ...auth, ...getJWTInfo(jwt) };
 
-    case GETTING_CURRENT_USER:
-      return { ...auth, loading: true };
     case GETTING_CURRENT_USER_SUCCESS:
       return { ...auth, loading: false, user: action.payload };
 
-    case AUTH_LOADING:
-      return { ...auth, loading: true };
+    case GETTING_CURRENT_USER_ERROR:
+      return { ...auth, loading: false };
 
     case LOGIN_SUCCESS:
       return {
@@ -93,6 +96,21 @@ const AuthReducer = (auth = initialState, action) => {
       };
 
     case EMPLOYEE_LOGIN_FAILURE:
+      return { ...auth, loading: false };
+
+    case EMPLOYEE_LOGOUT_SUCCESS:
+      return {
+        ...auth,
+        restaurant: action.payload.restaurant,
+        membership: action.payload.membership,
+        user: action.payload.user,
+        pin: action.payload.pin,
+        role: action.payload.role,
+        jwt: action.payload.jwt,
+        loading: false
+      };
+
+    case EMPLOYEE_LOGOUT_FAILURE:
       return { ...auth, loading: false };
 
     case RESTAURANT_AUTH:
