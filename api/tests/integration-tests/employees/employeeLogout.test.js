@@ -47,7 +47,6 @@ describe('employeeLogout', () => {
 
   // Valid
   it('[Auth] GET: Works with a token', async () => {
-    console.log(token, pin);
     const res = await request(server)
       .get('/api/employees/logout')
       .set('Authorization', `${token}`);
