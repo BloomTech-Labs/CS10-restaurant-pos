@@ -39,7 +39,6 @@ export const addRestaurant = ({
 
       localStorage.setItem('jwt', res.data.token);
 
-      console.log(push);
       push('/login-employee');
     })
     .catch(err => {

@@ -132,7 +132,6 @@ export const loginEmployee = ({ pin, pass }, push) => (dispatch) => {
     .post(`${serverURI}/api/employees/login`, { pin, pass })
     .then((res) => {
       const { role, restaurant } = jwtDecode(res.data.token);
-      console.log({ role, restaurant, jwt: jwtDecode(res.data.token) });
 
       dispatch({
         type: EMPLOYEE_LOGIN_SUCCESS,

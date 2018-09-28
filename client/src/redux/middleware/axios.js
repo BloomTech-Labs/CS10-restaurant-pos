@@ -4,6 +4,5 @@ import axios from 'axios';
 export const axiosAuth = () => (next) => (action) => {
   axios.defaults.withCredentials = true;
   axios.defaults.headers.common.Authorization = localStorage.getItem('jwt');
-  console.log('Middleware:', action, axios.defaults.headers.common.Authorization);
   next(action);
 };
