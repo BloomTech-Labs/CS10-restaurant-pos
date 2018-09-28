@@ -72,7 +72,7 @@ const getAllServers = (req, res) => {
       // { $sort: { total: -1 } },
     ])
     .then((populatedParties) => {
-      res.json(populatedParties);
+      res.json({ employees: populatedParties });
     })
     .catch(err => {
       res.status(500).json({ err, msg: 'There was an error retrieving the servers.' });
