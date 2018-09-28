@@ -13,20 +13,69 @@ const getAllServers = (req, res) => {
 
   // if the user is a manager, they will only see servers.
   // admins can see all employees
-  if (req.user.manager && !req.user.admin) {
+  if (req.user.role.manager && !req.user.role.admin) {
     searchQuery.role = { admin: false, manager: false };
   }
 
-  // find tall employees based on searchQuery
-  Employee.find(searchQuery)
-    .select(['name', 'email', 'role', 'pin'])
-    .then((employees) => {
-      res.status(200).json({ employees });
+  Employee
+    .aggregate([
+      { $match: searchQuery },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+        },
+      },
+      {
+        $lookup: {
+          from: 'parties',
+          localField: '_id',
+          foreignField: 'server',
+          as: 'parties',
+        },
+      },
+      {
+        $unwind: {
+          path: '$parties',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: 'items',
+          localField: 'parties.food',
+          foreignField: '_id',
+          as: 'parties.food',
+        },
+      },
+      {
+        $lookup: {
+          from: 'tables',
+          localField: 'parties.tables',
+          foreignField: '_id',
+          as: 'parties.tables',
+        },
+      },
+      {
+        $group: {
+          _id: '$_id',
+          name: { $first: '$name' },
+          parties: {
+            $push: {
+              _id: '$parties._id',
+              tables: '$parties.tables',
+              food: '$parties.food',
+            },
+          },
+        },
+      },
+      // { $sort: { total: -1 } },
+    ])
+    .then((populatedParties) => {
+      res.status(200).json({ employees: populatedParties });
     })
-    .catch((err) => {
-      res
-        .status(500)
-        .json({ err, msg: 'There was an error retrieving the servers.' });
+    .catch(err => {
+      res.status(500).json({ err, msg: 'There was an error retrieving the servers.' });
     });
 };
 
