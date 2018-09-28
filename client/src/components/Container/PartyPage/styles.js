@@ -8,5 +8,6 @@ export const Container = styled(MainContainer)`
   flex-direction: row;
   flex-grow: 2;
   width: 100%;
+  padding: 0;
   ${(props) => props.modalOpen && modalBlur};
 `;

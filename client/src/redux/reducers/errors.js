@@ -1,8 +1,12 @@
 import {
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
+  GETTING_CURRENT_USER_ERROR,
+  GETTING_CURRENT_USER_SUCCESS,
   EMPLOYEE_LOGIN_FAILURE,
   EMPLOYEE_LOGIN_SUCCESS,
+  EMPLOYEE_LOGOUT_FAILURE,
+  EMPLOYEE_LOGOUT_SUCCESS,
   REGISTRATION_FAILURE,
   REGISTRATION_SUCCESS,
   PASSWORD_MATCH_ERROR,
@@ -58,7 +62,9 @@ import {
 
 const initialState = {
   loginError: false,
+  getCurrentUser: false,
   employeeLoginError: false,
+  employeeLogoutError: false,
   registrationError: false,
   passMatchError: false,
   changePasswordError: false,
@@ -86,10 +92,18 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, loginError: action.payload };
     case LOGIN_SUCCESS:
       return { ...errors, loginError: false };
+    case GETTING_CURRENT_USER_ERROR:
+      return { ...errors, getCurrentUser: action.payload };
+    case GETTING_CURRENT_USER_SUCCESS:
+      return { ...errors, getCurrentUser: false };
     case EMPLOYEE_LOGIN_FAILURE:
       return { ...errors, employeeLoginError: action.payload };
     case EMPLOYEE_LOGIN_SUCCESS:
       return { ...errors, employeeLoginError: false };
+    case EMPLOYEE_LOGOUT_FAILURE:
+      return { ...errors, employeeLogoutError: action.payload };
+    case EMPLOYEE_LOGOUT_SUCCESS:
+      return { ...errors, employeeLogoutError: false };
     case REGISTRATION_FAILURE:
       return { ...errors, registrationError: action.payload };
     case REGISTRATION_SUCCESS:

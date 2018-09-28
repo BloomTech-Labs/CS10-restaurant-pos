@@ -16,7 +16,7 @@ import CreateEmployee from './components/Container/CreateEmployeePage';
 import Servers from './components/Container/ServersPage';
 import TablesPage from './components/Container/TablesPage';
 import NotFound from './components/Presentational/NotFound';
-import Navbar from './components/Presentational/Navbar';
+import Topbar from './components/Container/Topbar';
 import PartyPage from './components/Container/PartyPage';
 import Settings from './components/Container/SettingsPage';
 import Sidebar from './components/Presentational/Sidebar';
@@ -25,27 +25,26 @@ import RequireNotAuth from './components/HOC/RequireNotAuth';
 import RequireAuth from './components/HOC/RequireAuth';
 import { sidebar } from './config/conditionalPathnames';
 
-const AuthedPartyPage = RequireAuth(PartyPage);
-const AuthedLoginEmployee = RequireAuth(LoginEmployee);
-const AuthedNewRestaurant = RequireAuth(NewRestaurant);
-const AuthedCreateEmployee = RequireAuth(CreateEmployee);
-const AuthedTablesPage = RequireAuth(TablesPage);
-const AuthedServers = RequireAuth(Servers);
-const AuthedSettings = RequireAuth(Settings);
-
-const NotAuthedLogin = RequireNotAuth(Login);
-const NotAuthedRegsiter = RequireNotAuth(Register);
-
 class App extends Component {
   componentDidMount() {
     this.props.setInitialAuth();
   }
 
   render() {
+    const AuthedPartyPage = RequireAuth(PartyPage);
+    const AuthedLoginEmployee = RequireAuth(LoginEmployee);
+    const AuthedNewRestaurant = RequireAuth(NewRestaurant);
+    const AuthedCreateEmployee = RequireAuth(CreateEmployee);
+    const AuthedTablesPage = RequireAuth(TablesPage);
+    const AuthedServers = RequireAuth(Servers);
+    const AuthedSettings = RequireAuth(Settings);
+
+    const NotAuthedLogin = RequireNotAuth(Login);
+    const NotAuthedRegsiter = RequireNotAuth(Register);
     const { modalIsOpen, role, location, history } = this.props;
     return (
       <s.Container>
-        <Navbar blur={modalIsOpen} />
+        <Topbar blur={modalIsOpen} />
         <s.Main>
           <Sidebar
             blur={modalIsOpen}
@@ -68,7 +67,7 @@ class App extends Component {
             <Route path="/servers" component={AuthedServers} />
             <Route
               path="/party/:id"
-              render={props => <AuthedPartyPage {...props} modalIsOpen={modalIsOpen} />}
+              render={(props) => <AuthedPartyPage {...props} modalIsOpen={modalIsOpen} />}
             />
             <Route path="/settings" component={AuthedSettings} />
             <Route path="/404" component={NotFound} exact />
@@ -95,7 +94,7 @@ App.defaultProps = {
   setInitialAuth: () => {}
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   modalIsOpen: state.modal.isOpen,
   role: state.auth.role
 });

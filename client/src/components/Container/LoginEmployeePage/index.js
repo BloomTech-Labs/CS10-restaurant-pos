@@ -7,7 +7,6 @@ import LoginEmployee from '../../Presentational/LoginEmployee';
 
 class LoginEmployeePage extends React.PureComponent {
   loginEmployee = (info) => {
-    console.log(this.props.history.push);
     this.props.loginEmployee(info, this.props.history.push);
   }
 

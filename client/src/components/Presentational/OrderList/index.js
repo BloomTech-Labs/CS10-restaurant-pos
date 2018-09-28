@@ -9,8 +9,6 @@ import * as s from './styles';
 export default function OrderList(props) {
   const { order, itemAction, ItemButton, splitOrder } = props;
 
-  console.log(order);
-
   return (
     <s.Scroll>
       {order.map(item => (

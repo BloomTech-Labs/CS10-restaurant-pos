@@ -20,7 +20,7 @@ export default function OrderScratchPad(props) {
     saveParty,
     openModal
   } = props;
-  console.log('scratchpad ordr:', order);
+
   return (
     <s.Container>
       <PartyTablesTitle tables={tables} />
