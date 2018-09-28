@@ -7,9 +7,9 @@ const { loginAdmin } = require('../../helpers/loginAdmin');
 let token;
 let orderId;
 
-jest.setTimeout(60000);
+jest.setTimeout(30000);
 
-describe('deleteOrder', () => {
+describe('updateOrder', () => {
   beforeAll(async (done) => {
     // register the admin
     await loginAdmin(server)
@@ -48,19 +48,33 @@ describe('deleteOrder', () => {
     mongoose.disconnect();
   });
 
-  // [Authorized] Deletes an order from the DB
-  it('[Auth] DELETE: Deletes an order from the DB', async () => {
-    const res = await request(server)
-      .delete(`/api/orders/delete/${orderId}`)
-      .set('Authorization', `${token}`);
+  // A test order to use as an update
+  const testOrder = {
+    party: '5b993879366d2671bcba0e02',
+    server: '5b993879366d2671bcba0e02',
+    food: [
+      '5b956483ed2e4d86346d6c82',
+      '5b956483ed2e4d86346d6c82',
+      '5b956483ed2e4d86346d6c82',
+    ],
+  };
 
-    expect(res.status).toBe(202);
+  // [Authorized] Updates an order
+  it('[Auth] PUT: Updates an order in the DB', async () => {
+    const res = await request(server)
+      .put(`/api/orders/update/${orderId}`)
+      .set('Authorization', `${token}`)
+      .send(testOrder);
+
+    expect(res.status).toBe(200);
+    expect(res.body.updatedOrder.food.length).toEqual(3);
   });
 
-  // [Not Authorized] Deletes an order from the DB
-  it('[No Auth] DELETE: Fails deleting an order from the DB', async () => {
+  // [Not Authorized] Fails to update an order without auth
+  it('[No Auth] PUT: Fails to update an order in the DB', async () => {
     const res = await request(server)
-      .delete(`/api/orders/delete/${orderId}`);
+      .put(`/api/orders/update/${orderId}`)
+      .send(testOrder);
 
     expect(res.status).toBe(401);
   });

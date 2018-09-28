@@ -35,7 +35,6 @@ describe('employeeLogin', () => {
 
   // Valid
   it('[Auth] POST: Works with all required fields', async () => {
-    console.log(token, pin);
     const res = await request(server)
       .post('/api/employees/login')
       .set('Authorization', `${token}`)
