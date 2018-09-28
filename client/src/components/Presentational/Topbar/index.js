@@ -8,7 +8,7 @@ import * as s from './styles';
 
 class Topbar extends React.Component {
   render() {
-    const { user } = this.props;
+    const { user, logoutEmployee } = this.props;
     return (
       <s.Topbar blur={this.props.blur}>
         <Clock />
@@ -22,6 +22,7 @@ class Topbar extends React.Component {
         <s.StyledLink to="/party">(Party)</s.StyledLink>
         <s.StyledLink to="/servers">(Servers)</s.StyledLink>
         <s.StyledLink to="/settings">(Settings)</s.StyledLink>
+        <button type="button" onClick={logoutEmployee}>(Logout Employee)</button>
         <s.StyledLink to="/logout">(Logout)</s.StyledLink>
         <CurrentUser user={user} />
         {/* <Clock /> */}
@@ -32,12 +33,14 @@ class Topbar extends React.Component {
 
 Topbar.propTypes = {
   blur: PropTypes.bool,
-  user: PropTypes.shape({ name: PropTypes.string })
+  user: PropTypes.shape({ name: PropTypes.string }),
+  logoutEmployee: PropTypes.func,
 };
 
 Topbar.defaultProps = {
   blur: false,
-  user: { name: 'Please login' }
+  user: { name: 'Please login' },
+  logoutEmployee: () => {},
 };
 
 export default Topbar;

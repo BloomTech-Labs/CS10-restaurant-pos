@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getCurrentUser } from '../../../redux/actions/auth';
+import { getCurrentUser, logoutEmployee } from '../../../redux/actions/auth';
 import Topbar from '../../Presentational/Topbar';
 
 class TopbarContainer extends React.Component {
@@ -12,20 +12,22 @@ class TopbarContainer extends React.Component {
 
   render() {
     const { blur, user } = this.props;
-    return <Topbar blur={blur} user={user} />;
+    return <Topbar blur={blur} user={user} logoutEmployee={this.props.logoutEmployee} />;
   }
 }
 
 TopbarContainer.propTypes = {
   blur: PropTypes.bool,
   user: PropTypes.shape({ name: PropTypes.string }),
-  getCurrentUser: PropTypes.func
+  getCurrentUser: PropTypes.func,
+  logoutEmployee: PropTypes.func
 };
 
 TopbarContainer.defaultProps = {
   blur: false,
   user: { name: 'Please login' },
-  getCurrentUser: () => {}
+  getCurrentUser: () => {},
+  logoutEmployee: () => {}
 };
 
 const mapStateToProps = (state) => ({
@@ -34,5 +36,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { getCurrentUser }
+  { getCurrentUser, logoutEmployee }
 )(TopbarContainer);
