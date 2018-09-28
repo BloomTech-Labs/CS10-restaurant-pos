@@ -26,31 +26,25 @@ class TablesPage extends Component {
     this.props.clearSelected();
   }
 
-  openParty = tableNumber => {
+  openParty = (tableNumber) => {
     const foundParty = this.props.partyList
-      .find(party => party.tables
-        .find(table => table.number === tableNumber));
+      .find((party) => party.tables
+        .find((table) => table.number === tableNumber));
 
     if (foundParty) {
       this.props.history.push(`/party/${foundParty._id}`);
     } else {
-      console.error('some stuff reallllly went wrong here');
+      console.error('some stuff reallllly went wrong in TablesPage Container');
     }
   };
 
-  toggleTable = table => {
+  toggleTable = (table) => {
     this.props.toggleTable(table);
   };
 
   render() {
     const authorized = this.props.role.admin || this.props.role.manager;
-    const {
-      membership,
-      editing,
-      tables,
-      selected,
-      moveTable: moveTableAction,
-    } = this.props;
+    const { membership, editing, tables, selected, moveTable: moveTableAction } = this.props;
 
     let tablesToDisplay = tables;
     if (!membership) {
@@ -122,7 +116,7 @@ TablesPage.defaultProps = {
   history: { push: () => {} }
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   selected: state.tables.selected,
   tables: state.tables.tableList,
   editing: state.tables.editing,

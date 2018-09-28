@@ -7,7 +7,7 @@ import Topbar from '../../Presentational/Topbar';
 
 class TopbarContainer extends React.Component {
   componentDidMount() {
-    // this.props.getCurrentUser();
+    this.props.getCurrentUser();
   }
 
   render() {
@@ -18,14 +18,14 @@ class TopbarContainer extends React.Component {
 
 TopbarContainer.propTypes = {
   blur: PropTypes.bool,
-  user: PropTypes.shape({ name: PropTypes.string })
-  // getCurrentUser: PropTypes.func
+  user: PropTypes.shape({ name: PropTypes.string }),
+  getCurrentUser: PropTypes.func
 };
 
 TopbarContainer.defaultProps = {
   blur: false,
-  user: { name: 'Please login' }
-  // getCurrentUser: () => {}
+  user: { name: 'Please login' },
+  getCurrentUser: () => {}
 };
 
 const mapStateToProps = (state) => ({

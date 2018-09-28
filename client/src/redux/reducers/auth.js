@@ -5,7 +5,8 @@ import jwtDecode from 'jwt-decode';
 import {
   SET_INITIAL_AUTH,
   AUTH_LOADING,
-  GET_CURRENT_USER_SUCCESS,
+  GETTING_CURRENT_USER,
+  GETTING_CURRENT_USER_SUCCESS,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   REGISTRATION_SUCCESS,
@@ -56,8 +57,10 @@ const AuthReducer = (auth = initialState, action) => {
 
       return { ...auth, ...getJWTInfo(jwt) };
 
-    case GET_CURRENT_USER_SUCCESS:
-      return { ...auth, user: action.payload };
+    case GETTING_CURRENT_USER:
+      return { ...auth, loading: true };
+    case GETTING_CURRENT_USER_SUCCESS:
+      return { ...auth, loading: false, user: action.payload };
 
     case AUTH_LOADING:
       return { ...auth, loading: true };

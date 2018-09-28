@@ -25,23 +25,22 @@ import RequireNotAuth from './components/HOC/RequireNotAuth';
 import RequireAuth from './components/HOC/RequireAuth';
 import { sidebar } from './config/conditionalPathnames';
 
-const AuthedPartyPage = RequireAuth(PartyPage);
-const AuthedLoginEmployee = RequireAuth(LoginEmployee);
-const AuthedNewRestaurant = RequireAuth(NewRestaurant);
-const AuthedCreateEmployee = RequireAuth(CreateEmployee);
-const AuthedTablesPage = RequireAuth(TablesPage);
-const AuthedServers = RequireAuth(Servers);
-const AuthedSettings = RequireAuth(Settings);
-
-const NotAuthedLogin = RequireNotAuth(Login);
-const NotAuthedRegsiter = RequireNotAuth(Register);
-
 class App extends Component {
   componentDidMount() {
     this.props.setInitialAuth();
   }
 
   render() {
+    const AuthedPartyPage = RequireAuth(PartyPage);
+    const AuthedLoginEmployee = RequireAuth(LoginEmployee);
+    const AuthedNewRestaurant = RequireAuth(NewRestaurant);
+    const AuthedCreateEmployee = RequireAuth(CreateEmployee);
+    const AuthedTablesPage = RequireAuth(TablesPage);
+    const AuthedServers = RequireAuth(Servers);
+    const AuthedSettings = RequireAuth(Settings);
+
+    const NotAuthedLogin = RequireNotAuth(Login);
+    const NotAuthedRegsiter = RequireNotAuth(Register);
     const { modalIsOpen, role, location, history } = this.props;
     return (
       <s.Container>
@@ -68,7 +67,7 @@ class App extends Component {
             <Route path="/servers" component={AuthedServers} />
             <Route
               path="/party/:id"
-              render={props => <AuthedPartyPage {...props} modalIsOpen={modalIsOpen} />}
+              render={(props) => <AuthedPartyPage {...props} modalIsOpen={modalIsOpen} />}
             />
             <Route path="/settings" component={AuthedSettings} />
             <Route path="/404" component={NotFound} exact />
@@ -95,7 +94,7 @@ App.defaultProps = {
   setInitialAuth: () => {}
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   modalIsOpen: state.modal.isOpen,
   role: state.auth.role
 });

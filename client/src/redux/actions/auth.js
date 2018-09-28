@@ -5,8 +5,9 @@ import jwtDecode from 'jwt-decode';
 import serverURI from '../../config/URI';
 
 export const SET_INITIAL_AUTH = 'SET_INITIAL_AUTH';
-export const GET_CURRENT_USER_ERROR = 'GET_CURRENT_USER_ERROR';
-export const GET_CURRENT_USER_SUCCESS = 'GET_CURRENT_USER_SUCCESS';
+export const GETTING_CURRENT_USER = 'GETTING_CURRENT_USER';
+export const GETTING_CURRENT_USER_ERROR = 'GETTING_CURRENT_USER_ERROR';
+export const GETTING_CURRENT_USER_SUCCESS = 'GETTING_CURRENT_USER_SUCCESS';
 export const LOGOUT = 'LOGOUT';
 export const AUTH_LOADING = 'AUTH_LOADING';
 export const PASSWORD_MATCH_ERROR = 'PASSWORD_MATCH_ERROR';
@@ -25,13 +26,23 @@ export const EMPLOYEE_REGISTER_FAILURE = 'EMPLOYEE_REGISTER_FAILURE';
 export const setInitialAuth = () => ({ type: SET_INITIAL_AUTH });
 
 export const getCurrentUser = () => (dispatch) => {
+  dispatch({ type: GETTING_CURRENT_USER });
   axios
     .get(`${serverURI}/api/employees/current`)
     .then((res) => {
-      dispatch({ type: GET_CURRENT_USER_SUCCESS, payload: res.data });
+      /*
+      res.data: {
+        id: req.user._id,
+        name: req.user.name,
+        email: req.user.email,
+        pin: req.user.pin,
+        role: req.user.role,
+      }
+      */
+      dispatch({ type: GETTING_CURRENT_USER_SUCCESS, payload: res.data });
     })
     .catch((err) => {
-      dispatch({ type: GET_CURRENT_USER_ERROR, payload: err });
+      dispatch({ type: GETTING_CURRENT_USER_ERROR, payload: err });
     });
 };
 

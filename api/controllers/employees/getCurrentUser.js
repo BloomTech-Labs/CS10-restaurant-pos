@@ -2,11 +2,12 @@
 // @desc    Return current employee
 // @access  Private
 const getCurrentUser = (req, res) => {
-  console.log(req.user);
   res.json({
-    id: req.user.id,
+    id: req.user._id,
+    name: req.user.name,
+    email: req.user.email,
     pin: req.user.pin,
-    role: req.user.role
+    role: req.user.role,
   });
 };
 
