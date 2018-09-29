@@ -43,7 +43,7 @@ const getAllServers = (req, res) => {
       {
         $lookup: {
           from: 'items',
-          localField: 'parties.food',
+          localField: 'parties.food._id',
           foreignField: '_id',
           as: 'parties.food',
         },
