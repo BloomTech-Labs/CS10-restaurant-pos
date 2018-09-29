@@ -31,7 +31,7 @@ export const getCurrentUser = () => (dispatch) => {
   axios
     .get(`${serverURI}/api/employees/current`)
     .then((res) => {
-      // * res.data:
+      // * res.data
       // {
       //   id: req.user._id,
       //   name: req.user.name,
@@ -54,20 +54,7 @@ export const login = ({ email, pass }, push) => (dispatch, getState) => {
   axios
     .post(`${serverURI}/api/employees/admin/login`, { email, pass })
     .then((res) => {
-      const { restaurant, id } = jwtDecode(res.data.token);
-
-      // * res.data.token:
-      // {
-      //   id: user._id,
-      //   pin: null,
-      //   role: {
-      //     admin: null,
-      //     manager: null
-      //   },
-      //   restaurant: user.restaurant
-      // }
-
-      dispatch({ type: LOGIN_SUCCESS, payload: { jwt: res.data.token, restaurant, id } });
+      dispatch({ type: LOGIN_SUCCESS, payload: res.data.token });
 
       localStorage.setItem('jwt', res.data.token);
 
@@ -132,11 +119,11 @@ export const loginEmployee = ({ pin, pass }, push) => (dispatch) => {
   axios
     .post(`${serverURI}/api/employees/login`, { pin, pass })
     .then((res) => {
-      const { role, restaurant } = jwtDecode(res.data.token);
+      const { role } = jwtDecode(res.data.token);
 
       dispatch({
         type: EMPLOYEE_LOGIN_SUCCESS,
-        payload: { jwt: res.data.token, role, restaurant }
+        payload: res.data.token
       });
 
       localStorage.setItem('jwt', res.data.token);
@@ -157,11 +144,9 @@ export const logoutEmployee = () => (dispatch) => {
   axios
     .get(`${serverURI}/api/employees/logout`)
     .then((res) => {
-      const { restaurant, membership, user, pin, role } = jwtDecode(res.data.token);
-
       dispatch({
         type: EMPLOYEE_LOGOUT_SUCCESS,
-        payload: { jwt: res.data.token, restaurant, membership, user, pin, role }
+        payload: res.data.token
       });
 
       localStorage.setItem('jwt', res.data.token);

@@ -13,8 +13,7 @@ const employeeLogout = (req, res) => {
   const payload = {
     restaurant,
     membership,
-    user: { name: 'Please login' },
-    id: null, // ! What's with this id?
+    id: null,
     pin: '',
     role: {
       admin: false,

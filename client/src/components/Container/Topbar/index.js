@@ -11,27 +11,27 @@ class TopbarContainer extends React.Component {
   }
 
   render() {
-    const { blur, user } = this.props;
-    return <Topbar blur={blur} user={user} logoutEmployee={this.props.logoutEmployee} />;
+    const { blur, name } = this.props;
+    return <Topbar blur={blur} name={name} logoutEmployee={this.props.logoutEmployee} />;
   }
 }
 
 TopbarContainer.propTypes = {
   blur: PropTypes.bool,
-  user: PropTypes.shape({ name: PropTypes.string }),
+  name: PropTypes.string,
   getCurrentUser: PropTypes.func,
   logoutEmployee: PropTypes.func
 };
 
 TopbarContainer.defaultProps = {
   blur: false,
-  user: { name: 'Please login' },
+  name: 'Please login',
   getCurrentUser: () => {},
   logoutEmployee: () => {}
 };
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user
+  name: state.auth.name
 });
 
 export default connect(
