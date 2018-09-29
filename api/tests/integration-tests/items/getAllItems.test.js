@@ -5,10 +5,8 @@ const server = require('../../../../server');
 const { loginAdmin } = require('../../helpers/loginAdmin');
 
 let token;
-let employeePin;
-let managerPin;
 
-describe('getAllItem', () => {
+describe('getAllItems', () => {
   beforeAll(async (done) => {
     await loginAdmin(server)
       .then(async (resToken) => {
@@ -17,30 +15,27 @@ describe('getAllItem', () => {
           .post('/api/items/add')
           .set('Authorization', token)
           .send({
-            name: 'Fred Fredson',
-            pass: 'password',
+            name: 'Fries',
+            description: 'Salty potato sticks',
+            price: 4.99,
           })
-          .then((pinRes) => {
-            employeePin = pinRes.body.pin;
+          .then(() => {
             request(server)
-              .post('/api/items/register')
+              .post('/api/items/add')
               .set('Authorization', token)
               .send({
-                name: 'Andy Anderson',
-                pass: 'password',
-                role: {
-                  manager: true,
-                },
+                name: 'Ice cream',
+                description: 'Cold sweet thing',
+                price: 5.33,
               })
-              .then((mgrPinRes) => {
-                managerPin = mgrPinRes.body.pin;
+              .then(() => {
                 done();
               })
               .catch(err => {
                 console.error(err);
               });
           })
-          .catch(err => {
+          .catch((err) => {
             console.error(err);
           });
       })
@@ -54,60 +49,22 @@ describe('getAllItem', () => {
     mongoose.disconnect();
   });
 
-  // [Auth] Response should have an array of three employees when logged in as admin
-  it('[Auth] GET: Works when logged in as admin', async () => {
+  // [Authorized] Should return all the items
+  it('[Auth] GET: Works with authorization', async () => {
     const res = await request(server)
-      .get('/api/employees/all')
+      .get('/api/items/all')
       .set('Authorization', token);
-    expect(res.status).toBe(200);
-    expect(res.body).toHaveProperty('employees');
-    expect(res.body.employees.length).toBe(3);
-  });
-
-  // [Auth] Response should have an array of one employee when logged in as a manager
-  it('[Auth] GET: Works when logged in as manager', async () => {
-    const res = await request(server)
-      .post('/api/employees/login')
-      .set('Authorization', token)
-      .send({
-        pin: managerPin,
-        pass: 'password'
-      })
-      .then(response => (
-        request(server)
-          .get('/api/employees/all')
-          .set('Authorization', response.body.token)
-      ));
 
     expect(res.status).toBe(200);
-    expect(res.body).toHaveProperty('employees');
-    expect(res.body.employees.length).toBe(1);
+    expect(res.body).toHaveProperty('items');
+    expect(res.body.items.length).toBe(2);
   });
 
-  // [Not Auth] Response should not have an array of employees when logged in as a server
-  it('[Not Auth] GET: Fails when logged in as a server', async () => {
-    const res = await request(server)
-      .post('/api/employees/login')
-      .set('Authorization', token)
-      .send({
-        pin: employeePin
-      })
-      .then(response => (
-        request(server)
-          .get('/api/employees/all')
-          .set('Authorization', response.body.token)
-      ));
+  // [Auth] Response should not contain any items if not authorized
+  it('[No Auth] GET: Does not work without authorization', async () => {
+    const res = await request(server).get('/api/items/all');
 
     expect(res.status).toBe(401);
-    expect(res.body).not.toHaveProperty('employees');
-  });
-
-  // [Not Auth] Should fail with no auth token
-  it('[Not Auth] GET: Should fail with no authorization', async () => {
-    const res = await request(server)
-      .get('/api/employees/all');
-
-    expect(res.status).toBe(401);
-    expect(res.body).not.toHaveProperty('employees');
+    expect(res.body).not.toHaveProperty('items');
   });
 });
