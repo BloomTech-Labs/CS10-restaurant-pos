@@ -25,14 +25,15 @@ export default function CheckoutModalMain(props) {
     openSplitModal,
     toggleSplitCheckItem,
     toggleCheckout,
-    showStripe
+    showStripe,
+    server
   } = props;
 
   return (
     <Modal isOpen={modalIsOpen}>
       <s.Title>
         <PartyTablesTitle tables={tables} />
-        <div>Server Name</div>
+        <div>{server}</div>
       </s.Title>
       <OrderList
         splitOrder={splitOrder}
@@ -90,7 +91,8 @@ CheckoutModalMain.propTypes = {
   tables: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   location: locationType,
   toggleCheckout: PropTypes.func,
-  showStripe: PropTypes.bool
+  showStripe: PropTypes.bool,
+  server: PropTypes.string,
 };
 
 CheckoutModalMain.defaultProps = {
@@ -105,5 +107,6 @@ CheckoutModalMain.defaultProps = {
   tables: [{ number: 4 }],
   location: { country: 'US', state: 'CA' },
   toggleCheckout: () => {},
-  showStripe: false
+  showStripe: false,
+  server: 'Server Name',
 };

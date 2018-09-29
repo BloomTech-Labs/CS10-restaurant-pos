@@ -42,7 +42,8 @@ class PartyPage extends React.Component {
       this.props.history.push('/tables');
     } else {
       this.setState({
-        order: foundParty.food
+        order: foundParty.food,
+        server: foundParty.server.name,
       });
     }
   }
@@ -128,6 +129,7 @@ class PartyPage extends React.Component {
             total={this.total}
             tables={this.state.party.tables}
             partyId={this.props.match.params.id}
+            server={this.state.server}
           />
           <s.Container modalOpen={this.props.modalIsOpen}>
             <ItemSelector items={this.props.items} addItemToOrder={this.addItemToOrder} />
