@@ -43,7 +43,8 @@ class CheckoutModal extends React.Component {
       closeSplitModal,
       toggleSplitCheckItem,
       splitModalIsOpen,
-      server
+      server,
+      push,
     } = this.props;
 
     return (
@@ -62,6 +63,7 @@ class CheckoutModal extends React.Component {
           tables={tables}
           location={location}
           server={server}
+          push={push}
         />
         <CheckoutModalSplit
           checkoutSplitOrder={this.checkoutSplitOrder}
@@ -95,7 +97,8 @@ CheckoutModal.propTypes = {
   splitOrder: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   tables: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   server: PropTypes.string,
-  location: locationType
+  location: locationType,
+  push: PropTypes.func,
 };
 
 CheckoutModal.defaultProps = {
@@ -111,7 +114,8 @@ CheckoutModal.defaultProps = {
   splitOrder: [],
   tables: [{ number: 4 }],
   server: 'Server Name',
-  location: { country: 'US', state: 'CA' }
+  location: { country: 'US', state: 'CA' },
+  push: () => {}
 };
 
 export default CheckoutModal;

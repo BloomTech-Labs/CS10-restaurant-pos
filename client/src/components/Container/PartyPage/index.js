@@ -114,7 +114,7 @@ class PartyPage extends React.Component {
   render() {
     const { order, splitCheck, subTotal, tables, server } = this.state;
 
-    const { modalIsOpen, splitModalIsOpen, location, match, items } = this.props;
+    const { modalIsOpen, splitModalIsOpen, location, match, history, items } = this.props;
 
     return (
       <React.Fragment>
@@ -134,6 +134,7 @@ class PartyPage extends React.Component {
           tables={tables}
           partyId={match.params.id}
           server={server}
+          push={history.push}
         />
         <s.Container modalOpen={modalIsOpen}>
           <ItemSelector items={items} addItemToOrder={this.addItemToOrder} />

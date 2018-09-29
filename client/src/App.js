@@ -38,6 +38,7 @@ const NotAuthedLogin = RequireNotAuth(Login);
 const NotAuthedRegsiter = RequireNotAuth(Register);
 
 const stripePK = 'pk_test_0axArT8SI2u6aiUnuQH2lJzg';
+
 class App extends Component {
   state = {
     stripe: null
