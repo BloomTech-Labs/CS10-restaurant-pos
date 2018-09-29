@@ -6,8 +6,6 @@ import serverURI from '../../config/URI';
 
 export const AUTH_LOADING = 'AUTH_LOADING';
 export const SET_INITIAL_AUTH = 'SET_INITIAL_AUTH';
-export const GETTING_CURRENT_USER_ERROR = 'GETTING_CURRENT_USER_ERROR';
-export const GETTING_CURRENT_USER_SUCCESS = 'GETTING_CURRENT_USER_SUCCESS';
 export const LOGOUT = 'LOGOUT';
 export const PASSWORD_MATCH_ERROR = 'PASSWORD_MATCH_ERROR';
 export const PASSWORD_MATCH_SUCCESS = 'PASSWORD_MATCH_SUCCESS';
@@ -25,27 +23,6 @@ export const EMPLOYEE_REGISTER_SUCCESS = 'EMPLOYEE_REGISTER_SUCCESS';
 export const EMPLOYEE_REGISTER_FAILURE = 'EMPLOYEE_REGISTER_FAILURE';
 
 export const setInitialAuth = () => ({ type: SET_INITIAL_AUTH });
-
-export const getCurrentUser = () => (dispatch) => {
-  dispatch({ type: AUTH_LOADING });
-  axios
-    .get(`${serverURI}/api/employees/current`)
-    .then((res) => {
-      // * res.data
-      // {
-      //   id: req.user._id,
-      //   name: req.user.name,
-      //   email: req.user.email,
-      //   pin: req.user.pin,
-      //   role: req.user.role,
-      // }
-
-      dispatch({ type: GETTING_CURRENT_USER_SUCCESS, payload: res.data });
-    })
-    .catch((err) => {
-      dispatch({ type: GETTING_CURRENT_USER_ERROR, payload: err });
-    });
-};
 
 export const logout = () => ({ type: LOGOUT });
 
