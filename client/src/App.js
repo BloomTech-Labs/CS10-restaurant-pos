@@ -25,22 +25,23 @@ import RequireNotAuth from './components/HOC/RequireNotAuth';
 import RequireAuth from './components/HOC/RequireAuth';
 import { sidebar } from './config/conditionalPathnames';
 
+const AuthedPartyPage = RequireAuth(PartyPage);
+const AuthedLoginEmployee = RequireAuth(LoginEmployee);
+const AuthedNewRestaurant = RequireAuth(NewRestaurant);
+const AuthedCreateEmployee = RequireAuth(CreateEmployee);
+const AuthedTablesPage = RequireAuth(TablesPage);
+const AuthedServers = RequireAuth(Servers);
+const AuthedSettings = RequireAuth(Settings);
+
+const NotAuthedLogin = RequireNotAuth(Login);
+const NotAuthedRegsiter = RequireNotAuth(Register);
+
 class App extends Component {
   componentDidMount() {
     this.props.setInitialAuth();
   }
 
   render() {
-    const AuthedPartyPage = RequireAuth(PartyPage);
-    const AuthedLoginEmployee = RequireAuth(LoginEmployee);
-    const AuthedNewRestaurant = RequireAuth(NewRestaurant);
-    const AuthedCreateEmployee = RequireAuth(CreateEmployee);
-    const AuthedTablesPage = RequireAuth(TablesPage);
-    const AuthedServers = RequireAuth(Servers);
-    const AuthedSettings = RequireAuth(Settings);
-
-    const NotAuthedLogin = RequireNotAuth(Login);
-    const NotAuthedRegsiter = RequireNotAuth(Register);
     const { modalIsOpen, role, location, history } = this.props;
     return (
       <s.Container>
