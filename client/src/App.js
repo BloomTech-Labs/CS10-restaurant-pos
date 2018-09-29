@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { StripeProvider } from 'react-stripe-elements';
-import dotenv from 'dotenv';
 
 import { setInitialAuth } from './redux/actions/auth';
 import * as s from './styles';
@@ -27,8 +26,6 @@ import RequireNotAuth from './components/HOC/RequireNotAuth';
 import RequireAuth from './components/HOC/RequireAuth';
 import { sidebar } from './config/conditionalPathnames';
 
-dotenv.config();
-
 const AuthedPartyPage = RequireAuth(PartyPage);
 const AuthedLoginEmployee = RequireAuth(LoginEmployee);
 const AuthedNewRestaurant = RequireAuth(NewRestaurant);
@@ -40,6 +37,7 @@ const AuthedSettings = RequireAuth(Settings);
 const NotAuthedLogin = RequireNotAuth(Login);
 const NotAuthedRegsiter = RequireNotAuth(Register);
 
+const stripePK = 'pk_test_0axArT8SI2u6aiUnuQH2lJzg';
 class App extends Component {
   state = {
     stripe: null
@@ -49,11 +47,11 @@ class App extends Component {
     this.props.setInitialAuth();
 
     if (window.Stripe) {
-      this.setState({ stripe: window.Stripe('pk_test_0axArT8SI2u6aiUnuQH2lJzg') });
+      this.setState({ stripe: window.Stripe(stripePK) });
     } else {
       document.querySelector('#stripe-js').addEventListener('load', () => {
         // Create Stripe instance once Stripe.js loads
-        this.setState({ stripe: window.Stripe('pk_test_0axArT8SI2u6aiUnuQH2lJzg') });
+        this.setState({ stripe: window.Stripe(stripePK) });
       });
     }
   }
