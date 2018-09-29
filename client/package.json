@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "date-fns": "^1.29.0",
+    "dotenv": "^6.0.0",
     "es6-set-proptypes": "^1.0.0",
     "jwt-decode": "^2.2.0",
     "pixi-viewport": "^3.7.0",

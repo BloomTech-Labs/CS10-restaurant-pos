@@ -15,7 +15,6 @@ import registerServiceWorker from './registerServiceWorker';
 
 import './index.css';
 
-
 let store;
 if (process.env.NODE_ENV === 'production') {
   store = createStore(reducer, applyMiddleware(thunk, requireManager, axiosAuth));
@@ -30,7 +29,7 @@ if (process.env.NODE_ENV === 'production') {
   );
 }
 
-const AppWithRouter = withRouter(props => <App {...props} />);
+const AppWithRouter = withRouter((props) => <App {...props} />);
 
 ReactDOM.render(
   <Provider store={store}>
