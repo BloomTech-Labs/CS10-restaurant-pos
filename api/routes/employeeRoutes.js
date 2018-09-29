@@ -16,6 +16,6 @@ module.exports = (server, validation) => {
   server.route('/api/employees/admin/login').post(adminLogin);
   server.route('/api/employees/update/:pin').put(validation, updatePin);
   server.route('/api/employees/logout').get(employeeLogout);
-  server.route('/api/employees/current').get(getCurrentUser);
+  server.route('/api/employees/current').get(validation, getCurrentUser);
   server.route('/api/employees/all').get(validation, getAllServers);
 };

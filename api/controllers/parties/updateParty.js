@@ -14,9 +14,6 @@ const updateParty = (req, res) => {
   if (food) updatedFields.food = food;
   if (tables) updatedFields.tables = tables;
 
-  console.log(updatedFields);
-  console.warn(id);
-
   Party.findOneAndUpdate({ _id: id }, updatedFields, { new: true })
     .then(updatedParty => {
       updatedParty
