@@ -14,7 +14,7 @@ import * as s from './styles';
 
 class SettingsPage extends React.Component {
   changePassword = (info) => {
-    this.props.changePassword(info, this.props.history.push);
+    this.props.changePassword(info);
   }
 
   adminDisplay = () => (
@@ -51,9 +51,6 @@ SettingsPage.propTypes = {
     admin: PropTypes.bool,
     manager: PropTypes.bool
   }),
-  history: PropTypes.shape({
-    push: PropTypes.func
-  }),
   membership: PropTypes.bool,
   addItem: PropTypes.func,
   subscribe: PropTypes.func,
@@ -66,7 +63,6 @@ SettingsPage.defaultProps = {
     admin: false,
     manager: false
   },
-  history: { push: () => {} },
   membership: false,
   addItem: () => {},
   subscribe: () => {},

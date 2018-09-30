@@ -7,7 +7,7 @@ import CreateRestaurant from '../../Presentational/CreateRestaurant';
 
 class CreateRestaurantPage extends React.PureComponent {
   createRestaurant = (info) => {
-    this.props.addRestaurant(info, this.props.history.push);
+    this.props.addRestaurant(info);
   }
 
   render() {
@@ -18,14 +18,10 @@ class CreateRestaurantPage extends React.PureComponent {
 }
 
 CreateRestaurantPage.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func
-  }),
   addRestaurant: PropTypes.func
 };
 
 CreateRestaurantPage.defaultProps = {
-  history: { push: () => {} },
   addRestaurant: () => {}
 };
 

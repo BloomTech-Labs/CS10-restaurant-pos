@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { push } from 'connected-react-router';
 import jwtDecode from 'jwt-decode';
 
 import serverURI from '../../config/URI';
@@ -28,7 +29,7 @@ export const addRestaurant = ({
   restaurantName: name,
   location,
   billingAddress: address
-}, push) => dispatch => {
+}) => dispatch => {
   dispatch({ type: ADDING_RESTAURANT });
   axios
     .post(`${serverURI}/api/restaurants/register`, { name, location, billing: { address } })
@@ -39,7 +40,7 @@ export const addRestaurant = ({
 
       localStorage.setItem('jwt', res.data.token);
 
-      push('/login-employee');
+      dispatch(push('/login-employee'));
     })
     .catch(err => {
       console.error(err);

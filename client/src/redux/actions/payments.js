@@ -17,7 +17,7 @@ export const UNSUBSCRIBING_SUCCESS = 'UNSUBSCRIBING_SUCCESS';
 export const UNSUBSCRIBING_ERROR = 'UNSUBSCRIBING_ERROR';
 export const CLEAR_ORDER_CLIENT = 'CLEAR_ORDER_CLIENT';
 
-export const sendPayment = (stripe, amount, description, isSplit, partyId, push) => (
+export const sendPayment = (stripe, amount, description, isSplit, partyId) => (
   dispatch,
   getState
 ) => {
@@ -42,7 +42,6 @@ export const sendPayment = (stripe, amount, description, isSplit, partyId, push)
         dispatch({ type: CLEAR_ORDER_CLIENT });
         dispatch(deleteParty(partyId));
         dispatch(closeModal());
-        push('/tables');
       }
     })
     .catch(err => {

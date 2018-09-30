@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { push } from 'connected-react-router';
 import jwtDecode from 'jwt-decode';
 
 // URIs
@@ -26,7 +27,7 @@ export const setInitialAuth = () => ({ type: SET_INITIAL_AUTH });
 
 export const logout = () => ({ type: LOGOUT });
 
-export const login = ({ email, pass }, push) => (dispatch, getState) => {
+export const login = ({ email, pass }) => (dispatch, getState) => {
   dispatch({ type: AUTH_LOADING });
   axios
     .post(`${serverURI}/api/employees/admin/login`, { email, pass })
@@ -36,9 +37,9 @@ export const login = ({ email, pass }, push) => (dispatch, getState) => {
       localStorage.setItem('jwt', res.data.token);
 
       if (getState().auth.restaurant) {
-        push('/login-employee');
+        dispatch(push('/login-employee'));
       } else {
-        push('/new-restaurant');
+        dispatch(push('/new-restaurant'));
       }
     })
     .catch((err) => {
@@ -46,7 +47,7 @@ export const login = ({ email, pass }, push) => (dispatch, getState) => {
     });
 };
 
-export const register = ({ firstName, lastName, email, pass, confirmPass }, push) => (dispatch) => {
+export const register = ({ firstName, lastName, email, pass, confirmPass }) => (dispatch) => {
   if (pass !== confirmPass) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
@@ -61,14 +62,14 @@ export const register = ({ firstName, lastName, email, pass, confirmPass }, push
     })
     .then((res) => {
       dispatch({ type: REGISTRATION_SUCCESS, payload: res.data.pin });
-      push('/registration-success');
+      dispatch(push('/registration-success'));
     })
     .catch((err) => {
       dispatch({ type: REGISTRATION_FAILURE, payload: err });
     });
 };
 
-export const changePassword = ({ pin, oldPassword, newPassword, confirmNew }, push) => (
+export const changePassword = ({ pin, oldPassword, newPassword, confirmNew }) => (
   dispatch
 ) => {
   if (newPassword !== confirmNew) {
@@ -84,14 +85,14 @@ export const changePassword = ({ pin, oldPassword, newPassword, confirmNew }, pu
     })
     .then(() => {
       dispatch({ type: CHANGE_PASSWORD_SUCCESS });
-      push('/password-change-success');
+      dispatch(push('/password-change-success'));
     })
     .catch((err) => {
       dispatch({ type: CHANGE_PASSWORD_ERROR, payload: err });
     });
 };
 
-export const loginEmployee = ({ pin, pass }, push) => (dispatch) => {
+export const loginEmployee = ({ pin, pass }) => (dispatch) => {
   dispatch({ type: AUTH_LOADING });
   axios
     .post(`${serverURI}/api/employees/login`, { pin, pass })
@@ -106,9 +107,9 @@ export const loginEmployee = ({ pin, pass }, push) => (dispatch) => {
       localStorage.setItem('jwt', res.data.token);
 
       if (role.admin || role.manager) {
-        push('/servers');
+        dispatch(push('/servers'));
       } else {
-        push('/tables');
+        dispatch(push('/tables'));
       }
     })
     .catch((err) => {
@@ -133,7 +134,7 @@ export const logoutEmployee = () => (dispatch) => {
     });
 };
 
-export const addEmployee = ({ firstName, lastName, pass, confirmPass }, push) => (dispatch) => {
+export const addEmployee = ({ firstName, lastName, pass, confirmPass }) => (dispatch) => {
   if (pass !== confirmPass) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
@@ -144,7 +145,7 @@ export const addEmployee = ({ firstName, lastName, pass, confirmPass }, push) =>
     .post(`${serverURI}/api/employees/register`, { name: `${firstName} ${lastName}`, pass })
     .then((res) => {
       dispatch({ type: EMPLOYEE_REGISTER_SUCCESS, payload: res.data.pin });
-      push('/registration-success');
+      dispatch(push('/registration-success'));
     })
     .catch((err) => {
       dispatch({ type: EMPLOYEE_REGISTER_FAILURE, payload: err });

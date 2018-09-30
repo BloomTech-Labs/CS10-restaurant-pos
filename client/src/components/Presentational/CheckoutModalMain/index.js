@@ -27,7 +27,7 @@ export default function CheckoutModalMain(props) {
     toggleCheckout,
     showStripe,
     server,
-    push
+    
   } = props;
 
   return (
@@ -53,7 +53,6 @@ export default function CheckoutModalMain(props) {
               total={order.reduce((acc, item) => acc + item.price, 0)}
               isSplit={false}
               partyId={partyId}
-              push={push}
             />
           </Elements>
         ) : (
@@ -95,7 +94,6 @@ CheckoutModalMain.propTypes = {
   toggleCheckout: PropTypes.func,
   showStripe: PropTypes.bool,
   server: PropTypes.string,
-  push: PropTypes.func,
 };
 
 CheckoutModalMain.defaultProps = {
@@ -112,5 +110,4 @@ CheckoutModalMain.defaultProps = {
   toggleCheckout: () => {},
   showStripe: false,
   server: 'Server Name',
-  push: () => {}
 };

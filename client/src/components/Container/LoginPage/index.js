@@ -7,7 +7,7 @@ import Login from '../../Presentational/Login';
 
 class LoginPage extends React.PureComponent {
   login = (info) => {
-    this.props.login(info, this.props.history.push);
+    this.props.login(info);
   }
 
   render() {
@@ -18,14 +18,10 @@ class LoginPage extends React.PureComponent {
 }
 
 LoginPage.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func
-  }),
   login: PropTypes.func
 };
 
 LoginPage.defaultProps = {
-  history: { push: () => {} },
   login: () => {}
 };
 

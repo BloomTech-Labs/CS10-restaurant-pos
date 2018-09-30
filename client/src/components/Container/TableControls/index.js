@@ -25,7 +25,7 @@ class TableControls extends React.Component {
 
   createParty = () => {
     const tablesArray = this.props.tables.filter(table => this.props.selected.has(table.number));
-    this.props.createParty(tablesArray, this.props.push);
+    this.props.createParty(tablesArray);
   };
 
   toggleEdit = () => this.props.toggleEdit();
@@ -64,7 +64,6 @@ TableControls.propTypes = {
   addTable: PropTypes.func,
   saveTables: PropTypes.func,
   toggleEdit: PropTypes.func,
-  push: PropTypes.func
 };
 
 TableControls.defaultProps = {
@@ -78,7 +77,6 @@ TableControls.defaultProps = {
   addTable: () => {},
   saveTables: () => {},
   toggleEdit: () => {},
-  push: () => {}
 };
 
 const mapStateToProps = state => ({

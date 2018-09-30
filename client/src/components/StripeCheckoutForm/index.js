@@ -35,7 +35,6 @@ class StripeCheckoutForm extends React.Component {
             'sneaky_snake_case',
             this.props.isSplit,
             this.props.partyId,
-            this.props.push
           );
         })
         .catch((error) => console.error(error));
