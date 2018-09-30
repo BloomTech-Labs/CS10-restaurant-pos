@@ -26,8 +26,7 @@ export default function CheckoutModalMain(props) {
     toggleSplitCheckItem,
     toggleCheckout,
     showStripe,
-    server,
-    
+    server
   } = props;
 
   return (
@@ -93,7 +92,7 @@ CheckoutModalMain.propTypes = {
   location: locationType,
   toggleCheckout: PropTypes.func,
   showStripe: PropTypes.bool,
-  server: PropTypes.string,
+  server: PropTypes.string
 };
 
 CheckoutModalMain.defaultProps = {
@@ -109,5 +108,5 @@ CheckoutModalMain.defaultProps = {
   location: { country: 'US', state: 'CA' },
   toggleCheckout: () => {},
   showStripe: false,
-  server: 'Server Name',
+  server: 'Server Name'
 };
