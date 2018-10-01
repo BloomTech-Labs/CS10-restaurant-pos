@@ -6,7 +6,7 @@ import { logoutEmployee } from '../../../redux/actions/auth';
 import Topbar from '../../Presentational/Topbar';
 
 function TopbarContainer(props) {
-  const { blur, name, roleBooleans } = props;
+  const { blur, name, roleBooleans, loggedIn, pathname } = props;
   let role;
   if (roleBooleans.admin) {
     role = 'Admin';
@@ -16,15 +16,27 @@ function TopbarContainer(props) {
     role = 'Server';
   }
 
-  return <Topbar blur={blur} name={name} logoutEmployee={props.logoutEmployee} role={role} />;
+  return (
+    <Topbar
+      blur={blur}
+      name={name}
+      logoutEmployee={props.logoutEmployee}
+      role={role}
+      loggedIn={loggedIn}
+      showLogout={roleBooleans.admin || roleBooleans.manager}
+      landing={pathname === '/'}
+    />
+  );
 }
 
 TopbarContainer.propTypes = {
   blur: PropTypes.bool,
   name: PropTypes.string,
+  loggedIn: PropTypes.bool,
+  pathname: PropTypes.string,
   roleBooleans: PropTypes.shape({
     admin: PropTypes.bool,
-    manager: PropTypes.bool,
+    manager: PropTypes.bool
   }),
   logoutEmployee: PropTypes.func
 };
@@ -32,16 +44,20 @@ TopbarContainer.propTypes = {
 TopbarContainer.defaultProps = {
   blur: false,
   name: 'Please login',
+  loggedIn: false,
+  pathname: 'defaultpathname',
   roleBooleans: {
     admin: false,
-    manager: false,
+    manager: false
   },
   logoutEmployee: () => {}
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   name: state.auth.name,
+  loggedIn: !!state.auth.name,
   roleBooleans: state.auth.role,
+  pathname: state.router.location.pathname,
 });
 
 export default connect(

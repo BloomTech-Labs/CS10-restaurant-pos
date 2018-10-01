@@ -5,9 +5,9 @@ import * as s from './styles';
 
 class CurrentUser extends React.Component {
   render() {
-    const { name, role } = this.props;
+    const { name, role, action } = this.props;
     return (
-      <s.Container>
+      <s.Container onClick={action}>
         <div>
           <div>{name}</div>
           <div>{role}</div>
@@ -21,11 +21,13 @@ class CurrentUser extends React.Component {
 CurrentUser.propTypes = {
   name: PropTypes.string,
   role: PropTypes.string,
+  action: PropTypes.func,
 };
 
 CurrentUser.defaultProps = {
   name: 'Please login',
-  role: 'none'
+  role: 'none',
+  action: () => {},
 };
 
 export default CurrentUser;
