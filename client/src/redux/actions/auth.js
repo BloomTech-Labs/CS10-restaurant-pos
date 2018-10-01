@@ -126,6 +126,7 @@ export const logoutEmployee = () => (dispatch) => {
         type: EMPLOYEE_LOGOUT_SUCCESS,
         payload: res.data.token
       });
+      dispatch(push('/login-employee'));
 
       localStorage.setItem('jwt', res.data.token);
     })

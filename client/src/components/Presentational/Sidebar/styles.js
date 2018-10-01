@@ -9,8 +9,8 @@ export const Sidebar = styled.nav`
   justify-content: space-between;
   align-items: center;
   padding-top: 75px;
-  width: 15%;
-  min-width: 150px;
+  width: 230px;
+  flex-shrink: 0;
   max-width: ${props => props.theme.sideBarWidth}px;
   background: ${props => props.theme.appPrimary};
   ${(props) => props.modalIsOpen && modalBlur};
