@@ -15,7 +15,7 @@ import * as s from './styles';
 const Login = props => (
   <React.Fragment>
     <StyledFormik
-      initialValues={{ email: '', password: '' }}
+      initialValues={{ email: '', pass: '' }}
       validate={values => {
         const errors = {};
         if (!values.email) {

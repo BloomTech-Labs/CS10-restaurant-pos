@@ -47,7 +47,7 @@ export const login = ({ email, pass }) => (dispatch, getState) => {
     });
 };
 
-export const register = ({ firstName, lastName, email, pass, confirmPass }) => (dispatch) => {
+export const register = ({ name, email, pass, confirmPass }) => (dispatch) => {
   if (pass !== confirmPass) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
@@ -56,7 +56,7 @@ export const register = ({ firstName, lastName, email, pass, confirmPass }) => (
   dispatch({ type: AUTH_LOADING });
   axios
     .post(`${serverURI}/api/employees/admin/register`, {
-      name: `${firstName} ${lastName}`,
+      name,
       email,
       pass
     })
@@ -134,7 +134,7 @@ export const logoutEmployee = () => (dispatch) => {
     });
 };
 
-export const addEmployee = ({ firstName, lastName, pass, confirmPass }) => (dispatch) => {
+export const addEmployee = ({ name, pass, confirmPass }) => (dispatch) => {
   if (pass !== confirmPass) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
@@ -142,7 +142,7 @@ export const addEmployee = ({ firstName, lastName, pass, confirmPass }) => (disp
   dispatch({ type: PASSWORD_MATCH_SUCCESS });
   dispatch({ type: AUTH_LOADING });
   axios
-    .post(`${serverURI}/api/employees/register`, { name: `${firstName} ${lastName}`, pass })
+    .post(`${serverURI}/api/employees/register`, { name, pass })
     .then((res) => {
       dispatch({ type: EMPLOYEE_REGISTER_SUCCESS, payload: res.data.pin });
       dispatch(push('/registration-success'));

@@ -14,7 +14,7 @@ import * as s from './styles';
 const Register = props => (
   <React.Fragment>
     <StyledFormik
-      initialValues={{ email: '', password: '' }}
+      initialValues={{ name: '', email: '', pass: '', confirmPass: '' }}
       validate={values => {
         const errors = {};
         if (!values.name) {

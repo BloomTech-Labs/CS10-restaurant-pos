@@ -2,7 +2,7 @@
 const transparent = 'rgba(0, 0, 0, 0)';
 const lightGrey = 'rgba(255, 255, 255, 0.4)';
 const white = '#FFFFFF';
-const aquaHaze = '#F7F9FA';
+const aquaHaze = '#F6F8FB';
 const razzmatazz = '#E30E58';
 const oxfordBlue = '#303B49';
 const comet = '#5F6273';
@@ -19,7 +19,7 @@ export const theme = {
 
   // * Default Dimensions ----------------------
   sideBarWidth: 265,
-  topBarHeight: 125,
+  topBarHeight: 100,
   menuItemSize: 200,
 
   // * Font Styles -----------------------------
