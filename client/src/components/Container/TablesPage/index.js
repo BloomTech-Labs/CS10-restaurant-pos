@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import SetType from 'es6-set-proptypes';
 
 import FloorPlan from '../../Presentational/FloorPlan';
+import Loading from '../../Presentational/Loading';
 import FreeFloorPlan from '../../Presentational/FreeFloorPlan';
 // import Loading from '../../Presentational/Loading';
 import {
@@ -62,12 +63,19 @@ class TablesPage extends Component {
       selected,
       moveTable: moveTableAction,
       serverTables,
-      match
+      match,
+      loading
     } = this.props;
 
     let tablesToDisplay = tables;
     if (!membership) {
       tablesToDisplay = tables.slice(0, 5);
+    }
+
+    if (loading) {
+      return (
+        <Loading />
+      );
     }
 
     return (
@@ -115,6 +123,7 @@ TablesPage.propTypes = {
     manager: PropTypes.bool
   }),
   membership: PropTypes.bool,
+  loading: PropTypes.bool,
   tables: PropTypes.arrayOf(PropTypes.object),
   serverTables: PropTypes.arrayOf(PropTypes.number),
   partyList: PropTypes.arrayOf(PropTypes.object),
@@ -137,6 +146,7 @@ TablesPage.defaultProps = {
   editing: false,
   role: { admin: false, manager: false },
   membership: false,
+  loading: true,
   tables: [],
   serverTables: [],
   partyList: [{ _id: 'defaultpartyid' }],
@@ -157,7 +167,8 @@ const mapStateToProps = state => ({
   role: state.auth.role,
   partyList: state.party.partyList,
   serverTables: state.tables.serverTables,
-  membership: state.auth.membership
+  membership: state.auth.membership,
+  loading: state.tables.loading && state.party.loading,
 });
 
 export default connect(

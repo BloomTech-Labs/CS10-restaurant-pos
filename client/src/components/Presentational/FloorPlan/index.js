@@ -341,9 +341,9 @@ class FloorPlan extends React.PureComponent {
   resize = () => {
     // calculate the size the editor should
     // resize to based on the parent div
-    const parent = this.pixi.current.parentNode;
-    const w = parent.clientWidth;
-    const h = parent.clientHeight;
+    const { parent } = this.props;
+    const w = parent.current.clientWidth;
+    const h = parent.current.clientHeight;
     this.app.renderer.resize(w, h);
     this.viewport.resize(w, h, 1000, 1000);
   };
