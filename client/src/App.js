@@ -7,7 +7,6 @@ import { StripeProvider } from 'react-stripe-elements';
 import { setInitialAuth } from './redux/actions/auth';
 import * as s from './styles';
 import Landing from './components/Presentational/Landing';
-// import Loading from './components/Presentational/Loading';
 import Logout from './components/LogoutPage';
 import Login from './components/Container/LoginPage';
 import Register from './components/Container/RegisterPage';
@@ -26,6 +25,7 @@ import NewRestaurant from './components/Container/CreateRestaurantPage';
 import RequireNotAuth from './components/HOC/RequireNotAuth';
 import RequireAuth from './components/HOC/RequireAuth';
 import { sidebar } from './config/conditionalPathnames';
+import Test from './components/Presentational/Test';
 
 const AuthedPartyPage = RequireAuth(PartyPage);
 const AuthedLoginEmployee = RequireAuth(LoginEmployee, true);
@@ -73,6 +73,7 @@ class App extends Component {
               push={history.push}
             />
             <Switch>
+              <Route path="/test" component={Test} />
               <Route path="/" component={Landing} exact />
               <Route path="/logout" component={Logout} />
               <Route path="/login" component={NotAuthedLogin} />
