@@ -14,3 +14,9 @@ export const containerMixin = css`
 export const modalBlur = css`
   filter: blur(1px);
 `;
+
+export const card = css`
+  background: ${(props) => props.theme.appPrimary};
+  box-shadow: ${(props) => props.theme.boxShadow};
+  border-radius: ${(props) => props.theme.btnBorderRadius}px;
+`;

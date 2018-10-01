@@ -8,12 +8,13 @@ const oxfordBlue = '#303B49';
 const comet = '#5F6273';
 const steelBlue = '#4381C1';
 const ebonyClay = '#202233';
+const silver = '#C6C6C6';
 
 export const theme = {
   // * Misc. -----------------------------------
   menuOpacity: null,
   lineHeight: null,
-  boxShadow: '0 2px 4px 1px rgba(0, 0, 0, 0.15)',
+  boxShadow: '0 2px 16px 1px rgba(0, 0, 0, 0.15)',
 
   // * Default Dimensions ----------------------
   sideBarWidth: 265,
@@ -23,6 +24,7 @@ export const theme = {
   // * Font Styles -----------------------------
   ItemTitleSize: 2,
   ItemTitleDescription: 1.4,
+  placeholderColor: silver,
 
   // * Buttons ---------------------------------
   // Standard
