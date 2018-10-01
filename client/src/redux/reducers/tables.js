@@ -11,14 +11,13 @@ import {
   DEACTIVATING_TABLE,
   DEACTIVATING_TABLE_SUCCESS,
   TOGGLE_TABLE,
-  TOGGLE_EDIT,
+  TOGGLE_EDIT
 } from '../actions/tables';
-import {
-  CLEAR_SELECTED,
-} from '../actions/party';
+import { CLEAR_SELECTED } from '../actions/party';
 
 const initialState = {
   tableList: [],
+  serverTables: [],
   selected: new Set(),
   editing: false,
   loading: false,
@@ -32,7 +31,12 @@ const TablesReducer = (state = initialState, action) => {
       return { ...state, loading: true };
 
     case LOADING_TABLES_SUCCESS:
-      return { ...state, loading: false, tableList: action.payload };
+      return {
+        ...state,
+        loading: false,
+        tableList: action.payload.tableList,
+        serverTables: action.payload.serverTables
+      };
 
     case ADDING_TABLE:
       return { ...state, loading: true };
@@ -44,7 +48,7 @@ const TablesReducer = (state = initialState, action) => {
       const { x, y, tableId } = action.payload;
       return {
         ...state,
-        tableList: state.tableList.map((table) => {
+        tableList: state.tableList.map(table => {
           if (table._id === tableId) {
             return { ...table, x, y };
           }
@@ -66,7 +70,7 @@ const TablesReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        tableList: state.tableList.map((table) => {
+        tableList: state.tableList.map(table => {
           if (table._id === updatedTable._id) return updatedTable;
           return table;
         })

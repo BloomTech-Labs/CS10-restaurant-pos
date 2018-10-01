@@ -19,7 +19,8 @@ class TablesPage extends Component {
   }
 
   componentDidMount() {
-    this.props.getTables();
+    const { match } = this.props;
+    this.props.getTables(match.params.id);
     this.props.getParties();
   }
 
@@ -99,6 +100,9 @@ TablesPage.propTypes = {
   clearSelected: PropTypes.func,
   history: PropTypes.shape({
     push: PropTypes.func
+  }),
+  match: PropTypes.shape({
+    params: PropTypes.object,
   })
 };
 
@@ -114,7 +118,8 @@ TablesPage.defaultProps = {
   getParties: () => {},
   toggleTable: () => {},
   clearSelected: () => {},
-  history: { push: () => {} }
+  history: { push: () => {} },
+  match: { params: {} },
 };
 
 const mapStateToProps = (state) => ({

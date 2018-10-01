@@ -8,7 +8,7 @@ export default function Server(props) {
   const { server, push } = props;
 
   return (
-    <s.ServerBox onClick={() => push(`/tables?server=${server._id}`)}>
+    <s.ServerBox onClick={() => push(`/tables/${server.name.replace(/\s/, '_')}/${server._id}`)}>
       <div>Name: {server.name}</div>
       <div>
         Parties ({server.parties.length}
