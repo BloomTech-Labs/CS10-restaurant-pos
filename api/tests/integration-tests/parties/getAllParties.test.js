@@ -10,7 +10,7 @@ let tableId;
 jest.setTimeout(30000);
 
 // First a table must be created in order to add a party
-describe('addParty', () => {
+describe('getAllParties', () => {
   beforeAll(async (done) => {
     // register the admin
     await loginAdmin(server)
@@ -31,7 +31,17 @@ describe('addParty', () => {
           .then(tableRes => {
             // Assigns the _id of the new table to tableId
             tableId = tableRes.body.table._id;
-            done();
+
+            request(server)
+              .post('/api/party/add')
+              .set('Authorization', `${token}`)
+              .send({ tables: [tableId] })
+              .then(() => {
+                done();
+              })
+              .catch(err => {
+                console.error(err);
+              });
           })
           .catch(err => {
             console.error(err);
@@ -47,23 +57,13 @@ describe('addParty', () => {
     mongoose.disconnect();
   });
 
-  // [Authorized] Adds a party
-  it('[Auth] POST: Adds a party to the DB', async () => {
+  // [Authorized] Gets all the parties
+  it('[Auth] GET: Retrieves all parties from the DB', async () => {
     const res = await request(server)
-      .post('/api/party/add')
-      .set('Authorization', `${token}`)
-      .send({ tables: [tableId] });
+      .get('/api/party/all')
+      .set('Authorization', `${token}`);
 
+    expect(res.body.parties[0].tables.length).toEqual(1);
     expect(res.status).toBe(200);
-  });
-
-  // [Authorized] Changes a tables active status to true
-  it('[Auth] POST: Changes the tables active status to true when added to a party', async () => {
-    const res = await request(server)
-      .post('/api/party/add')
-      .set('Authorization', `${token}`)
-      .send({ tables: [tableId] });
-
-    expect(res.body.party.tables[0].active).toEqual(true);
   });
 });
