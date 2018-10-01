@@ -66,4 +66,12 @@ describe('getAllParties', () => {
     expect(res.body.parties[0].tables.length).toEqual(1);
     expect(res.status).toBe(200);
   });
+
+  // [Not Authorized] Gets all the parties
+  it('[No Auth] GET: Fails to retrieve all parties from the DB', async () => {
+    const res = await request(server)
+      .get('/api/party/all');
+
+    expect(res.status).toBe(401);
+  });
 });
