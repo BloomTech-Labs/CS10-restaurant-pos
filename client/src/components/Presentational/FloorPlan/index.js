@@ -321,10 +321,12 @@ class FloorPlan extends React.PureComponent {
         <s.Container innerRef={this.pixi} />
         <div style={{ position: 'fixed', right: '100px', top: '150px' }}>
           {/* // ! make these not inline */}
-          <label htmlFor="lock">
+          <s.CheckBox>
+            {/* <label htmlFor="lock"> */}
             <input type="checkbox" id="lock" onClick={this.toggleLock} value={this.state.locked} />
-            <span>Lock</span>
-          </label>
+            <label htmlFor="lock"><span>Lock</span></label>
+            {/* </label> */}
+          </s.CheckBox>
         </div>
         <div style={{ position: 'fixed', right: '40px', top: '150px' }}>
           {/* // ! make these not inline */}

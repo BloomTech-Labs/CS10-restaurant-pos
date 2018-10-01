@@ -1,0 +1,19 @@
+{
+    "name": "Main Course POS",
+    "short_name": "Main Course",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png?v=m2Lrd0oEn8",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png?v=m2Lrd0oEn8",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#e30e58",
+    "background_color": "#e30e58",
+    "display": "standalone"
+}

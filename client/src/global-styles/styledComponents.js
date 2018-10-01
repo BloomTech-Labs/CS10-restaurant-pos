@@ -1,8 +1,10 @@
 /* stylelint-disable value-list-max-empty-lines */
 /* stylelint-disable declaration-colon-newline-after */
 import styled from 'styled-components';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-import { flexCenterMixin } from './mixins';
+
+import { flexCenterMixin, card } from './mixins';
 
 export const MainContainer = styled.div`
   background: ${(props) => props.theme.contentBackground};
@@ -15,11 +17,9 @@ export const MainContainer = styled.div`
 
 export const Boxes = styled.div`
   ${flexCenterMixin};
+  ${card};
   flex-direction: column;
   justify-content: flex-start;
-  background: ${(props) => props.theme.appPrimary};
-  box-shadow: ${(props) => props.theme.boxShadow};
-  border-radius: ${(props) => props.theme.btnBorderRadius}px;
   align-items: center;
   height: ${(props) => props.theme.menuItemSize}px;
   width: ${(props) => props.theme.menuItemSize}px;
@@ -28,7 +28,7 @@ export const Boxes = styled.div`
   cursor: pointer;
 `;
 
-export const Button = styled.div`
+export const Button = styled.button`
   ${flexCenterMixin};
   position: relative;
   padding: 0;
@@ -73,8 +73,6 @@ export const Button = styled.div`
   &:hover {
     ${(props) => !props.inactive && (`
       cursor: pointer;
-      box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.1);
-      transform: translate(0, -1px);
     `)}
   }
   /* stylelint-enable comment-empty-line-before */
@@ -93,4 +91,46 @@ export const Button = styled.div`
     height: ${(props) => props.theme.btnHeight + 5}px;
     display: ${(props) => !props.inactive && 'none'};
   }
+`;
+
+export const StyledFormik = styled(Formik)`
+  /* styles */
+`;
+
+export const StyledForm = styled(Form)`
+  ${flexCenterMixin}
+  ${card}
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 50%;
+  max-height: 450px;
+  padding: 0 70px;
+`;
+
+export const StyledField = styled(Field)`
+  background: ${(props) => (props.error ? props.theme.inputError : props.theme.contentBackground)};
+  border: 0;
+  border-radius: ${(props) => props.theme.btnBorderRadius}px;
+  height: ${(props) => props.theme.btnHeight}px;
+  font-size: ${(props) => props.theme.btnFontSize}rem;
+  padding: 20px;
+  width: 250px;
+
+  &::placeholder {
+    color: ${(props) => props.theme.placeholderColor};
+  }
+
+  &[type='number'] {
+    -moz-appearance: textfield; /* stylelint-disable-line property-no-vendor-prefix */
+  }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    display: none;
+  }
+`;
+
+export const StyledErrorMessage = styled(ErrorMessage)`
+  color: ${(props) => props.theme.appSecondary};
+  position: relative;
 `;

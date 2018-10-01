@@ -22,13 +22,13 @@ const createOptions = () => ({
 });
 
 class StripeCheckoutForm extends React.Component {
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     const amount = Math.trunc(this.props.total * 100);
     event.preventDefault();
     if (this.props.stripe) {
       this.props.stripe
         .createToken()
-        .then(token => {
+        .then((token) => {
           this.props.sendPayment(
             token,
             amount,
@@ -37,7 +37,7 @@ class StripeCheckoutForm extends React.Component {
             this.props.partyId,
           );
         })
-        .catch(error => console.error(error));
+        .catch((error) => console.error(error));
     } else {
       console.log("Stripe.js hasn't loaded yet.");
     }
@@ -57,7 +57,9 @@ class StripeCheckoutForm extends React.Component {
             {...createOptions(this.props.fontSize)}
           />
         </s.Label>
-        <Button dark onClick={this.handleSubmit}>Pay</Button>
+        <Button dark onClick={this.handleSubmit}>
+          Pay
+        </Button>
       </s.Form>
     );
   }
