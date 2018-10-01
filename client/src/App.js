@@ -27,8 +27,8 @@ import RequireAuth from './components/HOC/RequireAuth';
 import { sidebar } from './config/conditionalPathnames';
 
 const AuthedPartyPage = RequireAuth(PartyPage);
-const AuthedLoginEmployee = RequireAuth(LoginEmployee);
-const AuthedNewRestaurant = RequireAuth(NewRestaurant);
+const AuthedLoginEmployee = RequireAuth(LoginEmployee, true);
+const AuthedNewRestaurant = RequireAuth(NewRestaurant, true);
 const AuthedCreateEmployee = RequireAuth(CreateEmployee);
 const AuthedTablesPage = RequireAuth(TablesPage);
 const AuthedServers = RequireAuth(Servers);

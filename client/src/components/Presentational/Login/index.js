@@ -2,58 +2,70 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import {
+  Button,
+  StyledFormik,
+  StyledForm,
+  StyledField,
+  StyledErrorMessage
+} from '../../../global-styles/styledComponents';
 
 import * as s from './styles';
 
-class Login extends React.Component {
-  state = { email: '', pass: '' };
-
-  handleChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-    this.props.login(this.state);
-  };
-
-  render() {
-    return (
-      <s.Container>
-        <Link to="/register">Don&apos;t have an account? Register here</Link>
-        <s.Form onSubmit={this.handleSubmit}>
-          <input
-            placeholder="email"
-            type="text"
-            onChange={this.handleChange}
-            name="email"
-            autoComplete="email"
-            value={this.state.email}
-          />
-          <input
-            placeholder="password"
-            type="password"
-            onChange={this.handleChange}
-            name="pass"
-            minLength="8"
-            maxLength="21"
-            autoComplete="current-password"
-            value={this.state.pass}
-          />
-          <button type="submit">Submit</button>
-        </s.Form>
-      </s.Container>
-    );
-  }
-}
+const Login = props => (
+  <React.Fragment>
+    <StyledFormik
+      initialValues={{ email: '', pass: '' }}
+      validate={values => {
+        const errors = {};
+        if (!values.email) {
+          errors.email = 'Required';
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+          errors.email = 'Invalid email address';
+        }
+        return errors;
+      }}
+      onSubmit={(values, { setSubmitting }) => {
+        props.login(values);
+        setSubmitting(false); // TODO: set this to false upon success or error
+      }}
+    >
+      {({ errors, isSubmitting }) => (
+        <s.Container>
+          <h1>Login to your Restaurant</h1>
+          <StyledForm>
+            <StyledField
+              type="email"
+              name="email"
+              placeholder="delish@nutrish.com"
+              error={errors.email}
+              autoComplete="username"
+            />
+            <StyledErrorMessage name="email" component="div" />
+            <StyledField
+              type="password"
+              name="pass"
+              autoComplete="current-password"
+              placeholder="********"
+            />
+            <StyledErrorMessage name="pass" component="div" />
+            <Button primary dark type="submit" inactive={isSubmitting}>
+              Submit
+            </Button>
+          </StyledForm>
+          <Link to="/register">Dont have an account? Sign Up here</Link>
+        </s.Container>
+      )}
+    </StyledFormik>
+  </React.Fragment>
+);
 
 Login.propTypes = {
-  login: PropTypes.func,
+  login: PropTypes.func
 };
 
 Login.defaultProps = {
-  login: () => {},
+  login: () => {}
 };
-
 
 export default Login;

@@ -1,1 +1,11 @@
-export const sidebar = ['/', '/404', '/login', '/logout', '/register', '/registration-success', '/new-restaurant'];
+export const sidebar = [
+  '/',
+  '/404',
+  '/login',
+  '/logout',
+  '/register',
+  '/registration-success',
+  '/new-restaurant',
+  '/login-employee',
+  '/new-employee'
+];

@@ -7,8 +7,6 @@ import { addTable, toggleEdit, saveTables } from '../../../redux/actions/tables'
 import { createParty } from '../../../redux/actions/party';
 import TableControlButtons from '../../Presentational/TableControlButtons';
 
-import * as s from './styles';
-
 class TableControls extends React.Component {
   addTable = () => {
     const { membership, tables } = this.props;
@@ -34,18 +32,16 @@ class TableControls extends React.Component {
     const authorized = this.props.role.admin || this.props.role.manager;
     const { selected, editing, visible } = this.props;
     return (
-      <s.Panel>
-        <TableControlButtons
-          authorized={authorized}
-          takeout={!!selected.size}
-          editing={authorized && editing}
-          toggleEdit={this.toggleEdit}
-          saveTables={this.saveTables}
-          createParty={this.createParty}
-          addTable={this.addTable}
-          visible={visible}
-        />
-      </s.Panel>
+      <TableControlButtons
+        authorized={authorized}
+        takeout={!!selected.size}
+        editing={authorized && editing}
+        toggleEdit={this.toggleEdit}
+        saveTables={this.saveTables}
+        createParty={this.createParty}
+        addTable={this.addTable}
+        visible={visible}
+      />
     );
   }
 }
