@@ -82,7 +82,7 @@ class TablesPage extends Component {
       <s.FloorPlanContainer innerRef={this.floorplanParent}>
         {match.params.id && (
           <button style={{ position: 'absolute' }} type="button" onClick={this.clearServerTables}>
-            {'< 😜'}
+            {'Back 😜'}
           </button>
         )}
         {membership ? (
@@ -91,6 +91,7 @@ class TablesPage extends Component {
               <FloorPlan
                 editing={editing && authorized}
                 tables={tablesToDisplay}
+                selectable={!match.params.id}
                 selected={selected}
                 moveTable={moveTableAction}
                 toggleTable={this.toggleTable}

@@ -254,7 +254,10 @@ class FloorPlan extends React.PureComponent {
       // circle.alpha = 1;
       circle.tint = 0xe30e58;
     }
-    this.props.toggleTable(circle.tableNumber);
+
+    if (this.props.selectable) {
+      this.props.toggleTable(circle.tableNumber);
+    }
   };
 
   onDragStart = (event, circle) => {
@@ -274,7 +277,9 @@ class FloorPlan extends React.PureComponent {
     } else if (!circle.tableActive) {
       // If editing mode is off, a click should
       // toggle the table's active status
-      this.toggleActive(circle);
+      if (this.props.selectable) {
+        this.toggleActive(circle);
+      }
     } else {
       this.props.openParty(circle.tableNumber);
     }
@@ -378,6 +383,7 @@ FloorPlan.propTypes = {
   selected: SetType,
   tables: PropTypes.arrayOf(PropTypes.object),
   serverTables: PropTypes.arrayOf(PropTypes.number),
+  selectable: PropTypes.bool,
   moveTable: PropTypes.func,
   toggleTable: PropTypes.func,
   openParty: PropTypes.func,
@@ -389,6 +395,7 @@ FloorPlan.defaultProps = {
   selected: new Set(),
   tables: [],
   serverTables: [],
+  selectable: true,
   moveTable: () => {},
   toggleTable: () => {},
   openParty: () => {},
