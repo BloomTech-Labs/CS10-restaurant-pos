@@ -105,7 +105,7 @@ export const StyledForm = styled(Form)`
   flex-direction: column;
   justify-content: space-evenly;
   height: 50%;
-  max-height: 400px;
+  max-height: 500px;
   padding: 0 70px;
 `;
 
