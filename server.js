@@ -21,7 +21,7 @@ const stripeRoutes = require('./api/routes/stripeRoutes');
 const tableRoutes = require('./api/routes/tableRoutes');
 
 // TODO: Setup morgan and helmet
-const corsOptions = { origin: clientURI, credentials: true };
+const corsOptions = { origin: [clientURI, 'https://optimistic-pare-7d0360.netlify.com'], credentials: true };
 
 // Initialize Server
 const server = express();
