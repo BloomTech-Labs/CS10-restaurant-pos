@@ -70,4 +70,12 @@ describe('updateParty', () => {
     expect(res.body.updatedParty.tables.length).toEqual(2);
     expect(res.status).toBe(200);
   });
+
+  // [Not Authorized] Fails to update a party
+  it('[No Auth] PUT: Fails to update a party in the DB', async () => {
+    const res = await request(server)
+      .put(`/api/party/update/${partyId}`);
+
+    expect(res.status).toBe(401);
+  });
 });
