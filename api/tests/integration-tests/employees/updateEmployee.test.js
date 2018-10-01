@@ -3,18 +3,20 @@ const request = require('supertest');
 
 const server = require('../../../../server');
 const { loginAdmin } = require('../../helpers/loginAdmin');
+const Employee = require('../../../models/Employee');
 
-let token;
+let employeeToken;
+let adminToken;
 let pin;
 
-describe('updatePin', () => {
+describe('updateEmployee', () => {
   beforeAll(async (done) => {
     loginAdmin(server)
       .then(async resToken => {
-        token = resToken;
+        adminToken = resToken;
         request(server)
           .post('/api/employees/register')
-          .set('Authorization', token)
+          .set('Authorization', adminToken)
           .send({
             name: 'Fred Fredson',
             pass: 'password'
@@ -23,12 +25,12 @@ describe('updatePin', () => {
             pin = response.body.pin; // eslint-disable-line
             return request(server)
               .post('/api/employees/login')
-              .set('Authorization', token)
+              .set('Authorization', adminToken)
               .send({
                 pin
               })
               .then((loginRes) => {
-                token = loginRes.body.token; //eslint-disable-line
+                employeeToken = loginRes.body.token; //eslint-disable-line
                 done();
               });
           })
@@ -49,20 +51,36 @@ describe('updatePin', () => {
   it('[Auth] PUT: Works when the user is logged in', async () => {
     const res = await request(server)
       .put(`/api/employees/update/${pin}`)
-      .set('Authorization', token)
+      .set('Authorization', employeeToken)
       .send({
-        oldPassword: 'password',
-        newPassword: 'newPassword'
+        pass: 'password',
+        newPass: 'newPassword'
       });
 
     expect(res.status).toBe(200);
+  });
+
+  it('[Auth] PUT: Update email works when the user is logged in', async () => {
+    const res = await request(server)
+      .put('/api/employees/update/0000')
+      .set('Authorization', adminToken)
+      .send({
+        pass: 'password',
+        email: 'newemail@mail.com'
+      });
+
+    const userEmail = await Employee.findOne({ pin: '0000' })
+      .then(employee => employee.email);
+
+    expect(res.status).toBe(200);
+    expect(userEmail).toBe('newemail@mail.com');
   });
 
   // Invalid
   it('[No Auth] PUT: Won\'t work if the user isn\'t logged in', async () => {
     const res = await request(server)
       .put('/api/employees/update/0000')
-      .set('Authorization', token)
+      .set('Authorization', employeeToken)
       .send({
         oldPassword: 'password',
         newPassword: 'newPassword'

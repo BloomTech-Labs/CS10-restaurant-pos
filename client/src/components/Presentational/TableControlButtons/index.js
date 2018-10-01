@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { Button } from '../../../global-styles/styledComponents';
 
+import * as s from './styles';
+
 class TableControlButtons extends React.PureComponent {
   authorized = () => (
     <React.Fragment>
@@ -36,11 +38,11 @@ class TableControlButtons extends React.PureComponent {
     const { editing, authorized, visible } = this.props;
     if (visible) {
       return (
-        <div>
+        <s.Container>
           {authorized && !editing && this.authorized()}
           {!editing && this.notEditing()}
           {editing && this.editing()}
-        </div>
+        </s.Container>
       );
     }
     return null;

@@ -6,7 +6,7 @@ import { modalBlur } from '../../../global-styles/mixins';
 export const Topbar = styled.nav`
   display: flex;
   flex-shrink: 0;
-  justify-content: space-between;
+  justify-content: ${(props) => (props.alignEnd ? 'flex-end' : 'space-between')};
   align-items: center;
   width: 100%;
   height: ${props => props.theme.topBarHeight}px;

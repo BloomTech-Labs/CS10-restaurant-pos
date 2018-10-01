@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { StripeProvider } from 'react-stripe-elements';
 import shortid from 'shortid';
 
 import ItemSelector from '../ItemSelector';
@@ -29,7 +28,8 @@ class PartyPage extends React.Component {
   state = {
     splitCheck: this.props.splitOrder,
     order: [],
-    party: {}
+    tables: [],
+    server: ''
   };
 
   componentDidMount() {
@@ -42,7 +42,9 @@ class PartyPage extends React.Component {
       this.props.history.push('/tables');
     } else {
       this.setState({
-        order: foundParty.food
+        order: foundParty.food,
+        tables: foundParty.tables,
+        server: foundParty.server.name
       });
     }
   }
@@ -102,6 +104,8 @@ class PartyPage extends React.Component {
 
   saveParty = () => {
     this.props.updateParty(this.props.match.params.id, { food: this.state.order });
+    // Push is not dispatched from the update action because
+    // the update action is also dispatched in the payment action
     this.props.history.push('/tables');
   };
 
@@ -110,40 +114,43 @@ class PartyPage extends React.Component {
   };
 
   render() {
+    const { order, splitCheck, subTotal, tables, server } = this.state;
+
+    const { modalIsOpen, splitModalIsOpen, location, match, items } = this.props;
+
     return (
-      <StripeProvider apiKey="pk_test_0axArT8SI2u6aiUnuQH2lJzg">
-        <React.Fragment>
-          <CheckoutModal
-            order={this.state.order}
-            modalIsOpen={this.props.modalIsOpen}
-            splitModalIsOpen={this.props.splitModalIsOpen}
-            openSplitModal={this.openSplitModal}
-            closeSplitModal={this.closeSplitModal}
-            splitOrder={this.state.splitCheck}
-            toggleSplitCheckItem={this.toggleSplitCheckItem}
-            location={this.props.location}
-            subTotal={this.state.subTotal}
-            sendPayment={this.props.sendPayment}
+      <React.Fragment>
+        <CheckoutModal
+          sendPayment={this.props.sendPayment}
+          setTotal={this.setTotal}
+          total={this.total}
+          openSplitModal={this.openSplitModal}
+          closeSplitModal={this.closeSplitModal}
+          toggleSplitCheckItem={this.toggleSplitCheckItem}
+          order={order}
+          modalIsOpen={modalIsOpen}
+          splitModalIsOpen={splitModalIsOpen}
+          splitOrder={splitCheck}
+          location={location}
+          subTotal={subTotal}
+          tables={tables}
+          partyId={match.params.id}
+          server={server}
+        />
+        <s.Container modalOpen={modalIsOpen}>
+          <ItemSelector items={items} addItemToOrder={this.addItemToOrder} />
+          <OrderScratchPad
+            tables={tables}
+            saveParty={this.saveParty}
+            order={order}
+            subTotal={subTotal}
             setTotal={this.setTotal}
-            total={this.total}
-            tables={this.state.party.tables}
-            partyId={this.props.match.params.id}
+            removeItemFromOrder={this.removeItemFromOrder}
+            location={location}
+            openModal={this.openModal}
           />
-          <s.Container modalOpen={this.props.modalIsOpen}>
-            <ItemSelector items={this.props.items} addItemToOrder={this.addItemToOrder} />
-            <OrderScratchPad
-              tables={this.state.party.tables}
-              saveParty={this.saveParty}
-              order={this.state.order}
-              subTotal={this.state.subTotal}
-              setTotal={this.setTotal}
-              removeItemFromOrder={this.removeItemFromOrder}
-              location={this.props.location}
-              openModal={this.openModal}
-            />
-          </s.Container>
-        </React.Fragment>
-      </StripeProvider>
+        </s.Container>
+      </React.Fragment>
     );
   }
 }

@@ -5,6 +5,7 @@ import SetType from 'es6-set-proptypes';
 
 import FloorPlan from '../../Presentational/FloorPlan';
 import FreeFloorPlan from '../../Presentational/FreeFloorPlan';
+// import Loading from '../../Presentational/Loading';
 import { getTables, moveTable, toggleTable } from '../../../redux/actions/tables';
 import { getParties, clearSelected } from '../../../redux/actions/party';
 
