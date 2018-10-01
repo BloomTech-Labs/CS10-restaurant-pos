@@ -67,4 +67,13 @@ describe('getParty', () => {
 
     expect(res.status).toBe(200);
   });
+
+  // [Not Authorized] Fails to get a party from the db
+  it('[No Auth] GET: Fails to retrieve a party from the DB', async () => {
+    const res = await request(server)
+      .get(`/api/party/${partyId}`)
+      .set('Authorization', `${token}`);
+
+    expect(res.status).toBe(200);
+  });
 });
