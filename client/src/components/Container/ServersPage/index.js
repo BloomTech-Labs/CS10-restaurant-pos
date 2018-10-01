@@ -13,10 +13,10 @@ class ServersPage extends React.Component {
   }
 
   render() {
-    const { serverList } = this.props;
+    const { serverList, history } = this.props;
     return (
       <React.Fragment>
-        <ServerList serverList={serverList} />
+        <ServerList serverList={serverList} push={history.push} />
       </React.Fragment>
     );
   }
@@ -25,6 +25,9 @@ class ServersPage extends React.Component {
 ServersPage.propTypes = {
   getServers: PropTypes.func,
   serverList: PropTypes.arrayOf(PropTypes.object), // TODO: Define object shape
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
 };
 
 ServersPage.defaultProps = {
@@ -34,6 +37,7 @@ ServersPage.defaultProps = {
     { name: 'Randy', _id: 'dgas98yh3n2' },
     { name: 'Carl', _id: 'asg0hio2n3' }
   ],
+  history: { push: () => {} },
 };
 
 const mapStateToProps = state => ({

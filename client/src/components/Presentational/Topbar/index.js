@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Clock from '../Clock';
+import Date from '../Date';
 import CurrentUser from '../CurrentUser';
 
 import * as s from './styles';
@@ -20,7 +21,10 @@ export default function Topbar(props) {
 
   return (
     <s.Topbar blur={props.blur}>
-      <Clock />
+      <div>
+        <Clock />
+        <Date />
+      </div>
       <h1>Main Course</h1>
       {/* <s.StyledLink to="/login-employee">(Employee Login)</s.StyledLink>
       <s.StyledLink to="/login">(Admin Login)</s.StyledLink>
