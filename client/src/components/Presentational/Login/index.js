@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-// import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 import {
   Button,
@@ -27,13 +26,8 @@ const Login = props => (
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
-        // setTimeout(() => {
-        //   alert(JSON.stringify(values, null, 2));
-        //   setSubmitting(false);
-        // }, 400);
         props.login(values);
-        console.log('its submitting');
-        setSubmitting(false);
+        setSubmitting(false); // TODO: set this to false upon success or error
       }}
     >
       {({ errors, isSubmitting }) => (
@@ -48,8 +42,13 @@ const Login = props => (
               autoComplete="username"
             />
             <StyledErrorMessage name="email" component="div" />
-            <StyledField type="password" name="password" autoComplete="current-password" placeholder="********" />
-            <StyledErrorMessage name="password" component="div" />
+            <StyledField
+              type="password"
+              name="pass"
+              autoComplete="current-password"
+              placeholder="********"
+            />
+            <StyledErrorMessage name="pass" component="div" />
             <Button primary dark type="submit" inactive={isSubmitting}>
               Submit
             </Button>

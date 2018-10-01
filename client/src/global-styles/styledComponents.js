@@ -28,7 +28,7 @@ export const Boxes = styled.div`
   cursor: pointer;
 `;
 
-export const Button = styled.div`
+export const Button = styled.button`
   ${flexCenterMixin};
   position: relative;
   padding: 0;
@@ -103,10 +103,10 @@ export const StyledForm = styled(Form)`
   ${flexCenterMixin}
   ${card}
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   height: 50%;
   max-height: 400px;
-  padding: 70px;
+  padding: 0 70px;
 `;
 
 export const StyledField = styled(Field)`

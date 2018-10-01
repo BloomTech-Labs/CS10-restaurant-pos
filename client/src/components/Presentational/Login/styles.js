@@ -6,7 +6,6 @@ export const Container = styled.div`
   ${containerMixin}
   ${flexCenterMixin}
   flex-direction: column;
-  justify-content: space-evenly;
   width: 100%;
 `;
 
