@@ -2,7 +2,7 @@ const { adminRegister } = require('./adminRegister');
 const { employeeRegister } = require('./employeeRegister');
 const { employeeLogin } = require('./employeeLogin');
 const { adminLogin } = require('./adminLogin');
-const { updatePin } = require('./updatePin');
+const { updateEmployee } = require('./updateEmployee');
 const { employeeLogout } = require('./employeeLogout');
 const { getCurrentUser } = require('./getCurrentUser');
 const { getAllServers } = require('./getAllServers');
@@ -12,7 +12,7 @@ module.exports = {
   employeeRegister,
   employeeLogin,
   adminLogin,
-  updatePin,
+  updateEmployee,
   employeeLogout,
   getCurrentUser,
   getAllServers

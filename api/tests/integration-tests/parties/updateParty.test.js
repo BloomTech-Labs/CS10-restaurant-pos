@@ -6,11 +6,12 @@ const { loginAdmin } = require('../../helpers/loginAdmin');
 
 let token;
 let tableId;
+let partyId;
 
 jest.setTimeout(30000);
 
 // First a table must be created in order to add a party
-describe('addParty', () => {
+describe('updateParty', () => {
   beforeAll(async (done) => {
     // register the admin
     await loginAdmin(server)
@@ -31,7 +32,19 @@ describe('addParty', () => {
           .then(tableRes => {
             // Assigns the _id of the new table to tableId
             tableId = tableRes.body.table._id;
-            done();
+
+            request(server)
+              .post('/api/party/add')
+              .set('Authorization', `${token}`)
+              .send({ tables: [tableId] })
+              .then(addedParty => {
+                // Store the partys ID
+                partyId = addedParty.body.party._id;
+                done();
+              })
+              .catch(err => {
+                console.error(err);
+              });
           })
           .catch(err => {
             console.error(err);
@@ -47,23 +60,22 @@ describe('addParty', () => {
     mongoose.disconnect();
   });
 
-  // [Authorized] Adds a party
-  it('[Auth] POST: Adds a party to the DB', async () => {
+  // [Authorized] Updates a party
+  it('[Auth] PUT: Updates a party in the DB', async () => {
     const res = await request(server)
-      .post('/api/party/add')
+      .put(`/api/party/update/${partyId}`)
       .set('Authorization', `${token}`)
-      .send({ tables: [tableId] });
+      .send({ tables: [tableId, tableId] });
 
+    expect(res.body.updatedParty.tables.length).toEqual(2);
     expect(res.status).toBe(200);
   });
 
-  // [Authorized] Changes a tables active status to true
-  it('[Auth] POST: Changes the tables active status to true when added to a party', async () => {
+  // [Not Authorized] Fails to update a party
+  it('[No Auth] PUT: Fails to update a party in the DB', async () => {
     const res = await request(server)
-      .post('/api/party/add')
-      .set('Authorization', `${token}`)
-      .send({ tables: [tableId] });
+      .put(`/api/party/update/${partyId}`);
 
-    expect(res.body.party.tables[0].active).toEqual(true);
+    expect(res.status).toBe(401);
   });
 });

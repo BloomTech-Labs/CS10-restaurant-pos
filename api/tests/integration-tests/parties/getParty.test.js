@@ -6,11 +6,12 @@ const { loginAdmin } = require('../../helpers/loginAdmin');
 
 let token;
 let tableId;
+let partyId;
 
 jest.setTimeout(30000);
 
 // First a table must be created in order to add a party
-describe('addParty', () => {
+describe('getParty', () => {
   beforeAll(async (done) => {
     // register the admin
     await loginAdmin(server)
@@ -31,7 +32,18 @@ describe('addParty', () => {
           .then(tableRes => {
             // Assigns the _id of the new table to tableId
             tableId = tableRes.body.table._id;
-            done();
+
+            request(server)
+              .post('/api/party/add')
+              .set('Authorization', `${token}`)
+              .send({ tables: [tableId] })
+              .then(partyRes => {
+                partyId = partyRes.body.party._id;
+                done();
+              })
+              .catch(err => {
+                console.error(err);
+              });
           })
           .catch(err => {
             console.error(err);
@@ -47,23 +59,21 @@ describe('addParty', () => {
     mongoose.disconnect();
   });
 
-  // [Authorized] Adds a party
-  it('[Auth] POST: Adds a party to the DB', async () => {
+  // [Authorized] Gets a party from the db
+  it('[Auth] GET: Retrieves the party from the DB', async () => {
     const res = await request(server)
-      .post('/api/party/add')
-      .set('Authorization', `${token}`)
-      .send({ tables: [tableId] });
+      .get(`/api/party/${partyId}`)
+      .set('Authorization', `${token}`);
 
     expect(res.status).toBe(200);
   });
 
-  // [Authorized] Changes a tables active status to true
-  it('[Auth] POST: Changes the tables active status to true when added to a party', async () => {
+  // [Not Authorized] Fails to get a party from the db
+  it('[No Auth] GET: Fails to retrieve a party from the DB', async () => {
     const res = await request(server)
-      .post('/api/party/add')
-      .set('Authorization', `${token}`)
-      .send({ tables: [tableId] });
+      .get(`/api/party/${partyId}`)
+      .set('Authorization', `${token}`);
 
-    expect(res.body.party.tables[0].active).toEqual(true);
+    expect(res.status).toBe(200);
   });
 });
