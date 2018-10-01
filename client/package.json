@@ -9,6 +9,7 @@
     "es6-set-proptypes": "^1.0.0",
     "formik": "^1.3.0",
     "jwt-decode": "^2.2.0",
+    "pixi-layers": "^0.1.9",
     "pixi-viewport": "^3.7.0",
     "pixi.js": "^4.8.2",
     "react": "^16.5.0",

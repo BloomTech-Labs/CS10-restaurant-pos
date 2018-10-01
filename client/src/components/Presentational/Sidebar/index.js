@@ -13,7 +13,7 @@ export default function Sidebar(props) {
       visible={visible}
     >
       <s.LinkGroup>
-        <s.StyledLink to="/tables">Tables</s.StyledLink>
+        <s.StyledLink to="/tables" exact>Tables</s.StyledLink>
         <s.StyledLink to="/servers">Servers</s.StyledLink>
         <TableControls push={push} visible={pathname === '/tables'} />
       </s.LinkGroup>

@@ -38,9 +38,9 @@ class SettingsPage extends React.Component {
     const { manager, admin } = this.props.role;
     return (
       <s.Container>
+        <ChangePassword changePassword={this.changePassword} />
         {admin && this.adminDisplay()}
         {(manager || admin) && this.managerDisplay()}
-        <ChangePassword changePassword={this.changePassword} />
       </s.Container>
     );
   }

@@ -5,10 +5,10 @@ import shortid from 'shortid';
 import * as s from './styles';
 
 export default function Server(props) {
-  const { server } = props;
+  const { server, push } = props;
 
   return (
-    <s.ServerBox>
+    <s.ServerBox onClick={() => push(`/tables/${server.name.replace(/\s/, '_')}/${server._id}`)}>
       <div>Name: {server.name}</div>
       <div>
         Parties ({server.parties.length}
@@ -35,7 +35,8 @@ Server.propTypes = {
         tables: PropTypes.arrayOf(PropTypes.object)
       })
     )
-  })
+  }),
+  push: PropTypes.func,
 };
 
 Server.defaultProps = {
@@ -62,5 +63,6 @@ Server.defaultProps = {
         ]
       }
     ]
-  }
+  },
+  push: () => {},
 };

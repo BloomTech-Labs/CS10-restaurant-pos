@@ -7,6 +7,7 @@ import { StripeProvider } from 'react-stripe-elements';
 import { setInitialAuth } from './redux/actions/auth';
 import * as s from './styles';
 import Landing from './components/Presentational/Landing';
+// import Loading from './components/Presentational/Loading';
 import Logout from './components/LogoutPage';
 import Login from './components/Container/LoginPage';
 import Register from './components/Container/RegisterPage';
@@ -81,6 +82,7 @@ class App extends Component {
               <Route path="/login-employee" component={AuthedLoginEmployee} />
               <Route path="/new-restaurant" component={AuthedNewRestaurant} />
               <Route path="/new-employee" component={AuthedCreateEmployee} />
+              <Route path="/tables/:name/:id" component={AuthedTablesPage} />
               <Route path="/tables" component={AuthedTablesPage} />
               <Route path="/servers" component={AuthedServers} />
               <Route

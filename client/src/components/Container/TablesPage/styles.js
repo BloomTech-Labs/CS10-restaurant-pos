@@ -14,4 +14,5 @@ export const Editor = styled.div`
 
 export const FloorPlanContainer = styled.div`
   flex-grow: 1;
+  position: relative;
 `;

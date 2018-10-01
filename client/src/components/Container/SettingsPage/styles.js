@@ -4,5 +4,6 @@ import { containerMixin } from '../../../global-styles/mixins';
 
 export const Container = styled.div`
   ${containerMixin};
-  height: 100%;
+  flex-wrap: wrap;
+  overflow-y: auto;
 `;

@@ -33,8 +33,7 @@ export const Dot = styled.div`
   border-radius: 50%;
   margin-right: 10px;
   background: ${(props) => props.theme.appSecondary};
-  animation: ${staggeredWave} 1.4s ease-in-out infinite;
-  animation-delay: 0.1s;
+  animation: ${staggeredWave} 1.2s ease-in-out infinite;
 
   &:nth-child(2) {
     animation-delay: -1.1s;

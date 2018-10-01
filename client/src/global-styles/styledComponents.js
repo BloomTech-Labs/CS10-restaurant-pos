@@ -104,6 +104,7 @@ export const StyledForm = styled(Form)`
   justify-content: space-evenly;
   height: 50%;
   max-height: 450px;
+  max-width: 400px;
   padding: 0 70px;
 `;
 
