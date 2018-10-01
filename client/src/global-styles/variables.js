@@ -9,6 +9,7 @@ const comet = '#5F6273';
 const steelBlue = '#4381C1';
 const ebonyClay = '#202233';
 const silver = '#C6C6C6';
+const wispPink = '#FDEFF5';
 
 export const theme = {
   // * Misc. -----------------------------------
@@ -54,6 +55,7 @@ export const theme = {
   appTertiary: oxfordBlue,
   contentBackground: aquaHaze,
   textColorDark: white,
+  inputError: wispPink,
   // Top Bar
   topBarLink: comet,
   // Side Bar

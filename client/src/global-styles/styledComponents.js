@@ -105,13 +105,13 @@ export const StyledForm = styled(Form)`
   flex-direction: column;
   justify-content: space-evenly;
   height: 50%;
-  max-height: 500px;
+  max-height: 450px;
   padding: 0 70px;
 `;
 
 export const StyledField = styled(Field)`
-  background: ${(props) => props.theme.contentBackground};
-  border: ${(props) => (props.error ? `2px solid ${props.theme.appSecondary}` : '0')};
+  background: ${(props) => (props.error ? props.theme.inputError : props.theme.contentBackground)};
+  border: 0;
   border-radius: ${(props) => props.theme.btnBorderRadius}px;
   height: ${(props) => props.theme.btnHeight}px;
   font-size: ${(props) => props.theme.btnFontSize}rem;
