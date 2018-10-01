@@ -7,7 +7,7 @@ import LoginEmployee from '../../Presentational/LoginEmployee';
 
 class LoginEmployeePage extends React.PureComponent {
   loginEmployee = (info) => {
-    this.props.loginEmployee(info, this.props.history.push);
+    this.props.loginEmployee(info);
   }
 
   render() {
@@ -18,14 +18,10 @@ class LoginEmployeePage extends React.PureComponent {
 }
 
 LoginEmployeePage.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func
-  }),
   loginEmployee: PropTypes.func
 };
 
 LoginEmployeePage.defaultProps = {
-  history: { push: () => {} },
   loginEmployee: () => {}
 };
 

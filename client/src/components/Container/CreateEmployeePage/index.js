@@ -7,7 +7,7 @@ import CreateEmployee from '../../Presentational/CreateEmployee';
 
 class CreateEmployeePage extends React.PureComponent {
   addEmployee = (info) => {
-    this.props.addEmployee(info, this.props.history.push);
+    this.props.addEmployee(info);
   }
 
   render() {
@@ -19,14 +19,10 @@ class CreateEmployeePage extends React.PureComponent {
 
 
 CreateEmployeePage.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func
-  }),
   addEmployee: PropTypes.func
 };
 
 CreateEmployeePage.defaultProps = {
-  history: { push: () => {} },
   addEmployee: () => {}
 };
 

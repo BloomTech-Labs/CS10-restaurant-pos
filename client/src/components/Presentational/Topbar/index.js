@@ -8,7 +8,7 @@ import * as s from './styles';
 
 class Topbar extends React.Component {
   render() {
-    const { user, logoutEmployee } = this.props;
+    const { name, logoutEmployee } = this.props;
     return (
       <s.Topbar blur={this.props.blur}>
         <Clock />
@@ -17,15 +17,14 @@ class Topbar extends React.Component {
         <s.StyledLink to="/login">(Admin Login)</s.StyledLink>
         <s.StyledLink to="/register">(Register)</s.StyledLink>
         <s.StyledLink to="/new-employee">(New Employee)</s.StyledLink>
-        <s.StyledLink to="/new-restaurant">(New Restaurant)</s.StyledLink>
-        <s.StyledLink to="/tables">(Tables)</s.StyledLink>
-        <s.StyledLink to="/party">(Party)</s.StyledLink>
-        <s.StyledLink to="/servers">(Servers)</s.StyledLink>
-        <s.StyledLink to="/settings">(Settings)</s.StyledLink>
+        {/* <s.StyledLink to="/new-restaurant">(New Restaurant)</s.StyledLink> */}
+        {/* <s.StyledLink to="/tables">(Tables)</s.StyledLink> */}
+        {/* <s.StyledLink to="/party">(Party)</s.StyledLink> */}
+        {/* <s.StyledLink to="/servers">(Servers)</s.StyledLink> */}
+        {/* <s.StyledLink to="/settings">(Settings)</s.StyledLink> */}
         <button type="button" onClick={logoutEmployee}>(Logout Employee)</button>
         <s.StyledLink to="/logout">(Logout)</s.StyledLink>
-        <CurrentUser user={user} />
-        {/* <Clock /> */}
+        <CurrentUser name={name} />
       </s.Topbar>
     );
   }
@@ -33,13 +32,13 @@ class Topbar extends React.Component {
 
 Topbar.propTypes = {
   blur: PropTypes.bool,
-  user: PropTypes.shape({ name: PropTypes.string }),
+  name: PropTypes.string,
   logoutEmployee: PropTypes.func,
 };
 
 Topbar.defaultProps = {
   blur: false,
-  user: { name: 'Please login' },
+  name: 'Please login',
   logoutEmployee: () => {},
 };
 

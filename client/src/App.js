@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import { StripeProvider } from 'react-stripe-elements';
 
 import { setInitialAuth } from './redux/actions/auth';
 import * as s from './styles';
@@ -25,56 +26,74 @@ import RequireNotAuth from './components/HOC/RequireNotAuth';
 import RequireAuth from './components/HOC/RequireAuth';
 import { sidebar } from './config/conditionalPathnames';
 
+const AuthedPartyPage = RequireAuth(PartyPage);
+const AuthedLoginEmployee = RequireAuth(LoginEmployee);
+const AuthedNewRestaurant = RequireAuth(NewRestaurant);
+const AuthedCreateEmployee = RequireAuth(CreateEmployee);
+const AuthedTablesPage = RequireAuth(TablesPage);
+const AuthedServers = RequireAuth(Servers);
+const AuthedSettings = RequireAuth(Settings);
+
+const NotAuthedLogin = RequireNotAuth(Login);
+const NotAuthedRegsiter = RequireNotAuth(Register);
+
+const stripePK = 'pk_test_0axArT8SI2u6aiUnuQH2lJzg';
+
 class App extends Component {
+  state = {
+    stripe: null
+  };
+
   componentDidMount() {
     this.props.setInitialAuth();
+
+    if (window.Stripe) {
+      this.setState({ stripe: window.Stripe(stripePK) });
+    } else {
+      document.querySelector('#stripe-js').addEventListener('load', () => {
+        // Create Stripe instance once Stripe.js loads
+        this.setState({ stripe: window.Stripe(stripePK) });
+      });
+    }
   }
 
   render() {
-    const AuthedPartyPage = RequireAuth(PartyPage);
-    const AuthedLoginEmployee = RequireAuth(LoginEmployee);
-    const AuthedNewRestaurant = RequireAuth(NewRestaurant);
-    const AuthedCreateEmployee = RequireAuth(CreateEmployee);
-    const AuthedTablesPage = RequireAuth(TablesPage);
-    const AuthedServers = RequireAuth(Servers);
-    const AuthedSettings = RequireAuth(Settings);
-
-    const NotAuthedLogin = RequireNotAuth(Login);
-    const NotAuthedRegsiter = RequireNotAuth(Register);
     const { modalIsOpen, role, location, history } = this.props;
     return (
-      <s.Container>
-        <Topbar blur={modalIsOpen} />
-        <s.Main>
-          <Sidebar
-            blur={modalIsOpen}
-            role={role}
-            visible={!sidebar.includes(location.pathname)}
-            pathname={location.pathname}
-            push={history.push}
-          />
-          <Switch>
-            <Route path="/" component={Landing} exact />
-            <Route path="/logout" component={Logout} />
-            <Route path="/login" component={NotAuthedLogin} />
-            <Route path="/register" component={NotAuthedRegsiter} />
-            <Route path="/registration-success" component={SuccessRegistration} />
-            <Route path="/password-change-success" component={SuccessPassChange} />
-            <Route path="/login-employee" component={AuthedLoginEmployee} />
-            <Route path="/new-restaurant" component={AuthedNewRestaurant} />
-            <Route path="/new-employee" component={AuthedCreateEmployee} />
-            <Route path="/tables" component={AuthedTablesPage} />
-            <Route path="/servers" component={AuthedServers} />
-            <Route
-              path="/party/:id"
-              render={(props) => <AuthedPartyPage {...props} modalIsOpen={modalIsOpen} />}
+      <StripeProvider stripe={this.state.stripe}>
+        <s.Container>
+          <Topbar blur={modalIsOpen} />
+          <s.Main>
+            <Sidebar
+              blur={modalIsOpen}
+              role={role}
+              visible={!sidebar.includes(location.pathname)}
+              pathname={location.pathname}
+              push={history.push}
             />
-            <Route path="/settings" component={AuthedSettings} />
-            <Route path="/404" component={NotFound} exact />
-            <Redirect to="/404" />
-          </Switch>
-        </s.Main>
-      </s.Container>
+            <Switch>
+              <Route path="/" component={Landing} exact />
+              <Route path="/logout" component={Logout} />
+              <Route path="/login" component={NotAuthedLogin} />
+              <Route path="/register" component={NotAuthedRegsiter} />
+              <Route path="/registration-success" component={SuccessRegistration} />
+              <Route path="/password-change-success" component={SuccessPassChange} />
+              <Route path="/login-employee" component={AuthedLoginEmployee} />
+              <Route path="/new-restaurant" component={AuthedNewRestaurant} />
+              <Route path="/new-employee" component={AuthedCreateEmployee} />
+              <Route path="/tables" component={AuthedTablesPage} />
+              <Route path="/servers" component={AuthedServers} />
+              <Route
+                path="/party/:id"
+                render={(props) => <AuthedPartyPage {...props} modalIsOpen={modalIsOpen} />}
+              />
+              <Route path="/settings" component={AuthedSettings} />
+              <Route path="/404" component={NotFound} exact />
+              <Redirect to="/404" />
+            </Switch>
+          </s.Main>
+        </s.Container>
+      </StripeProvider>
     );
   }
 }

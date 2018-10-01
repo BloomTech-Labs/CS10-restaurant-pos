@@ -7,7 +7,7 @@ import Register from '../../Presentational/Register';
 
 class RegisterPage extends React.PureComponent {
   register = (info) => {
-    this.props.register(info, this.props.history.push);
+    this.props.register(info);
   }
 
   render() {
@@ -18,14 +18,10 @@ class RegisterPage extends React.PureComponent {
 }
 
 RegisterPage.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func
-  }),
   register: PropTypes.func
 };
 
 RegisterPage.defaultProps = {
-  history: { push: () => {} },
   register: () => {}
 };
 

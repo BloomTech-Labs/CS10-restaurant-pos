@@ -43,6 +43,8 @@ const employeeLogin = (req, res) => {
         const payload = {
           id: employee.id,
           pin: employee.pin,
+          name: employee.name,
+          email: employee.email,
           role: {
             admin: employee.role.admin,
             manager: employee.role.manager
