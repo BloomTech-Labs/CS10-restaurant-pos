@@ -10,7 +10,7 @@ const getParty = (req, res) => {
   const { id } = req.params;
 
   // Verify Fields
-  const missingFields = verifyFields(['id'], req.body);
+  const missingFields = verifyFields(['id'], req.params);
 
   if (missingFields.length > 0) {
     return res.status(422).json({ msg: `Fields missing: ${missingFields.join(', ')}` });
