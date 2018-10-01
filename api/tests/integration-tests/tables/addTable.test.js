@@ -41,4 +41,19 @@ describe('addTable', () => {
 
     expect(res.status).toBe(201);
   });
+
+  // [Not Authorized] Should fail to add a table to the DB
+  it('[No Auth] POST: Fails adding a new table to the DB', async () => {
+    const res = await request(server)
+      .post('/api/tables/add')
+      .send(
+        {
+          x: 1,
+          y: 1,
+          number: 1
+        }
+      );
+
+    expect(res.status).toBe(401);
+  });
 });
