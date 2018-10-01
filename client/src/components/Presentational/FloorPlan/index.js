@@ -1,5 +1,6 @@
 import React from 'react';
 import * as PIXI from 'pixi.js';
+import 'pixi-layers';
 import Viewport from 'pixi-viewport';
 import PropTypes from 'prop-types';
 import SetType from 'es6-set-proptypes';
@@ -38,6 +39,8 @@ class FloorPlan extends React.PureComponent {
     this.app.renderer.backgroundColor = parseInt(theme.contentBackground.slice(1), 16);
     this.tables = []; // TODO: investigate cleaner solutions
     this.texture = null;
+    this.foreground = null;
+    this.background = null;
   }
 
   state = {
@@ -142,15 +145,37 @@ class FloorPlan extends React.PureComponent {
   };
 
   circleCreator = table => {
+    const container = new PIXI.Container();
+
+    const associatedServer = this.props.serverTables.includes(table.number);
+
+    const border = new PIXI.Sprite(this.texture);
+    border.x = table.x;
+    border.y = table.y;
+    border.scale.set(0.8);
+    border.anchor.set(0.5);
+    border.tint = 0x000000;
+    border.alpha = 0;
+    border.parentLayer = this.background;
+    container.addChild(border);
+
+    if (associatedServer) {
+      border.alpha = 1;
+    }
+
     // Create a circle, make it interactive,
     // set its scale
     // and add `cursor: pointer` css style
     const circle = new PIXI.Sprite(this.texture);
+    circle.alpha = 1;
     circle.scale.set(0.7);
     circle.anchor.set(0.5);
     circle.interactive = true;
     circle.buttonMode = true;
+    // circle.parentLayer = this.foreground;
+    // circle.parentGroup = this.tableGroup;
 
+    // console.log(this.foreground);
     // Position the circle according to
     // its location from the database
     // and add the circle to the stage
@@ -159,7 +184,7 @@ class FloorPlan extends React.PureComponent {
     circle.tableId = table._id;
     circle.tableNumber = table.number;
     circle.tableActive = table.active;
-    this.viewport.addChild(circle);
+    container.addChild(circle);
 
     // Adds the table number text,
     // adds it as a child to the circle,
@@ -189,7 +214,7 @@ class FloorPlan extends React.PureComponent {
       circle.tint = 0x114b5f;
     }
 
-    if (circle.tableActive) {
+    if (circle.tableActive && !associatedServer) {
       circle.alpha = 0.3;
     }
 
@@ -203,6 +228,8 @@ class FloorPlan extends React.PureComponent {
       .on('touchendoutside', () => this.deleteCircle(circle))
       .on('mousemove', () => this.onDragMove(circle))
       .on('touchmove', () => this.onDragMove(circle));
+
+    this.viewport.addChild(container);
   };
 
   deleteCircle = circle => {
@@ -291,6 +318,12 @@ class FloorPlan extends React.PureComponent {
   setup = () => {
     this.app.stage.addChild(this.viewport);
 
+    this.foreground = new PIXI.display.Layer();
+    this.background = new PIXI.display.Layer();
+
+    this.viewport.addChild(this.foreground);
+    this.viewport.addChild(this.background);
+
     this.viewport
       .drag()
       .bounce({ time: 300, friction: 0.6, ease: 'easeInOutQuad' })
@@ -322,10 +355,8 @@ class FloorPlan extends React.PureComponent {
         <div style={{ position: 'fixed', right: '100px', top: '150px' }}>
           {/* // ! make these not inline */}
           <s.CheckBox>
-            {/* <label htmlFor="lock"> */}
             <input type="checkbox" id="lock" onClick={this.toggleLock} value={this.state.locked} />
             <label htmlFor="lock"><span>Lock</span></label>
-            {/* </label> */}
           </s.CheckBox>
         </div>
         <div style={{ position: 'fixed', right: '40px', top: '150px' }}>
@@ -346,6 +377,7 @@ FloorPlan.propTypes = {
   editing: PropTypes.bool,
   selected: SetType,
   tables: PropTypes.arrayOf(PropTypes.object),
+  serverTables: PropTypes.arrayOf(PropTypes.number),
   moveTable: PropTypes.func,
   toggleTable: PropTypes.func,
   openParty: PropTypes.func,
@@ -356,6 +388,7 @@ FloorPlan.defaultProps = {
   editing: false,
   selected: new Set(),
   tables: [],
+  serverTables: [],
   moveTable: () => {},
   toggleTable: () => {},
   openParty: () => {},

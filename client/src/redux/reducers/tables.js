@@ -11,7 +11,8 @@ import {
   DEACTIVATING_TABLE,
   DEACTIVATING_TABLE_SUCCESS,
   TOGGLE_TABLE,
-  TOGGLE_EDIT
+  TOGGLE_EDIT,
+  CLEAR_SERVER_TABLES,
 } from '../actions/tables';
 import { CLEAR_SELECTED } from '../actions/party';
 
@@ -90,6 +91,9 @@ const TablesReducer = (state = initialState, action) => {
 
     case CLEAR_SELECTED:
       return { ...state, selected: new Set() };
+
+    case CLEAR_SERVER_TABLES:
+      return { ...state, serverTables: [] };
 
     default:
       return state;

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { push } from 'connected-react-router';
 
 import serverURI from '../../config/URI';
 
@@ -17,6 +18,7 @@ export const DEACTIVATING_TABLE_SUCCESS = 'DEACTIVATING_TABLE_SUCCESS';
 export const DEACTIVATING_TABLE_ERROR = 'DEACTIVATING_TABLE_ERROR';
 export const TOGGLE_TABLE = 'TOGGLE_TABLE';
 export const TOGGLE_EDIT = 'TOGGLE_EDIT';
+export const CLEAR_SERVER_TABLES = 'CLEAR_SERVER_TABLES';
 
 export const getTables = id => dispatch => {
   dispatch({ type: LOADING_TABLES });
@@ -83,3 +85,10 @@ export const toggleTable = table => ({
 export const toggleEdit = () => ({
   type: TOGGLE_EDIT
 });
+
+export const clearServerTables = () => dispatch => {
+  dispatch(push('/tables'));
+  dispatch({
+    type: CLEAR_SERVER_TABLES,
+  });
+};
