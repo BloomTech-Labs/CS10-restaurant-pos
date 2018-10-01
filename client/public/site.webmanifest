@@ -1,15 +1,15 @@
 {
-    "name": "Main Course",
-    "short_name": "Main Course",
+    "name": "Main Course POS",
+    "short_name": "Main Course POS",
     "icons": [
         {
-            "src": "/android-chrome-192x192.png",
+            "src": "/android-chrome-192x192.png?v=m2Lrd0oEn8",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "/android-chrome-384x384.png",
-            "sizes": "384x384",
+            "src": "/android-chrome-512x512.png?v=m2Lrd0oEn8",
+            "sizes": "512x512",
             "type": "image/png"
         }
     ],

@@ -73,8 +73,6 @@ export const Button = styled.button`
   &:hover {
     ${(props) => !props.inactive && (`
       cursor: pointer;
-      box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.1);
-      transform: translate(0, -1px);
     `)}
   }
   /* stylelint-enable comment-empty-line-before */
