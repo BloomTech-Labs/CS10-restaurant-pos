@@ -121,6 +121,15 @@ export const StyledField = styled(Field)`
   &::placeholder {
     color: ${(props) => props.theme.placeholderColor};
   }
+
+  &[type='number'] {
+    -moz-appearance: textfield; /* stylelint-disable-line property-no-vendor-prefix */
+  }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    display: none;
+  }
 `;
 
 export const StyledErrorMessage = styled(ErrorMessage)`
