@@ -13,7 +13,7 @@
     - [Login Admin](#login-admin)
     - [Login Employee](#login-employee)
     - [Get All Employees](#get-all-employees)
-    - [Change Password](#change-password)
+    - [Update Employee](#update-employee)
     - [Employee Logout](#employee-logout)
   - [Item Routes](#item-routes)
     - [Get All Items](#get-all-items)
@@ -273,26 +273,32 @@ Response:
 ```
 
 
-### Change Password
+### Update Employee
 
 PUT `/api/employees/update/:pin`
 
 **Requires Authorization**
 
-Changes the password for the user. The pin in the params must match the pin of the current user, unless the current user is a manager or admin.
+Changes the name, email or password for the user. The pin in the params must match the pin of the current user.
 
 Request body should look like this:
 
 ```
 {
-  "oldPassword": "password",
-  "newPassword": "password1"
+  "pass": "password",
+  "newPass": "password1",
+  "email": "admin@user.com",
+  "name": "New Name"
 }
 ```
 
-`oldPassword`: String, required
+`pass`: String, required. This should be the current password!
 
-`newPassword`: String, required
+`newPass`: String, optional
+
+`email`: String, optional,
+
+`name`: String, optional
 
 Response will be a success message.
 
@@ -300,7 +306,7 @@ Response:
 
 ```
 {
-  "msg": "Succesfully changed the password."
+  "msg": "Succesfully updated the user."
 }
 ```
 
