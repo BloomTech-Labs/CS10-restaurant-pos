@@ -9,6 +9,7 @@ import * as s from './styles';
 
 class FreeFloorPlan extends React.Component {
   render() {
+    console.log('tables', this.props.tables);
     return (
       <s.Container>
         {this.props.tables.map((table) => (

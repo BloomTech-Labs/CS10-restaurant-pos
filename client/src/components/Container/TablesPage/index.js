@@ -78,30 +78,14 @@ class TablesPage extends Component {
       );
     }
 
-    return (
-      <s.FloorPlanContainer innerRef={this.floorplanParent}>
-        {match.params.id && (
-          <button style={{ position: 'absolute' }} type="button" onClick={this.clearServerTables}>
-            {'Back 😜'}
-          </button>
-        )}
-        {membership ? (
-          <React.Fragment>
-            {this.floorplanParent.current && (
-              <FloorPlan
-                editing={editing && authorized}
-                tables={tablesToDisplay}
-                selectable={!match.params.id}
-                selected={selected}
-                moveTable={moveTableAction}
-                toggleTable={this.toggleTable}
-                parent={this.floorplanParent}
-                openParty={this.openParty}
-                serverTables={serverTables}
-              />
-            )}
-          </React.Fragment>
-        ) : (
+    if (!membership) {
+      return (
+        <React.Fragment>
+          {match.params.id && (
+            <button style={{ position: 'absolute' }} type="button" onClick={this.clearServerTables}>
+              {'Back 😜'}
+            </button>
+          )}
           <FreeFloorPlan
             membership={membership}
             tables={tablesToDisplay}
@@ -110,7 +94,32 @@ class TablesPage extends Component {
             openParty={this.openParty}
             serverTables={serverTables}
           />
+        </React.Fragment>
+      );
+    }
+
+    return (
+      <s.FloorPlanContainer innerRef={this.floorplanParent}>
+        {match.params.id && (
+          <button style={{ position: 'absolute' }} type="button" onClick={this.clearServerTables}>
+            {'Back 😜'}
+          </button>
         )}
+        <React.Fragment>
+          {this.floorplanParent.current && (
+            <FloorPlan
+              editing={editing && authorized}
+              tables={tablesToDisplay}
+              selectable={!match.params.id}
+              selected={selected}
+              moveTable={moveTableAction}
+              toggleTable={this.toggleTable}
+              parent={this.floorplanParent}
+              openParty={this.openParty}
+              serverTables={serverTables}
+            />
+          )}
+        </React.Fragment>
       </s.FloorPlanContainer>
     );
   }
