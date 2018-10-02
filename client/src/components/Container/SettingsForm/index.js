@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { addItem } from '../../../redux/actions/items';
 import CreateItem from '../../Presentational/CreateItem';
 
+// ! Are we using this component?
 class SettingsForm extends React.Component {
   render() {
     return (

@@ -33,7 +33,7 @@ class Billing extends React.Component {
     const { membership, unsubscribe } = this.props;
     return (
       <s.Container>
-        Billing
+        <div>Billing</div>
         {/* <s.Form onSubmit={this.handleSubmit}>
           <input
             placeholder="John"
@@ -83,7 +83,11 @@ class Billing extends React.Component {
         </s.Form> */}
         {/* // TODO: add support for multiple subscription term options */}
         {membership ? (
-          <Button type="button" onClick={unsubscribe}>Unsubscribe</Button>
+          <s.ButtonContainer>
+            <Button type="button" onClick={unsubscribe}>
+              Unsubscribe
+            </Button>
+          </s.ButtonContainer>
         ) : (
           <StripeCheckout
             name="POS Checkout"

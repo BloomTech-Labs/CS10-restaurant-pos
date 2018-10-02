@@ -7,6 +7,7 @@ import { StripeProvider } from 'react-stripe-elements';
 import { setInitialAuth } from './redux/actions/auth';
 import * as s from './styles';
 import Landing from './components/Presentational/Landing';
+import Help from './components/Presentational/Help';
 import Logout from './components/LogoutPage';
 import Login from './components/Container/LoginPage';
 import Register from './components/Container/RegisterPage';
@@ -34,6 +35,7 @@ const AuthedCreateEmployee = RequireAuth(CreateEmployee);
 const AuthedTablesPage = RequireAuth(TablesPage);
 const AuthedServers = RequireAuth(Servers);
 const AuthedSettings = RequireAuth(Settings);
+const AuthedHelp = RequireAuth(Help);
 
 const NotAuthedLogin = RequireNotAuth(Login);
 const NotAuthedRegsiter = RequireNotAuth(Register);
@@ -91,6 +93,7 @@ class App extends Component {
                 render={(props) => <AuthedPartyPage {...props} modalIsOpen={modalIsOpen} />}
               />
               <Route path="/settings" component={AuthedSettings} />
+              <Route path="/help" component={AuthedHelp} />
               <Route path="/404" component={NotFound} exact />
               <Redirect to="/404" />
             </Switch>
