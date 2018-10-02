@@ -103,11 +103,11 @@ SettingsPage.defaultProps = {
 const mapStateToProps = (state) => ({
   role: state.auth.role,
   membership: state.auth.membership,
-  itemCategories: state.items.itemList.reduce((accum, currentVal) => {
-    if (currentVal.category && !accum.includes(currentVal.category)) {
-      accum.push(currentVal.category);
+  itemCategories: state.items.itemList.reduce((acc, currentVal) => {
+    if (currentVal.category && !acc.includes(currentVal.category)) {
+      acc.push(currentVal.category);
     }
-    return accum;
+    return acc;
   }, [])
 });
 

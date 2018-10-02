@@ -224,6 +224,12 @@ const mapStateToProps = (state) => ({
   order: state.party.order,
   location: state.restaurant.restaurantInfo.location,
   loading: state.party.loading && state.items.loading,
+  itemCategories: state.items.itemList.reduce((acc, currentVal) => {
+    if (currentVal.category && !acc.includes(currentVal.category)) {
+      acc.push(currentVal.category);
+    }
+    return acc;
+  }, [])
 });
 
 export default connect(
