@@ -9,9 +9,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const cors = require('cors');
-const companion = require('@uppy/companion');
 
-const { mongoURI: db, clientURI, serverURI } = require('./config/keys');
+const { mongoURI: db, clientURI } = require('./config/keys');
 // Route Imports
 const employeeRoutes = require('./api/routes/employeeRoutes');
 const itemRoutes = require('./api/routes/itemRoutes');
@@ -67,33 +66,6 @@ orderRoutes(server, passport.authenticate('jwt', { session: false }));
 partyRoutes(server, passport.authenticate('jwt', { session: false }));
 stripeRoutes(server, passport.authenticate('jwt', { session: false }));
 tableRoutes(server, passport.authenticate('jwt', { session: false }));
-
-// Uppy Companion Options
-const options = {
-  providerOptions: {
-    google: {
-      key: 'GOOGLE_KEY',
-      secret: 'GOOGLE_SECRET'
-    },
-    instagram: {
-      key: 'INSTAGRAM_KEY',
-      secret: 'GOOGLE_SECRET'
-    },
-    dropbox: {
-      key: 'DROPBOX_KEY',
-      secret: 'GOOGLE_SECRET'
-    }
-  },
-  server: {
-    host: serverURI,
-    protocol: 'https'
-  },
-  filePath: '/temp/downloads',
-  secret: process.env.UPPY_SECRET,
-  debug: true
-};
-
-server.use(companion.app(options));
 
 if (process.env.NODE_ENV !== 'test') {
   server.listen(PORT, (err) => {
