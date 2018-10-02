@@ -11,32 +11,28 @@ import {
 
 import * as s from './styles';
 
-const ChangePassword = props => (
+const UpdateEmployee = props => (
   <React.Fragment>
     <StyledFormik
-      initialValues={{ pin: '', oldPassword: '', newPassword: '', confirmNew: '' }}
+      initialValues={{ pin: '', pass: '', newPass: '', confirmNew: '', email: '', name: '' }}
       validate={values => {
         const errors = {};
         if (!values.pin) {
           errors.pin = 'Required';
         }
-        if (!values.email) {
-          errors.email = 'Required';
-        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+        if (values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
           errors.email = 'Invalid email address';
         }
-        if (!values.oldPassword) {
-          errors.oldPassword = 'Required';
+        if (!values.pass) {
+          errors.pass = 'Required';
         }
-        if (!values.newPassword) {
-          errors.newPassword = 'Required';
-        } else if (values.newPassword !== values.confirmNew) {
+        if (values.newPass && values.newPass !== values.confirmNew) {
           errors.confirmNew = 'Passwords do not match';
         }
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
-        props.changePassword(values);
+        props.updateEmployee(values);
         setSubmitting(false); // TODO: set this to false upon success or error
       }}
     >
@@ -56,29 +52,41 @@ const ChangePassword = props => (
             />
             <StyledErrorMessage name="pin" component="div" />
             <StyledField
-              type="text"
-              name="oldPassword"
+              type="password"
+              name="pass"
               minLength="8"
               maxLength="21"
               placeholder="Old Password"
             />
             <StyledErrorMessage name="oldPassword" component="div" />
             <StyledField
-              type="number"
-              name="newPassword"
+              type="password"
+              name="newPass"
               minLength="8"
               maxLength="21"
               placeholder="New Password"
             />
             <StyledErrorMessage name="newPassword" component="div" />
             <StyledField
-              type="number"
+              type="password"
               name="confirmNew"
               minLength="8"
               maxLength="21"
               placeholder="Confirm New Password"
             />
             <StyledErrorMessage name="confirmNew" component="div" />
+            <StyledField
+              type="text"
+              name="name"
+              placeholder="New Name"
+            />
+            <StyledErrorMessage name="name" component="div" />
+            <StyledField
+              type="email"
+              name="email"
+              placeholder="New Email"
+            />
+            <StyledErrorMessage name="email" component="div" />
             <Button primary dark type="submit" inactive={isSubmitting}>
               Submit
             </Button>
@@ -89,12 +97,12 @@ const ChangePassword = props => (
   </React.Fragment>
 );
 
-ChangePassword.propTypes = {
-  changePassword: PropTypes.func,
+UpdateEmployee.propTypes = {
+  updateEmployee: PropTypes.func,
 };
 
-ChangePassword.defaultProps = {
-  changePassword: () => {},
+UpdateEmployee.defaultProps = {
+  updateEmployee: () => {},
 };
 
-export default ChangePassword;
+export default UpdateEmployee;
