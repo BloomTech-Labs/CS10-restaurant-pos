@@ -16,7 +16,6 @@ describe('deleteTable', () => {
       .then((loginRes) => {
         token = loginRes;
 
-        // Add a table to the DB
         request(server)
           .post('/api/tables/add')
           .set('Authorization', `${token}`)
@@ -53,5 +52,13 @@ describe('deleteTable', () => {
       .set('Authorization', `${token}`);
 
     expect(res.status).toBe(200);
+  });
+
+  // [Not Authorized] Deactivates a table
+  it('[No Auth] DELETE: Fails to delete a table in the DB', async () => {
+    const res = await request(server)
+      .delete(`/api/tables/delete/${tableId}`);
+
+    expect(res.status).toBe(401);
   });
 });
