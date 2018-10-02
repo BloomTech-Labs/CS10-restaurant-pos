@@ -60,4 +60,12 @@ describe('updateItem', () => {
     expect(res.body.updatedItem.price).toEqual(7.99);
     expect(res.status).toBe(200);
   });
+
+  // [Not Authorized] Fails to update an item in the DB
+  it('[No Auth] PUT: Fails to update an item in the DB', async () => {
+    const res = await request(server)
+      .put(`/api/items/update/${itemId}`);
+
+    expect(res.status).toBe(401);
+  });
 });
