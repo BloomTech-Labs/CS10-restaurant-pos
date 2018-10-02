@@ -98,14 +98,14 @@ export const StyledFormik = styled(Formik)`
 `;
 
 export const StyledForm = styled(Form)`
-  ${flexCenterMixin}
-  ${card}
+  ${flexCenterMixin};
+  ${card};
   flex-direction: column;
   justify-content: space-evenly;
-  height: 50%;
-  max-height: 450px;
-  max-width: 400px;
-  padding: 0 70px;
+  height: ${(props) => props.theme.settingCardHeight}px;
+  max-width: ${(props) => props.theme.settingCardMaxWidth}px;
+  padding: ${(props) => props.theme.settingCardPadding};
+  margin: ${(props) => props.theme.settingCardMargin};
 `;
 
 export const StyledField = styled(Field)`

@@ -21,6 +21,10 @@ export const theme = {
   sideBarWidth: 265,
   topBarHeight: 100,
   menuItemSize: 200,
+  settingCardHeight: 450,
+  settingCardMaxWidth: 450,
+  settingCardPadding: '0 70px',
+  settingCardMargin: '50px',
 
   // * Font Styles -----------------------------
   ItemTitleSize: 2,
