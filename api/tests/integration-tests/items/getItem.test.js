@@ -55,4 +55,12 @@ describe('getItem', () => {
     expect(res.body.item.name).toEqual('Cheese Wontons');
     expect(res.status).toBe(200);
   });
+
+  // [Not Authorized] Fails to get an item from the DB
+  it('[No Auth] GET: Fails to get an item from the DB', async () => {
+    const res = await request(server)
+      .get(`/api/items/${itemId}`);
+
+    expect(res.status).toBe(401);
+  });
 });
