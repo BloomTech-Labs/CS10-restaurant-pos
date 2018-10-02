@@ -5,10 +5,11 @@ const server = require('../../../../server');
 const { loginAdmin } = require('../../helpers/loginAdmin');
 
 let token;
+let tableId;
 
 jest.setTimeout(30000);
 
-describe('getAllTables', () => {
+describe('updateAllTables', () => {
   beforeAll(async (done) => {
     // register the admin
     await loginAdmin(server)
@@ -25,7 +26,10 @@ describe('getAllTables', () => {
               number: 1
             }
           )
-          .then(() => done())
+          .then(tableRes => {
+            tableId = tableRes.body.table._id;
+            done();
+          })
           .catch(err => {
             console.error(err);
           });
@@ -40,21 +44,25 @@ describe('getAllTables', () => {
     mongoose.disconnect();
   });
 
-  // [Authorized] Gets all tables
-  it('[Auth] GET: Gets all tables in the DB', async () => {
+  // [Authorized] Updates all the tables
+  it('[Auth] POST: Updates all tables in the DB', async () => {
     const res = await request(server)
-      .get('/api/tables/all')
-      .set('Authorization', `${token}`);
+      .post('/api/tables/update')
+      .set('Authorization', `${token}`)
+      .send(
+        {
+          tables: [
+            {
+              _id: tableId,
+              x: 2,
+              y: 2,
+              number: 1
+            }
+          ]
+        }
+      );
 
-    expect(res.body.tables.length).toEqual(1);
+    expect(res.body.updatedTables[0].x).toEqual(2);
     expect(res.status).toBe(200);
-  });
-
-  // [Not Authorized] Fails to get all tables
-  it('[No Auth] GET: Fails get all tables in the DB', async () => {
-    const res = await request(server)
-      .get('/api/tables/all');
-
-    expect(res.status).toBe(401);
   });
 });
