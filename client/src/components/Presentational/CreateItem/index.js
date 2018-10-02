@@ -30,12 +30,7 @@ const CreateItem = (props) => (
       }}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         props.addItem(values);
-        resetForm({
-          name: '',
-          description: '',
-          price: '',
-          category: ''
-        });
+        resetForm({});
         setSubmitting(false); // TODO: set this to false upon success or error
       }}
     >
