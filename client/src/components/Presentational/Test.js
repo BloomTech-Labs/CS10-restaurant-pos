@@ -11,6 +11,9 @@ import '@uppy/dashboard/dist/style.min.css';
 import '@uppy/webcam/dist/style.min.css';
 import '@uppy/url/dist/style.min.css';
 
+const username = 'Test_Username';
+const userId = 'testid';
+
 const uppy = Uppy({
   id: 'MyUppy',
   debug: true,
@@ -23,13 +26,20 @@ const uppy = Uppy({
   }
 })
   .use(Transloadit, {
+    service: 'https://api2.transloadit.com',
+    waitForEncoding: true,
+    waitForMetadata: false,
+    importFromUploadURLs: false,
+    alwaysRunAssembly: false,
+    signature: null,
+    field: {
+      username: 'Test_Username_in_Field'
+    },
     params: {
       auth: {
         // ! Another spot for environment variables
         key: 'd974c600c66711e8aea1818ac045b32a'
       },
-      // It's always better to use a template_id and enable
-      // Signature Authentication
       steps: {
         ':original': {
           robot: '/upload/handle'
@@ -41,96 +51,88 @@ const uppy = Uppy({
           accepts: [['${file.mime}', 'regex', 'image']],
           error_on_decline: true
         },
-        viruscheck: {
+        thumbnail: {
           use: 'filter',
-          robot: '/file/virusscan',
-          error_on_decline: true
-        },
-        convert_image_jpg: {
-          use: 'viruscheck',
-          robot: '/image/resize',
-          format: 'jpg',
-          quality: 90,
-          imagemagick_stack: 'v2.0.3'
-        },
-        thumbnail_full: {
-          use: 'convert_image_jpg',
           robot: '/image/resize',
           resize_strategy: 'fit',
           width: 50,
           height: 50,
-          imagemagick_stack: 'v2.0.3'
+          imagemagick_stack: 'v2.0.3',
+          progressive: true,
         },
-        small_full: {
-          use: 'convert_image_jpg',
+        small: {
+          use: 'filter',
           robot: '/image/resize',
           resize_strategy: 'fit',
           width: 100,
           height: 100,
-          imagemagick_stack: 'v2.0.3'
+          imagemagick_stack: 'v2.0.3',
+          progressive: true,
         },
-        medium_full: {
-          use: 'convert_image_jpg',
+        medium: {
+          use: 'filter',
           robot: '/image/resize',
           resize_strategy: 'fit',
           width: 200,
           height: 200,
-          imagemagick_stack: 'v2.0.3'
-        },
-        thumbnail: {
-          use: 'thumbnail_full',
-          robot: '/image/optimize',
-          progressive: true
-        },
-        small: {
-          use: 'small_full',
-          robot: '/image/optimize',
-          progressive: true
-        },
-        medium: {
-          use: 'medium_full',
-          robot: '/image/optimize',
-          progressive: true
+          imagemagick_stack: 'v2.0.3',
+          progressive: true,
         },
         export: {
-          use: ['convert_image_jpg', 'thumbnail', 'small', 'medium', 'compress_image'],
+          use: ['thumbnail', 'small', 'medium'],
           robot: '/google/store',
           credentials: 'google_cloud_storage_eric',
           path:
-            // eslint-disable-next-line no-template-curly-in-string
-            '${fields.username}_${previous_step.name}_${unique_prefix}.${file.ext}',
+            /* eslint-disable */
+            `/${username}_${userId}'` + '/${previous_step.name}_${unique_prefix}.${file.ext}',
+            /* eslint-enable */
           acl: 'public-read'
         }
       }
-    },
-    waitForEncoding: true
+    }
   })
   .use(GoogleDrive, {
     id: 'MyGoogleDrive',
     serverUrl: 'https://api2.transloadit.com/companion',
-    serverPattern: '.transloadit.com$'
+    serverPattern: /.transloadit.com$/
   })
   .use(Dropbox, {
     id: 'MyDropbox',
     serverUrl: 'https://api2.transloadit.com/companion',
-    serverPattern: '.transloadit.com$'
+    serverPattern: /.transloadit.com$/
   })
   .use(Instagram, {
     id: 'MyInstagram',
     serverUrl: 'https://api2.transloadit.com/companion',
-    serverPattern: '.transloadit.com$'
+    serverPattern: /.transloadit.com$/
   })
   .use(Url, {
     id: 'MyUrl',
     serverUrl: 'https://api2.transloadit.com/companion',
-    serverPattern: '.transloadit.com$'
+    serverPattern: /.transloadit.com$/
   })
   .use(Webcam, { id: 'MyWebcam' });
+// .use(Tus, { id: 'MyTus', endpoint: 'https://master.tus.io/files/' });
 
-uppy.on('transloadit:result', (stepName, result) => {
-  console.log('stepname:', stepName);
-  console.log('result:', result);
-});
+uppy
+  .on('complete', (result) => {
+    console.log('result on complete', result);
+  })
+  .on('transloadit:assembly-created', () => {
+    console.log('assembly-created');
+  })
+  .on('transloadit:upload', (file, assembly) => {
+    console.log('upload file and assembly: ', file, assembly);
+  })
+  .on('transloadit:assembly-executing', () => {
+    console.log('assembly-executing');
+  })
+  .on('transloadit:result', () => {
+    console.log('result');
+  })
+  .on('transloadit:complete', () => {
+    console.log('complete');
+  });
 
 export default function Test(/* { currentAvatar } */) {
   return (
@@ -144,7 +146,7 @@ export default function Test(/* { currentAvatar } */) {
         uppy={uppy}
         onRequestClose
         open
-        plugins={['MyGoogleDrive', 'MyDropbox', 'MyInstagram', 'MyUrl', 'MyWebcam']}
+        plugins={['MyGoogleDrive', 'MyDropbox', 'MyInstagram', 'MyUrl', 'MyWebcam' /* 'MyTus' */]}
         locale={{
           strings: {
             chooseFile: 'Pick a new avatar'
