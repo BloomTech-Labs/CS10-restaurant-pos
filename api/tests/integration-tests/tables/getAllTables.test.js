@@ -40,13 +40,21 @@ describe('getAllTables', () => {
     mongoose.disconnect();
   });
 
-  // [Authorized] Deactivates a table
-  it('[Auth] DELETE: deletes a table in the DB', async () => {
+  // [Authorized] Gets all tables
+  it('[Auth] GET: gets all tables in the DB', async () => {
     const res = await request(server)
       .get('/api/tables/all')
       .set('Authorization', `${token}`);
 
     expect(res.body.tables.length).toEqual(1);
     expect(res.status).toBe(200);
+  });
+
+  // [Not Authorized] Fails to get all tables
+  it('[No Auth] GET: Fails get all tables in the DB', async () => {
+    const res = await request(server)
+      .get('/api/tables/all');
+
+    expect(res.status).toBe(401);
   });
 });
