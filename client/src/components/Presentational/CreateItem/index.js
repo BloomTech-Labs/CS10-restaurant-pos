@@ -36,6 +36,9 @@ const CreateItem = (props) => (
     >
       {({ errors, isSubmitting }) => (
         <s.Container>
+          <button type="button" onClick={props.openUploadModal}>
+            Test Modal
+          </button>
           <h1>Add New Menu Item</h1>
           <StyledForm>
             <StyledField
@@ -76,12 +79,14 @@ const CreateItem = (props) => (
 
 CreateItem.propTypes = {
   itemCategories: PropTypes.arrayOf(PropTypes.string),
-  addItem: PropTypes.func
+  addItem: PropTypes.func,
+  openUploadModal: PropTypes.func
 };
 
 CreateItem.defaultProps = {
   itemCategories: ['default category one, default category two'],
-  addItem: () => {}
+  addItem: () => {},
+  openUploadModal: () => {}
 };
 
 export default CreateItem;
