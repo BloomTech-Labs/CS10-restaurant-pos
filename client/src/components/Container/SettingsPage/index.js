@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { subscribe, unsubscribe } from '../../../redux/actions/payments';
-import { changePassword } from '../../../redux/actions/auth';
+import { updateEmployee } from '../../../redux/actions/auth';
 import { addItem, getItems } from '../../../redux/actions/items';
 import RestaurantInfo from '../../Presentational/RestaurantInfo';
 import Billing from '../../Presentational/Billing';
-import ChangePassword from '../../Presentational/ChangePassword';
+import UpdateEmployee from '../../Presentational/UpdateEmployee';
 import CreateItem from '../../Presentational/CreateItem';
 
 import * as s from './styles';
@@ -17,8 +17,8 @@ class SettingsPage extends React.Component {
     this.props.getItems();
   }
 
-  changePassword = (info) => {
-    this.props.changePassword(info);
+  updateEmployee = (info) => {
+    this.props.updateEmployee(info);
   };
 
   adminDisplay = () => (
@@ -42,7 +42,7 @@ class SettingsPage extends React.Component {
     const { manager, admin } = this.props.role;
     return (
       <s.Container>
-        <ChangePassword changePassword={this.changePassword} />
+        <UpdateEmployee updateEmployee={this.updateEmployee} />
         {admin && this.adminDisplay()}
         {(manager || admin) && this.managerDisplay()}
       </s.Container>
@@ -61,7 +61,7 @@ SettingsPage.propTypes = {
   getItems: PropTypes.func,
   subscribe: PropTypes.func,
   unsubscribe: PropTypes.func,
-  changePassword: PropTypes.func
+  updateEmployee: PropTypes.func
 };
 
 SettingsPage.defaultProps = {
@@ -75,7 +75,7 @@ SettingsPage.defaultProps = {
   getItems: () => {},
   subscribe: () => {},
   unsubscribe: () => {},
-  changePassword: () => {}
+  updateEmployee: () => {}
 };
 
 const mapStateToProps = (state) => ({
@@ -91,5 +91,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { addItem, getItems, subscribe, unsubscribe, changePassword }
+  { addItem, getItems, subscribe, unsubscribe, updateEmployee }
 )(SettingsPage);
