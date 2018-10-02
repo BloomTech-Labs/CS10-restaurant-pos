@@ -58,7 +58,7 @@ const uppy = Uppy({
           width: 50,
           height: 50,
           imagemagick_stack: 'v2.0.3',
-          progressive: true,
+          progressive: true
         },
         small: {
           use: 'filter',
@@ -67,7 +67,7 @@ const uppy = Uppy({
           width: 100,
           height: 100,
           imagemagick_stack: 'v2.0.3',
-          progressive: true,
+          progressive: true
         },
         medium: {
           use: 'filter',
@@ -76,7 +76,7 @@ const uppy = Uppy({
           width: 200,
           height: 200,
           imagemagick_stack: 'v2.0.3',
-          progressive: true,
+          progressive: true
         },
         export: {
           use: ['thumbnail', 'small', 'medium'],
@@ -84,7 +84,7 @@ const uppy = Uppy({
           credentials: 'google_cloud_storage_eric',
           path:
             /* eslint-disable */
-            `/${username}_${userId}'` + '/${previous_step.name}_${unique_prefix}.${file.ext}',
+            `/${username}_${userId}` + '/${previous_step.name}_${unique_prefix}.${file.ext}',
             /* eslint-enable */
           acl: 'public-read'
         }
@@ -114,25 +114,26 @@ const uppy = Uppy({
   .use(Webcam, { id: 'MyWebcam' });
 // .use(Tus, { id: 'MyTus', endpoint: 'https://master.tus.io/files/' });
 
-uppy
-  .on('complete', (result) => {
-    console.log('result on complete', result);
-  })
-  .on('transloadit:assembly-created', () => {
-    console.log('assembly-created');
-  })
-  .on('transloadit:upload', (file, assembly) => {
-    console.log('upload file and assembly: ', file, assembly);
-  })
-  .on('transloadit:assembly-executing', () => {
-    console.log('assembly-executing');
-  })
-  .on('transloadit:result', () => {
-    console.log('result');
-  })
-  .on('transloadit:complete', () => {
-    console.log('complete');
-  });
+uppy.on('complete', (complete) => {
+  console.log('complete on complete', complete.transloadit[0].results.thumbnail[0].url);
+  console.log('complete on complete', complete.transloadit[0].results.small[0].url);
+  console.log('complete on complete', complete.transloadit[0].results.medium[0].url);
+});
+// .on('transloadit:assembly-created', () => {
+//   console.log('assembly-created');
+// })
+// .on('transloadit:upload', (file, assembly) => {
+//   console.log('upload file and assembly: ', file, assembly);
+// })
+// .on('transloadit:assembly-executing', () => {
+//   console.log('assembly-executing');
+// })
+// .on('transloadit:result', () => {
+//   console.log('result');
+// })
+// .on('transloadit:complete', (complete) => {
+//   console.log('complete', complete);
+// });
 
 export default function Test(/* { currentAvatar } */) {
   return (
