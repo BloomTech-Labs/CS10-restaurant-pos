@@ -33,9 +33,6 @@ export default function UploadModal(props) {
       importFromUploadURLs: false,
       alwaysRunAssembly: false,
       signature: null,
-      field: {
-        folderName: 'Test_folderName_in_Field'
-      },
       params: {
         auth: {
           // ! Another spot for environment variables
@@ -113,7 +110,6 @@ export default function UploadModal(props) {
       serverPattern: /.transloadit.com$/
     })
     .use(Webcam, { id: 'MyWebcam' });
-  // .use(Tus, { id: 'MyTus', endpoint: 'https://master.tus.io/files/' });
 
   uppy.on('complete', (complete) => {
     setImageUrls({
