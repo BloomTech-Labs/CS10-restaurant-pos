@@ -6,6 +6,8 @@ const { loginAdmin } = require('../../helpers/loginAdmin');
 
 let token;
 
+jest.setTimeout(40000);
+
 describe('getAllItems', () => {
   beforeAll(async (done) => {
     await loginAdmin(server)
