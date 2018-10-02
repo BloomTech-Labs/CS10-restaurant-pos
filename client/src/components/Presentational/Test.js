@@ -1,29 +1,13 @@
 import React from 'react';
 import Uppy from '@uppy/core';
 import { DashboardModal } from '@uppy/react';
-import Tus from '@uppy/tus';
 import GoogleDrive from '@uppy/google-drive';
 import Dropbox from '@uppy/dropbox';
 import Instagram from '@uppy/instagram';
+import Url from '@uppy/url';
 import Webcam from '@uppy/webcam';
-// import '@uppy/dist/uppy.min.css';
 import '@uppy/dashboard/dist/style.min.css';
 import '@uppy/webcam/dist/style.min.css';
-
-// const uppy = Uppy({
-//   meta: { type: 'avatar' },
-//   restrictions: { maxNumberOfFiles: 1 },
-//   autoProceed: true
-// })
-//   .use(Tus, { endpoint: '/upload' })
-//   .on('complete', (result) => {
-//     const url = result.successful[0].uploadURL;
-//     console.log(url);
-//     // store.dispatch({
-//     //   type: SET_USER_AVATAR_URL,
-//     //   payload: { url }
-//     // });
-//   });
 
 const uppy = Uppy({
   id: 'MyUppy',
@@ -36,30 +20,113 @@ const uppy = Uppy({
     allowedFileTypes: ['image/*']
   }
 })
-  // .use(Dashboard, {
-  //   id: 'MyDashboard',
-  //   trigger: '.UppyModalOpenerBtn',
-  //   inline: true,
-  //   target: '.DashboardContainer',
-  //   replaceTargetContent: true,
-  //   showProgressDetails: true,
-  //   note: 'Images and video only, 2–3 files, up to 1 MB',
-  //   height: 470,
-  //   metaFields: [
-  //     { id: 'name', name: 'Name', placeholder: 'file name' },
-  //     { id: 'caption', name: 'Caption', placeholder: 'describe what the image is about' }
-  //   ],
-  //   browserBackButtonClose: true
-  // })
-  .use(GoogleDrive, { id: 'MyGoogleDrive', serverUrl: 'https://companion.uppy.io' })
-  .use(Dropbox, { id: 'MyDropbox', serverUrl: 'https://companion.uppy.io' })
-  .use(Instagram, { id: 'MyInstagram', serverUrl: 'https://companion.uppy.io' })
-  .use(Webcam, { id: 'MyWebcam' })
-  .use(Tus, { id: 'MyTus', endpoint: 'https://master.tus.io/files/' });
+  .use(Uppy.Transloadit, {
+    params: {
+      auth: { // ! Another spot for environment variables
+        key: 'd974c600c66711e8aea1818ac045b32a'
+      },
+      // It's always better to use a template_id and enable
+      // Signature Authentication
+      steps: {
+        ':original': {
+          robot: '/upload/handle'
+        },
+        filter: {
+          use: ':original',
+          robot: '/file/filter',
+          // eslint-disable-next-line no-template-curly-in-string
+          accepts: [['${file.mime}', 'regex', 'image']],
+          error_on_decline: true
+        },
+        viruscheck: {
+          use: 'filter',
+          robot: '/file/virusscan',
+          error_on_decline: true
+        },
+        convert_image_jpg: {
+          use: 'viruscheck',
+          robot: '/image/resize',
+          format: 'jpg',
+          quality: 90,
+          imagemagick_stack: 'v2.0.3'
+        },
+        thumbnail_full: {
+          use: 'convert_image_jpg',
+          robot: '/image/resize',
+          resize_strategy: 'fit',
+          width: 50,
+          height: 50,
+          imagemagick_stack: 'v2.0.3'
+        },
+        small_full: {
+          use: 'convert_image_jpg',
+          robot: '/image/resize',
+          resize_strategy: 'fit',
+          width: 100,
+          height: 100,
+          imagemagick_stack: 'v2.0.3'
+        },
+        medium_full: {
+          use: 'convert_image_jpg',
+          robot: '/image/resize',
+          resize_strategy: 'fit',
+          width: 200,
+          height: 200,
+          imagemagick_stack: 'v2.0.3'
+        },
+        thumbnail: {
+          use: 'thumbnail_full',
+          robot: '/image/optimize',
+          progressive: true
+        },
+        small: {
+          use: 'small_full',
+          robot: '/image/optimize',
+          progressive: true
+        },
+        medium: {
+          use: 'medium_full',
+          robot: '/image/optimize',
+          progressive: true
+        },
+        export: {
+          use: ['convert_image_jpg', 'thumbnail', 'small', 'medium', 'compress_image'],
+          robot: '/google/store',
+          credentials: 'google_cloud_storage_eric',
+          path:
+            // eslint-disable-next-line no-template-curly-in-string
+            '${fields.username}_${previous_step.name}_${unique_prefix}.${file.ext}',
+          acl: 'public-read'
+        }
+      }
+    },
+    waitForEncoding: true
+  })
+  .use(GoogleDrive, {
+    id: 'MyGoogleDrive',
+    serverUrl: 'https://api2.transloadit.com/companion',
+    serverPattern: '.transloadit.com$'
+  })
+  .use(Dropbox, {
+    id: 'MyDropbox',
+    serverUrl: 'https://api2.transloadit.com/companion',
+    serverPattern: '.transloadit.com$'
+  })
+  .use(Instagram, {
+    id: 'MyInstagram',
+    serverUrl: 'https://api2.transloadit.com/companion',
+    serverPattern: '.transloadit.com$'
+  })
+  .use(Url, {
+    id: 'MyUrl',
+    serverUrl: 'https://api2.transloadit.com/companion',
+    serverPattern: '.transloadit.com$'
+  })
+  .use(Webcam, { id: 'MyWebcam' });
 
-uppy.on('complete', (result) => {
-  console.log('successful files:', result.successful);
-  console.log('failed files:', result.failed);
+uppy.on('transloadit:result', (stepName, result) => {
+  console.log('stepname:', stepName);
+  console.log('result:', result);
 });
 
 export default function Test(/* { currentAvatar } */) {
@@ -71,9 +138,10 @@ export default function Test(/* { currentAvatar } */) {
         alt="Current Avatar"
       />
       <DashboardModal
+        uppy={uppy}
+        onRequestClose
         open
         plugins={['MyGoogleDrive', 'MyDropbox', 'MyInstagram', 'MyWebcam', 'MyTus']}
-        uppy={uppy}
         locale={{
           strings: {
             chooseFile: 'Pick a new avatar'
