@@ -1,5 +1,6 @@
 import React from 'react';
 import Uppy from '@uppy/core';
+import Transloadit from '@uppy/transloadit';
 import { DashboardModal } from '@uppy/react';
 import GoogleDrive from '@uppy/google-drive';
 import Dropbox from '@uppy/dropbox';
@@ -8,6 +9,7 @@ import Url from '@uppy/url';
 import Webcam from '@uppy/webcam';
 import '@uppy/dashboard/dist/style.min.css';
 import '@uppy/webcam/dist/style.min.css';
+import '@uppy/url/dist/style.min.css';
 
 const uppy = Uppy({
   id: 'MyUppy',
@@ -20,9 +22,10 @@ const uppy = Uppy({
     allowedFileTypes: ['image/*']
   }
 })
-  .use(Uppy.Transloadit, {
+  .use(Transloadit, {
     params: {
-      auth: { // ! Another spot for environment variables
+      auth: {
+        // ! Another spot for environment variables
         key: 'd974c600c66711e8aea1818ac045b32a'
       },
       // It's always better to use a template_id and enable
@@ -141,7 +144,7 @@ export default function Test(/* { currentAvatar } */) {
         uppy={uppy}
         onRequestClose
         open
-        plugins={['MyGoogleDrive', 'MyDropbox', 'MyInstagram', 'MyWebcam', 'MyTus']}
+        plugins={['MyGoogleDrive', 'MyDropbox', 'MyInstagram', 'MyUrl', 'MyWebcam']}
         locale={{
           strings: {
             chooseFile: 'Pick a new avatar'
