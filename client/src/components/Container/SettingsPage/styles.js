@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
+import { MainContainer } from '../../../global-styles/styledComponents';
 import { containerMixin } from '../../../global-styles/mixins';
 
-export const Container = styled.div`
+export const Container = styled(MainContainer)`
   ${containerMixin};
-  height: 100%;
+  flex-wrap: wrap;
+  overflow-y: auto;
 `;

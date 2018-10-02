@@ -6,6 +6,7 @@ import shortid from 'shortid';
 import ItemSelector from '../ItemSelector';
 import OrderScratchPad from '../../Presentational/OrderScratchPad';
 import CheckoutModal from '../../Presentational/CheckoutModal';
+import Loading from '../../Presentational/Loading';
 import { getItems } from '../../../redux/actions/items';
 import { updateParty, saveOrder, saveSplitOrder } from '../../../redux/actions/party';
 import {
@@ -116,7 +117,13 @@ class PartyPage extends React.Component {
   render() {
     const { order, splitCheck, subTotal, tables, server } = this.state;
 
-    const { modalIsOpen, splitModalIsOpen, location, match, items } = this.props;
+    const { modalIsOpen, splitModalIsOpen, location, match, items, loading } = this.props;
+
+    if (loading) {
+      return (
+        <Loading />
+      );
+    }
 
     return (
       <React.Fragment>
@@ -172,6 +179,7 @@ PartyPage.propTypes = {
   modalIsOpen: PropTypes.bool,
   splitModalIsOpen: PropTypes.bool,
   closeSplitModal: PropTypes.func,
+  loading: PropTypes.bool,
   order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   items: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   splitOrder: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
@@ -198,6 +206,7 @@ PartyPage.defaultProps = {
   closeSplitModal: () => {},
   modalIsOpen: false,
   splitModalIsOpen: false,
+  loading: true,
   order: [{}],
   items: [],
   splitOrder: [],
@@ -213,7 +222,8 @@ const mapStateToProps = (state) => ({
   splitOrder: state.party.splitOrder,
   partyList: state.party.partyList,
   order: state.party.order,
-  location: state.restaurant.restaurantInfo.location
+  location: state.restaurant.restaurantInfo.location,
+  loading: state.party.loading && state.items.loading,
 });
 
 export default connect(
@@ -227,6 +237,6 @@ export default connect(
     closeModal,
     openSplitModal,
     closeSplitModal,
-    sendPayment
+    sendPayment,
   }
 )(PartyPage);

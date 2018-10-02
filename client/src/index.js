@@ -16,6 +16,7 @@ import { theme } from './global-styles/variables';
 import registerServiceWorker from './registerServiceWorker';
 
 import './index.css';
+import 'axios-progress-bar/dist/nprogress.css';
 
 const history = createBrowserHistory();
 

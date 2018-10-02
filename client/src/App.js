@@ -7,6 +7,7 @@ import { StripeProvider } from 'react-stripe-elements';
 import { setInitialAuth } from './redux/actions/auth';
 import * as s from './styles';
 import Landing from './components/Presentational/Landing';
+import Help from './components/Presentational/Help';
 import Logout from './components/LogoutPage';
 import Login from './components/Container/LoginPage';
 import Register from './components/Container/RegisterPage';
@@ -25,6 +26,7 @@ import NewRestaurant from './components/Container/CreateRestaurantPage';
 import RequireNotAuth from './components/HOC/RequireNotAuth';
 import RequireAuth from './components/HOC/RequireAuth';
 import { sidebar } from './config/conditionalPathnames';
+import UploadModal from './components/Presentational/UploadModal';
 
 const AuthedPartyPage = RequireAuth(PartyPage);
 const AuthedLoginEmployee = RequireAuth(LoginEmployee, true);
@@ -33,6 +35,7 @@ const AuthedCreateEmployee = RequireAuth(CreateEmployee);
 const AuthedTablesPage = RequireAuth(TablesPage);
 const AuthedServers = RequireAuth(Servers);
 const AuthedSettings = RequireAuth(Settings);
+const AuthedHelp = RequireAuth(Help);
 
 const NotAuthedLogin = RequireNotAuth(Login);
 const NotAuthedRegsiter = RequireNotAuth(Register);
@@ -72,6 +75,7 @@ class App extends Component {
               push={history.push}
             />
             <Switch>
+              <Route path="/test" component={UploadModal} />
               <Route path="/" component={Landing} exact />
               <Route path="/logout" component={Logout} />
               <Route path="/login" component={NotAuthedLogin} />
@@ -81,6 +85,7 @@ class App extends Component {
               <Route path="/login-employee" component={AuthedLoginEmployee} />
               <Route path="/new-restaurant" component={AuthedNewRestaurant} />
               <Route path="/new-employee" component={AuthedCreateEmployee} />
+              <Route path="/tables/:name/:id" component={AuthedTablesPage} />
               <Route path="/tables" component={AuthedTablesPage} />
               <Route path="/servers" component={AuthedServers} />
               <Route
@@ -88,6 +93,7 @@ class App extends Component {
                 render={(props) => <AuthedPartyPage {...props} modalIsOpen={modalIsOpen} />}
               />
               <Route path="/settings" component={AuthedSettings} />
+              <Route path="/help" component={AuthedHelp} />
               <Route path="/404" component={NotFound} exact />
               <Redirect to="/404" />
             </Switch>

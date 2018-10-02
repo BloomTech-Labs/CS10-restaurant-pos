@@ -149,6 +149,7 @@ html, body, #root {
   height: 100%;
 }
 
+/* Custom Scroll Bar */
 ::-webkit-scrollbar {
   width: 8px;
   background-color: rgba(0, 0, 0, 0.041);
@@ -170,4 +171,19 @@ html, body, #root {
 
 ::-webkit-scrollbar-thumb:vertical:active {
   background: rgba(0, 0, 0, 0.3);
+}
+
+/* Custom Axios Loading Bar */
+#nprogress .bar {
+  background: rgb(255, 255, 255) !important;
+  height: 55px;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px white, 0 0 5px white !important;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: white !important;
+  border-left-color: white !important;
 }

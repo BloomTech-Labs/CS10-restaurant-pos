@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { push } from 'connected-react-router';
 
 import serverURI from '../../config/URI';
 
@@ -17,37 +18,41 @@ export const DEACTIVATING_TABLE_SUCCESS = 'DEACTIVATING_TABLE_SUCCESS';
 export const DEACTIVATING_TABLE_ERROR = 'DEACTIVATING_TABLE_ERROR';
 export const TOGGLE_TABLE = 'TOGGLE_TABLE';
 export const TOGGLE_EDIT = 'TOGGLE_EDIT';
+export const CLEAR_SERVER_TABLES = 'CLEAR_SERVER_TABLES';
 
-export const getTables = () => (dispatch) => {
+export const getTables = id => dispatch => {
   dispatch({ type: LOADING_TABLES });
   axios
-    .get(`${serverURI}/api/tables/all`)
-    .then((res) => {
-      dispatch({ type: LOADING_TABLES_SUCCESS, payload: res.data.tables });
+    .get(`${serverURI}/api/tables/all?server=${id}`)
+    .then(res => {
+      dispatch({
+        type: LOADING_TABLES_SUCCESS,
+        payload: { tableList: res.data.tables, serverTables: res.data.serverTables }
+      });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch({ type: LOADING_TABLES_ERROR, payload: err });
     });
 };
 
-export const addTable = (number) => (dispatch) => {
+export const addTable = number => dispatch => {
   dispatch({ type: ADDING_TABLE });
   axios
     .post(`${serverURI}/api/tables/add`, { number, x: 50, y: 50 })
-    .then((res) => {
+    .then(res => {
       dispatch({ type: ADDING_TABLE_SUCCESS, payload: res.data.table });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch({ type: ADDING_TABLE_ERROR, payload: err });
     });
 };
 
-export const moveTable = (table) => ({
+export const moveTable = table => ({
   type: MOVE_TABLE,
   payload: table
 });
 
-export const saveTables = (tables) => (dispatch) => {
+export const saveTables = tables => dispatch => {
   dispatch({ type: SAVING_TABLES });
   axios
     .post(`${serverURI}/api/tables/update`, { tables })
@@ -55,24 +60,24 @@ export const saveTables = (tables) => (dispatch) => {
       // res.data.tables is unneeded but contains the updated tables array
       dispatch({ type: SAVING_TABLES_SUCCESS });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch({ type: SAVING_TABLES_ERROR, payload: err });
     });
 };
 
-export const deactivateTable = (id) => (dispatch) => {
+export const deactivateTable = id => dispatch => {
   dispatch({ type: DEACTIVATING_TABLE });
   axios
     .put(`${serverURI}/api/tables/deactivate/${id}`)
-    .then((res) => {
+    .then(res => {
       dispatch({ type: DEACTIVATING_TABLE_SUCCESS, payload: res.data });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch({ type: DEACTIVATING_TABLE_ERROR, payload: err });
     });
 };
 
-export const toggleTable = (table) => ({
+export const toggleTable = table => ({
   type: TOGGLE_TABLE,
   payload: table
 });
@@ -80,3 +85,10 @@ export const toggleTable = (table) => ({
 export const toggleEdit = () => ({
   type: TOGGLE_EDIT
 });
+
+export const clearServerTables = () => dispatch => {
+  dispatch(push('/tables'));
+  dispatch({
+    type: CLEAR_SERVER_TABLES,
+  });
+};

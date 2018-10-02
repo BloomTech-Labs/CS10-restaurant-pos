@@ -15,7 +15,7 @@ import {
   EMPLOYEE_LOGOUT_FAILURE,
   EMPLOYEE_REGISTER_SUCCESS,
   EMPLOYEE_REGISTER_FAILURE,
-  CHANGE_PASSWORD_SUCCESS
+  UPDATE_EMPLOYEE_SUCCESS
 } from '../actions/auth';
 import { RESTAURANT_AUTH } from '../actions/restaurant';
 import { SUBSCRIBING_SUCCESS, UNSUBSCRIBING_SUCCESS } from '../actions/payments';
@@ -80,7 +80,7 @@ const AuthReducer = (auth = initialState, action) => {
     case LOGIN_FAILURE:
       return { ...auth, loading: false };
 
-    case CHANGE_PASSWORD_SUCCESS:
+    case UPDATE_EMPLOYEE_SUCCESS:
       return { ...auth, loading: false };
 
     case REGISTRATION_SUCCESS:

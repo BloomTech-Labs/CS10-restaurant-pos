@@ -6,25 +6,13 @@ import Server from '../Server';
 import * as s from './styles';
 
 export default function ServerList(props) {
-  const { serverList } = props;
-
-  // const serverInfo = serverList.map(server => {
-  //   const serversParties = partyList.filter(party => party.server._id === server._id);
-
-  //   if (serversParties.length >= 0) {
-  //     return {
-  //       ...server,
-  //       parties: serversParties
-  //     };
-  //   }
-  //   return { ...server, parties: [{ tables: [] }] };
-  // });
+  const { serverList, push } = props;
 
   return (
     <s.Container>
       <h2>Servers</h2>
       {serverList.map(server => (
-        <Server key={server._id} server={server} />
+        <Server key={server._id} server={server} push={push} />
       ))}
     </s.Container>
   );
@@ -32,6 +20,7 @@ export default function ServerList(props) {
 
 ServerList.propTypes = {
   serverList: PropTypes.arrayOf(PropTypes.object), // TODO: Define object shape
+  push: PropTypes.func,
 };
 
 ServerList.defaultProps = {
@@ -40,4 +29,5 @@ ServerList.defaultProps = {
     { name: 'Randy', _id: 'dgas98yh3n2' },
     { name: 'Carl', _id: 'asg0hio2n3' }
   ],
+  push: () => {},
 };
