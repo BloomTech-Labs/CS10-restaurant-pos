@@ -9,8 +9,8 @@ import {
   REGISTRATION_SUCCESS,
   PASSWORD_MATCH_ERROR,
   PASSWORD_MATCH_SUCCESS,
-  CHANGE_PASSWORD_ERROR,
-  CHANGE_PASSWORD_SUCCESS,
+  UPDATE_EMPLOYEE_ERROR,
+  UPDATE_EMPLOYEE_SUCCESS,
   EMPLOYEE_REGISTER_FAILURE,
   EMPLOYEE_REGISTER_SUCCESS
 } from '../actions/auth';
@@ -64,7 +64,7 @@ const initialState = {
   employeeLogoutError: false,
   registrationError: false,
   passMatchError: false,
-  changePasswordError: false,
+  updateEmployeeError: false,
   loadingTablesError: false,
   addingTablesError: false,
   savingTablesError: false,
@@ -105,10 +105,10 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, passMatchError: action.payload };
     case PASSWORD_MATCH_SUCCESS:
       return { ...errors, passMatchError: false };
-    case CHANGE_PASSWORD_ERROR:
-      return { ...errors, changePasswordError: action.payload };
-    case CHANGE_PASSWORD_SUCCESS:
-      return { ...errors, changePasswordError: false };
+    case UPDATE_EMPLOYEE_ERROR:
+      return { ...errors, updateEmployeeError: action.payload };
+    case UPDATE_EMPLOYEE_SUCCESS:
+      return { ...errors, updateEmployeeError: false };
     case EMPLOYEE_REGISTER_FAILURE:
       return { ...errors, employeeRegisterError: action.payload };
     case EMPLOYEE_REGISTER_SUCCESS:
