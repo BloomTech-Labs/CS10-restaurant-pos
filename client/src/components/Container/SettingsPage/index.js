@@ -56,7 +56,7 @@ SettingsPage.propTypes = {
     manager: PropTypes.bool
   }),
   membership: PropTypes.bool,
-  itemCategories: PropTypes.arrayOf(PropTypes.string), // TODO: define shape of the objects,
+  itemCategories: PropTypes.arrayOf(PropTypes.string),
   addItem: PropTypes.func,
   getItems: PropTypes.func,
   subscribe: PropTypes.func,
@@ -70,7 +70,7 @@ SettingsPage.defaultProps = {
     manager: false
   },
   membership: false,
-  itemCategories: [],
+  itemCategories: ['default category one, default category two'],
   addItem: () => {},
   getItems: () => {},
   subscribe: () => {},
