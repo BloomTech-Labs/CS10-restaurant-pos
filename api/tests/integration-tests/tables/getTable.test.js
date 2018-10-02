@@ -46,11 +46,19 @@ describe('getTable', () => {
   });
 
   // [Authorized] Gets a table
-  it('[Auth] GET: gets a table stored in the DB', async () => {
+  it('[Auth] GET: Gets a table stored in the DB', async () => {
     const res = await request(server)
       .get(`/api/tables/${tableId}`)
       .set('Authorization', `${token}`);
 
     expect(res.status).toBe(200);
+  });
+
+  // [Not Authorized] Fails to get a table
+  it('[No Auth] GET: Fails to get a table stored in the DB', async () => {
+    const res = await request(server)
+      .get(`/api/tables/${tableId}`);
+
+    expect(res.status).toBe(401);
   });
 });
