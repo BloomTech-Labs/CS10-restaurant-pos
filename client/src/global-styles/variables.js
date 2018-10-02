@@ -10,6 +10,7 @@ const steelBlue = '#4381C1';
 const ebonyClay = '#202233';
 const silver = '#C6C6C6';
 const wispPink = '#FDEFF5';
+const porcelain = '#EDEFF0';
 
 export const theme = {
   // * Misc. -----------------------------------
@@ -60,6 +61,7 @@ export const theme = {
   contentBackground: aquaHaze,
   textColorDark: white,
   inputError: wispPink,
+  menuBg: porcelain,
   // Top Bar
   topBarLink: comet,
   // Side Bar

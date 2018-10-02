@@ -1,16 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import * as s from './styles';
+
 export default function CategorySelector(props) {
   const { selected, categories, filter } = props;
   return (
-    <div>
+    <s.Container>
       {categories.map(category => (
         <div selected={selected === category} onClick={() => filter(category)}>
           {category}
         </div>
       ))}
-    </div>
+    </s.Container>
   );
 }
 

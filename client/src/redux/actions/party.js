@@ -38,7 +38,9 @@ export const saveSplitOrder = (splitOrder) => ({
 // Gets all Parties: server (name), food (name, price), and tables
 export const getParties = () => (dispatch) => {
   dispatch({ type: LOADING_PARTIES });
-  axios
+  // returning a promise to sync up the party page component with this one
+  // my mind is exploding
+  return axios
     .get(`${serverURI}/api/party/all`)
     .then((res) => {
       dispatch({ type: LOADING_PARTIES_SUCCESS, payload: res.data.parties });

@@ -8,7 +8,7 @@ import OrderScratchPad from '../../Presentational/OrderScratchPad';
 import CheckoutModal from '../../Presentational/CheckoutModal';
 import Loading from '../../Presentational/Loading';
 import { getItems } from '../../../redux/actions/items';
-import { updateParty, saveOrder, saveSplitOrder } from '../../../redux/actions/party';
+import { getParties, updateParty, saveOrder, saveSplitOrder } from '../../../redux/actions/party';
 import {
   openModal,
   closeModal,
@@ -34,20 +34,24 @@ class PartyPage extends React.Component {
   };
 
   componentDidMount() {
+    this.props.getParties().then((response) => {
+      const foundParty = this.props.partyList
+        .find(party => party._id === this.props.match.params.id);
+
+      if (!foundParty) {
+        console.log('notfound');
+        this.props.history.push('/tables');
+      } else {
+        this.setState({
+          order: foundParty.food,
+          tables: foundParty.tables,
+          server: foundParty.server.name
+        });
+      }
+    })
+    .catch(error => console.error(error));
+
     this.props.getItems();
-
-    const foundParty = this.props.partyList
-      .find(party => party._id === this.props.match.params.id);
-
-    if (!foundParty) {
-      this.props.history.push('/tables');
-    } else {
-      this.setState({
-        order: foundParty.food,
-        tables: foundParty.tables,
-        server: foundParty.server.name
-      });
-    }
   }
 
   componentDidUpdate(prev) {
@@ -257,6 +261,7 @@ export default connect(
     closeModal,
     openSplitModal,
     closeSplitModal,
-    sendPayment
+    sendPayment,
+    getParties
   }
 )(PartyPage);
