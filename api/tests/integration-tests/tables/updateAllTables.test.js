@@ -65,4 +65,24 @@ describe('updateAllTables', () => {
     expect(res.body.updatedTables[0].x).toEqual(2);
     expect(res.status).toBe(200);
   });
+
+  // [Not Authorized] Fails to update all the tables
+  it('[No Auth] POST: Fails to update all tables in the DB', async () => {
+    const res = await request(server)
+      .post('/api/tables/update')
+      .send(
+        {
+          tables: [
+            {
+              _id: tableId,
+              x: 2,
+              y: 2,
+              number: 1
+            }
+          ]
+        }
+      );
+
+    expect(res.status).toBe(401);
+  });
 });
