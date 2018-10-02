@@ -7,11 +7,13 @@ export default function CategorySelector(props) {
   const { selected, categories, filter } = props;
   return (
     <s.Container>
-      {categories.map(category => (
-        <div selected={selected === category} onClick={() => filter(category)}>
-          {category}
-        </div>
-      ))}
+      <s.Selector>
+        {categories.map(category => (
+          <s.Category selected={selected === category} onClick={() => filter(category)}>
+            {category}
+          </s.Category>
+        ))}
+      </s.Selector>
     </s.Container>
   );
 }

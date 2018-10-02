@@ -34,7 +34,7 @@ class PartyPage extends React.Component {
   };
 
   componentDidMount() {
-    this.props.getParties().then((response) => {
+    this.props.getParties().then(() => {
       const foundParty = this.props.partyList
         .find(party => party._id === this.props.match.params.id);
 
@@ -49,7 +49,7 @@ class PartyPage extends React.Component {
         });
       }
     })
-    .catch(error => console.error(error));
+      .catch(error => console.error(error));
 
     this.props.getItems();
   }
@@ -192,6 +192,7 @@ PartyPage.propTypes = {
   modalIsOpen: PropTypes.bool,
   splitModalIsOpen: PropTypes.bool,
   closeSplitModal: PropTypes.func,
+  getParties: PropTypes.func,
   loading: PropTypes.bool,
   order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   items: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
@@ -217,6 +218,7 @@ PartyPage.defaultProps = {
   sendPayment: () => {},
   getItems: () => {},
   history: { push: () => {} },
+  getParties: () => {},
   closeSplitModal: () => {},
   modalIsOpen: false,
   splitModalIsOpen: false,

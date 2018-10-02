@@ -23,11 +23,13 @@ class ItemSelector extends React.Component {
   filter = category => {
     if (category === 'All') {
       this.setState({
-        filtered: this.props.items
+        filtered: this.props.items,
+        category
       });
     } else {
       this.setState({
-        filtered: this.props.items.filter(item => item.category === category)
+        filtered: this.props.items.filter(item => item.category === category),
+        category
       });
     }
   };
@@ -51,9 +53,11 @@ class ItemSelector extends React.Component {
             filter={this.filter}
           />
         </div>
-        {this.state.filtered.map(item => (
-          <Item key={item._id} addItemToOrder={this.addItemToOrder} item={item} />
-        ))}
+        <s.Items>
+          {this.state.filtered.map(item => (
+            <Item key={item._id} addItemToOrder={this.addItemToOrder} item={item} />
+          ))}
+        </s.Items>
       </s.Container>
     );
   }
