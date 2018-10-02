@@ -62,4 +62,12 @@ describe('deactivateTable', () => {
 
     expect(res.status).toBe(200);
   });
+
+  // [Not Authorized] Deactivates a table
+  it('[No Auth] PUT: Fails to deactivate a table in the DB', async () => {
+    const res = await request(server)
+      .put(`/api/tables/deactivate/${tableId}`);
+
+    expect(res.status).toBe(401);
+  });
 });
