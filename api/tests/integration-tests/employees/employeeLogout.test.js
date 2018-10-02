@@ -7,6 +7,8 @@ const { loginAdmin } = require('../../helpers/loginAdmin');
 let token;
 let pin;
 
+jest.setTimeout(40000);
+
 describe('employeeLogout', () => {
   beforeAll(async (done) => {
     loginAdmin(server)

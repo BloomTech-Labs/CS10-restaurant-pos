@@ -5,36 +5,31 @@ const server = require('../../../../server');
 const { loginAdmin } = require('../../helpers/loginAdmin');
 
 let token;
-let orderId;
+let itemId;
 
 jest.setTimeout(40000);
 
-describe('getOrder', () => {
+describe('updateItem', () => {
   beforeAll(async (done) => {
     // register the admin
     await loginAdmin(server)
       .then((loginRes) => {
         token = loginRes;
 
-        // First create an order in the db
+        // First create an item in the db
         request(server)
-          .post('/api/orders/add')
+          .post('/api/items/add')
           .set('Authorization', `${token}`)
           .send(
             {
-              party: '5b993879366d2671bcba0e02',
-              server: '5b993879366d2671bcba0e02',
-              food: [
-                {
-                  id: '5b956483ed2e4d86346d6c82',
-                  uniqueId: 'thisIsTheUniqueId'
-                }
-              ],
+              name: 'Cheese Wontons',
+              price: 4.99,
+              description: 'Yum',
             }
           )
-          .then(orderRes => {
-            // Assigns the _id of the new order to orderId
-            orderId = orderRes.body.order._id;
+          .then(itemRes => {
+            // Assigns the _id of the new item to itemId
+            itemId = itemRes.body.item._id;
             done();
           })
           .catch(err => {
@@ -51,19 +46,25 @@ describe('getOrder', () => {
     mongoose.disconnect();
   });
 
-  // [Authorized] Gets an order from the DB
-  it('[Auth] GET: Gets an order from the DB', async () => {
+  // [Authorized] Updates an item in the DB
+  it('[Auth] PUT: Updates an item in the DB', async () => {
     const res = await request(server)
-      .get(`/api/orders/${orderId}`)
-      .set('Authorization', `${token}`);
+      .put(`/api/items/update/${itemId}`)
+      .set('Authorization', `${token}`)
+      .send(
+        {
+          price: 7.99,
+        }
+      );
 
+    expect(res.body.updatedItem.price).toEqual(7.99);
     expect(res.status).toBe(200);
   });
 
-  // [Not Authorized] Fails to get an order from the DB
-  it('[No Auth] GET: Fails to get an order from the DB', async () => {
+  // [Not Authorized] Fails to update an item in the DB
+  it('[No Auth] PUT: Fails to update an item in the DB', async () => {
     const res = await request(server)
-      .get(`/api/orders/${orderId}`);
+      .put(`/api/items/update/${itemId}`);
 
     expect(res.status).toBe(401);
   });
