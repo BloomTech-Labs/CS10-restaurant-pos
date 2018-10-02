@@ -59,4 +59,19 @@ describe('registerRestaurant', () => {
 
     expect(res.status).toBe(201);
   });
+
+  // [Not Authorized] Fails to register a restaurant
+  it('[No Auth] POST: Fails to register a restaurant', async () => {
+    const res = await request(server)
+      .post('/api/restaurants/register')
+      .send({
+        name: 'Testaurant',
+        location: 'supertest',
+        billing: {
+          address: 'null',
+        },
+      });
+
+    expect(res.status).toBe(401);
+  });
 });
