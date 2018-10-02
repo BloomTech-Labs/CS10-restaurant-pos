@@ -11,11 +11,11 @@ import {
 
 import * as s from './styles';
 
-const CreateItem = props => (
+const CreateItem = (props) => (
   <React.Fragment>
     <StyledFormik
-      initialValues={{ name: '', description: '', price: '' }}
-      validate={values => {
+      initialValues={{ name: '', description: '', price: '', category: '' }}
+      validate={(values) => {
         const errors = {};
         if (!values.name) {
           errors.name = 'Required';
@@ -29,11 +29,11 @@ const CreateItem = props => (
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
+        console.log('The values:', values);
         props.addItem(values);
         setSubmitting(false); // TODO: set this to false upon success or error
       }}
     >
-      {/* // TODO: build categories */}
       {({ errors, isSubmitting }) => (
         <s.Container>
           <h1>Add New Menu Item</h1>
@@ -52,13 +52,17 @@ const CreateItem = props => (
               maxLength="100"
               placeholder="Delish Nutrish"
             />
+            <StyledField name="category" component="select">
+              <option value="">Choose a category...</option>
+              {props.itemCategories.map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </StyledField>
+            <StyledField type="text" name="category" maxLength="25" placeholder="Entrees" />
             <StyledErrorMessage name="description" component="div" />
-            <StyledField
-              type="number"
-              name="price"
-              maxLength="100"
-              placeholder="5.99"
-            />
+            <StyledField type="number" name="price" maxLength="100" placeholder="5.99" />
             <StyledErrorMessage name="price" component="div" />
             <Button primary dark type="submit" inactive={isSubmitting}>
               Submit
@@ -71,10 +75,12 @@ const CreateItem = props => (
 );
 
 CreateItem.propTypes = {
+  itemCategories: PropTypes.arrayOf(PropTypes.string),
   addItem: PropTypes.func
 };
 
 CreateItem.defaultProps = {
+  itemCategories: ['default category one, default category two'],
   addItem: () => {}
 };
 

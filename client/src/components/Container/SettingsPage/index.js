@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { subscribe, unsubscribe } from '../../../redux/actions/payments';
 import { changePassword } from '../../../redux/actions/auth';
-import { addItem } from '../../../redux/actions/items';
+import { addItem, getItems } from '../../../redux/actions/items';
 import RestaurantInfo from '../../Presentational/RestaurantInfo';
 import Billing from '../../Presentational/Billing';
 import ChangePassword from '../../Presentational/ChangePassword';
@@ -13,9 +13,13 @@ import CreateItem from '../../Presentational/CreateItem';
 import * as s from './styles';
 
 class SettingsPage extends React.Component {
+  componentDidMount() {
+    this.props.getItems();
+  }
+
   changePassword = (info) => {
     this.props.changePassword(info);
-  }
+  };
 
   adminDisplay = () => (
     <React.Fragment>
@@ -30,7 +34,7 @@ class SettingsPage extends React.Component {
 
   managerDisplay = () => (
     <React.Fragment>
-      <CreateItem addItem={this.props.addItem} />
+      <CreateItem addItem={this.props.addItem} itemCategories={this.props.itemCategories} />
     </React.Fragment>
   );
 
@@ -52,7 +56,9 @@ SettingsPage.propTypes = {
     manager: PropTypes.bool
   }),
   membership: PropTypes.bool,
+  itemCategories: PropTypes.arrayOf(PropTypes.string), // TODO: define shape of the objects,
   addItem: PropTypes.func,
+  getItems: PropTypes.func,
   subscribe: PropTypes.func,
   unsubscribe: PropTypes.func,
   changePassword: PropTypes.func
@@ -64,7 +70,9 @@ SettingsPage.defaultProps = {
     manager: false
   },
   membership: false,
+  itemCategories: [],
   addItem: () => {},
+  getItems: () => {},
   subscribe: () => {},
   unsubscribe: () => {},
   changePassword: () => {}
@@ -72,10 +80,16 @@ SettingsPage.defaultProps = {
 
 const mapStateToProps = (state) => ({
   role: state.auth.role,
-  membership: state.auth.membership
+  membership: state.auth.membership,
+  itemCategories: state.items.itemList.reduce((accum, currentVal) => {
+    if (currentVal.category && !accum.includes(currentVal.category)) {
+      accum.push(currentVal.category);
+    }
+    return accum;
+  }, [])
 });
 
 export default connect(
   mapStateToProps,
-  { addItem, subscribe, unsubscribe, changePassword }
+  { addItem, getItems, subscribe, unsubscribe, changePassword }
 )(SettingsPage);
