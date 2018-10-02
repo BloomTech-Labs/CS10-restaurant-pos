@@ -9,10 +9,16 @@ import RestaurantInfo from '../../Presentational/RestaurantInfo';
 import Billing from '../../Presentational/Billing';
 import ChangePassword from '../../Presentational/ChangePassword';
 import CreateItem from '../../Presentational/CreateItem';
+import UploadModal from '../../Presentational/UploadModal';
 
 import * as s from './styles';
 
 class SettingsPage extends React.Component {
+  state = {
+    images: {},
+    uploadModalIsOpen: false
+  };
+
   componentDidMount() {
     this.props.getItems();
   }
@@ -20,6 +26,12 @@ class SettingsPage extends React.Component {
   changePassword = (info) => {
     this.props.changePassword(info);
   };
+
+  setImageUrls = (images) => this.setState({ images });
+
+  openUploadModal = () => this.setState({ uploadModalIsOpen: true });
+
+  closeUploadModal = () => this.setState({ uploadModalIsOpen: false });
 
   adminDisplay = () => (
     <React.Fragment>
@@ -34,7 +46,12 @@ class SettingsPage extends React.Component {
 
   managerDisplay = () => (
     <React.Fragment>
-      <CreateItem addItem={this.props.addItem} itemCategories={this.props.itemCategories} />
+      <CreateItem
+        addItem={this.props.addItem}
+        itemCategories={this.props.itemCategories}
+        images={this.state.images}
+        openUploadModal={this.openUploadModal}
+      />
     </React.Fragment>
   );
 
@@ -42,6 +59,11 @@ class SettingsPage extends React.Component {
     const { manager, admin } = this.props.role;
     return (
       <s.Container>
+        <UploadModal
+          open={this.state.uploadModalIsOpen}
+          setImageUrls={this.setImageUrls}
+          closeUploadModal={this.closeUploadModal}
+        />
         <ChangePassword changePassword={this.changePassword} />
         {admin && this.adminDisplay()}
         {(manager || admin) && this.managerDisplay()}
