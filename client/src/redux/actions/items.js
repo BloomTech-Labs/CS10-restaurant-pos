@@ -26,6 +26,9 @@ export const getItems = () => (
 
 export const addItem = (item) => (
   (dispatch) => {
+    if (item.category) {
+      item.category = item.category.replace(/^\w/, item.category[0].toUpperCase());
+    }
     dispatch({ type: ADDING_ITEM });
     axios
       .post(`${serverURI}/api/items/add`, item)
