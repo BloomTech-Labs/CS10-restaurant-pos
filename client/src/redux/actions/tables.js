@@ -11,6 +11,9 @@ export const MOVE_TABLE = 'MOVE_TABLE';
 export const ADDING_TABLE = 'ADDING_TABLE';
 export const ADDING_TABLE_SUCCESS = 'ADDING_TABLE_SUCCESS';
 export const ADDING_TABLE_ERROR = 'ADDING_TABLE_ERROR';
+export const DELETING_TABLE = 'DELETING_TABLE';
+export const DELETING_TABLE_SUCCESS = 'DELETING_TABLE_SUCCESS';
+export const DELETING_TABLE_ERROR = 'DELETING_TABLE_ERROR';
 export const SAVING_TABLES = 'SAVING_TABLES';
 export const SAVING_TABLES_SUCCESS = 'SAVING_TABLES_SUCCESS';
 export const SAVING_TABLES_ERROR = 'SAVING_TABLES_ERROR';
@@ -46,6 +49,20 @@ export const addTable = number => dispatch => {
     })
     .catch(err => {
       dispatch({ type: ADDING_TABLE_ERROR, payload: err });
+      toast.error(err.response.data.msg);
+    });
+};
+
+export const deleteTable = table => dispatch => {
+  dispatch({ type: DELETING_TABLE });
+  axios
+    .delete(`${serverURI}/api/tables/delete/${table._id}`)
+    .then(res => {
+      dispatch({ type: DELETING_TABLE_SUCCESS, payload: res.data.tables });
+      toast(`Successfully deleted table number ${table.number}`);
+    })
+    .catch(err => {
+      dispatch({ type: DELETING_TABLE_ERROR, payload: err });
       toast.error(err.response.data.msg);
     });
 };

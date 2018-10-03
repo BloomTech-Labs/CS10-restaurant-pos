@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import DeleteTableForm from '../DeleteTableForm';
 import { Button } from '../../../global-styles/styledComponents';
 
 import * as s from './styles';
@@ -11,6 +12,7 @@ class TableControlButtons extends React.PureComponent {
       <Button type="button" onClick={this.props.toggleEdit}>
         Edit
       </Button>
+      <DeleteTableForm deleteTable={this.props.deleteTable} tables={this.props.tables} />
     </React.Fragment>
   )
 
@@ -50,25 +52,29 @@ class TableControlButtons extends React.PureComponent {
 }
 
 TableControlButtons.propTypes = {
+  tables: PropTypes.arrayOf(PropTypes.object),
   takeout: PropTypes.bool,
   editing: PropTypes.bool,
   authorized: PropTypes.bool,
   visible: PropTypes.bool,
   toggleEdit: PropTypes.func,
+  addTable: PropTypes.func,
+  deleteTable: PropTypes.func,
   saveTables: PropTypes.func,
   createParty: PropTypes.func,
-  addTable: PropTypes.func,
 };
 
 TableControlButtons.defaultProps = {
+  tables: [{}],
   takeout: false,
   editing: false,
   authorized: false,
   visible: false,
   toggleEdit: () => {},
+  addTable: () => {},
+  deleteTable: () => {},
   saveTables: () => {},
   createParty: () => {},
-  addTable: () => {},
 };
 
 export default TableControlButtons;

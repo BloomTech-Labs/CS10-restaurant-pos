@@ -102,8 +102,8 @@ const PartyReducer = (state = initialState, action) => {
         ...state,
         splitOrder: [],
         order: state.order
-          .filter(item => state.splitOrder
-            .find(splitItem => item.uniqueId !== splitItem.uniqueId))
+          .filter(item => !state.splitOrder
+            .find(splitItem => item.uniqueId === splitItem.uniqueId))
       };
 
     case CLEAR_ORDER_CLIENT:

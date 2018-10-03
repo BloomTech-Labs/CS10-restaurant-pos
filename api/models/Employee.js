@@ -38,6 +38,11 @@ const Employee = new Schema({
       default: false,
     },
   },
+  images: {
+    thumbnail: String,
+    small: String,
+    medium: String,
+  },
   restaurant: {
     type: ObjectId,
     ref: 'Restaurant',

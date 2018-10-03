@@ -19,6 +19,8 @@ import {
   LOADING_TABLES_SUCCESS,
   ADDING_TABLE_ERROR,
   ADDING_TABLE_SUCCESS,
+  DELETING_TABLE_ERROR,
+  DELETING_TABLE_SUCCESS,
   SAVING_TABLES_ERROR,
   SAVING_TABLES_SUCCESS,
   DEACTIVATING_TABLE_ERROR,
@@ -67,6 +69,7 @@ const initialState = {
   updateEmployeeError: false,
   loadingTablesError: false,
   addingTablesError: false,
+  deletingTableError: false,
   savingTablesError: false,
   deactivatingTablesError: false,
   loadingPartiesError: false,
@@ -122,6 +125,10 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, addingTableError: action.payload };
     case ADDING_TABLE_SUCCESS:
       return { ...errors, addingTableError: false };
+    case DELETING_TABLE_ERROR:
+      return { ...errors, deletingTableError: action.payload };
+    case DELETING_TABLE_SUCCESS:
+      return { ...errors, deletingTableError: false };
     case SAVING_TABLES_ERROR:
       return { ...errors, savingTablesError: action.payload };
     case SAVING_TABLES_SUCCESS:
