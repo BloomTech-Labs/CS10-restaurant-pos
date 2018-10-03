@@ -8,7 +8,7 @@ import OrderScratchPad from '../../Presentational/OrderScratchPad';
 import CheckoutModal from '../../Presentational/CheckoutModal';
 import Loading from '../../Presentational/Loading';
 import { getItems } from '../../../redux/actions/items';
-import { updateParty, saveOrder, saveSplitOrder } from '../../../redux/actions/party';
+import { getParties, updateParty, saveOrder, saveSplitOrder } from '../../../redux/actions/party';
 import {
   openModal,
   closeModal,
@@ -34,20 +34,24 @@ class PartyPage extends React.Component {
   };
 
   componentDidMount() {
-    this.props.getItems();
+    this.props.getParties().then(() => {
+      const foundParty = this.props.partyList
+        .find(party => party._id === this.props.match.params.id);
 
-    const foundParty = this.props.partyList.find(
-      (party) => party._id === this.props.match.params.id
-    );
-    if (!foundParty) {
-      this.props.history.push('/tables');
-    } else {
-      this.setState({
-        order: foundParty.food,
-        tables: foundParty.tables,
-        server: foundParty.server.name
-      });
-    }
+      if (!foundParty) {
+        console.log('notfound');
+        this.props.history.push('/tables');
+      } else {
+        this.setState({
+          order: foundParty.food,
+          tables: foundParty.tables,
+          server: foundParty.server.name
+        });
+      }
+    })
+      .catch(error => console.error(error));
+
+    this.props.getItems();
   }
 
   componentDidUpdate(prev) {
@@ -67,11 +71,11 @@ class PartyPage extends React.Component {
     this.props.openModal();
   };
 
-  toggleSplitCheckItem = (item) => {
-    this.setState((prev) => {
-      if (prev.splitCheck.find((element) => element.uniqueId === item.uniqueId)) {
+  toggleSplitCheckItem = item => {
+    this.setState(prev => {
+      if (prev.splitCheck.find(element => element.uniqueId === item.uniqueId)) {
         return {
-          splitCheck: prev.splitCheck.filter((element) => element.uniqueId !== item.uniqueId)
+          splitCheck: prev.splitCheck.filter(element => element.uniqueId !== item.uniqueId)
         };
       }
       return {
@@ -91,15 +95,15 @@ class PartyPage extends React.Component {
     this.props.openModal();
   };
 
-  addItemToOrder = (item) => {
-    this.setState((prev) => ({
+  addItemToOrder = item => {
+    this.setState(prev => ({
       order: [...prev.order, { ...item, uniqueId: shortid.generate() }]
     }));
   };
 
-  removeItemFromOrder = (item) => {
-    this.setState((prev) => ({
-      order: prev.order.filter((orderItem) => orderItem.uniqueId !== item.uniqueId)
+  removeItemFromOrder = item => {
+    this.setState(prev => ({
+      order: prev.order.filter(orderItem => orderItem.uniqueId !== item.uniqueId)
     }));
   };
 
@@ -110,21 +114,26 @@ class PartyPage extends React.Component {
     this.props.history.push('/tables');
   };
 
-  setTotal = (total) => {
+  setTotal = total => {
     this.total = total;
   };
 
   render() {
     const { order, splitCheck, subTotal, tables, server } = this.state;
 
-    const { modalIsOpen, splitModalIsOpen, location, match, items, loading } = this.props;
+    const {
+      modalIsOpen,
+      splitModalIsOpen,
+      location,
+      match,
+      items,
+      loading,
+      itemCategories
+    } = this.props;
 
     if (loading) {
-      return (
-        <Loading />
-      );
+      return <Loading />;
     }
-
     return (
       <React.Fragment>
         <CheckoutModal
@@ -145,7 +154,11 @@ class PartyPage extends React.Component {
           server={server}
         />
         <s.Container modalOpen={modalIsOpen}>
-          <ItemSelector items={items} addItemToOrder={this.addItemToOrder} />
+          <ItemSelector
+            categories={itemCategories}
+            items={items}
+            addItemToOrder={this.addItemToOrder}
+          />
           <OrderScratchPad
             tables={tables}
             saveParty={this.saveParty}
@@ -179,10 +192,12 @@ PartyPage.propTypes = {
   modalIsOpen: PropTypes.bool,
   splitModalIsOpen: PropTypes.bool,
   closeSplitModal: PropTypes.func,
+  getParties: PropTypes.func,
   loading: PropTypes.bool,
   order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   items: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   splitOrder: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
+  itemCategories: PropTypes.arrayOf(PropTypes.string),
   match: PropTypes.shape({
     params: PropTypes.object
   }),
@@ -203,6 +218,7 @@ PartyPage.defaultProps = {
   sendPayment: () => {},
   getItems: () => {},
   history: { push: () => {} },
+  getParties: () => {},
   closeSplitModal: () => {},
   modalIsOpen: false,
   splitModalIsOpen: false,
@@ -210,12 +226,13 @@ PartyPage.defaultProps = {
   order: [{}],
   items: [],
   splitOrder: [],
+  itemCategories: ['All'],
   partyList: [{ _id: 'defaultpartyid' }],
   match: { params: {} },
   location: { country: 'US', state: 'CA' }
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   splitModalIsOpen: state.modal.splitModalIsOpen,
   items: state.items.itemList,
   tables: state.party.tables,
@@ -224,6 +241,15 @@ const mapStateToProps = (state) => ({
   order: state.party.order,
   location: state.restaurant.restaurantInfo.location,
   loading: state.party.loading && state.items.loading,
+  itemCategories: state.items.itemList.reduce(
+    (acc, currentVal) => {
+      if (currentVal.category && !acc.includes(currentVal.category)) {
+        acc.push(currentVal.category);
+      }
+      return acc;
+    },
+    ['All']
+  )
 });
 
 export default connect(
@@ -238,5 +264,6 @@ export default connect(
     openSplitModal,
     closeSplitModal,
     sendPayment,
+    getParties
   }
 )(PartyPage);

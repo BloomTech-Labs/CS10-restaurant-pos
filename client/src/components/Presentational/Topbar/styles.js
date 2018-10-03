@@ -21,3 +21,11 @@ export const StyledLink = styled(Link)`
   text-decoration: none;
   margin-left: 10px;
 `;
+
+export const TimeDisplay = styled.div`
+  display: flex;
+
+  * {
+    margin-right: 20px;
+  }
+`;

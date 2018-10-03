@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 import serverURI from '../../config/URI';
 
@@ -15,8 +16,8 @@ export const getServers = () => (
         dispatch({ type: LOADING_SERVERS_SUCCESS, payload: res.data.employees });
       })
       .catch((err) => {
-        console.error(err);
         dispatch({ type: LOADING_SERVERS_ERROR, payload: err });
+        toast.error(err.response.data.msg);
       });
   }
 );

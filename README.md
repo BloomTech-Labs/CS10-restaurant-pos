@@ -40,6 +40,43 @@
     - [Get a Specific Order](#get-a-specific-order)
     - [Update Order](#update-order)
     - [Restaurant Routes](#restaurant-routes)
+- [Tech-Stack](#tech-stack)
+  - [Back-End Dependencies ```(Production)```](#back-end-dependencies-production)
+    - [Send Grid](#send-grid)
+    - [BcryptJS](#bcryptjs)
+    - [Cors](#cors)
+    - [ExpressJS](#expressjs)
+    - [Mongoose](#mongoose)
+    - [Helmet](#helmet)
+    - [JSON Web Token](#json-web-token)
+    - [Passport](#passport)
+    - [Stripe](#stripe)
+  - [Back-End Dependencies ```(Development)```](#back-end-dependencies-development)
+    - [Concurrently](#concurrently)
+    - [Crossenv](#crossenv)
+    - [Eslint](#eslint)
+    - [Husky](#husky)
+    - [Jest](#jest)
+    - [Morgan](#morgan)
+    - [Nodemon](#nodemon)
+    - [Supertest](#supertest)
+  - [Front-End Dependencies ```(Production)```](#front-end-dependencies-production)
+    - [React](#react)
+    - [Redux](#redux)
+    - [Redux Thunk](#redux-thunk)
+    - [Sales Tax](#sales-tax)
+    - [ShortID](#shortid)
+    - [Styled Components](#styled-components)
+    - [Uppy](#uppy)
+    - [Axios](#axios)
+    - [Connected React Router](#connected-react-router)
+    - [Date FNS](#date-fns)
+    - [Formik](#formik)
+    - [JWT Decode](#jwt-decode)
+    - [PixiJS](#pixijs)
+  - [Front-End Dependencies ```(Development)```](#front-end-dependencies-development)
+    - [Eslint](#eslint-1)
+    - [Stylelint](#stylelint)
 
 # Scripts
 
@@ -1223,3 +1260,139 @@ Response:
   "msg": "Successfully created"
 }
 ```
+# Tech-Stack
+
+## Back-End Dependencies ```(Production)```
+
+### Send Grid
+
+Used for user confirmation Emails (Required by employer). | [View Dependency](https://sendgrid.com/docs/)
+
+### BcryptJS
+
+Bcrypt is an adaptive hash function which adjusts the cost of hashing, which means that in the future as computers become more powerful, simply increasing the salt rounds will suffice at keeping Main Course secure due to the amount of processing time that would be required to generate all possible password combinations. | [View Dependency](https://www.npmjs.com/package/bcryptjs)
+
+### Cors
+
+Used to configure API security. This was used to allow for secure communication between the front-end and back-end servers. | [View Dependency](https://github.com/expressjs/cors)
+
+### ExpressJS
+
+A prebuilt NodeJS framework that makes creating server side applications simple, fast, and flexible. NodeJS is powered by Google's V8 Engine which means it's powerful and can handle a large number of requests without lapsing in dependability. Also, this means that this is a highly scalable choice when you consider the Event Loop which manages all asynchronous operations allowing the program to continue to run as expected without stops. | [View Dependency](http://expressjs.com/)
+
+### Mongoose
+
+### Helmet
+
+A collection of nine smaller middleware functions that set security-related HTTP headers appropriatley. This protects Main Course from numerous well known vulnerablilites. | [View Dependency](https://helmetjs.github.io/)
+
+### JSON Web Token
+
+Realizing that there is not inherent benefit to using tokens over sessions, we chose to implement jwts due to the added benefit of storing the session on the client side as opposed to being in-memory. Main Course is built with the active server in mind and the potential to have the application be accessed from various devices in different locations. With this, instead of running the risk of having a session be interrupted due to data roaming, connection issues, or server side problems, we chose to store the session information on the client side. We also found this to be more efficient for our needs, as jwts eliminate the need to fetch additional information from the DB to validate the user. | [View Dependency](https://www.npmjs.com/package/jsonwebtoken)
+
+### Passport
+
+Passport is a flexible and fully customizable NodeJS middleware that comes with various out of the box authentication strategies for Facebook, Twitter, etcetera. This was an obvious choice for us because it makes future authentication features readily accessible. | [View Dependency](http://www.passportjs.org/)
+
+### Stripe
+
+A powerful, simple, and seamless payment commerce solution (Required by employer). | [View Dependency](https://stripe.com/)
+
+
+## Back-End Dependencies ```(Development)```
+
+### Concurrently
+
+This provides the ability to conveniently run both the back-end and front-end servers simultaneously on one terminal, which makes keeping track of errors easy during development as well as cutting back on time switching between terminals. | [View Dependency](https://www.npmjs.com/package/concurrently)
+
+### Crossenv
+
+Due to the variance of operating systems on the development team, Crossenv allows us to universally set environment variables. | [View Dependency](https://www.npmjs.com/package/cross-env)
+
+### Eslint
+
+Eslint is the dominant linting tool for NodeJS and it makes it possible to establish a clear coding convention for a team or project, as well as aiding in catching various bugs such as variables improperly scoped. | [View Dependency](https://eslint.org/)
+
+### Husky
+
+Used to prevent possible bad git commits or pushes due to running pre-commit linting hooks. | [View Dependency](https://github.com/typicode/husky)
+
+### Jest
+
+Chosen for its out of the box readiness. Jest comes with inbuilt mocking, the ability to run tests in parallel, it works with both the front-end and back-end, has promise support, and is a one stop shop for most testing needs within the scope of this project. | [View Dependency](https://jestjs.io/)
+
+### Morgan
+
+An HTTP request logging middleware used for production to easily identify bugs in routes. | [View Dependency](https://github.com/expressjs/morgan)
+
+### Nodemon
+
+Automatically restarts the server on save making production more efficient. | [View Dependency](https://nodemon.io/)
+
+### Supertest
+
+Using supertest with jest for integration testing makes things easy to implement and easy to read. | [View Dependency](https://www.npmjs.com/package/supertest)
+
+## Front-End Dependencies ```(Production)```
+
+### React
+
+React is the current industry standard that offers a lot of out of the box benefits. It is fast, efficient, and scalable. Due to the large community 
+
+### Redux
+
+A state management tool making it possible to store the entire state of the application in a single store. This means a unidirectional data flow, and as the application scales we have predictable state updates which subsequently make things easier to test and introduce new features. Redux also has solid documentation and an active community, meaning that as new devs become introduced to the project it's likely that any problems they face would have already been encountered by someone else, thus making solutions easy to find. | [View Dependency](https://redux.js.org/)
+
+### Redux Thunk
+
+A middleware that allows you to write action creators that return a function instead of an action. The thunk can be used to delay the dispatch of an action, or to dispatch only if a certain condition is met. This functionality makes it easier to scale and implement features given diverse needs in a growing project. | [View Dependency](https://github.com/reduxjs/redux-thunk)
+
+### Sales Tax
+
+International sales tax calculator for Node (offline, but provides optional online VAT number fraud check). Tax rates are kept up-to-date. | [View Dependency](https://www.npmjs.com/package/sales-tax)
+
+### ShortID
+
+Used to fill a specific need in assigning items unique IDs for sorting on the front-end. | [View Dependency](https://www.npmjs.com/package/shortid)
+
+### Styled Components
+
+Has a thriving community and offers the ability to directly style multiple components within a file. The syntax used is familiar to JavaScript and improves code cleanliness and makes it easy to get up and going for those without a lot of css experience. Styled components are also very efficient, improving load time for users. | [View Dependency](https://www.styled-components.com/docs/)
+
+### Uppy
+
+"Sleek, modular file uploader that integrates seamlessly with any framework. It fetches files from local disk, Google Drive, Dropbox, Instagram, remote URLs, cameras and other exciting locations, and then uploads them to the final destination. It’s fast, easy to use and let's you worry about more important problems than building a file uploader." | [View Dependency](https://uppy.io/docs/)
+
+### Axios
+
+A lightweight, promise-based HTTP client with an intuitive API that makes interfacing with a REST API simple. | [View Dependency](https://www.npmjs.com/package/react-axios) 
+
+### Connected React Router
+
+Allows for the ability to synchronize state with redux store through uni-directional data flow, time traveling, and dispatching of history methods. This makes for an incredibly useful tool when dealing with various stages of state and subsequent routing for a seamless and intuitive UI. | [View Dependency](https://www.npmjs.com/package/connected-react-router) 
+
+### Date FNS
+
+A lightweight option for formatting JavaScript dates. | [View Dependency](https://date-fns.org/) 
+
+### Formik
+
+This library utilizes essential React form functionality under the hood which makes implementing it feel very intuitive and not magical. It keeps track of values, errors, and submissions, which reduces the time needed to implement forms and makes for a more enjoyable experience. | [View Dependency](https://jaredpalmer.com/formik) 
+
+### JWT Decode
+
+Used to decode JWTs on the front-end to retrieve user data. | [View Dependency](https://github.com/auth0/jwt-decode) 
+
+### PixiJS
+
+An open source, cross browser JavaScript 2D WebGL graphics library with canvas fallback used to build core floor-plan functionality on the app. | [View Dependency](http://www.pixijs.com/) 
+
+## Front-End Dependencies ```(Development)```
+
+### Eslint
+
+[See Above Explanation](#eslint)
+
+### Stylelint
+
+Used to enforce project conventions in styling to keep code consistent. | [View Dependency](https://stylelint.io/) 

@@ -6,7 +6,7 @@ import {
   StyledFormik,
   StyledForm,
   StyledField,
-  StyledErrorMessage
+  StyledErrorMessage,
 } from '../../../global-styles/styledComponents';
 
 import * as s from './styles';
@@ -28,10 +28,14 @@ const CreateItem = (props) => (
         }
         return errors;
       }}
-      onSubmit={(values, { setSubmitting }) => {
-        console.log('The values:', values);
-        props.addItem(values);
-        setSubmitting(false); // TODO: set this to false upon success or error
+      onSubmit={async (values, { setSubmitting, resetForm }) => {
+        try {
+          await props.addItem(values);
+          resetForm();
+          setSubmitting(false);
+        } catch (err) {
+          setSubmitting(false);
+        }
       }}
     >
       {({ errors, isSubmitting }) => (
@@ -55,6 +59,7 @@ const CreateItem = (props) => (
               maxLength="100"
               placeholder="Delish Nutrish"
             />
+            <StyledErrorMessage name="description" component="div" />
             <StyledField name="category" component="select">
               <option value="">Choose a category...</option>
               {props.itemCategories.map((item) => (
@@ -63,9 +68,19 @@ const CreateItem = (props) => (
                 </option>
               ))}
             </StyledField>
-            <StyledField type="text" name="category" maxLength="25" placeholder="Entrees" />
-            <StyledErrorMessage name="description" component="div" />
-            <StyledField type="number" name="price" maxLength="100" placeholder="5.99" />
+            <StyledField
+              type="text"
+              name="category"
+              maxLength="25"
+              placeholder="Entrees"
+            />
+            <StyledErrorMessage name="category" component="div" />
+            <StyledField
+              type="number"
+              name="price"
+              maxLength="100"
+              placeholder="5.99"
+            />
             <StyledErrorMessage name="price" component="div" />
             <Button primary dark type="submit" inactive={isSubmitting}>
               Submit
@@ -80,13 +95,13 @@ const CreateItem = (props) => (
 CreateItem.propTypes = {
   itemCategories: PropTypes.arrayOf(PropTypes.string),
   addItem: PropTypes.func,
-  openUploadModal: PropTypes.func
+  openUploadModal: PropTypes.func,
 };
 
 CreateItem.defaultProps = {
   itemCategories: ['default category one, default category two'],
   addItem: () => {},
-  openUploadModal: () => {}
+  openUploadModal: () => {},
 };
 
 export default CreateItem;

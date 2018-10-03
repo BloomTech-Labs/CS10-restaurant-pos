@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 import serverURI from '../../config/URI';
 
@@ -18,23 +19,27 @@ export const getItems = () => (
         dispatch({ type: LOADING_ITEMS_SUCCESS, payload: res.data.items });
       })
       .catch((err) => {
-        console.error(err);
         dispatch({ type: LOADING_ITEMS_ERROR, payload: err });
+        toast.error(err.response.data.msg);
       });
   }
 );
 
 export const addItem = (item) => (
   (dispatch) => {
+    if (item.category) {
+      item.category = item.category.replace(/^\w/, item.category[0].toUpperCase());
+    }
     dispatch({ type: ADDING_ITEM });
-    axios
+    return axios
       .post(`${serverURI}/api/items/add`, item)
       .then((res) => {
         dispatch({ type: ADDING_ITEM_SUCCESS, payload: res.data.item });
+        toast('Successfully added item.');
       })
       .catch((err) => {
-        console.error(err);
         dispatch({ type: ADDING_ITEM_ERROR, payload: err });
+        toast.error(err.response.data.msg);
       });
   }
 );

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { push } from 'connected-react-router';
+import { toast } from 'react-toastify';
 
 import serverURI from '../../config/URI';
 
@@ -38,13 +39,16 @@ export const saveSplitOrder = (splitOrder) => ({
 // Gets all Parties: server (name), food (name, price), and tables
 export const getParties = () => (dispatch) => {
   dispatch({ type: LOADING_PARTIES });
-  axios
+  // returning a promise to sync up the party page component with this one
+  // my mind is exploding
+  return axios
     .get(`${serverURI}/api/party/all`)
     .then((res) => {
       dispatch({ type: LOADING_PARTIES_SUCCESS, payload: res.data.parties });
     })
     .catch((err) => {
       dispatch({ type: LOADING_PARTIES_ERROR, payload: err });
+      toast.error(err.response.data.msg);
     });
 };
 
@@ -58,6 +62,7 @@ export const getParty = (id) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: LOADING_PARTY_ERROR, payload: err });
+      toast.error(err.response.data.msg);
     });
 };
 
@@ -73,6 +78,7 @@ export const createParty = (tables) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: ADDING_PARTY_ERROR, payload: err });
+      toast.error(err.response.data.msg);
     });
 };
 
@@ -87,6 +93,7 @@ export const updateParty = (id, updatedInfo) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: UPDATING_PARTY_ERROR, payload: err });
+      toast.error(err.response.data.msg);
     });
 };
 
@@ -102,6 +109,7 @@ export const deleteParty = (id) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: DELETING_PARTY_ERROR, payload: err });
+      toast.error(err.response.data.msg);
     });
 };
 
