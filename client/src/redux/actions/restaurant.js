@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { push } from 'connected-react-router';
 import jwtDecode from 'jwt-decode';
+import { toast } from 'react-toastify';
 
 import serverURI from '../../config/URI';
 
@@ -43,7 +44,7 @@ export const addRestaurant = ({
       dispatch(push('/login-employee'));
     })
     .catch(err => {
-      console.error(err);
       dispatch({ type: ADDING_RESTAURANT_ERROR, payload: err });
+      toast.error(err.response.data.msg);
     });
 };
