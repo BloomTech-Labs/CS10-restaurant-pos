@@ -1391,4 +1391,8 @@ An open source, cross browser JavaScript 2D WebGL graphics library with canvas f
 
 ### Eslint
 
+[See Above Explanation](#eslint)
+
 ### Stylelint
+
+Used to enforce project conventions in styling to keep code consistent. | [View Dependency](https://stylelint.io/) 
