@@ -5,7 +5,7 @@ import { flexCenterMixin } from '../../../global-styles/mixins';
 export const Container = styled.div`
   ${flexCenterMixin}
   width: 100%;
-  padding: 15px;
+  padding: 30px;
 `;
 
 export const Selector = styled.div`

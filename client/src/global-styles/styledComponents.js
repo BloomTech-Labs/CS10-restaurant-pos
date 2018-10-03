@@ -11,7 +11,7 @@ export const MainContainer = styled.div`
   border-radius: 50px 0 0 0;
   flex-grow: 2;
   width: 100%;
-  padding: 50px;
+  padding: 60px 100px;
   overflow: hidden;
 `;
 
