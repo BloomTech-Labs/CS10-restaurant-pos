@@ -8,7 +8,7 @@ const stripeKey = keys.stripeSecretKey;
 const stripe = require('stripe')(stripeKey);
 const Restaurant = require('../../models/Restaurant');
 
-// @route   POST api/subscriptions/subscribe
+// @route   POST api/subscribe
 // @desc    Creates a subscription for an admin
 // @access  Private
 const subscribe = (req, res) => {

@@ -2,20 +2,55 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Item from '../../Presentational/Item';
+import CategorySelector from '../../Presentational/CategorySelector';
+import BackButton from '../../Presentational/BackButton';
 
 import * as s from './styles';
 
 class ItemSelector extends React.Component {
-  addItemToOrder = (item) => {
-    this.props.addItemToOrder(item);
+  state = {
+    filtered: [],
+    category: 'All'
+  };
+
+  componentDidMount() {
+    this.filter('All');
   }
+
+  addItemToOrder = item => {
+    this.props.addItemToOrder(item);
+  };
+
+  filter = category => {
+    if (category === 'All') {
+      this.setState({
+        filtered: this.props.items,
+        category
+      });
+    } else {
+      this.setState({
+        filtered: this.props.items.filter(item => item.category === category),
+        category
+      });
+    }
+  };
 
   render() {
     return (
       <s.Container>
-        {this.props.items.map((item) => (
-          <Item key={item._id} addItemToOrder={this.addItemToOrder} item={item} />
-        ))}
+        <div style={{ position: 'relative' }}>
+          <BackButton />
+          <CategorySelector
+            categories={this.props.categories}
+            selected={this.state.category}
+            filter={this.filter}
+          />
+        </div>
+        <s.Items>
+          {this.state.filtered.map(item => (
+            <Item key={item._id} addItemToOrder={this.addItemToOrder} item={item} />
+          ))}
+        </s.Items>
       </s.Container>
     );
   }
@@ -23,11 +58,13 @@ class ItemSelector extends React.Component {
 
 ItemSelector.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object), // TODO: define shape later
+  categories: PropTypes.arrayOf(PropTypes.string),
   addItemToOrder: PropTypes.func
 };
 
 ItemSelector.defaultProps = {
   items: [],
+  categories: ['All'],
   addItemToOrder: () => {}
 };
 

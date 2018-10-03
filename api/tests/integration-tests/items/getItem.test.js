@@ -5,36 +5,31 @@ const server = require('../../../../server');
 const { loginAdmin } = require('../../helpers/loginAdmin');
 
 let token;
-let orderId;
+let itemId;
 
 jest.setTimeout(40000);
 
-describe('getOrder', () => {
+describe('getItem', () => {
   beforeAll(async (done) => {
     // register the admin
     await loginAdmin(server)
       .then((loginRes) => {
         token = loginRes;
 
-        // First create an order in the db
+        // First create an item in the db
         request(server)
-          .post('/api/orders/add')
+          .post('/api/items/add')
           .set('Authorization', `${token}`)
           .send(
             {
-              party: '5b993879366d2671bcba0e02',
-              server: '5b993879366d2671bcba0e02',
-              food: [
-                {
-                  id: '5b956483ed2e4d86346d6c82',
-                  uniqueId: 'thisIsTheUniqueId'
-                }
-              ],
+              name: 'Cheese Wontons',
+              price: 4.99,
+              description: 'Yum',
             }
           )
-          .then(orderRes => {
-            // Assigns the _id of the new order to orderId
-            orderId = orderRes.body.order._id;
+          .then(itemRes => {
+            // Assigns the _id of the new item to itemId
+            itemId = itemRes.body.item._id;
             done();
           })
           .catch(err => {
@@ -51,19 +46,20 @@ describe('getOrder', () => {
     mongoose.disconnect();
   });
 
-  // [Authorized] Gets an order from the DB
-  it('[Auth] GET: Gets an order from the DB', async () => {
+  // [Authorized] Gets an item from the DB
+  it('[Auth] GET: Gets an item from the DB', async () => {
     const res = await request(server)
-      .get(`/api/orders/${orderId}`)
+      .get(`/api/items/${itemId}`)
       .set('Authorization', `${token}`);
 
+    expect(res.body.item.name).toEqual('Cheese Wontons');
     expect(res.status).toBe(200);
   });
 
-  // [Not Authorized] Fails to get an order from the DB
-  it('[No Auth] GET: Fails to get an order from the DB', async () => {
+  // [Not Authorized] Fails to get an item from the DB
+  it('[No Auth] GET: Fails to get an item from the DB', async () => {
     const res = await request(server)
-      .get(`/api/orders/${orderId}`);
+      .get(`/api/items/${itemId}`);
 
     expect(res.status).toBe(401);
   });

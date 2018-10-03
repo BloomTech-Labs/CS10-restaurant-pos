@@ -8,6 +8,8 @@ let token;
 let employeePin;
 let managerPin;
 
+jest.setTimeout(40000);
+
 describe('getAllServers', () => {
   beforeAll(async (done) => {
     await loginAdmin(server)

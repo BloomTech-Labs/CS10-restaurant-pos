@@ -19,7 +19,8 @@ export const Sidebar = styled.nav`
 const activeClassName = 'nav-item-active';
 
 export const StyledLink = styled(NavLink).attrs({ activeClassName })`
-  color: grey;
+  color: ${(props) => props.theme.lightText};
+  font-weight: 600;
   text-decoration: none;
   margin-left: 10px;
   height: 55px;
@@ -29,11 +30,11 @@ export const StyledLink = styled(NavLink).attrs({ activeClassName })`
   padding-left: 25px;
 
   &.${activeClassName} {
-    color: black;
+    color: ${(props) => props.theme.primaryText};
     font-weight: 700;
     padding-left: 17px;
     background: ${props => props.theme.contentBackground};
-    border-left: 8px solid ${props => props.theme.oxfordBlue};
+    border-left: 8px solid ${props => props.theme.navTabColor};
     border-radius: 10px 0 0 10px;
   }
 `;

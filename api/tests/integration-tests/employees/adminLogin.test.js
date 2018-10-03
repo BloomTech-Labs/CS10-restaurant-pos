@@ -3,6 +3,8 @@ const request = require('supertest');
 
 const server = require('../../../../server');
 
+jest.setTimeout(40000);
+
 describe('adminLogin', () => {
   beforeAll((done) => {
     request(server)

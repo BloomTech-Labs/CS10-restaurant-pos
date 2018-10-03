@@ -9,6 +9,8 @@ let employeeToken;
 let adminToken;
 let pin;
 
+jest.setTimeout(40000);
+
 describe('updateEmployee', () => {
   beforeAll(async (done) => {
     loginAdmin(server)

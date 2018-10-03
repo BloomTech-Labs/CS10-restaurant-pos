@@ -6,19 +6,17 @@ const { loginAdmin } = require('../../helpers/loginAdmin');
 
 let token;
 let tableId;
-let partyId;
 
 jest.setTimeout(40000);
 
-// First a table must be created in order to add a party
-describe('updateParty', () => {
+describe('deactivateTable', () => {
   beforeAll(async (done) => {
     // register the admin
     await loginAdmin(server)
       .then((loginRes) => {
         token = loginRes;
 
-        // First create a table in the db
+        // Add a table to the DB
         request(server)
           .post('/api/tables/add')
           .set('Authorization', `${token}`)
@@ -30,18 +28,15 @@ describe('updateParty', () => {
             }
           )
           .then(tableRes => {
-            // Assigns the _id of the new table to tableId
+            // Store the new tables ID
             tableId = tableRes.body.table._id;
 
+            // Create a party and set the table status to active
             request(server)
               .post('/api/party/add')
               .set('Authorization', `${token}`)
               .send({ tables: [tableId] })
-              .then(addedParty => {
-                // Store the partys ID
-                partyId = addedParty.body.party._id;
-                done();
-              })
+              .then(() => done())
               .catch(err => {
                 console.error(err);
               });
@@ -50,7 +45,7 @@ describe('updateParty', () => {
             console.error(err);
           });
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   });
@@ -60,21 +55,19 @@ describe('updateParty', () => {
     mongoose.disconnect();
   });
 
-  // [Authorized] Updates a party
-  it('[Auth] PUT: Updates a party in the DB', async () => {
+  // [Authorized] Deactivates a table
+  it('[Auth] PUT: Deactivates a table in the DB', async () => {
     const res = await request(server)
-      .put(`/api/party/update/${partyId}`)
-      .set('Authorization', `${token}`)
-      .send({ tables: [tableId, tableId] });
+      .put(`/api/tables/deactivate/${tableId}`)
+      .set('Authorization', `${token}`);
 
-    expect(res.body.updatedParty.tables.length).toEqual(2);
     expect(res.status).toBe(200);
   });
 
-  // [Not Authorized] Fails to update a party
-  it('[No Auth] PUT: Fails to update a party in the DB', async () => {
+  // [Not Authorized] Deactivates a table
+  it('[No Auth] PUT: Fails to deactivate a table in the DB', async () => {
     const res = await request(server)
-      .put(`/api/party/update/${partyId}`);
+      .put(`/api/tables/deactivate/${tableId}`);
 
     expect(res.status).toBe(401);
   });

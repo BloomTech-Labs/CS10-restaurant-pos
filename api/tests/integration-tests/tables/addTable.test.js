@@ -6,7 +6,7 @@ const { loginAdmin } = require('../../helpers/loginAdmin');
 
 let token;
 
-jest.setTimeout(30000);
+jest.setTimeout(40000);
 
 describe('addTable', () => {
   beforeAll(async (done) => {

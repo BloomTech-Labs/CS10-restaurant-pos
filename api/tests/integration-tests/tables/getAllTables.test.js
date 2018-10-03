@@ -5,43 +5,32 @@ const server = require('../../../../server');
 const { loginAdmin } = require('../../helpers/loginAdmin');
 
 let token;
-let orderId;
 
 jest.setTimeout(40000);
 
-describe('getOrder', () => {
+describe('getAllTables', () => {
   beforeAll(async (done) => {
     // register the admin
     await loginAdmin(server)
       .then((loginRes) => {
         token = loginRes;
 
-        // First create an order in the db
         request(server)
-          .post('/api/orders/add')
+          .post('/api/tables/add')
           .set('Authorization', `${token}`)
           .send(
             {
-              party: '5b993879366d2671bcba0e02',
-              server: '5b993879366d2671bcba0e02',
-              food: [
-                {
-                  id: '5b956483ed2e4d86346d6c82',
-                  uniqueId: 'thisIsTheUniqueId'
-                }
-              ],
+              x: 1,
+              y: 1,
+              number: 1
             }
           )
-          .then(orderRes => {
-            // Assigns the _id of the new order to orderId
-            orderId = orderRes.body.order._id;
-            done();
-          })
+          .then(() => done())
           .catch(err => {
             console.error(err);
           });
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   });
@@ -51,19 +40,20 @@ describe('getOrder', () => {
     mongoose.disconnect();
   });
 
-  // [Authorized] Gets an order from the DB
-  it('[Auth] GET: Gets an order from the DB', async () => {
+  // [Authorized] Gets all tables
+  it('[Auth] GET: Gets all tables in the DB', async () => {
     const res = await request(server)
-      .get(`/api/orders/${orderId}`)
+      .get('/api/tables/all')
       .set('Authorization', `${token}`);
 
+    expect(res.body.tables.length).toEqual(1);
     expect(res.status).toBe(200);
   });
 
-  // [Not Authorized] Fails to get an order from the DB
-  it('[No Auth] GET: Fails to get an order from the DB', async () => {
+  // [Not Authorized] Fails to get all tables
+  it('[No Auth] GET: Fails get all tables in the DB', async () => {
     const res = await request(server)
-      .get(`/api/orders/${orderId}`);
+      .get('/api/tables/all');
 
     expect(res.status).toBe(401);
   });

@@ -56,6 +56,7 @@ const CreateItem = (props) => (
               maxLength="100"
               placeholder="Delish Nutrish"
             />
+            <StyledErrorMessage name="description" component="div" />
             <StyledField name="category" component="select">
               <option value="">Choose a category...</option>
               {props.itemCategories.map((item) => (
@@ -70,7 +71,7 @@ const CreateItem = (props) => (
               maxLength="25"
               placeholder="Entrees"
             />
-            <StyledErrorMessage name="description" component="div" />
+            <StyledErrorMessage name="category" component="div" />
             <StyledField
               type="number"
               name="price"

@@ -80,7 +80,7 @@ OrderTotal.propTypes = {
 
 OrderTotal.defaultProps = {
   order: [{}],
-  location: { country: 'US', state: 'CA' },
+  location: { country: 'US', state: 'OR' },
   setTotal: () => {}
 };
 
