@@ -1,6 +1,7 @@
 // * Root Colors ----------------------
 const transparent = 'rgba(0, 0, 0, 0)';
 const santasGrey = 'rgba(46, 49, 72, 0.4)';
+const lightGrey = 'rgba(255, 255, 255, 0.4)';
 const white = '#FFFFFF';
 const aquaHaze = '#F6F8FB';
 const razzmatazz = '#E30E58';
@@ -83,5 +84,6 @@ export const theme = {
   subHeader: null,
   // Text
   primaryText: ebonyClay,
-  lightText: santasGrey
+  lightText: santasGrey,
+  lightTextOnDark: lightGrey,
 };

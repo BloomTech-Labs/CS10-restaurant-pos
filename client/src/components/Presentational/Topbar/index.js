@@ -10,7 +10,7 @@ import * as s from './styles';
 export default function Topbar(props) {
   const { name, logoutEmployee, role, loggedIn, landing } = props;
 
-  if (landing) {
+  if (landing && !loggedIn) {
     return (
       <s.Topbar alignEnd>
         <s.StyledLink to="/login">(Login)</s.StyledLink>
@@ -19,12 +19,20 @@ export default function Topbar(props) {
     );
   }
 
+  if (landing && loggedIn) {
+    return (
+      <s.Topbar alignEnd>
+        <s.StyledLink to="/tables">Proceed To Restaurant</s.StyledLink>
+      </s.Topbar>
+    );
+  }
+
   return (
     <s.Topbar blur={props.blur}>
-      <div>
+      <s.TimeDisplay>
         <Clock />
         <Date />
-      </div>
+      </s.TimeDisplay>
       <h1>Main Course</h1>
       {loggedIn ? <CurrentUser name={name} role={role} action={logoutEmployee} /> : <div />}
     </s.Topbar>

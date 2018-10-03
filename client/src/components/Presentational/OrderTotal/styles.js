@@ -8,6 +8,8 @@ export const Display = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 50%;
+  padding-top: 20px;
+  border-top: 1px solid ${(props) => props.theme.lightTextOnDark};
 `;
 
 export const Label = styled.div`
@@ -15,7 +17,11 @@ export const Label = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   height: 100%;
-  color: ${(props) => props.theme.lightText};
+  color: ${(props) => props.theme.lightTextOnDark};
+
+  * {
+    font-weight: 300;
+  }
 `;
 
 export const Amount = styled.div`
