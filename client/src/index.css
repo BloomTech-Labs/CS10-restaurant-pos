@@ -175,8 +175,8 @@ html, body, #root {
 
 /* Custom Axios Loading Bar */
 #nprogress .bar {
-  background: rgb(255, 255, 255) !important;
-  height: 55px;
+  background: white !important;
+  height: 5px !important;
 }
 
 #nprogress .peg {
