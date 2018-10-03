@@ -1,5 +1,7 @@
 import React from 'react';
 
+import * as s from './styles';
+
 class Clock extends React.Component {
   constructor(props) {
     super(props);
@@ -25,9 +27,7 @@ class Clock extends React.Component {
 
   render() {
     return (
-      <div>
-        <h2>{this.state.date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</h2>
-      </div>
+      <s.Clock>{this.state.date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</s.Clock>
     );
   }
 }

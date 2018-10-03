@@ -8,10 +8,10 @@ class CurrentUser extends React.Component {
     const { name, role, action } = this.props;
     return (
       <s.Container onClick={action}>
-        <div>
-          <div>{name}</div>
-          <div>{role}</div>
-        </div>
+        <s.Info>
+          <s.Name>{name}</s.Name>
+          <s.Role>{role}</s.Role>
+        </s.Info>
         <s.ProfilePic />
       </s.Container>
     );

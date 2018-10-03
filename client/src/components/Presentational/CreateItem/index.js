@@ -55,6 +55,7 @@ const CreateItem = (props) => (
               maxLength="100"
               placeholder="Delish Nutrish"
             />
+            <StyledErrorMessage name="description" component="div" />
             <StyledField name="category" component="select">
               <option value="">Choose a category...</option>
               {props.itemCategories.map((item) => (
@@ -64,7 +65,7 @@ const CreateItem = (props) => (
               ))}
             </StyledField>
             <StyledField type="text" name="category" maxLength="25" placeholder="Entrees" />
-            <StyledErrorMessage name="description" component="div" />
+            <StyledErrorMessage name="category" component="div" />
             <StyledField type="number" name="price" maxLength="100" placeholder="5.99" />
             <StyledErrorMessage name="price" component="div" />
             <Button primary dark type="submit" inactive={isSubmitting}>

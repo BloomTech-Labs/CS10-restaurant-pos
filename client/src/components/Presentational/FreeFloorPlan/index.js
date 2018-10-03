@@ -9,6 +9,7 @@ import * as s from './styles';
 
 class FreeFloorPlan extends React.Component {
   render() {
+    console.log('tables', this.props.tables);
     return (
       <s.Container>
         {this.props.tables.map((table) => (
@@ -17,6 +18,7 @@ class FreeFloorPlan extends React.Component {
             table={table}
             selected={this.props.selected.has(table.number)}
             toggleTable={this.props.toggleTable}
+            openParty={this.props.openParty}
           />
         ))}
       </s.Container>
@@ -27,13 +29,15 @@ class FreeFloorPlan extends React.Component {
 FreeFloorPlan.propTypes = {
   selected: SetType,
   tables: PropTypes.arrayOf(PropTypes.object),
-  toggleTable: PropTypes.func
+  toggleTable: PropTypes.func,
+  openParty: PropTypes.func,
 };
 
 FreeFloorPlan.defaultProps = {
   selected: new Set(),
   tables: [],
-  toggleTable: () => {}
+  toggleTable: () => {},
+  openParty: () => {},
 };
 
 export default FreeFloorPlan;

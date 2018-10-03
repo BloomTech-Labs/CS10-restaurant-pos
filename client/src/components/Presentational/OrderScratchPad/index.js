@@ -60,7 +60,7 @@ OrderScratchPad.defaultProps = {
   tables: [],
   order: [],
   subTotal: 0,
-  location: { country: 'US', state: 'CA' },
+  location: { country: 'US', state: 'OR' },
   removeItemFromOrder: () => {},
   setTotal: () => {},
   openModal: () => {},
