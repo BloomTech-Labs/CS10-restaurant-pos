@@ -9,6 +9,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const cors = require('cors');
+const helmet = require('helmet');
 
 const { mongoURI: db, clientURI } = require('./config/keys');
 // Route Imports
@@ -33,6 +34,13 @@ const server = express();
 server.use(express.json());
 server.use(cors(corsOptions));
 server.use(express.urlencoded({ extended: false }));
+
+// Done for performance improvements by 5% or more
+server.use(helmet(
+  {
+    dnsPrefetchControl: { allow: true }
+  }
+));
 
 // Connect to MongDB
 mongoose
