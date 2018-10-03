@@ -7,6 +7,7 @@ import { updateEmployee } from '../../../redux/actions/auth';
 import { addItem, getItems } from '../../../redux/actions/items';
 import RestaurantInfo from '../../Presentational/RestaurantInfo';
 import Billing from '../../Presentational/Billing';
+import CreateEmployeeCard from '../../Presentational/CreateEmployeeCard';
 import UpdateEmployee from '../../Presentational/UpdateEmployee';
 import CreateItem from '../../Presentational/CreateItem';
 import UploadModal from '../../Presentational/UploadModal';
@@ -52,6 +53,7 @@ class SettingsPage extends React.Component {
         images={this.state.images}
         openUploadModal={this.openUploadModal}
       />
+      <CreateEmployeeCard />
     </React.Fragment>
   );
 
