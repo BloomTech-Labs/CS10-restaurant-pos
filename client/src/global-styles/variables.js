@@ -11,6 +11,7 @@ const ebonyClay = '#202233';
 const silver = '#C6C6C6';
 const wispPink = '#FDEFF5';
 const porcelain = '#EDEFF0';
+const limedSpruce = '#363F49';
 
 export const theme = {
   // * Misc. -----------------------------------
@@ -19,6 +20,7 @@ export const theme = {
   boxShadow: '0 2px 16px 1px rgba(0, 0, 0, 0.15)',
   catMenuBorderRadius: 25,
   categoryBorderRadius: 15,
+  navTabColor: limedSpruce,
 
   // * Default Dimensions ----------------------
   sideBarWidth: 265,
