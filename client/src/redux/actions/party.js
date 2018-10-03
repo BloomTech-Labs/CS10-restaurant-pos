@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { push } from 'connected-react-router';
+import { toast } from 'react-toastify';
 
 import serverURI from '../../config/URI';
 
@@ -47,6 +48,7 @@ export const getParties = () => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: LOADING_PARTIES_ERROR, payload: err });
+      toast.error(err.response.data.msg);
     });
 };
 
@@ -60,6 +62,7 @@ export const getParty = (id) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: LOADING_PARTY_ERROR, payload: err });
+      toast.error(err.response.data.msg);
     });
 };
 
@@ -75,6 +78,7 @@ export const createParty = (tables) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: ADDING_PARTY_ERROR, payload: err });
+      toast.error(err.response.data.msg);
     });
 };
 
@@ -89,6 +93,7 @@ export const updateParty = (id, updatedInfo) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: UPDATING_PARTY_ERROR, payload: err });
+      toast.error(err.response.data.msg);
     });
 };
 
@@ -104,6 +109,7 @@ export const deleteParty = (id) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: DELETING_PARTY_ERROR, payload: err });
+      toast.error(err.response.data.msg);
     });
 };
 
