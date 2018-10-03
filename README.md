@@ -40,6 +40,44 @@
     - [Get a Specific Order](#get-a-specific-order)
     - [Update Order](#update-order)
     - [Restaurant Routes](#restaurant-routes)
+- [Tech-Stack](#tech-stack)
+  - [Back-End Dependencies ```(Production)```](#back-end-dependencies-production)
+    - [Send Grid](#send-grid)
+    - [BcryptJS](#bcryptjs)
+    - [Cors](#cors)
+    - [ExpressJS](#expressjs)
+    - [Helmet](#helmet)
+    - [JSON Web Token](#json-web-token)
+    - [Mongoose](#mongoose)
+    - [Passport](#passport)
+    - [Stripe](#stripe)
+  - [Back-End Dependencies ```(Development)```](#back-end-dependencies-development)
+    - [Concurrently](#concurrently)
+    - [Crossenv](#crossenv)
+    - [Eslint](#eslint)
+    - [Husky](#husky)
+    - [Jest](#jest)
+    - [Morgan](#morgan)
+    - [Nodemon](#nodemon)
+    - [Supertest](#supertest)
+  - [Front-End Dependencies ```(Production)```](#front-end-dependencies-production)
+    - [React](#react)
+    - [Redux](#redux)
+    - [Redux Thunk](#redux-thunk)
+    - [Sales Tax](#sales-tax)
+    - [ShortID](#shortid)
+    - [Styled Components](#styled-components)
+    - [Uppy](#uppy)
+    - [Axios](#axios)
+    - [Connected React Router](#connected-react-router)
+    - [Date FNS](#date-fns)
+    - [ES6 Set Proptypes](#es6-set-proptypes)
+    - [Formik](#formik)
+    - [JWT Decode](#jwt-decode)
+    - [Pixi](#pixi)
+  - [Front-End Dependencies ```(Development)```](#front-end-dependencies-development)
+    - [Eslint](#eslint-1)
+    - [Stylelint](#stylelint)
 
 # Scripts
 
@@ -1223,3 +1261,78 @@ Response:
   "msg": "Successfully created"
 }
 ```
+# Tech-Stack
+
+## Back-End Dependencies ```(Production)```
+
+### Send Grid
+
+### BcryptJS
+
+### Cors
+
+### ExpressJS
+
+### Helmet
+
+### JSON Web Token
+
+### Mongoose
+
+### Passport
+
+### Stripe
+
+## Back-End Dependencies ```(Development)```
+
+### Concurrently
+
+### Crossenv
+
+### Eslint
+
+### Husky
+
+### Jest
+
+### Morgan
+
+### Nodemon
+
+### Supertest
+
+## Front-End Dependencies ```(Production)```
+
+### React
+
+### Redux
+
+### Redux Thunk
+
+### Sales Tax
+
+### ShortID
+
+### Styled Components
+
+### Uppy
+
+### Axios
+
+### Connected React Router
+
+### Date FNS
+
+### ES6 Set Proptypes
+
+### Formik
+
+### JWT Decode
+
+### Pixi
+
+## Front-End Dependencies ```(Development)```
+
+### Eslint
+
+### Stylelint
