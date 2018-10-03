@@ -46,6 +46,7 @@
     - [BcryptJS](#bcryptjs)
     - [Cors](#cors)
     - [ExpressJS](#expressjs)
+    - [MongoDB](#mongodb)
     - [Mongoose](#mongoose)
     - [Helmet](#helmet)
     - [JSON Web Token](#json-web-token)
@@ -1280,7 +1281,13 @@ Used to configure API security. This was used to allow for secure communication 
 
 A prebuilt NodeJS framework that makes creating server side applications simple, fast, and flexible. NodeJS is powered by Google's V8 Engine which means it's powerful and can handle a large number of requests without lapsing in dependability. Also, this means that this is a highly scalable choice when you consider the Event Loop which manages all asynchronous operations allowing the program to continue to run as expected without stops. | [View Dependency](http://expressjs.com/)
 
+### MongoDB
+
+MongoDB is an object-oriented, simple, dynamic, and scalable NoSQL database. Due to the minimal about of data relationships we felt this was a good choice for Main Course. | [View Dependency](https://docs.mongodb.com/)
+
 ### Mongoose
+
+Provides a straight-forward, schema-based solution to model application data with MongoDB. It also offers out of the box perks such as validation. | [View Dependency](https://mongoosejs.com/) 
 
 ### Helmet
 
