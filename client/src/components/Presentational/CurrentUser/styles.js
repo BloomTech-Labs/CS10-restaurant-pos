@@ -23,13 +23,14 @@ export const Info = styled.div`
   flex-direction: column;
   justify-content: space-around;
   height: 70%;
-  margin-right: 10px;
+  margin-right: 15px;
 `;
 
 export const Role = styled.div`
   display: flex;
   justify-content: flex-end;
   color: ${(props) => props.theme.lightText};
+  font-weight: 300;
 `;
 
 export const Name = styled.div`

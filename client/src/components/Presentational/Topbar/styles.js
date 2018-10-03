@@ -26,6 +26,6 @@ export const TimeDisplay = styled.div`
   display: flex;
 
   * {
-    margin-right: 10px;
+    margin-right: 20px;
   }
 `;
