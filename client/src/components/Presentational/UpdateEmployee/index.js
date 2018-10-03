@@ -31,8 +31,11 @@ const UpdateEmployee = props => (
         }
         return errors;
       }}
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={(values, { setSubmitting, resetForm }) => {
         props.updateEmployee(values);
+
+        resetForm();
+
         setSubmitting(false); // TODO: set this to false upon success or error
       }}
     >
