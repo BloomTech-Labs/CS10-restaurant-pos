@@ -187,3 +187,28 @@ html, body, #root {
   border-top-color: white !important;
   border-left-color: white !important;
 }
+
+/* Custom Toast */
+.toast {
+  background: #4381C1;
+  border-radius: 10px;
+  color: white;
+}
+
+.toast-body {
+  color: white;
+  padding-left: 10px;
+}
+
+.toast-progress-bar {
+  background: white;
+}
+
+.Toastify__toast--error {
+  background: #E30E58;
+}
+
+.Toastify__close-button--default {
+  color: white;
+  opacity: 0.7;
+}

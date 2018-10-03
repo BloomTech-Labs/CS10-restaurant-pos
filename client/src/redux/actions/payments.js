@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 import serverURI from '../../config/URI';
 
@@ -45,8 +46,8 @@ export const sendPayment = (stripe, amount, description, isSplit, partyId) => (
       }
     })
     .catch(err => {
-      console.error(err);
       dispatch({ type: PAYMENT_ERROR, payload: err });
+      toast.error(err.response.data.msg);
     });
 };
 
@@ -58,10 +59,11 @@ export const subscribe = token => dispatch => {
       localStorage.setItem('jwt', res.data.token);
       dispatch({ type: SET_INITIAL_AUTH });
       dispatch({ type: SUBSCRIBING_SUCCESS, payload: res.data.token });
+      toast('Successfully subscribed!');
     })
     .catch(err => {
-      console.error(err);
       dispatch({ type: SUBSCRIBING_ERROR, payload: err });
+      toast.error(err.response.data.msg);
     });
 };
 
@@ -72,9 +74,10 @@ export const unsubscribe = () => dispatch => {
     .then(() => {
       dispatch({ type: SET_INITIAL_AUTH });
       dispatch({ type: UNSUBSCRIBING_SUCCESS });
+      toast('Successfully unsubscribed.');
     })
     .catch(err => {
-      console.error(err);
       dispatch({ type: UNSUBSCRIBING_ERROR, payload: err });
+      toast.error(err.response.data.msg);
     });
 };

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { StripeProvider } from 'react-stripe-elements';
+import { ToastContainer } from 'react-toastify';
 
 import { setInitialAuth } from './redux/actions/auth';
 import * as s from './styles';
@@ -27,6 +28,8 @@ import RequireNotAuth from './components/HOC/RequireNotAuth';
 import RequireAuth from './components/HOC/RequireAuth';
 import { sidebar } from './config/conditionalPathnames';
 import UploadModal from './components/Presentational/UploadModal';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const AuthedPartyPage = RequireAuth(PartyPage);
 const AuthedLoginEmployee = RequireAuth(LoginEmployee, true);
@@ -67,6 +70,21 @@ class App extends Component {
         <s.Container>
           <Topbar blur={modalIsOpen} />
           <s.Main>
+            <ToastContainer
+              className="toast-container"
+              toastClassName="toast"
+              bodyClassName="toast-body"
+              progressClassName="toast-progress-bar"
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnVisibilityChange
+              draggable
+              pauseOnHover
+            />
             <Sidebar
               blur={modalIsOpen}
               role={role}

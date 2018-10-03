@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { push } from 'connected-react-router';
 import jwtDecode from 'jwt-decode';
+import { toast } from 'react-toastify';
 
 // URIs
 import serverURI from '../../config/URI';
@@ -44,6 +45,7 @@ export const login = ({ email, pass }) => (dispatch, getState) => {
     })
     .catch((err) => {
       dispatch({ type: LOGIN_FAILURE, payload: err });
+      toast.error(err.response.data.msg);
     });
 };
 
@@ -66,6 +68,7 @@ export const register = ({ name, email, pass, confirmPass }) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: REGISTRATION_FAILURE, payload: err });
+      toast.error(err.response.data.msg);
     });
 };
 
@@ -87,10 +90,12 @@ export const updateEmployee = ({ pin, pass, newPass, confirmNew, email, name }) 
     })
     .then(() => {
       dispatch({ type: UPDATE_EMPLOYEE_SUCCESS });
+      toast('Successfully updated the account.');
       dispatch(push('/password-change-success'));
     })
     .catch((err) => {
       dispatch({ type: UPDATE_EMPLOYEE_ERROR, payload: err });
+      toast.error(err.response.data.msg);
     });
 };
 
@@ -116,6 +121,7 @@ export const loginEmployee = ({ pin, pass }) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: EMPLOYEE_LOGIN_FAILURE, payload: err });
+      toast.error(err.response.data.msg);
     });
 };
 
@@ -134,6 +140,7 @@ export const logoutEmployee = () => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: EMPLOYEE_LOGOUT_FAILURE, payload: err });
+      toast.error(err.response.data.msg);
     });
 };
 
@@ -152,5 +159,6 @@ export const addEmployee = ({ name, pass, confirmPass }) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: EMPLOYEE_REGISTER_FAILURE, payload: err });
+      toast.error(err.response.data.msg);
     });
 };
