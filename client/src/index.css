@@ -149,6 +149,10 @@ html, body, #root {
   height: 100%;
 }
 
+a {
+  text-decoration: none;
+}
+
 /* Custom Scroll Bar */
 ::-webkit-scrollbar {
   width: 8px;
