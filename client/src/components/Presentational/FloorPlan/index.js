@@ -26,7 +26,7 @@ class FloorPlan extends React.PureComponent {
       height,
       transparent: false,
       antialias: true, // special filtering to look smoother
-      resolution: window.devicePixelRatio // for different screen resolutions/types
+      resolution: 1 // for different screen resolutions/types
     });
     this.viewport = new Viewport({
       screenWidth: width,
