@@ -1,6 +1,6 @@
 // * Root Colors ----------------------
 const transparent = 'rgba(0, 0, 0, 0)';
-const lightGrey = 'rgba(255, 255, 255, 0.4)';
+const santasGrey = 'rgba(46, 49, 72, 0.4)';
 const white = '#FFFFFF';
 const aquaHaze = '#F6F8FB';
 const razzmatazz = '#E30E58';
@@ -17,6 +17,8 @@ export const theme = {
   menuOpacity: null,
   lineHeight: null,
   boxShadow: '0 2px 16px 1px rgba(0, 0, 0, 0.15)',
+  catMenuBorderRadius: 25,
+  categoryBorderRadius: 15,
 
   // * Default Dimensions ----------------------
   sideBarWidth: 265,
@@ -76,5 +78,5 @@ export const theme = {
   subHeader: null,
   // Text
   primaryText: ebonyClay,
-  lightText: lightGrey
+  lightText: santasGrey
 };
