@@ -1304,19 +1304,35 @@ A powerful, simple, and seamless payment commerce solution (Required by employer
 
 ### Concurrently
 
+This provides the ability to conveniently run both the back-end and front-end servers simultaneously on one terminal, which makes keeping track of errors easy during development as well as cutting back on time switching between terminals. | [View Dependency](https://www.npmjs.com/package/concurrently)
+
 ### Crossenv
+
+Due to the variance of operating systems on the development team, Crossenv allows us to universally set environment variables. | [View Dependency](https://www.npmjs.com/package/cross-env)
 
 ### Eslint
 
+Eslint is the dominant linting tool for NodeJS and it makes it possible to establish a clear coding convention for a team or project, as well as aiding in catching various bugs such as variables improperly scoped. | [View Dependency](https://eslint.org/)
+
 ### Husky
+
+Used to prevent possible bad git commits or pushes due to running pre-commit linting hooks. | [View Dependency](https://github.com/typicode/husky)
 
 ### Jest
 
+Chosen for its out of the box readiness. Jest comes with inbuilt mocking, the ability to run tests in parallel, it works with both the front-end and back-end, has promise support, and is a one stop shop for most testing needs within the scope of this project. | [View Dependency](https://jestjs.io/)
+
 ### Morgan
+
+An HTTP request logging middleware used for production to easily identify bugs in routes. | [View Dependency](https://github.com/expressjs/morgan)
 
 ### Nodemon
 
+Automatically restarts the server on save making production more efficient. | [View Dependency](https://nodemon.io/)
+
 ### Supertest
+
+Using supertest with jest for integration testing makes things easy to implement and easy to read. | [View Dependency](https://www.npmjs.com/package/supertest)
 
 ## Front-End Dependencies ```(Production)```
 
