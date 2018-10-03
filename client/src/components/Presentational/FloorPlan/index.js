@@ -41,6 +41,7 @@ class FloorPlan extends React.PureComponent {
     this.texture = null;
     this.foreground = null;
     this.background = null;
+    this.gridSize = 50;
   }
 
   state = {
@@ -126,6 +127,7 @@ class FloorPlan extends React.PureComponent {
     this.viewport.removeChildren();
     this.tables = [];
     this.border();
+    if (this.props.editing) this.grid();
   };
 
   line = (x, y, width, height) => {
@@ -144,7 +146,16 @@ class FloorPlan extends React.PureComponent {
     this.line(this.viewport.worldWidth - borderWidth, 0, borderWidth, this.viewport.worldHeight);
   };
 
-  circleCreator = table => {
+  grid = () => {
+    for (let i = 0; i < this.viewport.worldWidth; i += this.gridSize) {
+      this.line(i, 0, 1, this.viewport.worldHeight);
+    }
+    for (let i = 0; i < this.viewport.worldHeight; i += this.gridSize) {
+      this.line(0, i, this.viewport.worldWidth, 1);
+    }
+  }
+
+  circleCreator = (table) => {
     const container = new PIXI.Container();
 
     const associatedServer = this.props.serverTables.includes(table.number);
@@ -307,7 +318,17 @@ class FloorPlan extends React.PureComponent {
       // If editing mode is on:
       // Update Redux Store's table location,
       // set dragging to false and clear the data
-      this.props.moveTable({ x: circle.x, y: circle.y, tableId: circle.tableId });
+      const snapX = Math.round(circle.x / this.gridSize) * this.gridSize;
+      const snapY = Math.round(circle.y / this.gridSize) * this.gridSize;
+
+      circle.x = snapX;
+      circle.y = snapY;
+
+      this.props.moveTable({
+        x: snapX,
+        y: snapY,
+        tableId: circle.tableId,
+      });
       circle.dragging = false;
       circle.data = null;
       circle.alpha = 1;
