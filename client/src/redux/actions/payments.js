@@ -33,8 +33,8 @@ export const sendPayment = (stripe, amount, description, isSplit, partyId) => (
         const { order, splitOrder } = getState().party;
 
         const food = order
-          .filter(item => splitOrder
-            .find(splitItem => item.uniqueId !== splitItem.uniqueId));
+          .filter(item => !splitOrder
+            .find(splitItem => item.uniqueId === splitItem.uniqueId));
 
         dispatch(updateParty(partyId, { food }));
         dispatch(closeSplitModal());
@@ -44,6 +44,7 @@ export const sendPayment = (stripe, amount, description, isSplit, partyId) => (
         dispatch(deleteParty(partyId));
         dispatch(closeModal());
       }
+      toast('Payment successful!');
     })
     .catch(err => {
       dispatch({ type: PAYMENT_ERROR, payload: err });
