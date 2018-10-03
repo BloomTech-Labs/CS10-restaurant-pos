@@ -28,11 +28,14 @@ const CreateItem = (props) => (
         }
         return errors;
       }}
-      onSubmit={(values, { setSubmitting, resetForm }) => {
-        props.addItem(values);
-        resetForm({});
-        setSubmitting(false); // TODO: set this to false upon success or error
-        resetForm();
+      onSubmit={async (values, { setSubmitting, resetForm }) => {
+        try {
+          await props.addItem(values);
+          resetForm();
+          setSubmitting(false);
+        } catch (err) {
+          setSubmitting(false);
+        }
       }}
     >
       {({ errors, isSubmitting }) => (
