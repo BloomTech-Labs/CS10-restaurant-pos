@@ -21,7 +21,7 @@ const partyRoutes = require('./api/routes/partyRoutes');
 const stripeRoutes = require('./api/routes/stripeRoutes');
 const tableRoutes = require('./api/routes/tableRoutes');
 
-// TODO: Setup morgan and helmet
+// TODO: Setup morgan
 const corsOptions = {
   origin: [clientURI, 'https://optimistic-pare-7d0360.netlify.com'],
   credentials: true
@@ -62,7 +62,6 @@ const PORT = process.env.PORT || 5000;
 
 // Test route
 server.post('/api', (req, res) => {
-  console.log(req.body);
   res.status(200).json({ message: 'Success' });
 });
 
