@@ -71,10 +71,9 @@
     - [Axios](#axios)
     - [Connected React Router](#connected-react-router)
     - [Date FNS](#date-fns)
-    - [ES6 Set Proptypes](#es6-set-proptypes)
     - [Formik](#formik)
     - [JWT Decode](#jwt-decode)
-    - [Pixi](#pixi)
+    - [PixiJS](#pixijs)
   - [Front-End Dependencies ```(Development)```](#front-end-dependencies-development)
     - [Eslint](#eslint-1)
     - [Stylelint](#stylelint)
@@ -1338,31 +1337,55 @@ Using supertest with jest for integration testing makes things easy to implement
 
 ### React
 
+React is the current industry standard that offers a lot of out of the box benefits. It is fast, efficient, and scalable. Due to the large community 
+
 ### Redux
+
+A state management tool making it possible to store the entire state of the application in a single store. This means a unidirectional data flow, and as the application scales we have predictable state updates which subsequently make things easier to test and introduce new features. Redux also has solid documentation and an active community, meaning that as new devs become introduced to the project it's likely that any problems they face would have already been encountered by someone else, thus making solutions easy to find. | [View Dependency](https://redux.js.org/)
 
 ### Redux Thunk
 
+A middleware that allows you to write action creators that return a function instead of an action. The thunk can be used to delay the dispatch of an action, or to dispatch only if a certain condition is met. This functionality makes it easier to scale and implement features given diverse needs in a growing project. | [View Dependency](https://github.com/reduxjs/redux-thunk)
+
 ### Sales Tax
+
+International sales tax calculator for Node (offline, but provides optional online VAT number fraud check). Tax rates are kept up-to-date. | [View Dependency](https://www.npmjs.com/package/sales-tax)
 
 ### ShortID
 
+Used to fill a specific need in assigning items unique IDs for sorting on the front-end. | [View Dependency](https://www.npmjs.com/package/shortid)
+
 ### Styled Components
+
+Has a thriving community and offers the ability to directly style multiple components within a file. The syntax used is familiar to JavaScript and improves code cleanliness and makes it easy to get up and going for those without a lot of css experience. Styled components are also very efficient, improving load time for users. | [View Dependency](https://www.styled-components.com/docs/)
 
 ### Uppy
 
+"Sleek, modular file uploader that integrates seamlessly with any framework. It fetches files from local disk, Google Drive, Dropbox, Instagram, remote URLs, cameras and other exciting locations, and then uploads them to the final destination. It’s fast, easy to use and let's you worry about more important problems than building a file uploader." | [View Dependency](https://uppy.io/docs/)
+
 ### Axios
+
+A lightweight, promise-based HTTP client with an intuitive API that makes interfacing with a REST API simple. | [View Dependency](https://www.npmjs.com/package/react-axios) 
 
 ### Connected React Router
 
+Allows for the ability to synchronize state with redux store through uni-directional data flow, time traveling, and dispatching of history methods. This makes for an incredibly useful tool when dealing with various stages of state and subsequent routing for a seamless and intuitive UI. | [View Dependency](https://www.npmjs.com/package/connected-react-router) 
+
 ### Date FNS
 
-### ES6 Set Proptypes
+A lightweight option for formatting JavaScript dates. | [View Dependency](https://date-fns.org/) 
 
 ### Formik
 
+This library utilizes essential React form functionality under the hood which makes implementing it feel very intuitive and not magical. It keeps track of values, errors, and submissions, which reduces the time needed to implement forms and makes for a more enjoyable experience. | [View Dependency](https://jaredpalmer.com/formik) 
+
 ### JWT Decode
 
-### Pixi
+Used to decode JWTs on the front-end to retrieve user data. | [View Dependency](https://github.com/auth0/jwt-decode) 
+
+### PixiJS
+
+An open source, cross browser JavaScript 2D WebGL graphics library with canvas fallback used to build core floor-plan functionality on the app. | [View Dependency](http://www.pixijs.com/) 
 
 ## Front-End Dependencies ```(Development)```
 
