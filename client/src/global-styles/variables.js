@@ -12,6 +12,7 @@ const silver = '#C6C6C6';
 const wispPink = '#FDEFF5';
 const porcelain = '#EDEFF0';
 const limedSpruce = '#363F49';
+const eden = '#114B5F';
 
 export const theme = {
   // * Misc. -----------------------------------
@@ -20,6 +21,7 @@ export const theme = {
   boxShadow: '0 2px 16px 1px rgba(0, 0, 0, 0.15)',
   catMenuBorderRadius: 25,
   categoryBorderRadius: 15,
+  selectedTable: eden,
   navTabColor: limedSpruce,
 
   // * Default Dimensions ----------------------
@@ -35,6 +37,7 @@ export const theme = {
   ItemTitleSize: 2,
   ItemTitleDescription: 1.4,
   placeholderColor: silver,
+  freeTableNumberSize: 4,
 
   // * Buttons ---------------------------------
   // Standard

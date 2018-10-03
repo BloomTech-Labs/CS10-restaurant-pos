@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import * as s from './styles';
 
 const Table = (props) => {
-  const toggleTable = () => props.toggleTable(props.table.number);
-  const openParty = () => props.openParty(props.table.number);
+  const { table, selected } = props;
+  const toggleTable = () => props.toggleTable(table.number);
+  const openParty = () => props.openParty(table.number);
 
   const click = () => {
-    if (props.table.active) {
+    if (table.active) {
       openParty();
     } else {
       toggleTable();
@@ -16,9 +17,8 @@ const Table = (props) => {
   };
 
   return (
-    <s.TableBox active={props.table.active} onClick={click}>
-      {props.table.number}
-      {props.selected && <div>I am selected!</div>}
+    <s.TableBox active={table.active} selected={selected} onClick={click}>
+      {table.number}
     </s.TableBox>
   );
 };

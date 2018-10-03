@@ -30,7 +30,7 @@ export const StyledLink = styled(NavLink).attrs({ activeClassName })`
   padding-left: 25px;
 
   &.${activeClassName} {
-    color: black;
+    color: ${(props) => props.theme.primaryText};
     font-weight: 700;
     padding-left: 17px;
     background: ${props => props.theme.contentBackground};
