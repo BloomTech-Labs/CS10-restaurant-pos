@@ -5,6 +5,8 @@ import {
   LOADING_TABLES_SUCCESS,
   ADDING_TABLE,
   ADDING_TABLE_SUCCESS,
+  DELETING_TABLE,
+  DELETING_TABLE_SUCCESS,
   MOVE_TABLE,
   SAVING_TABLES,
   SAVING_TABLES_SUCCESS,
@@ -23,7 +25,7 @@ const initialState = {
   editing: false,
   loading: false,
   sidebarRef: null,
-  topbarRef: null
+  topbarRef: null,
 };
 
 const TablesReducer = (state = initialState, action) => {
@@ -36,25 +38,39 @@ const TablesReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         tableList: action.payload.tableList,
-        serverTables: action.payload.serverTables
+        serverTables: action.payload.serverTables,
       };
 
     case ADDING_TABLE:
       return { ...state, loading: true };
 
     case ADDING_TABLE_SUCCESS:
-      return { ...state, tableList: [...state.tableList, action.payload] };
+      return {
+        ...state,
+        loading: false,
+        tableList: [...state.tableList, action.payload],
+      };
+
+    case DELETING_TABLE:
+      return { ...state, loading: true };
+
+    case DELETING_TABLE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        tableList: action.payload,
+      };
 
     case MOVE_TABLE:
       const { x, y, tableId } = action.payload;
       return {
         ...state,
-        tableList: state.tableList.map(table => {
+        tableList: state.tableList.map((table) => {
           if (table._id === tableId) {
             return { ...table, x, y };
           }
           return table;
-        })
+        }),
       };
 
     case SAVING_TABLES:
@@ -71,10 +87,10 @@ const TablesReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        tableList: state.tableList.map(table => {
+        tableList: state.tableList.map((table) => {
           if (table._id === updatedTable._id) return updatedTable;
           return table;
-        })
+        }),
       };
 
     case TOGGLE_TABLE:
