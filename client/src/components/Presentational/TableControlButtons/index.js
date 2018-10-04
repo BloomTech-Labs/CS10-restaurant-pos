@@ -10,31 +10,34 @@ class TableControlButtons extends React.PureComponent {
   authorized = () => (
     <React.Fragment>
       <Button type="button" onClick={this.props.toggleEdit}>
-        Edit
+        Edit Tables
       </Button>
-      <DeleteTableForm deleteTable={this.props.deleteTable} tables={this.props.tables} />
     </React.Fragment>
-  )
+  );
 
   editing = () => (
     <React.Fragment>
       <Button primary type="button" onClick={this.props.saveTables}>
         Save
       </Button>
-      <Button type="button" onClick={() => !this.props.loading && this.props.addTable()} inactive={this.props.loading}>
+      <Button
+        type="button"
+        onClick={() => !this.props.loading && this.props.addTable()}
+        inactive={this.props.loading}
+      >
         Add Table
       </Button>
       <Button type="button" onClick={this.props.toggleEdit}>
         Cancel
       </Button>
     </React.Fragment>
-  )
+  );
 
   notEditing = () => (
     <Button primary type="button" onClick={this.props.createParty}>
       {this.props.takeout ? 'Create Party' : 'Add Order'}
     </Button>
-  )
+  );
 
   render() {
     const { editing, authorized, visible } = this.props;
@@ -44,6 +47,10 @@ class TableControlButtons extends React.PureComponent {
           {authorized && !editing && this.authorized()}
           {!editing && this.notEditing()}
           {editing && this.editing()}
+          {authorized
+            && !editing && (
+              <DeleteTableForm deleteTable={this.props.deleteTable} tables={this.props.tables} />
+          )}
         </s.Container>
       );
     }
@@ -62,7 +69,7 @@ TableControlButtons.propTypes = {
   addTable: PropTypes.func,
   deleteTable: PropTypes.func,
   saveTables: PropTypes.func,
-  createParty: PropTypes.func,
+  createParty: PropTypes.func
 };
 
 TableControlButtons.defaultProps = {
@@ -76,7 +83,7 @@ TableControlButtons.defaultProps = {
   addTable: () => {},
   deleteTable: () => {},
   saveTables: () => {},
-  createParty: () => {},
+  createParty: () => {}
 };
 
 export default TableControlButtons;
