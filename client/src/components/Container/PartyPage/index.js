@@ -39,7 +39,8 @@ class PartyPage extends React.Component {
   };
 
   componentDidMount() {
-    this.props.getParties()
+    this.props
+      .getParties()
       .then(() => {
         const foundParty = this.props.partyList.find(
           (party) => party._id === this.props.match.params.id
@@ -49,15 +50,12 @@ class PartyPage extends React.Component {
           console.log('notfound');
           this.props.history.push('/tables');
         } else {
-          this.props.getItems()
-            .then(() => {
-              this.setState({
-                order: foundParty.food,
-                tables: foundParty.tables,
-                server: foundParty.server.name,
-              });
-            })
-            .catch(err => console.error(err));
+          console.log(foundParty);
+          this.setState({
+            order: foundParty.food,
+            tables: foundParty.tables,
+            server: foundParty.server.name,
+          });
         }
       })
       .catch((err) => console.error(err));
@@ -175,6 +173,7 @@ class PartyPage extends React.Component {
             categories={itemCategories}
             items={items}
             addItemToOrder={this.addItemToOrder}
+            getItems={this.props.getItems}
           />
           <OrderScratchPad
             tables={tables}
