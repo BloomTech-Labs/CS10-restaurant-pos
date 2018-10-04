@@ -15,7 +15,7 @@ export const ADDING_ITEM_ERROR = 'ADDING_ITEM_ERROR';
 
 export const getItems = () => (dispatch) => {
   dispatch({ type: LOADING_ITEMS });
-  axios
+  return axios
     .get(`${serverURI}/api/items/all`)
     .then((res) => {
       dispatch({ type: LOADING_ITEMS_SUCCESS, payload: res.data.items });
