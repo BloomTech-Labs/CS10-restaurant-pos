@@ -24,7 +24,7 @@ describe('deleteItem', () => {
             price: '3.99'
           })
           .then((res) => {
-            id = res.body[0].item._id;
+            id = res.body.items[0]._id;
             done();
           })
           .catch(err => {

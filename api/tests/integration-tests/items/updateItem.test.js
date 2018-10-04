@@ -29,7 +29,7 @@ describe('updateItem', () => {
           )
           .then(itemRes => {
             // Assigns the _id of the new item to itemId
-            itemId = itemRes.body[0].item._id;
+            itemId = itemRes.body.items[0]._id;
             done();
           })
           .catch(err => {
