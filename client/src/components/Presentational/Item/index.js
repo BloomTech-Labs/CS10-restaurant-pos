@@ -10,9 +10,9 @@ export default function Item(props) {
     : 'https://minimalistbaker.com/wp-content/uploads/2016/05/AMAZING-EASY-Quinoa-Taco-22Meat22-thats-crispy-flavorful-and-protein-packed-9-ingredients-SO-EASY-healthy-vegan-glutenfree-quinoa-tacos-mexican-recipe-768x1128.jpg';
   return (
     <s.ItemBoxes key={item._id} onClick={() => props.addItemToOrder(item)}>
-      <s.ProfilePic>
+      <s.ItemPic>
         <img src={imageToDisplay} alt="menu item" />
-      </s.ProfilePic>
+      </s.ItemPic>
       <s.ItemTitle>{item.name}</s.ItemTitle>
       <s.ItemDescription>{item.description}</s.ItemDescription>
       <s.ItemPrice>{item.price}</s.ItemPrice>
