@@ -29,6 +29,8 @@ export default function CheckoutModalMain(props) {
     server
   } = props;
 
+  console.log('in checkout modal main, order and splitOrder:', order, splitOrder);
+
   return (
     <Modal isOpen={modalIsOpen}>
       <s.Title>
@@ -57,12 +59,12 @@ export default function CheckoutModalMain(props) {
         ) : (
           <React.Fragment>
             <Button
-              /* inactive={!splitOrder.length || splitOrder.length === order.length} */
+              inactive={!splitOrder.length || splitOrder.length === order.length}
               dark
               type="button"
-              onClick={openSplitModal}
-              /* splitOrder.length && splitOrder.length < order.length ? openSplitModal : undefined
-              } */
+              onClick={(splitOrder.length && splitOrder.length < order.length)
+                ? openSplitModal
+                : undefined}
             >
               Split Check
             </Button>

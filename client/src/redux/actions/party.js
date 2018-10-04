@@ -8,6 +8,7 @@ import errorHandler from '../helpers/errorHandler';
 
 export const SAVE_ORDER = 'SAVE_ORDER';
 export const SAVE_SPLIT_ORDER = 'SAVE_SPLIT_ORDER';
+export const TOGGLE_SPLIT_ITEM = 'TOGGLE_SPLIT_ITEM';
 export const LOADING_PARTIES = 'LOADING_PARTIES';
 export const LOADING_PARTIES_SUCCESS = 'LOADING_PARTIES_SUCCESS';
 export const LOADING_PARTIES_ERROR = 'LOADING_PARTIES_ERROR';
@@ -36,6 +37,12 @@ export const saveOrder = (order) => ({
 export const saveSplitOrder = (splitOrder) => ({
   type: SAVE_SPLIT_ORDER,
   payload: splitOrder
+});
+
+// Toggles an item to go on the Split Modal
+export const toggleSplitCheckItem = (item) => ({
+  type: TOGGLE_SPLIT_ITEM,
+  payload: item
 });
 
 // Gets all Parties: server (name), food (name, price), and tables
