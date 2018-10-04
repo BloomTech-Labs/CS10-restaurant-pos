@@ -15,8 +15,8 @@ export default function Sidebar(props) {
       <s.LinkGroup>
         <s.StyledLink to="/tables" exact>Tables</s.StyledLink>
         <s.StyledLink to="/servers">Servers</s.StyledLink>
-        <TableControls push={push} visible={pathname === '/tables'} />
       </s.LinkGroup>
+      <TableControls push={push} visible={pathname === '/tables'} />
       <s.LinkGroup>
         <s.StyledLink to="/settings">Settings</s.StyledLink>
         <s.StyledLink to="/logout">Logout</s.StyledLink>
