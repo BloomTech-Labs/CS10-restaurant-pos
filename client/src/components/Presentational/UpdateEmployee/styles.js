@@ -11,3 +11,9 @@ export const Form = styled.form`
   ${flexCenterMixin}
   flex-direction: column;
 `;
+
+export const Titles = styled.div`
+  width: 100%;
+  border-bottom: 1.5px solid grey;
+  padding: 15px 0 0 0;
+`;
