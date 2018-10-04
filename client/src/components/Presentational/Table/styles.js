@@ -9,5 +9,6 @@ export const TableBox = styled(Boxes)`
   font-size: ${(props) => props.theme.freeTableNumberSize}rem;
   background: ${(props) => (props.selected ? props.theme.selectedTable : props.theme.appSecondary)};
   color: ${(props) => props.theme.appPrimary};
-  opacity: ${(props) => (props.active ? '0.5' : '1')};
+  opacity: ${(props) => ((props.active && !props.highlighted) ? '0.5' : '1')};
+  ${(props) => props.highlighted && 'border: 5px solid black'};
 `;

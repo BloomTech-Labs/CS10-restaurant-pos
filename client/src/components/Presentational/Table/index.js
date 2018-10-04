@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import * as s from './styles';
 
 const Table = (props) => {
-  const { table, selected } = props;
+  const { table, selected, highlighted } = props;
   const toggleTable = () => props.toggleTable(table.number);
   const openParty = () => props.openParty(table.number);
 
@@ -17,7 +17,7 @@ const Table = (props) => {
   };
 
   return (
-    <s.TableBox active={table.active} selected={selected} onClick={click}>
+    <s.TableBox active={table.active} selected={selected} highlighted={highlighted} onClick={click}>
       {table.number}
     </s.TableBox>
   );
@@ -25,6 +25,7 @@ const Table = (props) => {
 
 Table.propTypes = {
   selected: PropTypes.bool,
+  highlighted: PropTypes.bool,
   table: PropTypes.shape({
     number: PropTypes.number.isRequired,
     active: PropTypes.bool,
@@ -35,6 +36,7 @@ Table.propTypes = {
 
 Table.defaultProps = {
   selected: false,
+  highlighted: false,
   table: { number: 0, active: false },
   toggleTable: () => {},
   openParty: () => {},
