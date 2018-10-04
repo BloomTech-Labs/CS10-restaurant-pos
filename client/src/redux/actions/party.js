@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { push } from 'connected-react-router';
-import { toast } from 'react-toastify';
 
+// URIs
 import serverURI from '../../config/URI';
+// Helpers
+import errorHandler from '../helpers/errorHandler';
 
 export const SAVE_ORDER = 'SAVE_ORDER';
 export const SAVE_SPLIT_ORDER = 'SAVE_SPLIT_ORDER';
@@ -48,7 +50,7 @@ export const getParties = () => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: LOADING_PARTIES_ERROR, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };
 
@@ -62,7 +64,7 @@ export const getParty = (id) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: LOADING_PARTY_ERROR, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };
 
@@ -78,7 +80,7 @@ export const createParty = (tables) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: ADDING_PARTY_ERROR, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };
 
@@ -93,7 +95,7 @@ export const updateParty = (id, updatedInfo) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: UPDATING_PARTY_ERROR, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };
 
@@ -109,7 +111,7 @@ export const deleteParty = (id) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: DELETING_PARTY_ERROR, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };
 

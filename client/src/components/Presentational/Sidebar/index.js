@@ -19,6 +19,7 @@ export default function Sidebar(props) {
       </s.LinkGroup>
       <s.LinkGroup>
         <s.StyledLink to="/settings">Settings</s.StyledLink>
+        <s.StyledLink to="/logout">Logout</s.StyledLink>
         <s.StyledLink to="/help">Help</s.StyledLink>
       </s.LinkGroup>
     </s.Sidebar>

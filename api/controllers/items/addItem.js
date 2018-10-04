@@ -12,7 +12,8 @@ const addItem = (req, res) => {
     name,
     price,
     description,
-    category
+    category,
+    images,
   } = req.body;
 
   // Validate Fields
@@ -33,6 +34,7 @@ const addItem = (req, res) => {
     price,
     description,
     category,
+    images,
     restaurant: req.user.restaurant
   });
 

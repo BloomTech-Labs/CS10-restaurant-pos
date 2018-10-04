@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { flexCenterMixin } from '../../../global-styles/mixins';
+
 export const Container = styled.div`
   display: flex;
   height: 60px;
@@ -12,10 +14,12 @@ export const Container = styled.div`
 `;
 
 export const ProfilePic = styled.div`
+  ${flexCenterMixin};
   border-radius: 50%;
   background: grey;
   height: 55px;
   width: 55px;
+  overflow: hidden;
 `;
 
 export const Info = styled.div`

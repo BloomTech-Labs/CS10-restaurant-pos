@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 
 // URIs
 import serverURI from '../../config/URI';
+// Helpers
+import errorHandler from '../helpers/errorHandler';
 
 export const AUTH_LOADING = 'AUTH_LOADING';
 export const SET_INITIAL_AUTH = 'SET_INITIAL_AUTH';
@@ -45,7 +47,7 @@ export const login = ({ email, pass }) => (dispatch, getState) => {
     })
     .catch((err) => {
       dispatch({ type: LOGIN_FAILURE, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };
 
@@ -68,13 +70,11 @@ export const register = ({ name, email, pass, confirmPass }) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: REGISTRATION_FAILURE, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };
 
-export const updateEmployee = ({ pin, pass, newPass, confirmNew, email, name }) => (
-  dispatch
-) => {
+export const updateEmployee = ({ pin, pass, newPass, confirmNew, email, name }) => (dispatch) => {
   if (newPass !== confirmNew) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
@@ -95,7 +95,7 @@ export const updateEmployee = ({ pin, pass, newPass, confirmNew, email, name }) 
     })
     .catch((err) => {
       dispatch({ type: UPDATE_EMPLOYEE_ERROR, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };
 
@@ -121,7 +121,7 @@ export const loginEmployee = ({ pin, pass }) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: EMPLOYEE_LOGIN_FAILURE, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };
 
@@ -140,25 +140,30 @@ export const logoutEmployee = () => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: EMPLOYEE_LOGOUT_FAILURE, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };
 
-export const addEmployee = ({ name, pass, confirmPass }) => (dispatch) => {
-  if (pass !== confirmPass) {
+export const addEmployee = (employee) => (dispatch) => {
+  console.log(employee);
+  if (employee.pass !== employee.confirmPass) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
   }
   dispatch({ type: PASSWORD_MATCH_SUCCESS });
   dispatch({ type: AUTH_LOADING });
   axios
-    .post(`${serverURI}/api/employees/register`, { name, pass })
+    .post(`${serverURI}/api/employees/register`, {
+      name: employee.name,
+      pass: employee.pass,
+      images: employee.images
+    })
     .then((res) => {
       dispatch({ type: EMPLOYEE_REGISTER_SUCCESS, payload: res.data.pin });
       dispatch(push('/registration-success'));
     })
     .catch((err) => {
       dispatch({ type: EMPLOYEE_REGISTER_FAILURE, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };

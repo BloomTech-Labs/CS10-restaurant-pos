@@ -10,16 +10,10 @@ import Billing from '../../Presentational/Billing';
 import CreateEmployeeCard from '../../Presentational/CreateEmployeeCard';
 import UpdateEmployee from '../../Presentational/UpdateEmployee';
 import CreateItem from '../../Presentational/CreateItem';
-import UploadModal from '../../Presentational/UploadModal';
 
 import * as s from './styles';
 
 class SettingsPage extends React.Component {
-  state = {
-    images: {},
-    uploadModalIsOpen: false
-  };
-
   componentDidMount() {
     this.props.getItems();
   }
@@ -28,47 +22,45 @@ class SettingsPage extends React.Component {
     this.props.updateEmployee(info);
   };
 
-  setImageUrls = (images) => this.setState({ images });
-
-  openUploadModal = () => this.setState({ uploadModalIsOpen: true });
-
-  closeUploadModal = () => this.setState({ uploadModalIsOpen: false });
-
   adminDisplay = () => (
     <React.Fragment>
+      {!this.props.membership && (
+        // ! Do we want to do this? If so, both billing
+        // ! components don't need all of the information
+        <Billing
+          membership={this.props.membership}
+          subscribe={this.props.subscribe}
+          unsubscribe={this.props.unsubscribe}
+        />
+      )}
       <RestaurantInfo />
-      <Billing
-        membership={this.props.membership}
-        subscribe={this.props.subscribe}
-        unsubscribe={this.props.unsubscribe}
-      />
     </React.Fragment>
   );
 
   managerDisplay = () => (
     <React.Fragment>
-      <CreateItem
-        addItem={this.props.addItem}
-        itemCategories={this.props.itemCategories}
-        images={this.state.images}
-        openUploadModal={this.openUploadModal}
-      />
+      <CreateItem addItem={this.props.addItem} itemCategories={this.props.itemCategories} />
       <CreateEmployeeCard />
     </React.Fragment>
   );
 
   render() {
-    const { manager, admin } = this.props.role;
+    const { membership } = this.props;
+    const { admin, manager } = this.props.role;
     return (
       <s.Container>
-        <UploadModal
-          open={this.state.uploadModalIsOpen}
-          setImageUrls={this.setImageUrls}
-          closeUploadModal={this.closeUploadModal}
-        />
-        <UpdateEmployee updateEmployee={this.updateEmployee} />
         {admin && this.adminDisplay()}
         {(manager || admin) && this.managerDisplay()}
+        <UpdateEmployee updateEmployee={this.updateEmployee} />
+        {membership && (
+          // ! Do we want to do this? If so, both billing
+          // ! components don't need all of the information
+          <Billing
+            membership={this.props.membership}
+            subscribe={this.props.subscribe}
+            unsubscribe={this.props.unsubscribe}
+          />
+        )}
       </s.Container>
     );
   }
