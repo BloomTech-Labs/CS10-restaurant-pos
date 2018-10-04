@@ -21,7 +21,7 @@ class TableControlButtons extends React.PureComponent {
       <Button primary type="button" onClick={this.props.saveTables}>
         Save
       </Button>
-      <Button type="button" onClick={this.props.addTable}>
+      <Button type="button" onClick={() => !this.props.loading && this.props.addTable()} inactive={this.props.loading}>
         Add Table
       </Button>
       <Button type="button" onClick={this.props.toggleEdit}>
@@ -53,6 +53,7 @@ class TableControlButtons extends React.PureComponent {
 
 TableControlButtons.propTypes = {
   tables: PropTypes.arrayOf(PropTypes.object),
+  loading: PropTypes.bool,
   takeout: PropTypes.bool,
   editing: PropTypes.bool,
   authorized: PropTypes.bool,
@@ -66,6 +67,7 @@ TableControlButtons.propTypes = {
 
 TableControlButtons.defaultProps = {
   tables: [{}],
+  loading: false,
   takeout: false,
   editing: false,
   authorized: false,

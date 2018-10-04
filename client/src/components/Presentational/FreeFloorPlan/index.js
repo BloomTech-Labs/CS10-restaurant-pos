@@ -9,18 +9,31 @@ import * as s from './styles';
 
 class FreeFloorPlan extends React.Component {
   render() {
-    console.log('tables', this.props.tables);
+    const {
+      tables,
+      serverTables,
+      toggleTable,
+      openParty,
+      selected,
+    } = this.props;
+    console.log(serverTables);
     return (
       <s.Container>
-        {this.props.tables.map((table) => (
-          <Table
-            key={shortId.generate()}
-            table={table}
-            selected={this.props.selected.has(table.number)}
-            toggleTable={this.props.toggleTable}
-            openParty={this.props.openParty}
-          />
-        ))}
+        {tables.map((table) => {
+          const highlighted = serverTables.find(
+            (serverTable) => serverTable === table.number
+          );
+          return (
+            <Table
+              key={shortId.generate()}
+              table={table}
+              selected={selected.has(table.number)}
+              toggleTable={toggleTable}
+              openParty={openParty}
+              highlighted={!!highlighted}
+            />
+          );
+        })}
       </s.Container>
     );
   }
@@ -29,13 +42,15 @@ class FreeFloorPlan extends React.Component {
 FreeFloorPlan.propTypes = {
   selected: SetType,
   tables: PropTypes.arrayOf(PropTypes.object),
+  serverTables: PropTypes.arrayOf(PropTypes.object),
   toggleTable: PropTypes.func,
   openParty: PropTypes.func,
 };
 
 FreeFloorPlan.defaultProps = {
   selected: new Set(),
-  tables: [],
+  tables: [{}],
+  serverTables: [{}],
   toggleTable: () => {},
   openParty: () => {},
 };

@@ -7,7 +7,6 @@ import {
 
 const initialState = {
   itemList: [],
-  newItem: {},
   loading: false,
 };
 
@@ -23,7 +22,7 @@ const ItemsReducer = (state = initialState, action) => {
       return { ...state, loading: true };
 
     case ADDING_ITEM_SUCCESS:
-      return { ...state, loading: false, newItem: action.payload };
+      return { ...state, loading: false, itemList: action.payload };
 
     default:
       return state;

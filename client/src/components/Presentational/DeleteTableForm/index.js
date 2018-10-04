@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import shortid from 'shortid';
 
 import { Button } from '../../../global-styles/styledComponents';
 
@@ -27,7 +28,7 @@ class DeleteTableForm extends React.Component {
           <select name="tables" value={this.state.selected} onChange={this.handleChange}>
             <option value="">Select a table to delete...</option>
             {this.props.tables.map((table) => (
-              <option value={table._id}>{table.number}</option>
+              <option key={shortid.generate()} value={table._id}>{table.number}</option>
             ))}
           </select>
           {!!this.state.selected.length && <Button type="submit">Delete</Button>}

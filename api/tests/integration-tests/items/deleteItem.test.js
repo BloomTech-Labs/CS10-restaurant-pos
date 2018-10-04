@@ -7,7 +7,7 @@ const { loginAdmin } = require('../../helpers/loginAdmin');
 let token;
 let id;
 
-jest.setTimeout(40000);
+jest.setTimeout(100000);
 
 describe('deleteItem', () => {
   beforeAll(async (done) => {
@@ -24,7 +24,7 @@ describe('deleteItem', () => {
             price: '3.99'
           })
           .then((res) => {
-            id = res.body.item._id;
+            id = res.body.items[0]._id;
             done();
           })
           .catch(err => {

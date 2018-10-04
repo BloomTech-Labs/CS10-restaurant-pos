@@ -7,6 +7,8 @@ import serverURI from '../../config/URI';
 // Helpers
 import errorHandler from '../helpers/errorHandler';
 
+import { getParties } from './party';
+
 export const LOADING_TABLES = 'LOADING_TABLES';
 export const LOADING_TABLES_SUCCESS = 'LOADING_TABLES_SUCCESS';
 export const LOADING_TABLES_ERROR = 'LOADING_TABLES_ERROR';
@@ -60,6 +62,10 @@ export const deleteTable = table => dispatch => {
   dispatch({ type: DELETING_TABLE });
   axios
     .delete(`${serverURI}/api/tables/delete/${table._id}`)
+    .then((res) => {
+      dispatch(getParties());
+      return res;
+    })
     .then(res => {
       dispatch({ type: DELETING_TABLE_SUCCESS, payload: res.data.tables });
       toast(`Successfully deleted table number ${table.number}`);

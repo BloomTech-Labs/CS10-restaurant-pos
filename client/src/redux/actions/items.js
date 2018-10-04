@@ -15,7 +15,7 @@ export const ADDING_ITEM_ERROR = 'ADDING_ITEM_ERROR';
 
 export const getItems = () => (dispatch) => {
   dispatch({ type: LOADING_ITEMS });
-  axios
+  return axios
     .get(`${serverURI}/api/items/all`)
     .then((res) => {
       dispatch({ type: LOADING_ITEMS_SUCCESS, payload: res.data.items });
@@ -31,11 +31,10 @@ export const addItem = (item) => (dispatch) => {
     item.category = item.category.replace(/^\w/, item.category[0].toUpperCase());
   }
   dispatch({ type: ADDING_ITEM });
-  console.log('item in the action:', item);
   return axios
     .post(`${serverURI}/api/items/add`, item)
     .then((res) => {
-      dispatch({ type: ADDING_ITEM_SUCCESS, payload: res.data.item });
+      dispatch({ type: ADDING_ITEM_SUCCESS, payload: res.data.items });
       toast('Successfully added item.');
     })
     .catch((err) => {

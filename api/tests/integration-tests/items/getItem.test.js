@@ -7,7 +7,7 @@ const { loginAdmin } = require('../../helpers/loginAdmin');
 let token;
 let itemId;
 
-jest.setTimeout(40000);
+jest.setTimeout(100000);
 
 describe('getItem', () => {
   beforeAll(async (done) => {
@@ -29,7 +29,7 @@ describe('getItem', () => {
           )
           .then(itemRes => {
             // Assigns the _id of the new item to itemId
-            itemId = itemRes.body.item._id;
+            itemId = itemRes.body.items[0]._id;
             done();
           })
           .catch(err => {
