@@ -30,7 +30,7 @@ class TableControls extends React.Component {
 
   render() {
     const authorized = this.props.role.admin || this.props.role.manager;
-    const { selected, editing, visible, tables } = this.props;
+    const { selected, editing, visible, tables, loading } = this.props;
     return (
       <TableControlButtons
         authorized={authorized}
@@ -43,6 +43,7 @@ class TableControls extends React.Component {
         createParty={this.createParty}
         visible={visible}
         tables={tables}
+        loading={loading}
       />
     );
   }
@@ -50,6 +51,7 @@ class TableControls extends React.Component {
 
 TableControls.propTypes = {
   tables: PropTypes.arrayOf(PropTypes.object),
+  loading: PropTypes.bool,
   editing: PropTypes.bool,
   selected: SetType,
   membership: PropTypes.bool,
@@ -67,6 +69,7 @@ TableControls.propTypes = {
 
 TableControls.defaultProps = {
   tables: [],
+  loading: false,
   editing: false,
   selected: new Set(),
   membership: false,
@@ -81,10 +84,11 @@ TableControls.defaultProps = {
 
 const mapStateToProps = state => ({
   tables: state.tables.tableList,
+  loading: state.tables.loading,
   editing: state.tables.editing,
   selected: state.tables.selected,
   membership: state.auth.membership,
-  role: state.auth.role
+  role: state.auth.role,
 });
 
 export default connect(
