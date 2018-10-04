@@ -13,14 +13,16 @@ const addItem = (req, res) => {
     price,
     description,
     category,
-    images,
+    images
   } = req.body;
 
   // Validate Fields
   const missingFields = verifyFields(['name', 'price'], req.body, res);
 
   if (missingFields.length > 0) {
-    return res.status(422).json({ msg: `Fields missing: ${missingFields.join(', ')}` });
+    return res
+      .status(422)
+      .json({ msg: `Fields missing: ${missingFields.join(', ')}` });
   }
 
   // Verify roles
@@ -35,17 +37,27 @@ const addItem = (req, res) => {
     description,
     category,
     images,
-    restaurant: req.user.restaurant
+    restaurant: req.user.restaurant,
   });
 
   // save the new item to the database
   newItem
     .save()
-    .then((item) => {
-      res.status(201).json({ item });
+    .then(() => {
+      Item.find({ restaurant: req.user.restaurant })
+        .then((items) => {
+          res.status(200).json({ items });
+        })
+        .catch((err) => {
+          res
+            .status(500)
+            .json({ err, msg: 'Error communicating with the database.' });
+        });
     })
     .catch((err) => {
-      res.status(500).json({ err, msg: 'Error saving the item to the database.' });
+      res
+        .status(500)
+        .json({ err, msg: 'Error saving the item to the database.' });
     });
 };
 
