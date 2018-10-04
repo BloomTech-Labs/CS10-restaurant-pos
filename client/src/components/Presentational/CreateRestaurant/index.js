@@ -43,7 +43,7 @@ const CreateRestaurant = props => (
               placeholder="Restaurant Name"
               error={errors.email}
             />
-            <StyledErrorMessage name="email" component="div" />
+            <StyledErrorMessage name="name" component="div" />
             <StyledField
               placeholder="location"
               type="text"

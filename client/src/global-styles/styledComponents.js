@@ -33,6 +33,7 @@ export const Button = styled.button`
   position: relative;
   padding: 0;
   font-weight: 600;
+  flex-shrink: 0;
   color: ${(props) => {
     if (!props.primary && !props.dark) {
       return props.theme.btnPrimaryBgColor;

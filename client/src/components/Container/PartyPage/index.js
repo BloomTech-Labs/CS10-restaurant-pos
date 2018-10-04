@@ -13,12 +13,13 @@ import {
   updateParty,
   saveOrder,
   saveSplitOrder,
+  toggleSplitCheckItem
 } from '../../../redux/actions/party';
 import {
   openModal,
   closeModal,
   openSplitModal,
-  closeSplitModal,
+  closeSplitModal
 } from '../../../redux/actions/modal';
 import { sendPayment } from '../../../redux/actions/payments';
 
@@ -32,10 +33,9 @@ class PartyPage extends React.Component {
   }
 
   state = {
-    splitCheck: this.props.splitOrder,
     order: [],
     tables: [],
-    server: '',
+    server: ''
   };
 
   componentDidMount() {
@@ -54,7 +54,7 @@ class PartyPage extends React.Component {
           this.setState({
             order: foundParty.food,
             tables: foundParty.tables,
-            server: foundParty.server.name,
+            server: foundParty.server.name
           });
         }
       })
@@ -68,7 +68,7 @@ class PartyPage extends React.Component {
     ) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
-        order: this.props.order,
+        order: this.props.order
       });
     }
   }
@@ -79,24 +79,10 @@ class PartyPage extends React.Component {
   };
 
   toggleSplitCheckItem = (item) => {
-    this.setState((prev) => {
-      if (
-        prev.splitCheck.find((element) => element.uniqueId === item.uniqueId)
-      ) {
-        return {
-          splitCheck: prev.splitCheck.filter(
-            (element) => element.uniqueId !== item.uniqueId
-          ),
-        };
-      }
-      return {
-        splitCheck: [...prev.splitCheck, item],
-      };
-    });
+    this.props.toggleSplitCheckItem(item);
   };
 
   openSplitModal = () => {
-    this.props.saveSplitOrder(this.state.splitCheck);
     this.props.closeModal();
     this.props.openSplitModal();
   };
@@ -108,21 +94,19 @@ class PartyPage extends React.Component {
 
   addItemToOrder = (item) => {
     this.setState((prev) => ({
-      order: [...prev.order, { ...item, uniqueId: shortid.generate() }],
+      order: [...prev.order, { ...item, uniqueId: shortid.generate() }]
     }));
   };
 
   removeItemFromOrder = (item) => {
     this.setState((prev) => ({
-      order: prev.order.filter(
-        (orderItem) => orderItem.uniqueId !== item.uniqueId
-      ),
+      order: prev.order.filter((orderItem) => orderItem.uniqueId !== item.uniqueId)
     }));
   };
 
   saveParty = () => {
     this.props.updateParty(this.props.match.params.id, {
-      food: this.state.order,
+      food: this.state.order
     });
     // Push is not dispatched from the update action because
     // the update action is also dispatched in the payment action
@@ -134,7 +118,8 @@ class PartyPage extends React.Component {
   };
 
   render() {
-    const { order, splitCheck, subTotal, tables, server } = this.state;
+    const { order, subTotal, tables, server } = this.state;
+    const { splitOrder } = this.props;
 
     const {
       modalIsOpen,
@@ -143,7 +128,7 @@ class PartyPage extends React.Component {
       match,
       items,
       loading,
-      itemCategories,
+      itemCategories
     } = this.props;
 
     if (loading) {
@@ -161,7 +146,7 @@ class PartyPage extends React.Component {
           order={order}
           modalIsOpen={modalIsOpen}
           splitModalIsOpen={splitModalIsOpen}
-          splitOrder={splitCheck}
+          splitOrder={splitOrder}
           location={location}
           subTotal={subTotal}
           tables={tables}
@@ -174,6 +159,7 @@ class PartyPage extends React.Component {
             items={items}
             addItemToOrder={this.addItemToOrder}
             getItems={this.props.getItems}
+            partyId={match.params.id}
           />
           <OrderScratchPad
             tables={tables}
@@ -193,7 +179,7 @@ class PartyPage extends React.Component {
 
 const locationType = PropTypes.shape({
   country: PropTypes.string,
-  state: PropTypes.string,
+  state: PropTypes.string
 });
 
 PartyPage.propTypes = {
@@ -202,7 +188,8 @@ PartyPage.propTypes = {
   openSplitModal: PropTypes.func,
   updateParty: PropTypes.func,
   saveOrder: PropTypes.func,
-  saveSplitOrder: PropTypes.func,
+  // saveSplitOrder: PropTypes.func,
+  toggleSplitCheckItem: PropTypes.func,
   sendPayment: PropTypes.func,
   getItems: PropTypes.func,
   modalIsOpen: PropTypes.bool,
@@ -215,13 +202,13 @@ PartyPage.propTypes = {
   splitOrder: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
   itemCategories: PropTypes.arrayOf(PropTypes.string),
   match: PropTypes.shape({
-    params: PropTypes.object,
+    params: PropTypes.object
   }),
   partyList: PropTypes.arrayOf(PropTypes.object),
   location: locationType,
   history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
+    push: PropTypes.func
+  })
 };
 
 PartyPage.defaultProps = {
@@ -230,7 +217,8 @@ PartyPage.defaultProps = {
   openSplitModal: () => {},
   updateParty: () => {},
   saveOrder: () => {},
-  saveSplitOrder: () => {},
+  // saveSplitOrder: () => {},
+  toggleSplitCheckItem: () => {},
   sendPayment: () => {},
   getItems: () => {},
   history: { push: () => {} },
@@ -245,7 +233,7 @@ PartyPage.defaultProps = {
   itemCategories: ['All'],
   partyList: [{ _id: 'defaultpartyid' }],
   match: { params: {} },
-  location: { country: 'US', state: 'CA' },
+  location: { country: 'US', state: 'CA' }
 };
 
 const mapStateToProps = (state) => ({
@@ -265,7 +253,7 @@ const mapStateToProps = (state) => ({
       return acc;
     },
     ['All']
-  ),
+  )
 });
 
 export default connect(
@@ -275,11 +263,12 @@ export default connect(
     getItems,
     saveOrder,
     saveSplitOrder,
+    toggleSplitCheckItem,
     openModal,
     closeModal,
     openSplitModal,
     closeSplitModal,
     sendPayment,
-    getParties,
+    getParties
   }
 )(PartyPage);

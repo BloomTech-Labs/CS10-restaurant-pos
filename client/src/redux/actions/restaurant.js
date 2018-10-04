@@ -29,7 +29,7 @@ export const getRestaurant = () => dispatch => {
 };
 
 export const addRestaurant = ({
-  restaurantName: name,
+  name,
   location,
   billingAddress: address
 }) => dispatch => {

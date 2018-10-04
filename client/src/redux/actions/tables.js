@@ -29,36 +29,41 @@ export const TOGGLE_TABLE = 'TOGGLE_TABLE';
 export const TOGGLE_EDIT = 'TOGGLE_EDIT';
 export const CLEAR_SERVER_TABLES = 'CLEAR_SERVER_TABLES';
 
-export const getTables = id => dispatch => {
+export const getTables = (id) => (dispatch) => {
   dispatch({ type: LOADING_TABLES });
   axios
     .get(`${serverURI}/api/tables/all?server=${id}`)
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: LOADING_TABLES_SUCCESS,
         payload: { tableList: res.data.tables, serverTables: res.data.serverTables }
       });
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch({ type: LOADING_TABLES_ERROR, payload: err });
       errorHandler(err);
     });
 };
 
-export const addTable = number => dispatch => {
+export const addTable = (number) => (dispatch, getState) => {
   dispatch({ type: ADDING_TABLE });
+
+  const table = { number, x: 50, y: 50 };
+
+  if (!getState().auth.membership) table.x = table.number * 100;
+
   axios
-    .post(`${serverURI}/api/tables/add`, { number, x: 50, y: 50 })
-    .then(res => {
+    .post(`${serverURI}/api/tables/add`, table)
+    .then((res) => {
       dispatch({ type: ADDING_TABLE_SUCCESS, payload: res.data.table });
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch({ type: ADDING_TABLE_ERROR, payload: err });
       errorHandler(err);
     });
 };
 
-export const deleteTable = table => dispatch => {
+export const deleteTable = (table) => (dispatch) => {
   dispatch({ type: DELETING_TABLE });
   axios
     .delete(`${serverURI}/api/tables/delete/${table._id}`)
@@ -66,22 +71,22 @@ export const deleteTable = table => dispatch => {
       dispatch(getParties());
       return res;
     })
-    .then(res => {
+    .then((res) => {
       dispatch({ type: DELETING_TABLE_SUCCESS, payload: res.data.tables });
       toast(`Successfully deleted table number ${table.number}`);
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch({ type: DELETING_TABLE_ERROR, payload: err });
       errorHandler(err);
     });
 };
 
-export const moveTable = table => ({
+export const moveTable = (table) => ({
   type: MOVE_TABLE,
   payload: table
 });
 
-export const saveTables = tables => dispatch => {
+export const saveTables = (tables) => (dispatch) => {
   dispatch({ type: SAVING_TABLES });
   axios
     .post(`${serverURI}/api/tables/update`, { tables })
@@ -90,26 +95,26 @@ export const saveTables = tables => dispatch => {
       dispatch({ type: SAVING_TABLES_SUCCESS });
       toast('Successfully saved the tables.');
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch({ type: SAVING_TABLES_ERROR, payload: err });
       errorHandler(err);
     });
 };
 
-export const deactivateTable = id => dispatch => {
+export const deactivateTable = (id) => (dispatch) => {
   dispatch({ type: DEACTIVATING_TABLE });
   axios
     .put(`${serverURI}/api/tables/deactivate/${id}`)
-    .then(res => {
+    .then((res) => {
       dispatch({ type: DEACTIVATING_TABLE_SUCCESS, payload: res.data });
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch({ type: DEACTIVATING_TABLE_ERROR, payload: err });
       errorHandler(err);
     });
 };
 
-export const toggleTable = table => ({
+export const toggleTable = (table) => ({
   type: TOGGLE_TABLE,
   payload: table
 });
@@ -118,9 +123,9 @@ export const toggleEdit = () => ({
   type: TOGGLE_EDIT
 });
 
-export const clearServerTables = () => dispatch => {
+export const clearServerTables = () => (dispatch) => {
   dispatch(push('/tables'));
   dispatch({
-    type: CLEAR_SERVER_TABLES,
+    type: CLEAR_SERVER_TABLES
   });
 };

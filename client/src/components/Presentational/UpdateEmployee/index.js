@@ -42,8 +42,9 @@ const UpdateEmployee = props => (
       {/* // TODO: build categories */}
       {({ errors, isSubmitting }) => (
         <s.Container>
-          <h1>Change Password</h1>
+          <h1>Update User Information</h1>
           <StyledForm>
+            <s.Titles>Verify Identity</s.Titles>
             <StyledField
               type="text"
               name="pin"
@@ -59,8 +60,9 @@ const UpdateEmployee = props => (
               name="pass"
               minLength="8"
               maxLength="21"
-              placeholder="Old Password"
+              placeholder="Password"
             />
+            <s.Titles>Edit Desired Fields</s.Titles>
             <StyledErrorMessage name="oldPassword" component="div" />
             <StyledField
               type="password"

@@ -4,6 +4,8 @@ import shortid from 'shortid';
 
 import { Button } from '../../../global-styles/styledComponents';
 
+import * as s from './styles';
+
 class DeleteTableForm extends React.Component {
   state = {
     selected: '',
@@ -22,18 +24,18 @@ class DeleteTableForm extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <s.Container>
         Delete Tables
         <form onSubmit={this.deleteTable}>
-          <select name="tables" value={this.state.selected} onChange={this.handleChange}>
-            <option value="">Select a table to delete...</option>
+          <s.Select name="tables" value={this.state.selected} onChange={this.handleChange}>
+            <option value="">Pick a table...</option>
             {this.props.tables.map((table) => (
               <option key={shortid.generate()} value={table._id}>{table.number}</option>
             ))}
-          </select>
+          </s.Select>
           {!!this.state.selected.length && <Button type="submit">Delete</Button>}
         </form>
-      </React.Fragment>
+      </s.Container>
     );
   }
 }

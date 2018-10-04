@@ -5,6 +5,7 @@ import { Boxes } from '../../../global-styles/styledComponents';
 
 export const ItemBoxes = styled(Boxes)`
   padding-top: 0;
+  overflow: hidden;
 `;
 
 export const Item = styled.div`
@@ -17,7 +18,6 @@ export const ItemPic = styled.div`
   height: 100%;
   width: 100%;
   overflow: hidden;
-  margin-top: 18px;/* Temporary style: */
 `;
 
 export const ItemTitle = styled(Item)`
