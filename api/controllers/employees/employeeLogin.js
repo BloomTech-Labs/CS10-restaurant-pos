@@ -45,6 +45,7 @@ const employeeLogin = (req, res) => {
           pin: employee.pin,
           name: employee.name,
           email: employee.email,
+          images: employee.images,
           role: {
             admin: employee.role.admin,
             manager: employee.role.manager

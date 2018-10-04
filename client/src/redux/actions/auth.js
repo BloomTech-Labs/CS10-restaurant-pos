@@ -72,9 +72,7 @@ export const register = ({ name, email, pass, confirmPass }) => (dispatch) => {
     });
 };
 
-export const updateEmployee = ({ pin, pass, newPass, confirmNew, email, name }) => (
-  dispatch
-) => {
+export const updateEmployee = ({ pin, pass, newPass, confirmNew, email, name }) => (dispatch) => {
   if (newPass !== confirmNew) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
@@ -144,15 +142,20 @@ export const logoutEmployee = () => (dispatch) => {
     });
 };
 
-export const addEmployee = ({ name, pass, confirmPass }) => (dispatch) => {
-  if (pass !== confirmPass) {
+export const addEmployee = (employee) => (dispatch) => {
+  console.log(employee);
+  if (employee.pass !== employee.confirmPass) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
   }
   dispatch({ type: PASSWORD_MATCH_SUCCESS });
   dispatch({ type: AUTH_LOADING });
   axios
-    .post(`${serverURI}/api/employees/register`, { name, pass })
+    .post(`${serverURI}/api/employees/register`, {
+      name: employee.name,
+      pass: employee.pass,
+      images: employee.images
+    })
     .then((res) => {
       dispatch({ type: EMPLOYEE_REGISTER_SUCCESS, payload: res.data.pin });
       dispatch(push('/registration-success'));

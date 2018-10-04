@@ -29,7 +29,12 @@ const initialState = {
   name: '',
   email: '',
   id: '',
-  pin: ''
+  pin: '',
+  images: {
+    thumbnail: '',
+    small: '',
+    medium: ''
+  }
 };
 
 const getJWTInfo = (jwt) => {
@@ -40,6 +45,14 @@ const getJWTInfo = (jwt) => {
   let email = '';
   let id = '';
   let pin = '';
+  let images = {
+    thumbnail:
+      'https://images.unsplash.com/photo-1531752059180-d0b20f5ee924?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=928c0c096b86c12619290c36b4c6350d&auto=format&fit=crop&w=10&q=60',
+    small:
+      'https://images.unsplash.com/photo-1531752059180-d0b20f5ee924?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=928c0c096b86c12619290c36b4c6350d&auto=format&fit=crop&w=60&q=60',
+    medium:
+      'https://images.unsplash.com/photo-1531752059180-d0b20f5ee924?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=928c0c096b86c12619290c36b4c6350d&auto=format&fit=crop&w=150&q=60'
+  };
 
   if (jwt) {
     const currentTime = Date.now() / 1000;
@@ -48,16 +61,19 @@ const getJWTInfo = (jwt) => {
     if (decodedJwt.exp < currentTime) {
       localStorage.removeItem('jwt');
     } else {
-      role = decodedJwt.role; // eslint-disable-line prefer-destructuring
-      restaurant = decodedJwt.restaurant; // eslint-disable-line prefer-destructuring
-      membership = decodedJwt.membership; // eslint-disable-line prefer-destructuring
-      name = decodedJwt.name; // eslint-disable-line prefer-destructuring
-      email = decodedJwt.email; // eslint-disable-line prefer-destructuring
-      id = decodedJwt.id; // eslint-disable-line prefer-destructuring
-      pin = decodedJwt.pin; // eslint-disable-line prefer-destructuring
+      /* eslint-disable prefer-destructuring */
+      role = decodedJwt.role;
+      restaurant = decodedJwt.restaurant;
+      membership = decodedJwt.membership;
+      name = decodedJwt.name;
+      email = decodedJwt.email;
+      id = decodedJwt.id;
+      pin = decodedJwt.pin;
+      if (Object.keys(decodedJwt.images).length) images = decodedJwt.images;
+      /* eslint-enable */
     }
   }
-  return { jwt, role, restaurant, membership, name, email, id, pin };
+  return { jwt, role, restaurant, membership, name, email, id, pin, images };
 };
 
 const AuthReducer = (auth = initialState, action) => {
@@ -66,6 +82,7 @@ const AuthReducer = (auth = initialState, action) => {
       return { ...auth, loading: true };
 
     case SET_INITIAL_AUTH:
+      // eslint-disable-next-line no-case-declarations
       const jwt = localStorage.getItem('jwt');
 
       return { ...auth, ...getJWTInfo(jwt) };

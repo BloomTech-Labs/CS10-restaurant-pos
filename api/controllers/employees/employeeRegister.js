@@ -12,7 +12,7 @@ const verifyRole = require('../../validation/verifyRole');
 // @access  Public
 const employeeRegister = (req, res) => {
   const {
-    pass: password, role, name
+    pass: password, role, name, images
   } = req.body;
 
   // Validate Fields
@@ -53,6 +53,7 @@ const employeeRegister = (req, res) => {
   const newEmployee = new Employee({
     name,
     password,
+    images,
     role,
     pin,
     restaurant
