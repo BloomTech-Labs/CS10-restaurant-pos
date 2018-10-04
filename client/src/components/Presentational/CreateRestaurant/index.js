@@ -42,7 +42,6 @@ const CreateRestaurant = props => (
               name="name"
               placeholder="Restaurant Name"
               error={errors.email}
-              autoComplete="username"
             />
             <StyledErrorMessage name="email" component="div" />
             <StyledField
