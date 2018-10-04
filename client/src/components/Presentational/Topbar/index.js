@@ -33,7 +33,7 @@ export default function Topbar(props) {
         <Clock />
         <Date />
       </s.TimeDisplay>
-      <s.Title>Main Course</s.Title>
+      <s.Title><s.StyledLink to="/"> - Main Course - </s.StyledLink></s.Title>
       <CurrentUser name={name} role={role} image={image} action={logoutEmployee} />
     </s.Topbar>
   );
