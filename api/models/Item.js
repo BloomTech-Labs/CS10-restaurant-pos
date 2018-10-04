@@ -18,6 +18,11 @@ const ItemSchema = new Schema({
   category: {
     type: String,
   },
+  images: {
+    thumbnail: String,
+    small: String,
+    medium: String,
+  },
   restaurant: {
     type: ObjectId,
     ref: 'Restaurant',
