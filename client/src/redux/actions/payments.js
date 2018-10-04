@@ -40,7 +40,7 @@ export const sendPayment = (stripe, amount, description, isSplit, partyId) => (
             .find(splitItem => item.uniqueId === splitItem.uniqueId));
 
         dispatch(updateParty(partyId, { food }));
-        dispatch(closeSplitModal());
+        dispatch(closeSplitModal(isSplit));
         dispatch(openModal());
       } else {
         dispatch({ type: CLEAR_ORDER_CLIENT });

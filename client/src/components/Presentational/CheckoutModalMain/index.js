@@ -57,10 +57,12 @@ export default function CheckoutModalMain(props) {
         ) : (
           <React.Fragment>
             <Button
-              inactive={!splitOrder.length}
+              /* inactive={!splitOrder.length || splitOrder.length === order.length} */
               dark
               type="button"
-              onClick={splitOrder.length ? openSplitModal : undefined}
+              onClick={openSplitModal}
+              /* splitOrder.length && splitOrder.length < order.length ? openSplitModal : undefined
+              } */
             >
               Split Check
             </Button>

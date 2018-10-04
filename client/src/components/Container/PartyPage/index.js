@@ -174,6 +174,7 @@ class PartyPage extends React.Component {
             items={items}
             addItemToOrder={this.addItemToOrder}
             getItems={this.props.getItems}
+            partyId={match.params.id}
           />
           <OrderScratchPad
             tables={tables}

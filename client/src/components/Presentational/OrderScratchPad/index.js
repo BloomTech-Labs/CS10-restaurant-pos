@@ -31,7 +31,7 @@ export default function OrderScratchPad(props) {
           <Button primary dark type="button" onClick={saveParty}>
             Save
           </Button>
-          <Button dark type="button" onClick={openModal}>
+          <Button dark type="button" onClick={order.length ? openModal : undefined} inactive={!order.length}>
             Checkout Now
           </Button>
         </s.ButtonContainer>

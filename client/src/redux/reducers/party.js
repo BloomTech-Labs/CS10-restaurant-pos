@@ -16,7 +16,7 @@ import {
 } from '../actions/party';
 import { CLEAR_ORDER_CLIENT } from '../actions/payments';
 import { DEACTIVATING_TABLE_SUCCESS } from '../actions/tables';
-import { CLEAR_SPLIT_ORDER } from '../actions/modal';
+import { CLEAR_SPLIT_ORDER, REMOVE_SPLIT_ORDER_FROM_ORDER } from '../actions/modal';
 
 const initialState = {
   tables: [],
@@ -57,7 +57,7 @@ const PartyReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        partyList: [...state.partyList, action.payload],
+        partyList: [...state.partyList, action.payload]
       };
 
     case UPDATING_PARTY:
@@ -67,7 +67,7 @@ const PartyReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        partyList: state.partyList.map(party => {
+        partyList: state.partyList.map((party) => {
           if (party._id === action.payload._id) return action.payload;
           return party;
         })
@@ -80,7 +80,7 @@ const PartyReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        partyList: state.partyList.filter(party => party._id !== action.payload.removedParty._id)
+        partyList: state.partyList.filter((party) => party._id !== action.payload.removedParty._id)
       };
 
     // ? Should we add the populatedParty to state.fetchedParty?
@@ -88,7 +88,7 @@ const PartyReducer = (state = initialState, action) => {
       const { populatedParty } = action.payload; // eslint-disable-line no-case-declarations
       return {
         ...state,
-        partyList: state.partyList.map(party => {
+        partyList: state.partyList.map((party) => {
           if (party._id === populatedParty._id) return populatedParty;
           return party;
         })
@@ -100,10 +100,15 @@ const PartyReducer = (state = initialState, action) => {
     case CLEAR_SPLIT_ORDER:
       return {
         ...state,
-        splitOrder: [],
-        order: state.order
-          .filter(item => !state.splitOrder
-            .find(splitItem => item.uniqueId === splitItem.uniqueId))
+        splitOrder: []
+      };
+
+    case REMOVE_SPLIT_ORDER_FROM_ORDER:
+      return {
+        ...state,
+        order: state.order.filter(
+          (item) => !state.splitOrder.find((splitItem) => item.uniqueId === splitItem.uniqueId)
+        )
       };
 
     case CLEAR_ORDER_CLIENT:

@@ -70,6 +70,7 @@ class CheckoutModal extends React.Component {
           sendPayment={sendPayment}
           splitModalIsOpen={splitModalIsOpen}
           partyId={partyId}
+          location={location}
           splitOrder={splitOrder}
         />
       </React.Fragment>
