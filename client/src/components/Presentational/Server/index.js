@@ -1,27 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import shortid from 'shortid';
 
 import * as s from './styles';
 
 export default function Server(props) {
   const { server, push } = props;
+  const imageToDisplay = server.images
+    ? server.images.medium
+    : 'https://images.unsplash.com/photo-1531752059180-d0b20f5ee924?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=928c0c096b86c12619290c36b4c6350d&auto=format&fit=crop&w=150&q=60';
 
   return (
+    // TODO: Get the free table view version of this working
     <s.ServerBox onClick={() => push(`/tables/${server.name.replace(/\s/, '_')}/${server._id}`)}>
-      <div>Name: {server.name}</div>
-      <div>
-        Parties ({server.parties.length}
-        ):
-      </div>
-      {server.parties.map((party, i) => (
-        <div key={shortid.generate()}>
-          {i + 1}: table(s):{' '}
-          {party.tables.map((table) => (
-            <span key={shortid.generate()}>{table.number}, </span>
-          ))}
-        </div>
-      ))}
+      <div>{server.name}</div>
+      <s.ProfilePic>
+        <img src={imageToDisplay} alt="user profile" />
+      </s.ProfilePic>
     </s.ServerBox>
   );
 }
@@ -36,7 +30,7 @@ Server.propTypes = {
       })
     )
   }),
-  push: PropTypes.func,
+  push: PropTypes.func
 };
 
 Server.defaultProps = {
@@ -64,5 +58,5 @@ Server.defaultProps = {
       }
     ]
   },
-  push: () => {},
+  push: () => {}
 };

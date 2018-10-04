@@ -13,7 +13,7 @@ class CurrentUser extends React.Component {
           <s.Role>{role}</s.Role>
         </s.Info>
         <s.ProfilePic>
-          <img src={image} alt="user rofile" />
+          <img src={image} alt="user profile" />
         </s.ProfilePic>
       </s.Container>
     );
