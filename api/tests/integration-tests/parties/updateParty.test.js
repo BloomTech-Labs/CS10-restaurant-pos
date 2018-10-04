@@ -8,7 +8,7 @@ let token;
 let tableId;
 let partyId;
 
-jest.setTimeout(40000);
+jest.setTimeout(100000);
 
 // First a table must be created in order to add a party
 describe('updateParty', () => {

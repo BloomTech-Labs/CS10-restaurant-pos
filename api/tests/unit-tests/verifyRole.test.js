@@ -1,6 +1,6 @@
 const verifyRole = require('../../validation/verifyRole');
 
-jest.setTimeout(30000);
+jest.setTimeout(100000);
 
 describe('verifyRole', () => {
   // [Valid] Testing with admin role
