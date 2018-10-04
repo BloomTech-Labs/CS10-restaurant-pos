@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { push } from 'connected-react-router';
 import jwtDecode from 'jwt-decode';
-import { toast } from 'react-toastify';
 
+// URIs
 import serverURI from '../../config/URI';
+// Helpers
+import errorHandler from '../helpers/errorHandler';
 
 export const LOADING_RESTAURANT = 'LOADING_RESTAURANT';
 export const LOADING_RESTAURANT_SUCCESS = 'LOADING_RESTAURANT_SUCCESS';
@@ -45,6 +47,6 @@ export const addRestaurant = ({
     })
     .catch(err => {
       dispatch({ type: ADDING_RESTAURANT_ERROR, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };

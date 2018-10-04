@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
+// URIs
 import serverURI from '../../config/URI';
+// Helpers
+import errorHandler from '../helpers/errorHandler';
 
 export const LOADING_ITEMS = 'LOADING_ITEMS';
 export const LOADING_ITEMS_SUCCESS = 'LOADING_ITEMS_SUCCESS';
@@ -20,7 +23,7 @@ export const getItems = () => (
       })
       .catch((err) => {
         dispatch({ type: LOADING_ITEMS_ERROR, payload: err });
-        toast.error(err.response.data.msg);
+        errorHandler(err);
       });
   }
 );
@@ -39,7 +42,7 @@ export const addItem = (item) => (
       })
       .catch((err) => {
         dispatch({ type: ADDING_ITEM_ERROR, payload: err });
-        toast.error(err.response.data.msg);
+        errorHandler(err);
       });
   }
 );

@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
+// URIs
 import serverURI from '../../config/URI';
+// Helpers
+import errorHandler from '../helpers/errorHandler';
 
 import { updateParty, deleteParty } from './party';
 import { SET_INITIAL_AUTH } from './auth';
@@ -48,7 +51,7 @@ export const sendPayment = (stripe, amount, description, isSplit, partyId) => (
     })
     .catch(err => {
       dispatch({ type: PAYMENT_ERROR, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };
 
@@ -64,7 +67,7 @@ export const subscribe = token => dispatch => {
     })
     .catch(err => {
       dispatch({ type: SUBSCRIBING_ERROR, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };
 
@@ -79,6 +82,6 @@ export const unsubscribe = () => dispatch => {
     })
     .catch(err => {
       dispatch({ type: UNSUBSCRIBING_ERROR, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };

@@ -2,7 +2,10 @@ import axios from 'axios';
 import { push } from 'connected-react-router';
 import { toast } from 'react-toastify';
 
+// URIs
 import serverURI from '../../config/URI';
+// Helpers
+import errorHandler from '../helpers/errorHandler';
 
 export const LOADING_TABLES = 'LOADING_TABLES';
 export const LOADING_TABLES_SUCCESS = 'LOADING_TABLES_SUCCESS';
@@ -36,7 +39,7 @@ export const getTables = id => dispatch => {
     })
     .catch(err => {
       dispatch({ type: LOADING_TABLES_ERROR, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };
 
@@ -49,7 +52,7 @@ export const addTable = number => dispatch => {
     })
     .catch(err => {
       dispatch({ type: ADDING_TABLE_ERROR, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };
 
@@ -63,7 +66,7 @@ export const deleteTable = table => dispatch => {
     })
     .catch(err => {
       dispatch({ type: DELETING_TABLE_ERROR, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };
 
@@ -83,7 +86,7 @@ export const saveTables = tables => dispatch => {
     })
     .catch(err => {
       dispatch({ type: SAVING_TABLES_ERROR, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };
 
@@ -96,7 +99,7 @@ export const deactivateTable = id => dispatch => {
     })
     .catch(err => {
       dispatch({ type: DEACTIVATING_TABLE_ERROR, payload: err });
-      toast.error(err.response.data.msg);
+      errorHandler(err);
     });
 };
 
