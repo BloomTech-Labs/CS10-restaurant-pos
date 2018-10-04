@@ -88,7 +88,7 @@ class CreateItem extends React.Component {
                 <StyledErrorMessage name="category" component="div" />
                 <StyledField type="number" name="price" maxLength="100" placeholder="5.99" />
                 <StyledErrorMessage name="price" component="div" />
-                <Button type="button" onClick={this.props.openUploadModal}>
+                <Button type="button" onClick={this.openUploadModal}>
                   Upload Menu Item Image
                 </Button>
                 <Button primary dark type="submit" inactive={isSubmitting}>
@@ -106,13 +106,11 @@ class CreateItem extends React.Component {
 CreateItem.propTypes = {
   itemCategories: PropTypes.arrayOf(PropTypes.string),
   addItem: PropTypes.func,
-  openUploadModal: PropTypes.func
 };
 
 CreateItem.defaultProps = {
   itemCategories: ['default category one, default category two'],
   addItem: () => {},
-  openUploadModal: () => {}
 };
 
 export default CreateItem;
