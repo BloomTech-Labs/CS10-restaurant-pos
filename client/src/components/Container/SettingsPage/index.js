@@ -10,16 +10,10 @@ import Billing from '../../Presentational/Billing';
 import CreateEmployeeCard from '../../Presentational/CreateEmployeeCard';
 import UpdateEmployee from '../../Presentational/UpdateEmployee';
 import CreateItem from '../../Presentational/CreateItem';
-import UploadModal from '../../Presentational/UploadModal';
 
 import * as s from './styles';
 
 class SettingsPage extends React.Component {
-  state = {
-    images: {},
-    uploadModalIsOpen: false
-  };
-
   componentDidMount() {
     this.props.getItems();
   }
@@ -27,12 +21,6 @@ class SettingsPage extends React.Component {
   updateEmployee = (info) => {
     this.props.updateEmployee(info);
   };
-
-  setImageUrls = (images) => this.setState({ images });
-
-  openUploadModal = () => this.setState({ uploadModalIsOpen: true });
-
-  closeUploadModal = () => this.setState({ uploadModalIsOpen: false });
 
   adminDisplay = () => (
     <React.Fragment>
@@ -61,11 +49,6 @@ class SettingsPage extends React.Component {
     const { manager, admin } = this.props.role;
     return (
       <s.Container>
-        <UploadModal
-          open={this.state.uploadModalIsOpen}
-          setImageUrls={this.setImageUrls}
-          closeUploadModal={this.closeUploadModal}
-        />
         <UpdateEmployee updateEmployee={this.updateEmployee} />
         {admin && this.adminDisplay()}
         {(manager || admin) && this.managerDisplay()}
