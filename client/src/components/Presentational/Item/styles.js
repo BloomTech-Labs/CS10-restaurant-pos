@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import { flexCenterMixin } from '../../../global-styles/mixins';
 import { Boxes } from '../../../global-styles/styledComponents';
 
 export const ItemBoxes = styled(Boxes)`
@@ -8,6 +9,15 @@ export const ItemBoxes = styled(Boxes)`
 
 export const Item = styled.div`
   padding-bottom: 5px;
+`;
+
+export const ProfilePic = styled.div`
+  ${flexCenterMixin};
+  background: grey;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 18px;/* Temporary style: */
 `;
 
 export const ItemTitle = styled(Item)`
