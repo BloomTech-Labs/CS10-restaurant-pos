@@ -46,7 +46,7 @@ const addItem = (req, res) => {
     .then(() => {
       Item.find({ restaurant: req.user.restaurant })
         .then((items) => {
-          res.status(200).json({ items });
+          res.status(201).json({ items });
         })
         .catch((err) => {
           res
