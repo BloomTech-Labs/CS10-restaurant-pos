@@ -71,7 +71,6 @@ const getAllServers = (req, res) => {
           },
         },
       },
-      // { $sort: { total: -1 } },
     ])
     .then((populatedParties) => {
       res.status(200).json({ employees: populatedParties });
