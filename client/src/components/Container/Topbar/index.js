@@ -7,12 +7,12 @@ import Topbar from '../../Presentational/Topbar';
 
 function TopbarContainer(props) {
   const { blur, name, roleBooleans, loggedIn, pathname, image } = props;
-  let role;
+  let role = '';
   if (roleBooleans.admin) {
     role = 'Admin';
   } else if (roleBooleans.manager) {
     role = 'Manager';
-  } else {
+  } else if (loggedIn) {
     role = 'Server';
   }
 
