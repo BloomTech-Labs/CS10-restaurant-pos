@@ -29,6 +29,8 @@ export default function CheckoutModalMain(props) {
     server
   } = props;
 
+  console.log('in checkout modal main, order and splitOrder:', order, splitOrder);
+
   return (
     <Modal isOpen={modalIsOpen}>
       <s.Title>

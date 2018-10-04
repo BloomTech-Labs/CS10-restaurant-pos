@@ -1,6 +1,7 @@
 import {
   SAVE_ORDER,
   SAVE_SPLIT_ORDER,
+  TOGGLE_SPLIT_ITEM,
   LOADING_PARTIES,
   LOADING_PARTIES_SUCCESS,
   LOADING_PARTY,
@@ -34,6 +35,20 @@ const PartyReducer = (state = initialState, action) => {
 
     case SAVE_SPLIT_ORDER:
       return { ...state, splitOrder: action.payload };
+
+    case TOGGLE_SPLIT_ITEM:
+      const item = action.payload; // eslint-disable-line no-case-declarations
+
+      if (state.splitOrder.find((element) => element.uniqueId === item.uniqueId)) {
+        return {
+          ...state,
+          splitOrder: state.splitOrder.filter((element) => element.uniqueId !== item.uniqueId)
+        };
+      }
+      return {
+        ...state,
+        splitOrder: [...state.splitOrder, item]
+      };
 
     case LOADING_PARTIES:
       return { ...state, loading: true };
@@ -106,9 +121,9 @@ const PartyReducer = (state = initialState, action) => {
     case REMOVE_SPLIT_ORDER_FROM_ORDER:
       return {
         ...state,
-        order: state.order.filter(
-          (item) => !state.splitOrder.find((splitItem) => item.uniqueId === splitItem.uniqueId)
-        )
+        order: state.order
+          .filter((element) => !state.splitOrder
+            .find((splitItem) => element.uniqueId === splitItem.uniqueId))
       };
 
     case CLEAR_ORDER_CLIENT:
