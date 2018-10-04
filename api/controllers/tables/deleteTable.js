@@ -16,25 +16,35 @@ const deleteTable = (req, res) => {
   Table.findOneAndRemove({ _id: id })
     .then((removedTable) => {
       Table.update(
-        { number: { $gt: removedTable.number }, restaurant: req.user.restaurant },
+        {
+          number: { $gt: removedTable.number },
+          restaurant: req.user.restaurant,
+        },
         { $inc: { number: -1 } },
         { multi: true }
-      ).catch((err) => {
-        res.status(500).json({
-          err,
-          msg: 'There was an error updating the table numbers.',
-        });
-      });
-
-      Table.find({ restaurant: req.user.restaurant })
-        .then((tables) => {
-          res
-            .status(200)
-            .json({ tables, msg: 'Table deleted from the database.' });
-        }).catch(err => {
-          res
-            .status(500)
-            .json({ err, msg: 'There was an error retrieving the tables from the database.' });
+      )
+        .then(() => {
+          Table.find({ restaurant: req.user.restaurant })
+            .then((tables) => {
+              res
+                .status(200)
+                .json({ tables, msg: 'Table deleted from the database.' });
+            })
+            .catch((err) => {
+              res
+                .status(500)
+                .json({
+                  err,
+                  msg:
+                    'There was an error retrieving the tables from the database.',
+                });
+            });
+        })
+        .catch((err) => {
+          res.status(500).json({
+            err,
+            msg: 'There was an error updating the table numbers.',
+          });
         });
     })
     .catch((err) => {
