@@ -69,7 +69,7 @@ const getJWTInfo = (jwt) => {
       email = decodedJwt.email;
       id = decodedJwt.id;
       pin = decodedJwt.pin;
-      if (Object.keys(decodedJwt.images).length) images = decodedJwt.images;
+      if (decodedJwt.images && Object.keys(decodedJwt.images).length) images = decodedJwt.images;
       /* eslint-enable */
     }
   }
