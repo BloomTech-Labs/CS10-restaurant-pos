@@ -1,6 +1,5 @@
 import { OPEN_MODAL, CLOSE_MODAL, OPEN_SPLIT_MODAL, CLOSE_SPLIT_MODAL } from '../actions/modal';
 
-// TODO: Fix names so that they're relavant and unique
 const initialState = {
   isOpen: false,
   splitModalIsOpen: false,
