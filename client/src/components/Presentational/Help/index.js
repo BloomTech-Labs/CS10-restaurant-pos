@@ -13,6 +13,7 @@ class Help extends React.PureComponent {
   copyToClipboard = () => {
     if (document.queryCommandSupported('copy')) {
       this.supportEmail.current.select();
+
       document.execCommand('copy');
 
       toast('Support email copied to the clipboard');
@@ -25,9 +26,9 @@ class Help extends React.PureComponent {
         For more information, contact{' '}
         <s.Email onClick={this.copyToClipboard}>help@maincourse.app</s.Email>
         <textarea
-          style={{ visibility: 'hidden', borderRadius: '10px' }}
           ref={this.supportEmail}
           value="help@maincourse.app"
+          style={{ position: 'relative', zIndex: '-1' }}
         />
       </s.Container>
     );
