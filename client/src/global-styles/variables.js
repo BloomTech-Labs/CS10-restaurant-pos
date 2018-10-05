@@ -1,8 +1,9 @@
 // * Root Colors ----------------------
 const transparent = 'rgba(0, 0, 0, 0)';
 const santasGrey = 'rgba(46, 49, 72, 0.4)';
+const midGrey = 'rgba(46, 49, 72, 0.75)';
 const lightGrey = 'rgba(255, 255, 255, 0.4)';
-const midGrey = 'rgba(255, 255, 255, 0.75)';
+const lightWhite = 'rgba(255, 255, 255, 0.75)';
 const white = '#FFFFFF';
 const aquaHaze = '#F6F8FB';
 const razzmatazz = '#E30E58';
@@ -17,6 +18,7 @@ const limedSpruce = '#363F49';
 const eden = '#114B5F';
 const cosmic = '#803952';
 const athensGrey = '#EDEFF2';
+const catskillWhite = '#FCFCFC';
 
 export const theme = {
   // * Misc. -----------------------------------
@@ -77,6 +79,7 @@ export const theme = {
   appTertiary: oxfordBlue,
   contentBackground: aquaHaze,
   contentBackgroundDarker: athensGrey,
+  contentBackgroundLighter: catskillWhite,
   textColorDark: white,
   inputError: wispPink,
   menuBg: porcelain,
@@ -95,6 +98,7 @@ export const theme = {
   // Text
   primaryText: ebonyClay,
   lightText: santasGrey,
-  medText: midGrey,
+  medTextLight: midGrey,
+  medText: lightWhite,
   lightTextOnDark: lightGrey,
 };
