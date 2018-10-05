@@ -2,6 +2,7 @@
 const transparent = 'rgba(0, 0, 0, 0)';
 const santasGrey = 'rgba(46, 49, 72, 0.4)';
 const lightGrey = 'rgba(255, 255, 255, 0.4)';
+const midGrey = 'rgba(255, 255, 255, 0.75)';
 const white = '#FFFFFF';
 const aquaHaze = '#F6F8FB';
 const razzmatazz = '#E30E58';
@@ -39,6 +40,7 @@ export const theme = {
   ItemTitleDescription: 1.4,
   placeholderColor: silver,
   freeTableNumberSize: 4,
+  h1: 2.4,
 
   // * Buttons ---------------------------------
   // Standard
@@ -85,5 +87,6 @@ export const theme = {
   // Text
   primaryText: ebonyClay,
   lightText: santasGrey,
+  medText: midGrey,
   lightTextOnDark: lightGrey,
 };

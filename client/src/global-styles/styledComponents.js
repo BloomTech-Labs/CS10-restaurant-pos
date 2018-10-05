@@ -25,7 +25,12 @@ export const Boxes = styled.div`
   width: ${(props) => props.theme.menuItemSize}px;
   margin: 10px;
   padding: 25px 0 0 0;
-  cursor: pointer;
+  transition: transform 0.1s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    transform: translate(0, -3px);
+  }
 `;
 
 export const Button = styled.button`

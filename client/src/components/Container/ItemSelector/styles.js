@@ -12,4 +12,5 @@ export const Items = styled.div`
   overflow-y: auto;
   justify-content: space-evenly;
   width: 100%;
+  height: 100%;
 `;
