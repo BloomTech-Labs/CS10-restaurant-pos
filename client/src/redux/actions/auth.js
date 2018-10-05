@@ -154,7 +154,7 @@ export const addEmployee = (employee) => (dispatch) => {
   }
   dispatch({ type: PASSWORD_MATCH_SUCCESS });
   dispatch({ type: AUTH_LOADING });
-  axios
+  return axios
     .post(`${serverURI}/api/employees/register`, {
       name: employee.name,
       pass: employee.pass,
