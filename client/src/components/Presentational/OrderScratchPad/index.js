@@ -46,8 +46,8 @@ const locationType = PropTypes.shape({
 });
 
 OrderScratchPad.propTypes = {
-  tables: PropTypes.arrayOf(PropTypes.object), // TODO: define shape later
-  order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape later
+  tables: PropTypes.arrayOf(PropTypes.object),
+  order: PropTypes.arrayOf(PropTypes.object),
   removeItemFromOrder: PropTypes.func,
   location: locationType,
   subTotal: PropTypes.number,
@@ -57,8 +57,8 @@ OrderScratchPad.propTypes = {
 };
 
 OrderScratchPad.defaultProps = {
-  tables: [],
-  order: [],
+  tables: [{}],
+  order: [{}],
   subTotal: 0,
   location: { country: 'US', state: 'OR' },
   removeItemFromOrder: () => {},

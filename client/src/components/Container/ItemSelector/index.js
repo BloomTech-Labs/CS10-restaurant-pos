@@ -65,7 +65,7 @@ class ItemSelector extends React.Component {
 
 ItemSelector.propTypes = {
   partyId: PropTypes.string,
-  items: PropTypes.arrayOf(PropTypes.object), // TODO: define shape later
+  items: PropTypes.arrayOf(PropTypes.object),
   categories: PropTypes.arrayOf(PropTypes.string),
   addItemToOrder: PropTypes.func,
   getItems: PropTypes.func
@@ -73,7 +73,7 @@ ItemSelector.propTypes = {
 
 ItemSelector.defaultProps = {
   partyId: '',
-  items: [],
+  items: [{}],
   categories: ['All'],
   addItemToOrder: () => {},
   getItems: () => {}

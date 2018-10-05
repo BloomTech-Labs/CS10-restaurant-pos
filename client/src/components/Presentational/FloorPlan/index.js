@@ -243,23 +243,11 @@ class FloorPlan extends React.PureComponent {
       .on('mousedown', e => this.onDragStart(e, circle))
       .on('touchstart', e => this.onDragStart(e, circle))
       .on('mouseup', () => this.onDragEnd(circle))
-      .on('mouseupoutside', () => this.deleteCircle(circle))
       .on('touchend', () => this.onDragEnd(circle))
-      .on('touchendoutside', () => this.deleteCircle(circle))
       .on('mousemove', () => this.onDragMove(circle))
       .on('touchmove', () => this.onDragMove(circle));
 
     this.viewport.addChild(container);
-  };
-
-  deleteCircle = circle => {
-    // This is called on 'mouseupoutside' so that,
-    // if you are in editing mode, dragging the
-    // circle out of bounds will destroy it
-    if (this.props.editing) {
-      circle.destroy();
-      // TODO: Call action to delete from the database
-    }
   };
 
   toggleActive = circle => {
@@ -428,7 +416,7 @@ FloorPlan.defaultProps = {
   moveTable: () => {},
   toggleTable: () => {},
   openParty: () => {},
-  parent: false, // TODO: define as a node
+  parent: false,
 };
 
 export default FloorPlan;
