@@ -94,8 +94,7 @@ export const updateEmployee = ({ pin, pass, newPass, confirmNew, email, name, th
     .then(() => {
       dispatch({ type: UPDATE_EMPLOYEE_SUCCESS });
       toast('Successfully updated the account.');
-      window.location.reload();
-      // ! Get rid of or change the /password-change-success page
+      if (themeColor) window.location.reload();
     })
     .catch((err) => {
       dispatch({ type: UPDATE_EMPLOYEE_ERROR, payload: err });

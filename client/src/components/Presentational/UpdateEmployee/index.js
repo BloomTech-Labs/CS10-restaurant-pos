@@ -15,7 +15,7 @@ import * as s from './styles';
 class UpdateEmployee extends React.Component {
   state = {
     revealed: false,
-    background: '#fff'
+    background: localStorage.getItem('themeColor') || '#E30E58',
   };
 
   toggleColorPicker = () => {
@@ -60,9 +60,12 @@ class UpdateEmployee extends React.Component {
             return errors;
           }}
           onSubmit={(values, { setSubmitting, resetForm }) => {
-            localStorage.setItem('themeColor', background);
-
-            updateEmployee({ ...values, themeColor: background });
+            if (background !== localStorage.getItem('themeColor')) {
+              localStorage.setItem('themeColor', background);
+              updateEmployee({ ...values, themeColor: background });
+            } else {
+              updateEmployee({ ...values });
+            }
 
             resetForm();
 
