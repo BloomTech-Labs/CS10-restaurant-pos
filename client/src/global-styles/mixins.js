@@ -37,23 +37,22 @@ export const checkbox = css`
     &::before {
       content: '';
       position: absolute;
-      left: 0;
-      top: 0;
-      width: 17px;
-      height: 17px;
+      left: 2px;
+      top: 2px;
+      width: 14px;
+      height: 14px;
       border: 1px solid #aaa;
-      background: #f8f8f8;
+      background: rgba(255, 255, 255, 0.2);
       border-radius: 3px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     }
 
     &::after {
       content: '';
       position: absolute;
-      top: 2px;
-      left: 2px;
-      width: 15px;
-      height: 15px;
+      top: 4px;
+      left: 4px;
+      width: 12px;
+      height: 12px;
       background: black;
       border-radius: 2px;
       transition: all 0.2s;

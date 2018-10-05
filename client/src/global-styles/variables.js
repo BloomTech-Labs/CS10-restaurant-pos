@@ -52,7 +52,7 @@ export const theme = {
   // Standard
   btnWidth: 170,
   btnHeight: 47,
-  btnBorderRadius: 10,
+  btnBorderRadius: 25,
   btnFontSize: 1.6,
   btnTextColor: white,
   btnBgColor: transparent,

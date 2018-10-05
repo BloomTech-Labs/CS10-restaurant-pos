@@ -378,22 +378,20 @@ class FloorPlan extends React.PureComponent {
     return (
       <React.Fragment>
         <s.Container innerRef={this.pixi} />
-        <div style={{ position: 'fixed', right: '100px', top: '150px' }}>
-          {/* // ! make these not inline */}
+        <s.Lock>
           <s.CheckBox>
             <input type="checkbox" id="lock" onClick={this.toggleLock} value={this.state.locked} />
             <label htmlFor="lock"><span>Lock</span></label>
           </s.CheckBox>
-        </div>
-        <div style={{ position: 'fixed', right: '40px', top: '150px' }}>
-          {/* // ! make these not inline */}
-          <button type="button" onClick={this.zoomIn}>
+        </s.Lock>
+        <s.Zoom>
+          <s.ZoomButtons onClick={this.zoomIn}>
             +
-          </button>
-          <button type="button" onClick={this.zoomOut}>
+          </s.ZoomButtons>
+          <s.ZoomButtons onClick={this.zoomOut}>
             -
-          </button>
-        </div>
+          </s.ZoomButtons>
+        </s.Zoom>
       </React.Fragment>
     );
   }
