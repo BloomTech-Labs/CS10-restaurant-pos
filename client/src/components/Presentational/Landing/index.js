@@ -2,6 +2,8 @@ import React from 'react';
 
 import Logo from '../Logo';
 
+import { Button } from '../../../global-styles/styledComponents';
+
 import * as s from './styles';
 
 class Landing extends React.Component {
@@ -15,6 +17,13 @@ class Landing extends React.Component {
         </s.Background>
         <s.LandingContainer className="App">
           <s.Title><Logo width="45" />Main Course</s.Title>
+          <s.SubContainer>
+            <s.Tagline>POS that will make your loins tingle</s.Tagline>
+            <s.Buttons>
+              <Button dark>Learn More</Button>
+              <Button primary>Sign Up</Button>
+            </s.Buttons>
+          </s.SubContainer>
         </s.LandingContainer>
       </React.Fragment>
     );

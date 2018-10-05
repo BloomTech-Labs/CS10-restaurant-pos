@@ -7,6 +7,13 @@ export const LandingContainer = styled.div`
   flex-grow: 2;
 `;
 
+export const SubContainer = styled.div`
+  position: fixed;
+  top: 30%;
+  left: 10%;
+  min-width: 350px;
+`;
+
 export const Title = styled.h1`
   position: fixed;
   top: 40px;
@@ -27,4 +34,17 @@ export const Background = styled.div`
   top: 0;
   left: 0;
   fill: ${(props) => props.theme.appSecondary};
+`;
+
+export const Tagline = styled.div`
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin-bottom: 100px;
+  color: ${(props) => props.theme.appPrimary};
+`;
+
+export const Buttons = styled.div`
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
 `;
