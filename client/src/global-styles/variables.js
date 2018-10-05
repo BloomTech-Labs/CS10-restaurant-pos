@@ -1,7 +1,9 @@
 // * Root Colors ----------------------
 const transparent = 'rgba(0, 0, 0, 0)';
 const santasGrey = 'rgba(46, 49, 72, 0.4)';
+const midGrey = 'rgba(46, 49, 72, 0.75)';
 const lightGrey = 'rgba(255, 255, 255, 0.4)';
+const lightWhite = 'rgba(255, 255, 255, 0.75)';
 const white = '#FFFFFF';
 const aquaHaze = '#F6F8FB';
 const oxfordBlue = '#303B49';
@@ -13,6 +15,9 @@ const wispPink = '#FDEFF5';
 const porcelain = '#EDEFF0';
 const limedSpruce = '#363F49';
 const eden = '#114B5F';
+const cosmic = '#803952';
+const athensGrey = '#EDEFF2';
+const catskillWhite = '#FCFCFC';
 
 const themeColor = localStorage.getItem('themeColor');
 const razzmatazz = themeColor || '#E30E58';
@@ -26,6 +31,7 @@ export const theme = {
   categoryBorderRadius: 15,
   selectedTable: eden,
   navTabColor: limedSpruce,
+  deleteColor: cosmic,
 
   // * Default Dimensions ----------------------
   sideBarWidth: 265,
@@ -36,17 +42,22 @@ export const theme = {
   settingCardPadding: '0 70px',
   settingCardMargin: '50px',
 
+  // * Card Styles -----------------------------
+  cardBorderRadius: 18,
+
   // * Font Styles -----------------------------
   ItemTitleSize: 2,
+  ItemPriceSize: 1.7,
   ItemTitleDescription: 1.4,
   placeholderColor: silver,
   freeTableNumberSize: 4,
+  h1: 2.4,
 
   // * Buttons ---------------------------------
   // Standard
   btnWidth: 170,
   btnHeight: 47,
-  btnBorderRadius: 10,
+  btnBorderRadius: 25,
   btnFontSize: 1.6,
   btnTextColor: white,
   btnBgColor: transparent,
@@ -67,6 +78,8 @@ export const theme = {
   appSecondary: razzmatazz,
   appTertiary: oxfordBlue,
   contentBackground: aquaHaze,
+  contentBackgroundDarker: athensGrey,
+  contentBackgroundLighter: catskillWhite,
   textColorDark: white,
   inputError: wispPink,
   menuBg: porcelain,
@@ -85,5 +98,7 @@ export const theme = {
   // Text
   primaryText: ebonyClay,
   lightText: santasGrey,
-  lightTextOnDark: lightGrey
+  medTextLight: midGrey,
+  medText: lightWhite,
+  lightTextOnDark: lightGrey,
 };

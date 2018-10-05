@@ -16,28 +16,28 @@ function DeletePartyButton(props) {
           <g id="Group_17" data-name="Group 17" transform="translate(-1385.934 -968.989)">
             <path
               id="path"
-              style={{ fill: 'none', stroke: '#707070', strokeWidth: '5px', fillRule: 'evenodd' }}
+              style={{ fill: 'none', strokeWidth: '5px', fillRule: 'evenodd' }}
               d="M54.663,18.149H8.817V63.995a7.645,7.645,0,0,0,7.645,7.641h30.56a7.639,7.639,0,0,0,7.641-7.641V16.013M41.291,2.863h-19.1L18.372,6.687H8.817A3.82,3.82,0,0,0,5,10.5v3.824H58.487V10.5a3.822,3.822,0,0,0-3.824-3.817H45.115L40.062,2.374"
               transform="translate(1383.434 968.626)"
             />
             <path
               id="Path_14"
               data-name="Path 14"
-              style={{ fill: 'none', stroke: '#707070', strokeWidth: '5px' }}
+              style={{ fill: 'none', strokeWidth: '5px' }}
               d="M0,0V26"
               transform="translate(1404.5 999.5)"
             />
             <line
               id="Line_40"
               data-name="Line 40"
-              style={{ fill: 'none', stroke: '#707070', strokeWidth: '5px' }}
+              style={{ fill: 'none', strokeWidth: '5px' }}
               y2="26"
               transform="translate(1414.5 999.5)"
             />
             <line
               id="Line_41"
               data-name="Line 41"
-              style={{ fill: 'none', stroke: '#707070', strokeWidth: '5px' }}
+              style={{ fill: 'none', strokeWidth: '5px' }}
               y2="26"
               transform="translate(1424.5 999.5)"
             />

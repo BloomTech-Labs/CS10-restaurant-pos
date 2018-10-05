@@ -19,12 +19,13 @@ export const Topbar = styled.nav`
 
 export const Title = styled.h1`
   ${flexCenterMixin};
+  font-size: ${(props) => props.theme.h1}rem;
   position: fixed;
   right: 0;
   left: 0;
   margin-right: auto;
   margin-left: auto;
-  width: 150px;
+  width: 300px;
 `;
 
 export const StyledLink = styled(Link)`

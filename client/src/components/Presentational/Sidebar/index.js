@@ -6,7 +6,7 @@ import TableControls from '../../Container/TableControls';
 import * as s from './styles';
 
 export default function Sidebar(props) {
-  const { blur, visible, push, pathname } = props;
+  const { blur, visible, push, pathname, role } = props;
   return (
     <s.Sidebar
       blur={blur}
@@ -14,12 +14,12 @@ export default function Sidebar(props) {
     >
       <s.LinkGroup>
         <s.StyledLink to="/tables" exact>Tables</s.StyledLink>
-        <s.StyledLink to="/servers">Servers</s.StyledLink>
+        {(role.admin || role.manager) && <s.StyledLink to="/servers">Servers</s.StyledLink>}
         <TableControls push={push} visible={pathname === '/tables'} />
       </s.LinkGroup>
       <s.LinkGroup>
         <s.StyledLink to="/settings">Settings</s.StyledLink>
-        <s.StyledLink to="/logout">Logout</s.StyledLink>
+        {(role.admin || role.manager) && <s.StyledLink to="/logout">Logout</s.StyledLink>}
         <s.StyledLink to="/help">Help</s.StyledLink>
       </s.LinkGroup>
     </s.Sidebar>
@@ -31,6 +31,10 @@ Sidebar.propTypes = {
   visible: PropTypes.bool,
   push: PropTypes.func,
   pathname: PropTypes.string,
+  role: PropTypes.shape({
+    admin: PropTypes.bool,
+    manager: PropTypes.bool
+  }),
 };
 
 Sidebar.defaultProps = {
@@ -38,4 +42,5 @@ Sidebar.defaultProps = {
   visible: false,
   push: () => {},
   pathname: 'defaultpathname',
+  role: { admin: false, manager: false },
 };

@@ -7,7 +7,7 @@ export default function Server(props) {
   const { server, push } = props;
   const imageToDisplay = server.images
     ? server.images.medium
-    : 'https://images.unsplash.com/photo-1531752059180-d0b20f5ee924?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=928c0c096b86c12619290c36b4c6350d&auto=format&fit=crop&w=150&q=60';
+    : 'https://images.unsplash.com/photo-1500649297466-74794c70acfc?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ce5cca94a31b3b2c59c9ff1002079ed9&auto=format&fit=crop&w=150&q=60';
 
   return (
     // TODO: Get the free table view version of this working

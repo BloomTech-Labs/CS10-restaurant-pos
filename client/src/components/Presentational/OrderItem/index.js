@@ -8,8 +8,10 @@ export default function OrderItem(props) {
   return (
     <s.Items>
       <ItemButton action={itemAction} item={item} checked={checked} />
-      <span>{item.name}</span>
-      <span>{item.price}</span>
+      <s.Info>
+        <s.Name>{item.name}</s.Name>
+        <s.Price>{item.price.toFixed(2)}</s.Price>
+      </s.Info>
     </s.Items>
   );
 }
