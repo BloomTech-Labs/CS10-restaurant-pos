@@ -18,7 +18,7 @@ class FloorPlan extends React.PureComponent {
 
     // use ref of parent div and use its width and height
     const { parent } = this.props;
-    // ! Subtraction hack to fix the scrolling thing
+    // Subtraction hack to fix the scrolling thing
     const width = parent.current.clientWidth - 10;
     const height = parent.current.clientHeight - 10;
 
@@ -377,7 +377,7 @@ class FloorPlan extends React.PureComponent {
     // calculate the size the editor should
     // resize to based on the parent div
     const { parent } = this.props;
-    // ! Subtraction hack to fix the scrolling thing
+    // Subtraction hack to fix the scrolling thing
     const w = parent.current.clientWidth - 10;
     const h = parent.current.clientHeight - 10;
     this.app.renderer.resize(w, h);
