@@ -58,7 +58,7 @@ TopbarContainer.defaultProps = {
 
 const mapStateToProps = (state) => ({
   name: state.auth.name,
-  loggedIn: !!state.auth.name,
+  loggedIn: !!state.auth.jwt,
   roleBooleans: state.auth.role,
   image: state.auth.images.small,
   pathname: state.router.location.pathname

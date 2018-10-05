@@ -39,7 +39,7 @@ const Register = props => (
     >
       {({ errors, isSubmitting }) => (
         <s.Container>
-          <h1>Login to your Restaurant</h1>
+          <h1>Register for our Service</h1>
           <StyledForm>
             <StyledField
               type="text"

@@ -16,8 +16,9 @@ class FloorPlan extends React.PureComponent {
 
     // use ref of parent div and use its width and height
     const { parent } = this.props;
-    const width = parent.current.clientWidth;
-    const height = parent.current.clientHeight;
+    // ! Subtraction hack to fix the scrolling thing
+    const width = parent.current.clientWidth - 10;
+    const height = parent.current.clientHeight - 10;
 
     this.pixi = React.createRef();
 
@@ -108,8 +109,14 @@ class FloorPlan extends React.PureComponent {
       () => {
         if (this.state.locked) {
           this.viewport.pausePlugin('drag');
+          this.viewport.pausePlugin('zoom');
+          this.viewport.pausePlugin('wheel');
+          this.viewport.pausePlugin('pinch');
         } else {
           this.viewport.resumePlugin('drag');
+          this.viewport.resumePlugin('zoom');
+          this.viewport.resumePlugin('wheel');
+          this.viewport.resumePlugin('pinch');
         }
       }
     );
@@ -368,8 +375,9 @@ class FloorPlan extends React.PureComponent {
     // calculate the size the editor should
     // resize to based on the parent div
     const { parent } = this.props;
-    const w = parent.current.clientWidth;
-    const h = parent.current.clientHeight;
+    // ! Subtraction hack to fix the scrolling thing
+    const w = parent.current.clientWidth - 10;
+    const h = parent.current.clientHeight - 10;
     this.app.renderer.resize(w, h);
     this.viewport.resize(w, h, 1000, 1000);
   };
@@ -378,22 +386,20 @@ class FloorPlan extends React.PureComponent {
     return (
       <React.Fragment>
         <s.Container innerRef={this.pixi} />
-        <div style={{ position: 'fixed', right: '100px', top: '150px' }}>
-          {/* // ! make these not inline */}
+        <s.Lock>
           <s.CheckBox>
             <input type="checkbox" id="lock" onClick={this.toggleLock} value={this.state.locked} />
             <label htmlFor="lock"><span>Lock</span></label>
           </s.CheckBox>
-        </div>
-        <div style={{ position: 'fixed', right: '40px', top: '150px' }}>
-          {/* // ! make these not inline */}
-          <button type="button" onClick={this.zoomIn}>
+        </s.Lock>
+        <s.Zoom>
+          <s.ZoomButtons onClick={this.zoomIn}>
             +
-          </button>
-          <button type="button" onClick={this.zoomOut}>
+          </s.ZoomButtons>
+          <s.ZoomButtons onClick={this.zoomOut}>
             -
-          </button>
-        </div>
+          </s.ZoomButtons>
+        </s.Zoom>
       </React.Fragment>
     );
   }

@@ -25,15 +25,22 @@ export const Boxes = styled.div`
   width: ${(props) => props.theme.menuItemSize}px;
   margin: 10px;
   padding: 25px 0 0 0;
-  cursor: pointer;
+  transition: transform 0.1s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    transform: translate(0, -3px);
+  }
 `;
 
 export const Button = styled.button`
   ${flexCenterMixin};
+  box-sizing: border-box;
   position: relative;
   padding: 0;
   font-weight: 600;
   flex-shrink: 0;
+  z-index: 1;
   color: ${(props) => {
     if (!props.primary && !props.dark) {
       return props.theme.btnPrimaryBgColor;
@@ -44,36 +51,16 @@ export const Button = styled.button`
   width: ${(props) => props.theme.btnWidth}px;
   height: ${(props) => props.theme.btnHeight}px;
   border-radius: ${(props) => props.theme.btnBorderRadius}px;
-  ${(props) => {
-    let color = '';
-    if (props.inactive) {
-      return 'border: 0';
-    }
-
-    if (!props.primary && props.dark) {
-      color = props.theme.btnDarkBorderColor;
-    } else if (!props.primary) {
-      color = props.theme.btnBorderColor;
-    } else {
-      return 'border: 0';
-    }
-    return `border: 2px solid ${color}`;
-  }};
   overflow: hidden;
-  background: ${(props) => {
-    if (props.primary && props.dark) {
-      return props.theme.btnDarkPrimaryBgColor;
-    }
-    if (props.primary) {
-      return props.theme.btnPrimaryBgColor;
-    }
-    return props.theme.btnBgColor;
-  }};
+  background: none;
+  border: 0;
+  transition: transform 0.1s ease-in-out;
 
   /* stylelint-disable comment-empty-line-before */
   &:hover {
     ${(props) => !props.inactive && (`
       cursor: pointer;
+      transform: translatey(-1px);
     `)}
   }
   /* stylelint-enable comment-empty-line-before */
@@ -91,6 +78,39 @@ export const Button = styled.button`
     width: ${(props) => props.theme.btnWidth + 5}px;
     height: ${(props) => props.theme.btnHeight + 5}px;
     display: ${(props) => !props.inactive && 'none'};
+  }
+
+  &::after {
+    position: absolute;
+    z-index: -1;
+    border-radius: ${(props) => props.theme.btnBorderRadius}px;
+    width: ${(props) => props.theme.btnWidth - 4}px;
+    height: ${(props) => props.theme.btnHeight - 4}px;
+    content: "";
+    background: ${(props) => {
+    if (props.primary && props.dark) {
+      return props.theme.btnDarkPrimaryBgColor;
+    }
+    if (props.primary) {
+      return props.theme.btnPrimaryBgColor;
+    }
+    return props.theme.btnBgColor;
+  }};
+    ${(props) => {
+    let color = '';
+    if (props.inactive) {
+      return 'border: 0';
+    }
+
+    if (!props.primary && props.dark) {
+      color = props.theme.btnDarkBorderColor;
+    } else if (!props.primary) {
+      color = props.theme.btnBorderColor;
+    } else {
+      return 'border: 0';
+    }
+    return `border: 2px solid ${color}`;
+  }};
   }
 `;
 
