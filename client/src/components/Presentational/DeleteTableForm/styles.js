@@ -11,5 +11,7 @@ export const Select = styled.select`
   width: ${(props) => props.theme.btnWidth}px;
   height: calc(${(props) => props.theme.btnHeight}px - 10px);
   border-radius: ${(props) => props.theme.btnBorderRadius}px;
+  background: ${(props) => props.theme.contentBackground};
   margin: 12px 0 0 0;
+  padding: 0 10px;
 `;

@@ -54,6 +54,7 @@ export const Button = styled.button`
   overflow: hidden;
   background: none;
   border: 0;
+  transition: transform 0.1s ease-in-out;
 
   /* stylelint-disable comment-empty-line-before */
   &:hover {
