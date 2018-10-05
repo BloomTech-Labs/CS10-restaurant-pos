@@ -32,7 +32,7 @@ export const logout = () => ({ type: LOGOUT });
 
 export const login = ({ email, pass }) => (dispatch, getState) => {
   dispatch({ type: AUTH_LOADING });
-  axios
+  return axios
     .post(`${serverURI}/api/employees/admin/login`, { email, pass })
     .then((res) => {
       dispatch({ type: LOGIN_SUCCESS, payload: res.data.token });
