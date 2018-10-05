@@ -44,9 +44,9 @@ export const ItemPrice = styled.div`
 `;
 
 export const PriceContainer = styled.div`
-   ${flexCenterMixin};
-   width: 100%;
-   padding-right: 20px;
-   display: flex;
-   justify-content: flex-end;
+  ${flexCenterMixin};
+  width: 100%;
+  padding-right: 20px;
+  display: flex;
+  justify-content: flex-end;
 `;

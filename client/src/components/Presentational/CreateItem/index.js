@@ -39,9 +39,9 @@ class CreateItem extends React.Component {
             if (!values.name) {
               errors.name = 'Required';
             }
-            if (!values.description) {
-              errors.description = 'Required';
-            }
+            // if (!values.description) {
+            //   errors.description = 'Required';
+            // }
             if (!values.price) {
               errors.price = 'Required';
             }
@@ -69,14 +69,14 @@ class CreateItem extends React.Component {
                   maxLength="50"
                 />
                 <StyledErrorMessage name="name" component="div" />
-                <StyledField
+                {/* <StyledField
                   type="text"
                   name="description"
                   maxLength="100"
                   placeholder="Delish Nutrish"
                 />
-                <StyledErrorMessage name="description" component="div" />
-                <StyledField name="category" component="select">
+                <StyledErrorMessage name="description" component="div" /> */}
+                <StyledField style={{ padding: '5px' }} name="category" component="select">
                   <option value="">Choose a category...</option>
                   {this.props.itemCategories.map((item) => (
                     <option key={item} value={item}>
