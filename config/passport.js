@@ -11,6 +11,7 @@ const Employee = mongoose.model('Employee');
 // The key is sent with the request, we need it for validation
 const keys = require('./keys');
 
+// TODO: Set jwt expiration
 // Empty object for our options
 const opts = {};
 
