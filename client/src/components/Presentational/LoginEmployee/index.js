@@ -22,9 +22,13 @@ const LoginEmployee = props => (
         }
         return errors;
       }}
-      onSubmit={(values, { setSubmitting }) => {
-        props.loginEmployee(values);
-        setSubmitting(false); // TODO: set this to false upon success or error
+      onSubmit={async (values, { setSubmitting }) => {
+        try {
+          await props.loginEmployee(values);
+          setSubmitting(false);
+        } catch (err) {
+          setSubmitting(false);
+        }
       }}
     >
       {({ errors, isSubmitting }) => (

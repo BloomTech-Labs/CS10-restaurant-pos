@@ -45,8 +45,6 @@ import {
   ADDING_ITEM_SUCCESS
 } from '../actions/items';
 import {
-  LOADING_RESTAURANT_ERROR,
-  LOADING_RESTAURANT_SUCCESS,
   ADDING_RESTAURANT_ERROR,
   ADDING_RESTAURANT_SUCCESS
 } from '../actions/restaurant';
@@ -78,7 +76,6 @@ const initialState = {
   updatingPartyError: false,
   deletingPartyError: false,
   loadingItemsError: false,
-  loadingRestaurantError: false,
   addingRestaurantError: false,
   loadingServersError: false,
   paymentsError: false,
@@ -167,11 +164,6 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, addingItemError: action.payload };
     case ADDING_ITEM_SUCCESS:
       return { ...errors, addingItemError: false };
-
-    case LOADING_RESTAURANT_ERROR:
-      return { ...errors, loadingRestaurantError: action.payload };
-    case LOADING_RESTAURANT_SUCCESS:
-      return { ...errors, loadingRestaurantError: false };
 
     case ADDING_RESTAURANT_ERROR:
       return { ...errors, addingRestaurantError: action.payload };

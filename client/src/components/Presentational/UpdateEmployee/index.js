@@ -15,7 +15,7 @@ import * as s from './styles';
 class UpdateEmployee extends React.Component {
   state = {
     revealed: false,
-    background: '#fff'
+    background: localStorage.getItem('themeColor') || '#E30E58',
   };
 
   resetColor = () => {
@@ -65,17 +65,23 @@ class UpdateEmployee extends React.Component {
             }
             return errors;
           }}
-          onSubmit={(values, { setSubmitting, resetForm }) => {
-            localStorage.setItem('themeColor', background);
-
-            updateEmployee({ ...values, themeColor: background });
-
-            resetForm();
-
-            setSubmitting(false); // TODO: set this to false upon success or error
+          onSubmit={async (values, { setSubmitting, resetForm }) => {
+            try {
+              if (background !== localStorage.getItem('themeColor')) {
+                localStorage.setItem('themeColor', background);
+                await updateEmployee({ ...values, themeColor: background });
+                resetForm();
+                setSubmitting(false);
+              } else {
+                await updateEmployee({ ...values });
+                resetForm();
+                setSubmitting(false);
+              }
+            } catch (err) {
+              setSubmitting(false);
+            }
           }}
         >
-          {/* // TODO: build categories */}
           {({ errors, isSubmitting }) => (
             <s.Container>
               <h1>Update User Information</h1>

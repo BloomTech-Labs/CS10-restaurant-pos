@@ -32,7 +32,7 @@ export const logout = () => ({ type: LOGOUT });
 
 export const login = ({ email, pass }) => (dispatch, getState) => {
   dispatch({ type: AUTH_LOADING });
-  axios
+  return axios
     .post(`${serverURI}/api/employees/admin/login`, { email, pass })
     .then((res) => {
       dispatch({ type: LOGIN_SUCCESS, payload: res.data.token });
@@ -58,7 +58,7 @@ export const register = ({ name, email, pass, confirmPass }) => (dispatch) => {
   }
   dispatch({ type: PASSWORD_MATCH_SUCCESS });
   dispatch({ type: AUTH_LOADING });
-  axios
+  return axios
     .post(`${serverURI}/api/employees/admin/register`, {
       name,
       email,
@@ -83,7 +83,7 @@ export const updateEmployee = ({ pin, pass, newPass, confirmNew, email, name, th
   }
   dispatch({ type: PASSWORD_MATCH_SUCCESS });
   dispatch({ type: AUTH_LOADING });
-  axios
+  return axios
     .put(`${serverURI}/api/employees/update/${pin}`, {
       pass,
       newPass,
@@ -94,8 +94,7 @@ export const updateEmployee = ({ pin, pass, newPass, confirmNew, email, name, th
     .then(() => {
       dispatch({ type: UPDATE_EMPLOYEE_SUCCESS });
       toast('Successfully updated the account.');
-      window.location.reload();
-      // ! Get rid of or change the /password-change-success page
+      if (themeColor) window.location.reload();
     })
     .catch((err) => {
       dispatch({ type: UPDATE_EMPLOYEE_ERROR, payload: err });
@@ -105,7 +104,7 @@ export const updateEmployee = ({ pin, pass, newPass, confirmNew, email, name, th
 
 export const loginEmployee = ({ pin, pass }) => (dispatch) => {
   dispatch({ type: AUTH_LOADING });
-  axios
+  return axios
     .post(`${serverURI}/api/employees/login`, { pin, pass })
     .then((res) => {
       const { role } = jwtDecode(res.data.token);
@@ -155,7 +154,7 @@ export const addEmployee = (employee) => (dispatch) => {
   }
   dispatch({ type: PASSWORD_MATCH_SUCCESS });
   dispatch({ type: AUTH_LOADING });
-  axios
+  return axios
     .post(`${serverURI}/api/employees/register`, {
       name: employee.name,
       pass: employee.pass,

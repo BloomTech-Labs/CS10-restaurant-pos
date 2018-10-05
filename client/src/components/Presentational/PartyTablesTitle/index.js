@@ -29,11 +29,11 @@ function PartyTablesTitle(props) {
 }
 
 PartyTablesTitle.propTypes = {
-  tables: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of object
+  tables: PropTypes.arrayOf(PropTypes.object),
 };
 
 PartyTablesTitle.defaultProps = {
-  tables: [],
+  tables: [{}],
 };
 
 export default PartyTablesTitle;

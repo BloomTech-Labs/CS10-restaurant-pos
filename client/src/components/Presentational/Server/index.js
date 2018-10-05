@@ -10,7 +10,6 @@ export default function Server(props) {
     : 'https://images.unsplash.com/photo-1500649297466-74794c70acfc?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ce5cca94a31b3b2c59c9ff1002079ed9&auto=format&fit=crop&w=150&q=60';
 
   return (
-    // TODO: Get the free table view version of this working
     <s.ServerBox onClick={() => push(`/tables/${server.name.replace(/\s/, '_')}/${server._id}`)}>
       <div>{server.name}</div>
       <s.ProfilePic>

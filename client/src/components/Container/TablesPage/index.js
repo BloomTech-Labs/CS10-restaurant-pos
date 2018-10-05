@@ -82,7 +82,6 @@ class TablesPage extends Component {
           {match.params.id && (
             <BackButton />
           )}
-          {/* // ! Highlight server's tables + fix renumbering */}
           <FreeFloorPlan
             membership={membership}
             tables={tablesToDisplay}

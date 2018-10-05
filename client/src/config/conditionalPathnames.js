@@ -4,7 +4,6 @@ export const sidebar = [
   '/login',
   '/logout',
   '/register',
-  '/registration-success',
   '/new-restaurant',
   '/login-employee',
   '/new-employee'

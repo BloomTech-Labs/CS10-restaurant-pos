@@ -18,7 +18,7 @@ class FloorPlan extends React.PureComponent {
 
     // use ref of parent div and use its width and height
     const { parent } = this.props;
-    // ! Subtraction hack to fix the scrolling thing
+    // Subtraction hack to fix the scrolling thing
     const width = parent.current.clientWidth - 10;
     const height = parent.current.clientHeight - 10;
 
@@ -40,7 +40,7 @@ class FloorPlan extends React.PureComponent {
       passiveWheel: false // presence of unnecessary passive event listeners causes a warning
     });
     this.app.renderer.backgroundColor = parseInt(theme.contentBackground.slice(1), 16);
-    this.tables = []; // TODO: investigate cleaner solutions
+    this.tables = [];
     this.texture = null;
     this.foreground = null;
     this.background = null;
@@ -243,23 +243,11 @@ class FloorPlan extends React.PureComponent {
       .on('mousedown', e => this.onDragStart(e, circle))
       .on('touchstart', e => this.onDragStart(e, circle))
       .on('mouseup', () => this.onDragEnd(circle))
-      .on('mouseupoutside', () => this.deleteCircle(circle))
       .on('touchend', () => this.onDragEnd(circle))
-      .on('touchendoutside', () => this.deleteCircle(circle))
       .on('mousemove', () => this.onDragMove(circle))
       .on('touchmove', () => this.onDragMove(circle));
 
     this.viewport.addChild(container);
-  };
-
-  deleteCircle = circle => {
-    // This is called on 'mouseupoutside' so that,
-    // if you are in editing mode, dragging the
-    // circle out of bounds will destroy it
-    if (this.props.editing) {
-      circle.destroy();
-      // TODO: Call action to delete from the database
-    }
   };
 
   toggleActive = circle => {
@@ -377,7 +365,7 @@ class FloorPlan extends React.PureComponent {
     // calculate the size the editor should
     // resize to based on the parent div
     const { parent } = this.props;
-    // ! Subtraction hack to fix the scrolling thing
+    // Subtraction hack to fix the scrolling thing
     const w = parent.current.clientWidth - 10;
     const h = parent.current.clientHeight - 10;
     this.app.renderer.resize(w, h);
@@ -428,7 +416,7 @@ FloorPlan.defaultProps = {
   moveTable: () => {},
   toggleTable: () => {},
   openParty: () => {},
-  parent: false, // TODO: define as a node
+  parent: false,
 };
 
 export default FloorPlan;
