@@ -28,9 +28,13 @@ const CreateRestaurant = props => (
         }
         return errors;
       }}
-      onSubmit={(values, { setSubmitting }) => {
-        props.addRestaurant(values);
-        setSubmitting(false); // TODO: set this to false upon success or error
+      onSubmit={async (values, { setSubmitting }) => {
+        try {
+          await props.addRestaurant(values);
+          setSubmitting(false);
+        } catch (err) {
+          setSubmitting(false);
+        }
       }}
     >
       {({ errors, isSubmitting }) => (

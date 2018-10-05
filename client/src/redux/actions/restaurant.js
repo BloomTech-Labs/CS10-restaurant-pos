@@ -34,7 +34,7 @@ export const addRestaurant = ({
   billingAddress: address
 }) => dispatch => {
   dispatch({ type: ADDING_RESTAURANT });
-  axios
+  return axios
     .post(`${serverURI}/api/restaurants/register`, { name, location, billing: { address } })
     .then(res => {
       const { restaurant } = jwtDecode(res.data.token);
