@@ -173,9 +173,7 @@ Response:
 
 POST `/api/employees/register`
 
-**Requires Authentication**
-
-**Admin/Manager only**
+**Requires:** Authentication, an admin must create a restaurant first, must be an admin or a manager.
 
 Registers a new employee. The `restaurant` field for the Employee will automatically be pulled from the JWT.
 
