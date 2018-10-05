@@ -51,6 +51,7 @@ const employeeLogin = (req, res) => {
             manager: employee.role.manager
           },
           restaurant: employee.restaurant,
+          themeColor: employee.themeColor,
           membership: token.membership
         };
 

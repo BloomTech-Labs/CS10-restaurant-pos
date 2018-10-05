@@ -12,7 +12,7 @@ const verifyRole = require('../../validation/verifyRole');
 // @access  Public
 const employeeRegister = (req, res) => {
   const {
-    pass: password, role, name, images
+    pass: password, role, name, images,
   } = req.body;
 
   // Validate Fields
@@ -23,6 +23,7 @@ const employeeRegister = (req, res) => {
   }
 
   let restaurant;
+  let themeColor;
 
   try {
     // Check to see if token exists
@@ -31,8 +32,10 @@ const employeeRegister = (req, res) => {
     }
     const currentUser = jwt.verify(req.headers.authorization.slice(7), keys.secretOrKey);
 
-    // eslint-disable-next-line
+    /* eslint-disable prefer-destructuring */
     restaurant = currentUser.restaurant;
+    themeColor = currentUser.themeColor;
+    /* eslint-enable prefer-destructuring */
 
     // Verify roles
     if (!verifyRole(currentUser)) {
@@ -56,7 +59,8 @@ const employeeRegister = (req, res) => {
     images,
     role,
     pin,
-    restaurant
+    restaurant,
+    themeColor
   });
 
   newEmployee

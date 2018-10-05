@@ -7,7 +7,6 @@ import * as s from './styles';
 
 export default function ServerList(props) {
   const { serverList, push } = props;
-  console.log(serverList);
   return (
     <s.Container>
       {serverList.map((server) => (

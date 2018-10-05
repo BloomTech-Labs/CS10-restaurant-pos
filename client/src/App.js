@@ -27,7 +27,6 @@ import NewRestaurant from './components/Container/CreateRestaurantPage';
 import RequireNotAuth from './components/HOC/RequireNotAuth';
 import RequireAuth from './components/HOC/RequireAuth';
 import { sidebar } from './config/conditionalPathnames';
-import Test from './components/Presentational/Test';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -39,7 +38,6 @@ const AuthedTablesPage = RequireAuth(TablesPage);
 const AuthedServers = RequireAuth(Servers);
 const AuthedSettings = RequireAuth(Settings);
 const AuthedHelp = RequireAuth(Help);
-// const AuthedTest = RequireAuth(Test);
 
 const NotAuthedLogin = RequireNotAuth(Login);
 const NotAuthedRegsiter = RequireNotAuth(Register);
@@ -94,7 +92,6 @@ class App extends Component {
               push={history.push}
             />
             <Switch>
-              <Route path="/test" component={Test} />
               <Route path="/" component={Landing} exact />
               <Route path="/logout" component={Logout} />
               <Route path="/login" component={NotAuthedLogin} />

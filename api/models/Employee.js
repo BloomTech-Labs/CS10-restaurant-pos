@@ -47,6 +47,7 @@ const Employee = new Schema({
     type: ObjectId,
     ref: 'Restaurant',
   },
+  themeColor: String,
 });
 
 // Pre-Save Hook

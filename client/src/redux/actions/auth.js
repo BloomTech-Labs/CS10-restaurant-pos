@@ -74,7 +74,9 @@ export const register = ({ name, email, pass, confirmPass }) => (dispatch) => {
     });
 };
 
-export const updateEmployee = ({ pin, pass, newPass, confirmNew, email, name }) => (dispatch) => {
+export const updateEmployee = ({ pin, pass, newPass, confirmNew, email, name, themeColor }) => (
+  dispatch
+) => {
   if (newPass !== confirmNew) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
@@ -86,7 +88,8 @@ export const updateEmployee = ({ pin, pass, newPass, confirmNew, email, name }) 
       pass,
       newPass,
       name,
-      email
+      email,
+      themeColor
     })
     .then(() => {
       dispatch({ type: UPDATE_EMPLOYEE_SUCCESS });
@@ -145,7 +148,6 @@ export const logoutEmployee = () => (dispatch) => {
 };
 
 export const addEmployee = (employee) => (dispatch) => {
-  console.log(employee);
   if (employee.pass !== employee.confirmPass) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
