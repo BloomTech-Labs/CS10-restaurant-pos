@@ -19,12 +19,9 @@ class UpdateEmployee extends React.Component {
   };
 
   toggleColorPicker = () => {
-    this.setState((prev) => { // eslint-disable-line arrow-body-style
-      // if (prev.revealed) localStorage.setItem('themeColor', prev.background);
-      return {
-        revealed: !prev.revealed
-      };
-    });
+    this.setState((prev) => ({
+      revealed: !prev.revealed
+    }));
   };
 
   handleChangeComplete = (color) => {
@@ -63,6 +60,8 @@ class UpdateEmployee extends React.Component {
             return errors;
           }}
           onSubmit={(values, { setSubmitting, resetForm }) => {
+            localStorage.setItem('themeColor', background);
+
             updateEmployee({ ...values, themeColor: background });
 
             resetForm();

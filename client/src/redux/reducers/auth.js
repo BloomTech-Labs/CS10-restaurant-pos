@@ -34,7 +34,7 @@ const initialState = {
     thumbnail: '',
     small: '',
     medium: ''
-  }
+  },
 };
 
 const getJWTInfo = (jwt) => {
@@ -53,7 +53,6 @@ const getJWTInfo = (jwt) => {
     medium:
       'https://images.unsplash.com/photo-1500649297466-74794c70acfc?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ce5cca94a31b3b2c59c9ff1002079ed9&auto=format&fit=crop&w=150&q=60'
   };
-  let themeColor;
 
   if (jwt) {
     const currentTime = Date.now() / 1000;
@@ -71,17 +70,15 @@ const getJWTInfo = (jwt) => {
       id = decodedJwt.id;
       pin = decodedJwt.pin;
       if (decodedJwt.images && Object.keys(decodedJwt.images).length) images = decodedJwt.images;
-      if (decodedJwt.themeColor) {
-        themeColor = decodedJwt.themeColor;
-        localStorage.setItem('themeColor', themeColor);
-      }
       /* eslint-enable */
     }
   }
-  return { jwt, role, restaurant, membership, name, email, id, pin, images, themeColor };
+  return { jwt, role, restaurant, membership, name, email, id, pin, images };
 };
 
 const AuthReducer = (auth = initialState, action) => {
+  let themeColor;
+
   switch (action.type) {
     case AUTH_LOADING:
       return { ...auth, loading: true };
@@ -93,6 +90,12 @@ const AuthReducer = (auth = initialState, action) => {
       return { ...auth, ...getJWTInfo(jwt) };
 
     case LOGIN_SUCCESS:
+      // eslint-disable-next-line prefer-destructuring
+      themeColor = jwtDecode(action.payload).themeColor;
+      if (themeColor && themeColor !== localStorage.getItem('themeColor')) {
+        localStorage.setItem('themeColor', themeColor);
+        window.location.reload();
+      }
       return {
         ...auth,
         ...getJWTInfo(action.payload),
@@ -112,10 +115,16 @@ const AuthReducer = (auth = initialState, action) => {
       return { ...auth, loading: false };
 
     case EMPLOYEE_LOGIN_SUCCESS:
+      // eslint-disable-next-line prefer-destructuring
+      themeColor = jwtDecode(action.payload).themeColor;
+      if (themeColor && themeColor !== localStorage.getItem('themeColor')) {
+        localStorage.setItem('themeColor', themeColor);
+        window.location.reload();
+      }
       return {
         ...auth,
-        loading: false,
-        ...getJWTInfo(action.payload)
+        ...getJWTInfo(action.payload),
+        loading: false
       };
 
     case EMPLOYEE_LOGIN_FAILURE:

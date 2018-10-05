@@ -10,7 +10,6 @@ export default function RequireAuthHOC(ComposedComponent, ignoreEmployeeLogin) {
     if (jwt) {
       const decoded = jwtDecode(jwt);
 
-      console.log(props);
       if (!decoded.restaurant && location.pathname !== '/new-restaurant') {
         return (
           <Redirect to="/new-restaurant" />
