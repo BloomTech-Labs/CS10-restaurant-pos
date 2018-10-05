@@ -10,6 +10,8 @@ import * as tableImage from '../../../assets/Path_33.png';
 
 import * as s from './styles';
 
+const appSecondary = parseInt(theme.appSecondary.slice(1), 16);
+
 class FloorPlan extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -217,7 +219,7 @@ class FloorPlan extends React.PureComponent {
       // If the table doesn't exist in the active Set,
       // add it to the Set and adjust its appearance
       // circle.alpha = 1;
-      circle.tint = 0xe30e58;
+      circle.tint = appSecondary;
     } else {
       // If the table does exist in the active Set,
       // remove it from the Set and adjust its appearance
@@ -263,7 +265,7 @@ class FloorPlan extends React.PureComponent {
       // If the table does exist in the active Set,
       // remove it from the Set and adjust its appearance
       // circle.alpha = 1;
-      circle.tint = 0xe30e58;
+      circle.tint = appSecondary;
     }
 
     if (this.props.selectable) {
