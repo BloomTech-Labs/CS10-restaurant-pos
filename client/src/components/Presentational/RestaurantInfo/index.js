@@ -12,6 +12,8 @@ import {
 
 import * as s from './styles';
 
+// This component is not being used but could be implemented later
+
 const RestaurantInfo = props => (
   <React.Fragment>
     <StyledFormik
@@ -35,9 +37,13 @@ const RestaurantInfo = props => (
 
         return errors;
       }}
-      onSubmit={(values, { setSubmitting }) => {
-        props.changeRestaurantInfo(values);
-        setSubmitting(false); // TODO: set this to false upon success or error
+      onSubmit={async (values, { setSubmitting }) => {
+        try {
+          await props.changeRestaurantInfo(values);
+          setSubmitting(false);
+        } catch (err) {
+          setSubmitting(false);
+        }
       }}
     >
       {({ errors, isSubmitting }) => (
