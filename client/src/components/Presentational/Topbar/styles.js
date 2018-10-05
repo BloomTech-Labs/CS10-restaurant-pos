@@ -13,7 +13,6 @@ export const Topbar = styled.nav`
   height: ${(props) => props.theme.topBarHeight}px;
   padding: 0 50px;
   border-top: 4px solid ${(props) => props.theme.appSecondary};
-  background: ${(props) => props.theme.appPrimary};
   ${(props) => props.blur && modalBlur};
 `;
 

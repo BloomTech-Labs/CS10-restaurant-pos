@@ -8,5 +8,23 @@ export const LandingContainer = styled.div`
 `;
 
 export const Title = styled.h1`
-  font-size: 3.6rem;
+  position: fixed;
+  top: 40px;
+  left: 50px;
+  display: flex;
+  font-size: 3.3rem;
+  color: ${(props) => props.theme.appPrimary};
+
+  * {
+    margin-right: 10px;
+  }
+`;
+
+export const Background = styled.div`
+  position: fixed;
+  z-index: -100;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  fill: ${(props) => props.theme.appSecondary};
 `;
