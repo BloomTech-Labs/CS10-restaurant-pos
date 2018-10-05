@@ -39,7 +39,6 @@ if (process.env.NODE_ENV === 'production') {
   );
 }
 
-// TODO: Possibly remove due to connected-react-router
 const AppWithRouter = withRouter((props) => <App {...props} />);
 
 ReactDOM.render(

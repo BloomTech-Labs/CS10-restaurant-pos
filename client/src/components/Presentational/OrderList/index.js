@@ -25,15 +25,15 @@ export default function OrderList(props) {
 }
 
 OrderList.propTypes = {
-  order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape later
-  splitOrder: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
+  order: PropTypes.arrayOf(PropTypes.object),
+  splitOrder: PropTypes.arrayOf(PropTypes.object),
   itemAction: PropTypes.func,
   ItemButton: PropTypes.func,
 };
 
 OrderList.defaultProps = {
-  order: [],
-  splitOrder: [],
+  order: [{}],
+  splitOrder: [{}],
   itemAction: () => {},
   ItemButton: () => <div />,
 };

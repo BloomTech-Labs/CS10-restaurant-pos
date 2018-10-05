@@ -21,7 +21,7 @@ OrderItem.propTypes = {
   item: PropTypes.shape({
     name: PropTypes.string,
     price: PropTypes.number
-  }), // TODO: define shape later
+  }),
   itemAction: PropTypes.func,
   ItemButton: PropTypes.func,
 };
@@ -29,8 +29,8 @@ OrderItem.propTypes = {
 OrderItem.defaultProps = {
   checked: false,
   item: {
-    name: 'defaultitem',
-    price: '555.00'
+    name: 'Default Item',
+    price: '9.99'
   },
   itemAction: () => {},
   ItemButton: () => <div />,

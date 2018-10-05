@@ -32,7 +32,7 @@ class ServersPage extends React.Component {
 
 ServersPage.propTypes = {
   getServers: PropTypes.func,
-  serverList: PropTypes.arrayOf(PropTypes.object), // TODO: Define object shape
+  serverList: PropTypes.arrayOf(PropTypes.object),
   loading: PropTypes.bool,
   history: PropTypes.shape({
     push: PropTypes.func,
@@ -41,11 +41,7 @@ ServersPage.propTypes = {
 
 ServersPage.defaultProps = {
   getServers: () => {},
-  serverList: [ // ! Get this right
-    { name: 'Jimmy', _id: '38hiodsn' },
-    { name: 'Randy', _id: 'dgas98yh3n2' },
-    { name: 'Carl', _id: 'asg0hio2n3' }
-  ],
+  serverList: [{}],
   loading: true,
   history: { push: () => {} },
 };

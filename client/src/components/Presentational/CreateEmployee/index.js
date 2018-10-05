@@ -51,9 +51,13 @@ class CreateEmployee extends React.Component {
             }
             return errors;
           }}
-          onSubmit={(values, { setSubmitting }) => {
-            this.props.addEmployee({ ...values, images: this.state.images });
-            setSubmitting(false); // TODO: set this to false upon success or error
+          onSubmit={async (values, { setSubmitting }) => {
+            try {
+              await this.props.addEmployee({ ...values, images: this.state.images });
+              setSubmitting(false);
+            } catch (err) {
+              setSubmitting(false);
+            }
           }}
         >
           {({ errors, isSubmitting }) => (

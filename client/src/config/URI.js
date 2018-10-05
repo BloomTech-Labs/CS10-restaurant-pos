@@ -8,11 +8,3 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 export default serverURI;
-
-
-// ! Try this:
-// if (process.env.NODE_ENV === 'production') {
-//   export default '';
-// } else {
-//   export default 'http://localhost:5000';
-// }

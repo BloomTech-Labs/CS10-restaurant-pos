@@ -197,9 +197,9 @@ PartyPage.propTypes = {
   closeSplitModal: PropTypes.func,
   getParties: PropTypes.func,
   loading: PropTypes.bool,
-  order: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
-  items: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
-  splitOrder: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
+  order: PropTypes.arrayOf(PropTypes.object),
+  items: PropTypes.arrayOf(PropTypes.object),
+  splitOrder: PropTypes.arrayOf(PropTypes.object),
   itemCategories: PropTypes.arrayOf(PropTypes.string),
   match: PropTypes.shape({
     params: PropTypes.object
@@ -228,8 +228,8 @@ PartyPage.defaultProps = {
   splitModalIsOpen: false,
   loading: true,
   order: [{}],
-  items: [],
-  splitOrder: [],
+  items: [{}],
+  splitOrder: [{}],
   itemCategories: ['All'],
   partyList: [{ _id: 'defaultpartyid' }],
   match: { params: {} },

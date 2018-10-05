@@ -13,7 +13,6 @@ import Logout from './components/LogoutPage';
 import Login from './components/Container/LoginPage';
 import Register from './components/Container/RegisterPage';
 import SuccessRegistration from './components/Presentational/SuccessRegistration';
-import SuccessPassChange from './components/Presentational/SuccessPassChange';
 import LoginEmployee from './components/Container/LoginEmployeePage';
 import CreateEmployee from './components/Container/CreateEmployeePage';
 import Servers from './components/Container/ServersPage';
@@ -97,7 +96,6 @@ class App extends Component {
               <Route path="/login" component={NotAuthedLogin} />
               <Route path="/register" component={NotAuthedRegsiter} />
               <Route path="/registration-success" component={SuccessRegistration} />
-              <Route path="/password-change-success" component={SuccessPassChange} />
               <Route path="/login-employee" component={AuthedLoginEmployee} />
               <Route path="/new-restaurant" component={AuthedNewRestaurant} />
               <Route path="/new-employee" component={AuthedCreateEmployee} />

@@ -64,7 +64,7 @@ CheckoutModalSplit.propTypes = {
   splitModalIsOpen: PropTypes.bool,
   partyId: PropTypes.string,
   location: locationType,
-  splitOrder: PropTypes.arrayOf(PropTypes.object), // TODO: define shape of the objects,
+  splitOrder: PropTypes.arrayOf(PropTypes.object),
   showStripe: PropTypes.bool,
   checkoutSplitOrder: PropTypes.func
 };
@@ -75,7 +75,7 @@ CheckoutModalSplit.defaultProps = {
   splitModalIsOpen: false,
   partyId: 'defaultpartyid',
   location: { country: 'US', state: 'CA' },
-  splitOrder: [],
+  splitOrder: [{}],
   showStripe: false,
   checkoutSplitOrder: () => {}
 };

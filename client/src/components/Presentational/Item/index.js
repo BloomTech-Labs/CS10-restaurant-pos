@@ -32,18 +32,16 @@ export default function Item(props) {
 
 Item.propTypes = {
   item: PropTypes.shape({
-    description: PropTypes.string,
     name: PropTypes.string,
     price: PropTypes.number
-  }), // TODO: define shape later
+  }),
   addItemToOrder: PropTypes.func
 };
 
 Item.defaultProps = {
   item: {
-    name: 'defaultitem',
-    description: 'delicious',
-    price: '555.00'
+    name: 'Default Item',
+    price: '9.99'
   },
   addItemToOrder: () => {}
 };
