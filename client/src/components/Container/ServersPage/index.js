@@ -41,11 +41,7 @@ ServersPage.propTypes = {
 
 ServersPage.defaultProps = {
   getServers: () => {},
-  serverList: [ // ! Get this right
-    { name: 'Jimmy', _id: '38hiodsn' },
-    { name: 'Randy', _id: 'dgas98yh3n2' },
-    { name: 'Carl', _id: 'asg0hio2n3' }
-  ],
+  serverList: [],
   loading: true,
   history: { push: () => {} },
 };
