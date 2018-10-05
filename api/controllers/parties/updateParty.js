@@ -22,7 +22,6 @@ const updateParty = (req, res) => {
         .populate('tables')
         .execPopulate()
         .then(party => {
-          // TODO: Revisit later with the time
           const reformattedParty = {
             ...party._doc,
             food: party.food.map(foodItem => ({

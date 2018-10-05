@@ -45,7 +45,7 @@ const employeeRegister = (req, res) => {
     return res.status(500).json({ err, msg: 'Error verifying the token.' });
   }
 
-  // TODO: Remove auto generated pins
+  // TODO: Check if pin exists before saving
   let pin = '';
 
   for (let i = 0; i < 4; i++) {

@@ -40,7 +40,7 @@ class FloorPlan extends React.PureComponent {
       passiveWheel: false // presence of unnecessary passive event listeners causes a warning
     });
     this.app.renderer.backgroundColor = parseInt(theme.contentBackground.slice(1), 16);
-    this.tables = []; // TODO: investigate cleaner solutions
+    this.tables = [];
     this.texture = null;
     this.foreground = null;
     this.background = null;

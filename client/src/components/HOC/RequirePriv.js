@@ -13,7 +13,6 @@ export default (ComposedComponent) => {
             <ComposedComponent {...this.props} />
           ) : (
             <Redirect to="/tables" />
-            // TODO: Pop up the PIN modal
           )}
         </React.Fragment>
       );

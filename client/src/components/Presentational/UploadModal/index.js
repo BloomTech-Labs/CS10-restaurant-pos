@@ -42,7 +42,6 @@ class UploadModal extends React.Component {
         signature: null,
         params: {
           auth: {
-            // TODO: Another spot for environment variables
             key: 'd974c600c66711e8aea1818ac045b32a'
           },
           steps: {

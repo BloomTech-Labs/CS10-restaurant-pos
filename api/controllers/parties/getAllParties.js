@@ -10,7 +10,6 @@ const getAllParties = (req, res) => {
     .populate({ path: 'food._id', model: 'Item' })
     .populate('tables')
     .then((parties) => {
-      // TODO: Revisit later with the time
       const reformattedParties = parties.map(party => ({
         ...party._doc,
         food: party.food.map(food => ({
