@@ -83,7 +83,7 @@ export const updateEmployee = ({ pin, pass, newPass, confirmNew, email, name, th
   }
   dispatch({ type: PASSWORD_MATCH_SUCCESS });
   dispatch({ type: AUTH_LOADING });
-  axios
+  return axios
     .put(`${serverURI}/api/employees/update/${pin}`, {
       pass,
       newPass,
