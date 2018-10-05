@@ -9,7 +9,7 @@ const verifyRole = require('../../validation/verifyRole');
 
 // @route   POST api/employees/register
 // @desc    Adds a new user to the DB
-// @access  Public
+// @access  Private
 const employeeRegister = (req, res) => {
   const {
     pass: password, role, name, images,
