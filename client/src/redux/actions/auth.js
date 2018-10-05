@@ -58,7 +58,7 @@ export const register = ({ name, email, pass, confirmPass }) => (dispatch) => {
   }
   dispatch({ type: PASSWORD_MATCH_SUCCESS });
   dispatch({ type: AUTH_LOADING });
-  axios
+  return axios
     .post(`${serverURI}/api/employees/admin/register`, {
       name,
       email,

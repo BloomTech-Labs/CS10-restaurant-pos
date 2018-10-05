@@ -32,9 +32,13 @@ const Register = props => (
         }
         return errors;
       }}
-      onSubmit={(values, { setSubmitting }) => {
-        props.register(values);
-        setSubmitting(false); // TODO: set this to false upon success or error
+      onSubmit={async (values, { setSubmitting }) => {
+        try {
+          await props.register(values);
+          setSubmitting(false);
+        } catch (err) {
+          setSubmitting(false);
+        }
       }}
     >
       {({ errors, isSubmitting }) => (
