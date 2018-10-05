@@ -16,9 +16,9 @@
     - [Update Employee](#update-employee)
     - [Employee Logout](#employee-logout)
   - [Item Routes](#item-routes)
+    - [Add Item](#add-item)
     - [Get All Items](#get-all-items)
     - [Get A Specific Item](#get-a-specific-item)
-    - [Add Item](#add-item)
     - [Update Item](#update-item)
     - [Delete Item](#delete-item)
   - [Party Routes](#party-routes)
@@ -292,7 +292,7 @@ Response:
     },
     {
       "_id": "5bb7d3ceb2786a2c785eee1c",
-      "name": "Milo Pup",
+      "name": "employee name",
       "images": null,
       "parties": [
         {
@@ -311,7 +311,7 @@ Response:
 
 PUT `/api/employees/update/:pin`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Changes the name, email or password for the user. The pin in the params must match the pin of the current user.
 
@@ -352,84 +352,11 @@ Response will be a new token with all the user information fields replaced with 
 
 ## Item Routes
 
-### Get All Items
-
-GET `/api/items/all`
-
-**Requires Authorization**
-
-Retrieves all of the food items from the database.
-
-Each element in the response array includes and item's:
-
-- name
-- description
-- category
-- price
-
-Response:
-
-```
-{
-  "items": [
-    {
-      "_id": "5ba6c9f8914dc082011a1657",
-      "name": "Spaghetti",
-      "price": 10.99,
-      "description": "Noodles and red stuff",
-      "category": "entrees",
-      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-      "__v": 0
-    },
-    {
-      "_id": "5ba6caaf914dc082011a1658",
-      "name": "Salad",
-      "price": 6.75,
-      "description": "Lettuce and various other things",
-      "category": "sides",
-      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-      "__v": 0
-    }
-  ]
-}
-```
-
-### Get A Specific Item
-
-GET `/api/items/:id`
-
-**Requires Authorization**
-
-Retrieves the food by the id specified in the parameters.
-
-Response includes the item's:
-
-- name
-- price
-- description
-- category
-
-Response:
-
-```
-{
-  "item": {
-    "_id": "5ba6c9f8914dc082011a1657",
-    "name": "Spaghetti",
-    "price": 10.99,
-    "description": "Noodles and red stuff",
-    "category": "entrees",
-    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-    "__v": 0
-  }
-}
-```
-
 ### Add Item
 
 POST `/api/items/add`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Adds a new food item to the database. Only managers and admins can do this.
 
@@ -475,11 +402,84 @@ Response:
 }
 ```
 
+### Get All Items
+
+GET `/api/items/all`
+
+**Requires:** Authorization
+
+Retrieves all of the food items from the database.
+
+Each element in the response array includes and item's:
+
+- name
+- description
+- category
+- price
+
+Response:
+
+```
+{
+  "items": [
+    {
+      "_id": "5ba6c9f8914dc082011a1657",
+      "name": "Spaghetti",
+      "price": 10.99,
+      "description": "Noodles and red stuff",
+      "category": "entrees",
+      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+      "__v": 0
+    },
+    {
+      "_id": "5ba6caaf914dc082011a1658",
+      "name": "Salad",
+      "price": 6.75,
+      "description": "Lettuce and various other things",
+      "category": "sides",
+      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+      "__v": 0
+    }
+  ]
+}
+```
+
+### Get A Specific Item
+
+GET `/api/items/:id`
+
+**Requires:** Authorization
+
+Retrieves the food by the id specified in the parameters.
+
+Response includes the item's:
+
+- name
+- price
+- description
+- category
+
+Response:
+
+```
+{
+  "item": {
+    "_id": "5ba6c9f8914dc082011a1657",
+    "name": "Spaghetti",
+    "price": 10.99,
+    "description": "Noodles and red stuff",
+    "category": "entrees",
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 0
+  }
+}
+```
+
 ### Update Item
 
 PUT `/api/items/update/:id`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Updates information for an existing food item. Only managers and admins can do this.
 
@@ -528,7 +528,7 @@ Response:
 
 DELETE `/api/items/delete/:id`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Deletes an item from the database. Only managers and admins can do this.
 
