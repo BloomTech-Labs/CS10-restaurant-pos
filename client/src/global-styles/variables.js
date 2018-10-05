@@ -16,6 +16,7 @@ const porcelain = '#EDEFF0';
 const limedSpruce = '#363F49';
 const eden = '#114B5F';
 const cosmic = '#803952';
+const athensGrey = '#EDEFF2';
 
 export const theme = {
   // * Misc. -----------------------------------
@@ -75,6 +76,7 @@ export const theme = {
   appSecondary: razzmatazz,
   appTertiary: oxfordBlue,
   contentBackground: aquaHaze,
+  contentBackgroundDarker: athensGrey,
   textColorDark: white,
   inputError: wispPink,
   menuBg: porcelain,
