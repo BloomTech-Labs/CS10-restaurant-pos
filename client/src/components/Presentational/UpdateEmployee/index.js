@@ -18,6 +18,12 @@ class UpdateEmployee extends React.Component {
     background: localStorage.getItem('themeColor') || '#E30E58',
   };
 
+  resetColor = () => {
+    this.setState({
+      background: '#E30E58'
+    });
+  };
+
   toggleColorPicker = () => {
     this.setState((prev) => ({
       revealed: !prev.revealed
@@ -124,6 +130,9 @@ class UpdateEmployee extends React.Component {
                   <div>
                     <Button type="button" onClick={this.toggleColorPicker}>
                       {revealed ? 'Save Color' : 'Pick Color'}
+                    </Button>
+                    <Button type="button" onClick={this.resetColor}>
+                      Reset Color
                     </Button>
                     {revealed ? (
                       <ChromePicker
