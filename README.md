@@ -1344,7 +1344,7 @@ Using supertest with jest for integration testing makes things easy to implement
 
 ### React
 
-React is the current industry standard that offers a lot of out of the box benefits. It is fast, efficient, and scalable. Due to the large community 
+React is the current industry standard that offers a lot of out of the box benefits. It is fast, efficient, and scalable. Due to the large community, finding solutions to potential problems and reference material is much easier, even for a potential dev without a lot of experience who would like to contribute to Main Course. | [View Dependency](https://reactjs.org/docs/getting-started.html)
 
 ### Redux
 
