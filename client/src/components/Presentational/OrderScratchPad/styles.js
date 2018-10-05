@@ -8,7 +8,9 @@ export const Container = styled.div`
   align-items: center;
   background: ${props => props.theme.appTertiary};
   color: ${props => props.theme.textColorDark};
-  padding: 0 35px;
+  padding: 25px;
+  width: 300px;
+  flex-shrink: 0;
 `;
 
 export const Checkout = styled.div`

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  flex-grow: 1;
 `;
 
 export const Items = styled.div`
@@ -12,4 +12,5 @@ export const Items = styled.div`
   overflow-y: auto;
   justify-content: space-evenly;
   width: 100%;
+  height: 100%;
 `;

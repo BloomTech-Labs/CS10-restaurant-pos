@@ -11,5 +11,13 @@ export const Select = styled.select`
   width: ${(props) => props.theme.btnWidth}px;
   height: calc(${(props) => props.theme.btnHeight}px - 10px);
   border-radius: ${(props) => props.theme.btnBorderRadius}px;
+  background: ${(props) => props.theme.appPrimary};
   margin: 12px 0 0 0;
+  padding: 0 10px;
+  transition: background 0.2s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    background: ${(props) => props.theme.contentBackground};
+  }
 `;

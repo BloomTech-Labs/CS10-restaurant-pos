@@ -28,6 +28,11 @@ export const StyledLink = styled(NavLink).attrs({ activeClassName })`
   justify-content: flex-start;
   align-items: center;
   padding-left: 25px;
+  transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+
+  &:hover {
+    color: ${(props) => props.theme.medTextLight};
+  }
 
   &.${activeClassName} {
     color: ${(props) => props.theme.primaryText};
@@ -36,6 +41,10 @@ export const StyledLink = styled(NavLink).attrs({ activeClassName })`
     background: ${props => props.theme.contentBackground};
     border-left: 8px solid ${props => props.theme.navTabColor};
     border-radius: 10px 0 0 10px;
+    transition:
+      background 0.2s ease-in-out,
+      border-left 0.2s ease-in-out,
+      padding-left 0.2s ease-in-out;
   }
 `;
 
