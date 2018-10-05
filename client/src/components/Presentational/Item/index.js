@@ -22,8 +22,9 @@ export default function Item(props) {
       </s.ItemPic>
       <s.Item>
         <s.ItemTitle>{item.name}</s.ItemTitle>
-        {/* <s.ItemDescription>{description}</s.ItemDescription> */}
-        <s.ItemPrice>{item.price}</s.ItemPrice>
+        <s.PriceContainer>
+          <s.ItemPrice>{item.price.toFixed(2)}</s.ItemPrice>
+        </s.PriceContainer>
       </s.Item>
     </s.ItemBoxes>
   );
