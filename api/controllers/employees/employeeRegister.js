@@ -7,7 +7,7 @@ const Employee = require('../../models/Employee');
 // Verify Roles for Authentication
 const verifyRole = require('../../validation/verifyRole');
 
-// @route   POST api/employees/add
+// @route   POST api/employees/register
 // @desc    Adds a new user to the DB
 // @access  Public
 const employeeRegister = (req, res) => {
