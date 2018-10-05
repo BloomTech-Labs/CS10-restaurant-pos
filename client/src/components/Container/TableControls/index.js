@@ -3,7 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SetType from 'es6-set-proptypes';
 
-import { addTable, toggleEdit, saveTables, deleteTable } from '../../../redux/actions/tables';
+import {
+  addTable,
+  toggleEdit,
+  saveTables,
+  deleteTable,
+  getTables
+} from '../../../redux/actions/tables';
 import { createParty } from '../../../redux/actions/party';
 import TableControlButtons from '../../Presentational/TableControlButtons';
 
@@ -26,7 +32,10 @@ class TableControls extends React.Component {
     this.props.createParty(tablesArray);
   };
 
-  toggleEdit = () => this.props.toggleEdit();
+  toggleEdit = () => {
+    this.props.getTables();
+    this.props.toggleEdit();
+  };
 
   render() {
     const authorized = this.props.role.admin || this.props.role.manager;
@@ -65,6 +74,7 @@ TableControls.propTypes = {
   deleteTable: PropTypes.func,
   saveTables: PropTypes.func,
   toggleEdit: PropTypes.func,
+  getTables: PropTypes.func
 };
 
 TableControls.defaultProps = {
@@ -80,6 +90,7 @@ TableControls.defaultProps = {
   deleteTable: () => {},
   saveTables: () => {},
   toggleEdit: () => {},
+  getTables: () => {}
 };
 
 const mapStateToProps = state => ({
@@ -88,10 +99,10 @@ const mapStateToProps = state => ({
   editing: state.tables.editing,
   selected: state.tables.selected,
   membership: state.auth.membership,
-  role: state.auth.role,
+  role: state.auth.role
 });
 
 export default connect(
   mapStateToProps,
-  { createParty, addTable, saveTables, toggleEdit, deleteTable }
+  { createParty, addTable, saveTables, toggleEdit, deleteTable, getTables }
 )(TableControls);
