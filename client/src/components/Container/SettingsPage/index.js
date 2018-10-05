@@ -25,12 +25,9 @@ class SettingsPage extends React.Component {
   adminDisplay = () => (
     <React.Fragment>
       {!this.props.membership && (
-        // ! Do we want to do this? If so, both billing
-        // ! components don't need all of the information
         <Billing
           membership={this.props.membership}
           subscribe={this.props.subscribe}
-          unsubscribe={this.props.unsubscribe}
         />
       )}
       <RestaurantInfo />
@@ -53,11 +50,9 @@ class SettingsPage extends React.Component {
         {(manager || admin) && this.managerDisplay()}
         <UpdateEmployee updateEmployee={this.updateEmployee} authorized={admin} />
         {membership && (
-          // ! Do we want to do this? If so, both billing
-          // ! components don't need all of the information
+          // This one appears at the end of the list if the user has a membership
           <Billing
             membership={this.props.membership}
-            subscribe={this.props.subscribe}
             unsubscribe={this.props.unsubscribe}
           />
         )}
