@@ -4,7 +4,6 @@ const santasGrey = 'rgba(46, 49, 72, 0.4)';
 const lightGrey = 'rgba(255, 255, 255, 0.4)';
 const white = '#FFFFFF';
 const aquaHaze = '#F6F8FB';
-const razzmatazz = '#E30E58';
 const oxfordBlue = '#303B49';
 const comet = '#5F6273';
 const steelBlue = '#4381C1';
@@ -14,6 +13,9 @@ const wispPink = '#FDEFF5';
 const porcelain = '#EDEFF0';
 const limedSpruce = '#363F49';
 const eden = '#114B5F';
+
+const themeColor = localStorage.getItem('themeColor');
+const razzmatazz = themeColor || '#E30E58';
 
 export const theme = {
   // * Misc. -----------------------------------
@@ -53,13 +55,11 @@ export const theme = {
   // Primary
   btnPrimaryBgColor: steelBlue,
 
-
   // Dark Primary
   btnDarkPrimaryBgColor: razzmatazz,
 
   // Dark
   btnDarkBorderColor: white,
-
 
   // * Color Theme Variables -------------------
   // Primary Styles
@@ -85,5 +85,5 @@ export const theme = {
   // Text
   primaryText: ebonyClay,
   lightText: santasGrey,
-  lightTextOnDark: lightGrey,
+  lightTextOnDark: lightGrey
 };
