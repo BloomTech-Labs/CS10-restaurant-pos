@@ -31,7 +31,6 @@ export const StyledLink = styled(NavLink).attrs({ activeClassName })`
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
 
   &:hover {
-    background: ${(props) => props.theme.contentBackgroundLighter};
     color: ${(props) => props.theme.medTextLight};
   }
 
