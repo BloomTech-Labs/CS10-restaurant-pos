@@ -11,7 +11,7 @@ export const DeleteButton = styled.div`
 
   &:hover {
     cursor: pointer;
-    stroke: #803952;
+    stroke: ${(props) => props.theme.deleteColor};
     transform: scale(1.2);
   }
 `;

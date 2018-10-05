@@ -15,6 +15,7 @@ const wispPink = '#FDEFF5';
 const porcelain = '#EDEFF0';
 const limedSpruce = '#363F49';
 const eden = '#114B5F';
+const cosmic = '#803952';
 
 export const theme = {
   // * Misc. -----------------------------------
@@ -25,6 +26,7 @@ export const theme = {
   categoryBorderRadius: 15,
   selectedTable: eden,
   navTabColor: limedSpruce,
+  deleteColor: cosmic,
 
   // * Default Dimensions ----------------------
   sideBarWidth: 265,
