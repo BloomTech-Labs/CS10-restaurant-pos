@@ -270,7 +270,7 @@ Response:
 
 GET `/api/employees/all`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Retrieves a list of employees from the database. Admins can see all employees in the restaurant, managers can see only servers.
 
@@ -280,33 +280,31 @@ Response:
 {
   "employees": [
     {
-      "role": {
-        "admin": true,
-        "manager": false
-      },
-      "_id": "5ba6c050df4d147ee8cf9003",
-      "name": "Admin User",
-      "password": "(hashed password. should be changed)",
-      "email": "admin@user.com",
-      "pin": "0000",
-      "__v": 0,
-      "restaurant": "5ba6c19f0c6f7f7f7e859dc4"
+      "_id": "5bb7d8e50f5a084e70e84bd4",
+      "name": "server 1",
+      "images": null,
+      "parties": [
+        {
+          "tables": [],
+          "food": []
+        }
+      ]
     },
     {
-      "role": {
-        "admin": false,
-        "manager": false
-      },
-      "_id": "5ba6c30a0c6f7f7f7e859dc5",
-      "name": "First Server",
-      "password": "(hashed password. should be changed)",
-      "pin": "7350",
-      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-      "__v": 0
+      "_id": "5bb7d3ceb2786a2c785eee1c",
+      "name": "Milo Pup",
+      "images": null,
+      "parties": [
+        {
+          "tables": [],
+          "food": []
+        }
+      ]
     }
   ]
 }
 ```
+
 
 
 ### Update Employee
