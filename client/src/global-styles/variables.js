@@ -37,8 +37,12 @@ export const theme = {
   settingCardPadding: '0 70px',
   settingCardMargin: '50px',
 
+  // * Card Styles -----------------------------
+  cardBorderRadius: 18,
+
   // * Font Styles -----------------------------
   ItemTitleSize: 2,
+  ItemPriceSize: 1.7,
   ItemTitleDescription: 1.4,
   placeholderColor: silver,
   freeTableNumberSize: 4,

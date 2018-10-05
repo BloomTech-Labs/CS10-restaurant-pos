@@ -18,7 +18,7 @@ export const modalBlur = css`
 export const card = css`
   background: ${(props) => props.theme.appPrimary};
   box-shadow: ${(props) => props.theme.boxShadow};
-  border-radius: ${(props) => props.theme.btnBorderRadius}px;
+  border-radius: ${(props) => props.theme.cardBorderRadius}px;
 `;
 
 export const checkbox = css`

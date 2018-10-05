@@ -9,25 +9,34 @@ export const ItemBoxes = styled(Boxes)`
 `;
 
 export const Item = styled.div`
-  padding-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px;
+  flex-grow: 1;
 `;
 
 export const ItemPic = styled.div`
   ${flexCenterMixin};
   background: grey;
-  height: 100%;
+  height: 120px;
   width: 100%;
   overflow: hidden;
 `;
 
 export const ItemTitle = styled(Item)`
+  ${flexCenterMixin};
   font-size: ${(props) => props.theme.ItemTitleSize}rem;
 `;
 
 export const ItemDescription = styled(Item)`
+  ${flexCenterMixin};
   font-size: ${(props) => props.theme.ItemTitlePrice}rem;
 `;
 
 export const ItemPrice = styled(Item)`
-  font-size: ${(props) => props.theme.ItemTitleSize}rem;
+  ${flexCenterMixin};
+  font-weight: 300;
+  font-size: ${(props) => props.theme.ItemPriceSize}rem;
 `;
