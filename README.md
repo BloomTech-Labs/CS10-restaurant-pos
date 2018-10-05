@@ -364,12 +364,13 @@ Request body should look like this:
 
 ```
 {
-  "name": "Spaghetti",
+  "name": "Sweet Potato Roll",
   "price": "7.99",
-  "category": "entrees",
-  "description": "Noodles and red stuff"
+  "category": "sushi",
+  "description": "Sweet and also amazing"
 }
 ```
+
 
 `name`: String, required, must be unique
 
@@ -379,26 +380,31 @@ Request body should look like this:
 
 `category`: String, optional
 
+`images`: String, optional
+
 Response includes the added item's:
 
 - name
 - price
-- category
 - description
+- category
+- restaurant ID (taken from req.user)
 
 Response:
 
 ```
 {
-  "item": {
-    "_id": "5ba6c9f8914dc082011a1657",
-    "name": "Spaghetti",
-    "price": 7.99,
-    "description": "Noodles and red stuff",
-    "category": "entrees",
-    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-    "__v": 0
-  }
+  "items": [
+    {
+      "_id": "5bb7eec30f5a084e70e84bd7",
+      "name": "Sweet Potato Roll",
+      "price": 4.99,
+      "description": "Sweet and also amazing",
+      "category": "sushi",
+      "restaurant": "5bb7d501d333ca2760d1d334",
+      "__v": 0
+    }
+  ]
 }
 ```
 
