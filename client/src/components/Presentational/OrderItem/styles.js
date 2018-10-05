@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const Items = styled.div`
-  font-weight: 300;
   display: flex;
   align-items: center;
   height: 55px;
@@ -23,4 +22,5 @@ export const Name = styled.span`
 
 export const Price = styled.span`
   color: ${(props) => props.theme.lightTextOnDark};
+  font-weight: 300;
 `;

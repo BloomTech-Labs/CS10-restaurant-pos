@@ -10,7 +10,7 @@ export default function OrderItem(props) {
       <ItemButton action={itemAction} item={item} checked={checked} />
       <s.Info>
         <s.Name>{item.name}</s.Name>
-        <s.Price>{item.price}</s.Price>
+        <s.Price>{item.price.toFixed(2)}</s.Price>
       </s.Info>
     </s.Items>
   );
