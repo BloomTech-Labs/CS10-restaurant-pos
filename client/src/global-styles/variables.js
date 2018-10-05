@@ -6,7 +6,6 @@ const lightGrey = 'rgba(255, 255, 255, 0.4)';
 const lightWhite = 'rgba(255, 255, 255, 0.75)';
 const white = '#FFFFFF';
 const aquaHaze = '#F6F8FB';
-const razzmatazz = '#E30E58';
 const oxfordBlue = '#303B49';
 const comet = '#5F6273';
 const steelBlue = '#4381C1';
@@ -19,6 +18,9 @@ const eden = '#114B5F';
 const cosmic = '#803952';
 const athensGrey = '#EDEFF2';
 const catskillWhite = '#FCFCFC';
+
+const themeColor = localStorage.getItem('themeColor');
+const razzmatazz = themeColor || '#E30E58';
 
 export const theme = {
   // * Misc. -----------------------------------
@@ -64,13 +66,11 @@ export const theme = {
   // Primary
   btnPrimaryBgColor: steelBlue,
 
-
   // Dark Primary
   btnDarkPrimaryBgColor: razzmatazz,
 
   // Dark
   btnDarkBorderColor: white,
-
 
   // * Color Theme Variables -------------------
   // Primary Styles

@@ -8,10 +8,7 @@ const Employee = require('../../models/Employee');
 const updateEmployee = (req, res) => {
   // Pull off the pin, oldPassword, and newPassword from the request
   const {
-    pass,
-    newPass,
-    name,
-    email
+    pass, newPass, name, email, themeColor
   } = req.body;
 
   const { pin } = req.params;
@@ -46,11 +43,20 @@ const updateEmployee = (req, res) => {
             employee.email = email || employee.email;
             employee.name = name || employee.name;
             employee.password = newPass || employee.password;
+            if (themeColor) {
+              employee.themeColor = themeColor;
+            }
 
             employee
               .save()
               .then(() => {
-                res.status(200).json({ msg: 'Successfully updated the user.' });
+                Employee.updateMany({ restaurant: req.user.restaurant }, { themeColor })
+                  .then(() => {
+                    res.status(200).json({ msg: 'Successfully updated the user.' });
+                  })
+                  .catch((err) => {
+                    res.status(500).json({ err, msg: 'Error updating the user in the database.' });
+                  });
               })
               .catch((err) => {
                 res.status(500).json({ err, msg: 'Error updating the user in the database.' });

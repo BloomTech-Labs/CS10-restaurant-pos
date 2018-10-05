@@ -27,7 +27,6 @@ import NewRestaurant from './components/Container/CreateRestaurantPage';
 import RequireNotAuth from './components/HOC/RequireNotAuth';
 import RequireAuth from './components/HOC/RequireAuth';
 import { sidebar } from './config/conditionalPathnames';
-import UploadModal from './components/Presentational/UploadModal';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -93,7 +92,6 @@ class App extends Component {
               push={history.push}
             />
             <Switch>
-              <Route path="/test" component={UploadModal} />
               <Route path="/" component={Landing} exact />
               <Route path="/logout" component={Logout} />
               <Route path="/login" component={NotAuthedLogin} />

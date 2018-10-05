@@ -34,7 +34,7 @@ const initialState = {
     thumbnail: '',
     small: '',
     medium: ''
-  }
+  },
 };
 
 const getJWTInfo = (jwt) => {
@@ -77,6 +77,8 @@ const getJWTInfo = (jwt) => {
 };
 
 const AuthReducer = (auth = initialState, action) => {
+  let themeColor;
+
   switch (action.type) {
     case AUTH_LOADING:
       return { ...auth, loading: true };
@@ -88,6 +90,12 @@ const AuthReducer = (auth = initialState, action) => {
       return { ...auth, ...getJWTInfo(jwt) };
 
     case LOGIN_SUCCESS:
+      // eslint-disable-next-line prefer-destructuring
+      themeColor = jwtDecode(action.payload).themeColor;
+      if (themeColor && themeColor !== localStorage.getItem('themeColor')) {
+        localStorage.setItem('themeColor', themeColor);
+        window.location.reload();
+      }
       return {
         ...auth,
         ...getJWTInfo(action.payload),
@@ -107,10 +115,16 @@ const AuthReducer = (auth = initialState, action) => {
       return { ...auth, loading: false };
 
     case EMPLOYEE_LOGIN_SUCCESS:
+      // eslint-disable-next-line prefer-destructuring
+      themeColor = jwtDecode(action.payload).themeColor;
+      if (themeColor && themeColor !== localStorage.getItem('themeColor')) {
+        localStorage.setItem('themeColor', themeColor);
+        window.location.reload();
+      }
       return {
         ...auth,
-        loading: false,
-        ...getJWTInfo(action.payload)
+        ...getJWTInfo(action.payload),
+        loading: false
       };
 
     case EMPLOYEE_LOGIN_FAILURE:

@@ -51,7 +51,7 @@ class SettingsPage extends React.Component {
       <s.Container>
         {admin && this.adminDisplay()}
         {(manager || admin) && this.managerDisplay()}
-        <UpdateEmployee updateEmployee={this.updateEmployee} />
+        <UpdateEmployee updateEmployee={this.updateEmployee} authorized={admin} />
         {membership && (
           // ! Do we want to do this? If so, both billing
           // ! components don't need all of the information
