@@ -24,13 +24,18 @@ class SuccessRegistration extends React.PureComponent {
   render() {
     return (
       <s.Container>
-        <div>Remember this PIN: <span onClick={this.copyToClipboard}>{this.props.pin}</span></div>
-        <div>You will need it to login!</div>
-        <textarea
-          style={{ position: 'relative', zIndex: '-1' }}
-          ref={this.pin}
-          value={this.props.pin}
-        />
+        <s.SubContainer>
+          <s.Text>Remember this PIN</s.Text>
+          <s.PinContainer onClick={this.copyToClipboard}>
+            {this.props.pin}
+          </s.PinContainer>
+          <s.Text>You will need it to login!</s.Text>
+          <textarea
+            style={{ position: 'fixed', left: '10000px' }}
+            ref={this.pin}
+            value={this.props.pin}
+          />
+        </s.SubContainer>
       </s.Container>
     );
   }
