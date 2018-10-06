@@ -25,19 +25,18 @@ export const sendPayment = (stripe, amount, description, isSplit, partyId) => (
   dispatch,
   getState
 ) => {
-  // const stripeToken =
   dispatch({ type: SENDING_PAYMENT });
   axios
     .post(`${serverURI}/api/checkout`, { stripeToken: stripe.token.id, amount, description })
-    .then(res => {
+    .then((res) => {
       dispatch({ type: PAYMENT_SUCCESS, payload: res.data });
 
       if (isSplit) {
         const { order, splitOrder } = getState().party;
 
-        const food = order
-          .filter(item => !splitOrder
-            .find(splitItem => item.uniqueId === splitItem.uniqueId));
+        const food = order.filter(
+          (item) => !splitOrder.find((splitItem) => item.uniqueId === splitItem.uniqueId)
+        );
 
         dispatch(updateParty(partyId, { food }));
         dispatch(closeSplitModal(isSplit));
@@ -49,29 +48,31 @@ export const sendPayment = (stripe, amount, description, isSplit, partyId) => (
       }
       toast('Payment successful!');
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch({ type: PAYMENT_ERROR, payload: err });
       errorHandler(err);
     });
 };
 
-export const subscribe = token => dispatch => {
+export const subscribe = (stripe) => (dispatch) => {
   dispatch({ type: SUBSCRIBING });
   axios
-    .post(`${serverURI}/api/subscribe`, { stripeToken: token.id, email: token.email })
-    .then(res => {
+    // TODO: Do we want to just grab the email off of the token and send that one in?
+    .post(`${serverURI}/api/subscribe`, { stripeToken: stripe.token.id, email: stripe.token.email })
+    .then((res) => {
       localStorage.setItem('jwt', res.data.token);
       dispatch({ type: SET_INITIAL_AUTH });
       dispatch({ type: SUBSCRIBING_SUCCESS, payload: res.data.token });
+      dispatch(closeModal());
       toast('Successfully subscribed!');
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch({ type: SUBSCRIBING_ERROR, payload: err });
       errorHandler(err);
     });
 };
 
-export const unsubscribe = () => dispatch => {
+export const unsubscribe = () => (dispatch) => {
   dispatch({ type: UNSUBSCRIBING });
   axios
     .get(`${serverURI}/api/cancel`)
@@ -80,7 +81,7 @@ export const unsubscribe = () => dispatch => {
       dispatch({ type: UNSUBSCRIBING_SUCCESS });
       toast('Successfully unsubscribed.');
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch({ type: UNSUBSCRIBING_ERROR, payload: err });
       errorHandler(err);
     });

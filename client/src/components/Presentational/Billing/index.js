@@ -1,5 +1,5 @@
 import React from 'react';
-import StripeCheckout from 'react-stripe-checkout';
+// import StripeCheckout from 'react-stripe-checkout';
 import PropTypes from 'prop-types';
 
 import { Button } from '../../../global-styles/styledComponents';
@@ -8,12 +8,17 @@ import * as s from './styles';
 
 class Billing extends React.Component {
   state = {
+    // TODO: Clean all this up
     // firstName: '',
     // lastName: '',
-    // email: '',
+    // email: ''
     // cc: '',
     // expiry: '',
     // cvv: ''
+  };
+
+  openModal = () => {
+    this.props.openModal();
   };
 
   handleChange = (event) => {
@@ -30,7 +35,7 @@ class Billing extends React.Component {
   };
 
   render() {
-    const { membership, unsubscribe } = this.props;
+    const { membership, unsubscribe, openModal } = this.props;
     return (
       <s.Container>
         <div>Billing</div>
@@ -41,7 +46,8 @@ class Billing extends React.Component {
               Unsubscribe
             </Button>
           ) : (
-            <StripeCheckout
+          // TODO: Clean all this up
+            /* <StripeCheckout
               name="POS Checkout"
               description="Subscribe"
               ComponentClass="div"
@@ -54,7 +60,12 @@ class Billing extends React.Component {
               <Button primary type="button">
                 Subscribe
               </Button>
-            </StripeCheckout>
+            </StripeCheckout> */
+            <div>
+              <Button type="submit" onClick={openModal}>
+                Subscribe
+              </Button>
+            </div>
           )}
         </s.ButtonContainer>
       </s.Container>
@@ -64,14 +75,16 @@ class Billing extends React.Component {
 
 Billing.propTypes = {
   membership: PropTypes.bool,
+  openModal: PropTypes.func,
   subscribe: PropTypes.func,
-  unsubscribe: PropTypes.func,
+  unsubscribe: PropTypes.func
 };
 
 Billing.defaultProps = {
   membership: false,
+  openModal: () => {},
   subscribe: () => {},
-  unsubscribe: () => {},
+  unsubscribe: () => {}
 };
 
 export default Billing;

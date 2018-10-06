@@ -38,6 +38,10 @@ export const PinContainer = styled.div`
   color: transparent;
   text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.3);
   background-clip: text;
+  /* stylelint-disable property-no-vendor-prefix */
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  /* stylelint-enable property-no-vendor-prefix */
 
   &:hover {
     cursor: pointer;

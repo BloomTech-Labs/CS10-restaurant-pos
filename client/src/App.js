@@ -106,7 +106,10 @@ class App extends Component {
                 path="/party/:id"
                 render={(props) => <AuthedPartyPage {...props} modalIsOpen={modalIsOpen} />}
               />
-              <Route path="/settings" component={AuthedSettings} />
+              <Route
+                path="/settings"
+                render={(props) => <AuthedSettings {...props} modalIsOpen={modalIsOpen} />}
+              />
               <Route path="/help" component={AuthedHelp} />
               <Route path="/404" component={NotFound} exact />
               <Redirect to="/404" />

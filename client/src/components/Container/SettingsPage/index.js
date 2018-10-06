@@ -1,15 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Elements } from 'react-stripe-elements';
 
 import { subscribe, unsubscribe } from '../../../redux/actions/payments';
 import { updateEmployee } from '../../../redux/actions/auth';
 import { addItem, getItems } from '../../../redux/actions/items';
+import { openModal } from '../../../redux/actions/modal';
 import RestaurantInfo from '../../Presentational/RestaurantInfo';
 import Billing from '../../Presentational/Billing';
 import CreateEmployeeCard from '../../Presentational/CreateEmployeeCard';
 import UpdateEmployee from '../../Presentational/UpdateEmployee';
 import CreateItem from '../../Presentational/CreateItem';
+import Modal from '../../HOC/Modal';
+import StripeRegisterForm from '../../StripeRegisterForm';
 
 import * as s from './styles';
 
@@ -28,6 +32,8 @@ class SettingsPage extends React.Component {
         <Billing
           membership={this.props.membership}
           subscribe={this.props.subscribe}
+          modalIsOpen={this.props.modalIsOpen}
+          openModal={this.props.openModal}
         />
       )}
       <RestaurantInfo />
@@ -42,21 +48,27 @@ class SettingsPage extends React.Component {
   );
 
   render() {
-    const { membership } = this.props;
+    const { membership, modalIsOpen } = this.props;
     const { admin, manager } = this.props.role;
     return (
-      <s.Container>
-        {admin && this.adminDisplay()}
-        {(manager || admin) && this.managerDisplay()}
-        <UpdateEmployee updateEmployee={this.updateEmployee} authorized={admin} />
-        {membership && (
-          // This one appears at the end of the list if the user has a membership
-          <Billing
-            membership={this.props.membership}
-            unsubscribe={this.props.unsubscribe}
-          />
-        )}
-      </s.Container>
+      <React.Fragment>
+        <Modal isOpen={modalIsOpen}>
+          <div>Hey, pay for the sub!</div>
+          <div>The sub costs 100 bucks</div>
+          <Elements>
+            <StripeRegisterForm subscribe={this.props.subscribe} />
+          </Elements>
+        </Modal>
+        <s.Container modalOpen={modalIsOpen}>
+          {admin && this.adminDisplay()}
+          {(manager || admin) && this.managerDisplay()}
+          <UpdateEmployee updateEmployee={this.updateEmployee} authorized={admin} />
+          {membership && (
+            // This one appears at the end of the list if the user has a membership
+            <Billing membership={this.props.membership} unsubscribe={this.props.unsubscribe} />
+          )}
+        </s.Container>
+      </React.Fragment>
     );
   }
 }
@@ -68,6 +80,8 @@ SettingsPage.propTypes = {
   }),
   membership: PropTypes.bool,
   itemCategories: PropTypes.arrayOf(PropTypes.string),
+  modalIsOpen: PropTypes.bool,
+  openModal: PropTypes.func,
   addItem: PropTypes.func,
   getItems: PropTypes.func,
   subscribe: PropTypes.func,
@@ -82,6 +96,8 @@ SettingsPage.defaultProps = {
   },
   membership: false,
   itemCategories: ['default category one, default category two'],
+  modalIsOpen: false,
+  openModal: () => {},
   addItem: () => {},
   getItems: () => {},
   subscribe: () => {},
@@ -102,5 +118,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { addItem, getItems, subscribe, unsubscribe, updateEmployee }
+  { openModal, addItem, getItems, subscribe, unsubscribe, updateEmployee }
 )(SettingsPage);
