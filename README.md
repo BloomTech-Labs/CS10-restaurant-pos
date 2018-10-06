@@ -489,7 +489,7 @@ PUT `/api/items/update/:id`
 
 Updates information for an existing food item. Only managers and admins can do this.
 
-Request body should look like this:
+If only updating the price, the request body should look like this:
 
 ```
 {
