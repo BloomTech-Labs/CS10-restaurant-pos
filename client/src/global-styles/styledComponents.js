@@ -10,7 +10,8 @@ export const MainContainer = styled.div`
   border-radius: 50px 0 0 0;
   flex-grow: 2;
   width: 100%;
-  padding: ${(props) => props.theme.mainContainerPaddingTopBottom}
+  padding:
+    ${(props) => props.theme.mainContainerPaddingTopBottom}
     ${(props) => props.theme.mainContainerPaddingRightLeft};
   overflow: hidden;
 `;

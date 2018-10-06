@@ -21,6 +21,7 @@ class Billing extends React.Component {
     this.props.openModal();
   };
 
+  // TODO: Clean all this up
   // handleChange = (event) => {
   //   this.setState({ [event.target.name]: event.target.value });
   // };
@@ -38,16 +39,14 @@ class Billing extends React.Component {
     const { membership, unsubscribe, openModal } = this.props;
     return (
       <s.Container>
-        <div>Billing</div>
         {/* // TODO: add support for multiple subscription term options */}
-        <s.ButtonContainer>
-          {membership ? (
-            <Button type="button" onClick={unsubscribe}>
-              Unsubscribe
-            </Button>
-          ) : (
-          // TODO: Clean all this up
-            /* <StripeCheckout
+        {membership ? (
+          <Button type="button" onClick={unsubscribe}>
+            Unsubscribe
+          </Button>
+        ) : (
+        // TODO: Clean all this up
+          /* <StripeCheckout
               name="POS Checkout"
               description="Subscribe"
               ComponentClass="div"
@@ -61,18 +60,18 @@ class Billing extends React.Component {
                 Subscribe
               </Button>
             </StripeCheckout> */
-            <div>
-              <Button type="submit" onClick={openModal}>
-                Subscribe
-              </Button>
-            </div>
-          )}
-        </s.ButtonContainer>
+          <div>
+            <Button type="submit" onClick={openModal}>
+              Subscribe
+            </Button>
+          </div>
+        )}
       </s.Container>
     );
   }
 }
 
+// TODO: Clean all this up
 Billing.propTypes = {
   membership: PropTypes.bool,
   openModal: PropTypes.func,
