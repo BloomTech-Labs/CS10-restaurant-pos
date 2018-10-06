@@ -568,7 +568,7 @@ Response:
 
 GET `/api/party/all`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Retrieves all parties from the database.
 
@@ -629,7 +629,7 @@ Response:
 
 GET `/api/party/:id`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Retrieves a specific party from the database by its id.
 
@@ -670,7 +670,7 @@ Response:
 
 POST `/api/party/add`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Adds a new party to the database
 
@@ -727,7 +727,7 @@ Response:
 
 PUT `/api/party/update/:id`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Updates the party information
 
@@ -774,7 +774,7 @@ Response:
 
 DELETE `/api/party/delete/:id`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Deletes a party from the database.
 
