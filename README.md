@@ -1027,7 +1027,7 @@ Response:
 
 POST `/api/orders/add`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Adds a new order to the selected table.
 
@@ -1084,7 +1084,7 @@ Response:
 
 GET `/api/orders/all`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Retrieves all of the orders from the database.
 
@@ -1126,7 +1126,7 @@ Response:
 
 GET `/api/orders/:id`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Retrieves a specific order from the database by the id provided.
 
@@ -1166,7 +1166,7 @@ Response:
 
 PUT `/api/orders/:id`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Updates an existing order.
 
@@ -1215,7 +1215,7 @@ Response:
 
 POST `/api/restaurants/register`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Adds a new restaurant to the signed-in admin's account.
 
@@ -1249,6 +1249,7 @@ Response:
   "msg": "Successfully created"
 }
 ```
+
 # Tech-Stack
 
 ## Back-End Dependencies ```(Production)```
