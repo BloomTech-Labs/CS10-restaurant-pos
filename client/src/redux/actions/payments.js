@@ -63,6 +63,7 @@ export const subscribe = (stripe) => (dispatch) => {
       localStorage.setItem('jwt', res.data.token);
       dispatch({ type: SET_INITIAL_AUTH });
       dispatch({ type: SUBSCRIBING_SUCCESS, payload: res.data.token });
+      dispatch(closeModal());
       toast('Successfully subscribed!');
     })
     .catch((err) => {
