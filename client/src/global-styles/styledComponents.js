@@ -133,7 +133,6 @@ export const StyledForm = styled(Form)`
   /* editing updateEmployee */
   border: 3px solid red;
   ${props => props.updateEmployee && 'width: 100%'};
-  ${props => props.updateEmployee && 'flex-grow: 2'};
 
   /* editing updateEmployee */
 `;

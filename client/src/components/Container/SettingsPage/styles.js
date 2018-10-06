@@ -8,7 +8,6 @@ export const Container = styled(MainContainer)`
   flex-direction: column;
   overflow-y: auto;
   ${(props) => props.modalOpen && modalBlur};
-  flex-grow: 3;
   height: 100%;
 `;
 
@@ -20,5 +19,4 @@ export const CardContainer = styled.div`
   height: 100%;
   flex-direction: row;
   flex-wrap: wrap;
-  flex-grow: 3;
 `;

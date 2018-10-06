@@ -7,7 +7,6 @@ export const Container = styled.div`
   ${containerMixin};
   flex-direction: column;
   height: 100px;
-  width: 100%;
   margin:
     0
     calc(5px - ${(props) => props.theme.mainContainerPaddingRightLeft})
