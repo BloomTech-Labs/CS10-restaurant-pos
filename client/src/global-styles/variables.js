@@ -31,6 +31,8 @@ export const theme = {
   categoryBorderRadius: 15,
 
   // * Default Dimensions ----------------------
+  mainContainerPaddingTopBottom: '60px',
+  mainContainerPaddingRightLeft: '100px',
   sideBarWidth: 265,
   topBarHeight: 100,
   menuItemSize: 200,
