@@ -803,7 +803,7 @@ Response:
 
 GET`/api/tables/all`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Get all tables.
 
@@ -838,7 +838,7 @@ Response:
 
 GET`/api/tables/:id`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Get a table by it's ID. The ID will be pulled off of the request parameters.
 
@@ -862,7 +862,7 @@ Response:
 
 POST `/api/tables/add`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Adds a new table to the database with the given coordinates.
 
@@ -909,7 +909,7 @@ Response:
 
 POST `api/tables/update`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Updates all the tables in array in the request body.
 
@@ -969,7 +969,7 @@ Response:
 
 PUT `api/tables/deactivate/:id`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Deactivates a table by its ID and removes the table from any connected party.
 
@@ -1012,7 +1012,7 @@ Response:
 
 Delete `api/tables/delete/:id`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Deletes a table by its ID. The ID will be pulled off of the request parameters. No request body is required for this route. Only managers and admins can do this.
 
