@@ -9,7 +9,6 @@ import { addItem, getItems } from '../../../redux/actions/items';
 import { openModal } from '../../../redux/actions/modal';
 import RestaurantInfo from '../../Presentational/RestaurantInfo';
 import Billing from '../../Presentational/Billing';
-import CreateEmployeeCard from '../../Presentational/CreateEmployeeCard';
 import UpdateEmployee from '../../Presentational/UpdateEmployee';
 import CreateItem from '../../Presentational/CreateItem';
 import Modal from '../../HOC/Modal';
@@ -43,7 +42,6 @@ class SettingsPage extends React.Component {
   managerDisplay = () => (
     <React.Fragment>
       <CreateItem addItem={this.props.addItem} itemCategories={this.props.itemCategories} />
-      <CreateEmployeeCard />
     </React.Fragment>
   );
 
