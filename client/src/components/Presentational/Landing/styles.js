@@ -1,17 +1,21 @@
 import styled from 'styled-components';
 
-import { flexCenterMixin } from '../../../global-styles/mixins';
+// import { flexCenterMixin } from '../../../global-styles/mixins';
 
 export const LandingContainer = styled.div`
-  ${flexCenterMixin}
   flex-grow: 2;
 `;
 
 export const SubContainer = styled.div`
-  position: fixed;
-  top: 30%;
-  left: 10%;
-  min-width: 350px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 7% 10%;
+
+  @media (max-width: 1500px) {
+    flex-direction: column;
+  }
 `;
 
 export const Title = styled.h1`
@@ -30,7 +34,7 @@ export const Title = styled.h1`
 export const Background = styled.div`
   position: fixed;
   z-index: -100;
-  width: 100vw;
+  width: calc(2300px - (1vw * 20));
   top: 0;
   left: 0;
   fill: ${(props) => props.theme.appSecondary};
@@ -39,7 +43,7 @@ export const Background = styled.div`
 export const Tagline = styled.div`
   font-size: 2.5rem;
   font-weight: 300;
-  margin-bottom: 100px;
+  margin-bottom: 80px;
   color: ${(props) => props.theme.appPrimary};
 `;
 
@@ -47,4 +51,16 @@ export const Buttons = styled.div`
   display: flex;
   width: 90%;
   justify-content: space-between;
+`;
+
+export const Video = styled.video`
+  box-shadow: ${(props) => props.theme.boxShadow};
+
+  @media (max-width: 650px) {
+    width: 100%;
+  }
+`;
+
+export const Info = styled.div`
+  min-width: 350px;
 `;

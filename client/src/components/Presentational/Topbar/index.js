@@ -22,7 +22,9 @@ export default function Topbar(props) {
   if (landing && loggedIn) {
     return (
       <s.Topbar alignEnd>
-        <s.StyledLink to="/tables">Proceed To Restaurant</s.StyledLink>
+        <s.Tab>
+          <s.StyledLink to="/tables">Proceed To Restaurant</s.StyledLink>
+        </s.Tab>
       </s.Topbar>
     );
   }

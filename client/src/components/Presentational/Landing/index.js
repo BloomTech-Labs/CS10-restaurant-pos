@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Logo from '../Logo';
-
 import { Button } from '../../../global-styles/styledComponents';
 
 import * as s from './styles';
@@ -18,11 +17,16 @@ class Landing extends React.Component {
         <s.LandingContainer className="App">
           <s.Title><Logo width="45" />Main Course</s.Title>
           <s.SubContainer>
-            <s.Tagline>POS that will make your loins tingle</s.Tagline>
-            <s.Buttons>
-              <Button dark>Learn More</Button>
-              <Button primary>Sign Up</Button>
-            </s.Buttons>
+            <s.Info>
+              <s.Tagline>A POS that will make you <i>want</i> to take orders</s.Tagline>
+              <s.Buttons>
+                <Button dark>Learn More</Button>
+                <Button primary>Sign Up</Button>
+              </s.Buttons>
+            </s.Info>
+            <s.Video loop muted autoPlay playsinline>
+              <source src="https://storage.googleapis.com/main-course-images/paidFloorPlanVideo.mp4" />
+            </s.Video>
           </s.SubContainer>
         </s.LandingContainer>
       </React.Fragment>

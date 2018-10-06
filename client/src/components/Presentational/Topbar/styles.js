@@ -30,7 +30,7 @@ export const Title = styled.h1`
 export const StyledLink = styled(Link)`
   color: ${(props) => props.theme.primaryText};
   text-decoration: none;
-  margin-left: 10px;
+  left: 10px;
 `;
 
 export const TimeDisplay = styled.div`
@@ -39,4 +39,14 @@ export const TimeDisplay = styled.div`
   * {
     margin-right: 20px;
   }
+`;
+
+export const Tab = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: -50px;
+  padding: 0 20px;
+  background: ${(props) => props.theme.appPrimary};
+  border-radius: 30px 0 0 30px;
+  height: 50%;
 `;
