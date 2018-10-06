@@ -15,19 +15,34 @@ export const SubContainer = styled.div`
 
   @media (max-width: 1500px) {
     flex-direction: column;
+    padding: 100px 0 0 0;
+  }
+
+  @media (max-width: 700px) {
+    padding: 100px 20px 20px 20px;
   }
 `;
 
 export const Title = styled.h1`
+  display: flex;
+  align-items: center;
   position: fixed;
   top: 40px;
   left: 50px;
-  display: flex;
   font-size: 3.3rem;
   color: ${(props) => props.theme.appPrimary};
 
   * {
     margin-right: 10px;
+  }
+
+  @media (max-width: 550px) {
+    font-size: 2.4rem;
+    left: 20px;
+
+    * {
+      margin-right: 7px;
+    }
   }
 `;
 
