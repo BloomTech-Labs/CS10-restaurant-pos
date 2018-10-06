@@ -970,27 +970,25 @@ Response:
 
 ```
 {
-  "populatedParty": {
-    "food": [],
-    "tables": [
-      "5ba6c6b00c6f7f7f7e859dc7"
-    ],
-    "_id": "5ba6c8070c6f7f7f7e859dc8",
+  "updatedParty": {
+    "tables": [],
+    "_id": "5bb922f8d5461a87502efc85",
     "server": {
-      "_id": "5ba6c30a0c6f7f7f7e859dc5",
-      "name": "First Server"
+        "_id": "5bb7d3ceb2786a2c785eee1c",
+        "name": "Milo Pup"
     },
-    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "restaurant": "5bb7d501d333ca2760d1d334",
+    "food": [],
     "__v": 1
   },
   "msg": "Table has been deactivated and removed from the party.",
   "updatedTable": {
     "active": true,
-    "_id": "5ba6c6860c6f7f7f7e859dc6",
-    "x": 400,
-    "y": 100,
+    "_id": "5bb91ad8d5461a87502efc83",
+    "x": 2,
+    "y": 2,
     "number": 1,
-    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "restaurant": "5bb7d501d333ca2760d1d334",
     "__v": 0
   }
 }
