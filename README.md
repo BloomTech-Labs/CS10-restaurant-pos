@@ -28,9 +28,9 @@
     - [Update a Party](#update-a-party)
     - [Delete a Party](#delete-a-party)
   - [Table Routes](#table-routes)
+    - [Add Table](#add-table)
     - [Get All Tables](#get-all-tables)
     - [Get A Specific Table](#get-a-specific-table)
-    - [Add Table](#add-table)
     - [Update Tables](#update-tables)
     - [Deactivate Table](#deactivate-table)
     - [Delete Table](#delete-table)
@@ -799,6 +799,53 @@ Response:
 
 ## Table Routes
 
+### Add Table
+
+POST `/api/tables/add`
+
+**Requires:** Authorization
+
+Adds a new table to the database with the given coordinates.
+
+Request body should look like this:
+
+```
+{
+  "x": "100",
+  "y": "250",
+  "number": "1"
+}
+```
+
+`x`: Number, required
+
+`y`: Number, required
+
+`number`: Number, required
+
+Response includes the added item's:
+
+- x coordinate
+- y coordinate
+- active status (defaults to true)
+- number
+
+Response:
+
+```
+{
+  "table": {
+    "active": false,
+    "_id": "5ba6c6860c6f7f7f7e859dc6",
+    "x": 100,
+    "y": 250,
+    "number": 1,
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 0
+  }
+}
+```
+
 ### Get All Tables
 
 GET`/api/tables/all`
@@ -858,53 +905,6 @@ Response:
 }
 ```
 
-### Add Table
-
-POST `/api/tables/add`
-
-**Requires:** Authorization
-
-Adds a new table to the database with the given coordinates.
-
-Request body should look like this:
-
-```
-{
-  "x": "100",
-  "y": "250",
-  "number": "1"
-}
-```
-
-`x`: Number, required
-
-`y`: Number, required
-
-`number`: Number, required
-
-Response includes the added item's:
-
-- x coordinate
-- y coordinate
-- active status (defaults to true)
-- number
-
-Response:
-
-```
-{
-  "table": {
-    "active": false,
-    "_id": "5ba6c6860c6f7f7f7e859dc6",
-    "x": 100,
-    "y": 250,
-    "number": 1,
-    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-    "__v": 0
-  }
-}
-```
-
 ### Update Tables
 
 POST `api/tables/update`
@@ -917,18 +917,13 @@ Request body should look like this:
 
 ```
 {
-	"updatedTables": [
-    {
-      "_id": "5ba6c6860c6f7f7f7e859dc6",
-      "x": 400,
-      "y": 100
-    },
-    {
-      "_id": "5ba6c6b00c6f7f7f7e859dc7",
-      "x": 100,
-      "y": 250
-    }
-  ]
+"tables": [
+	  {
+	    "_id": "5bb91ad8d5461a87502efc83",
+	    "x": 2,
+	    "y": 2
+	  }
+	]
 }
 ```
 
@@ -943,26 +938,19 @@ Response includes the added item's:
 Response:
 
 ```
-[
-  {
-    "active": false,
-    "_id": "5ba6c6860c6f7f7f7e859dc6",
-    "x": 400,
-    "y": 100,
-    "number": 1,
-    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-    "__v": 0
-  },
-  {
-    "active": false,
-    "_id": "5ba6c6b00c6f7f7f7e859dc7",
-    "x": 100,
-    "y": 250,
-    "number": 2,
-    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-    "__v": 0
-  }
-]
+{
+  "updatedTables": [
+     {
+      "active": false,
+      "_id": "5bb91ad8d5461a87502efc83",
+      "x": 2,
+      "y": 2,
+      "number": 1,
+      "restaurant": "5bb7d501d333ca2760d1d334",
+      "__v": 0
+    }
+  ]
+}
 ```
 
 ### Deactivate Table
