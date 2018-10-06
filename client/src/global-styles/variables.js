@@ -29,9 +29,6 @@ export const theme = {
   boxShadow: '0 2px 16px 1px rgba(0, 0, 0, 0.15)',
   catMenuBorderRadius: 25,
   categoryBorderRadius: 15,
-  selectedTable: eden,
-  navTabColor: limedSpruce,
-  deleteColor: cosmic,
 
   // * Default Dimensions ----------------------
   sideBarWidth: 265,
@@ -83,6 +80,9 @@ export const theme = {
   textColorDark: white,
   inputError: wispPink,
   menuBg: porcelain,
+  selectedTable: eden,
+  navTabColor: limedSpruce,
+  deleteColor: cosmic,
   // Top Bar
   topBarLink: comet,
   // Side Bar

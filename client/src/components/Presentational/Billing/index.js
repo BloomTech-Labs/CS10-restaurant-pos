@@ -21,18 +21,18 @@ class Billing extends React.Component {
     this.props.openModal();
   };
 
-  handleChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
+  // handleChange = (event) => {
+  //   this.setState({ [event.target.name]: event.target.value });
+  // };
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    // this.props.addRestaurant(this.state);
-  };
+  // handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   // this.props.addRestaurant(this.state);
+  // };
 
-  subscribe = (token) => {
-    this.props.subscribe(token);
-  };
+  // subscribe = (token) => {
+  //   this.props.subscribe(token);
+  // };
 
   render() {
     const { membership, unsubscribe, openModal } = this.props;
@@ -76,14 +76,14 @@ class Billing extends React.Component {
 Billing.propTypes = {
   membership: PropTypes.bool,
   openModal: PropTypes.func,
-  subscribe: PropTypes.func,
+  // subscribe: PropTypes.func,
   unsubscribe: PropTypes.func
 };
 
 Billing.defaultProps = {
   membership: false,
   openModal: () => {},
-  subscribe: () => {},
+  // subscribe: () => {},
   unsubscribe: () => {}
 };
 

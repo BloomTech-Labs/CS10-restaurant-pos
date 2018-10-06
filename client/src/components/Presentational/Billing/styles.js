@@ -5,12 +5,8 @@ import { containerMixin, card, flexCenterMixin } from '../../../global-styles/mi
 export const Container = styled.div`
   ${containerMixin};
   flex-direction: column;
-`;
-
-export const Form = styled.form`
-  ${flexCenterMixin};
-  flex-direction: column;
-  margin: 35px;
+  border: 3px solid green;
+  width: 100%;
 `;
 
 export const ButtonContainer = styled.div`
@@ -22,4 +18,5 @@ export const ButtonContainer = styled.div`
   max-width: ${(props) => props.theme.settingCardMaxWidth}px;
   padding: ${(props) => props.theme.settingCardPadding};
   margin: ${(props) => props.theme.settingCardMargin};
+  border: 3px solid red;
 `;
