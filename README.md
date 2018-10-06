@@ -22,9 +22,9 @@
     - [Update Item](#update-item)
     - [Delete Item](#delete-item)
   - [Party Routes](#party-routes)
+    - [Add a New Party](#add-a-new-party)
     - [Get All Parties](#get-all-parties)
     - [Get a Specific Party](#get-a-specific-party)
-    - [Add a New Party](#add-a-new-party)
     - [Update a Party](#update-a-party)
     - [Delete a Party](#delete-a-party)
   - [Table Routes](#table-routes)
@@ -564,6 +564,63 @@ Response:
 
 ## Party Routes
 
+### Add a New Party
+
+POST `/api/party/add`
+
+**Requires:** Authorization
+
+Adds a new party to the database
+
+Request body should look like this:
+
+```
+{
+  "tables": ["5ba6c6860c6f7f7f7e859dc6"],
+  "server": "5ba6c30a0c6f7f7f7e859dc5"
+}
+```
+
+`tables`: Should be an array of Table ObjectIds.
+
+`server`: Employee ObjectId, optional
+
+`tables` is an array so that if tables are combined, all tables are represented in the array. In most cases there will be only one table id.
+
+Response includes the party's:
+
+- Items list (name, price)
+- tables list
+- server name
+
+Response:
+
+```
+{
+  "party": {
+    "food": [],
+    "tables": [
+      {
+        "active": true,
+        "_id": "5ba6c6860c6f7f7f7e859dc6",
+        "x": 400,
+        "y": 100,
+        "number": 1,
+        "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+        "__v": 0
+      }
+    ],
+    "_id": "5ba6c8070c6f7f7f7e859dc8",
+    "server": {
+      "_id": "5ba6c30a0c6f7f7f7e859dc5",
+      "name": "First Server"
+    },
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 0
+  }
+}
+```
+
 ### Get All Parties
 
 GET `/api/party/all`
@@ -661,63 +718,6 @@ Response:
       }
     ],
     "_id": "5b99a5fc603385aece3e367b",
-    "__v": 0
-  }
-}
-```
-
-### Add a New Party
-
-POST `/api/party/add`
-
-**Requires:** Authorization
-
-Adds a new party to the database
-
-Request body should look like this:
-
-```
-{
-  "tables": ["5ba6c6860c6f7f7f7e859dc6"],
-  "server": "5ba6c30a0c6f7f7f7e859dc5"
-}
-```
-
-`tables`: Should be an array of Table ObjectIds.
-
-`server`: Employee ObjectId, optional
-
-`tables` is an array so that if tables are combined, all tables are represented in the array. In most cases there will be only one table id.
-
-Response includes the party's:
-
-- Items list (name, price)
-- tables list
-- server name
-
-Response:
-
-```
-{
-  "party": {
-    "food": [],
-    "tables": [
-      {
-        "active": true,
-        "_id": "5ba6c6860c6f7f7f7e859dc6",
-        "x": 400,
-        "y": 100,
-        "number": 1,
-        "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-        "__v": 0
-      }
-    ],
-    "_id": "5ba6c8070c6f7f7f7e859dc8",
-    "server": {
-      "_id": "5ba6c30a0c6f7f7f7e859dc5",
-      "name": "First Server"
-    },
-    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
     "__v": 0
   }
 }
