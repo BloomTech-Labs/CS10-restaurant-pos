@@ -9,3 +9,11 @@ export const Container = styled(MainContainer)`
   overflow-y: auto;
   ${(props) => props.modalOpen && modalBlur};
 `;
+
+export const CardContainer = styled.div`
+  border: 3px solid green;
+  display: flex;
+  justify-content: center;
+  flex-direction: wrap;
+  width: 100%;
+`;

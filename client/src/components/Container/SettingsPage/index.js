@@ -58,9 +58,13 @@ class SettingsPage extends React.Component {
           </Elements>
         </Modal>
         <s.Container modalOpen={modalIsOpen}>
-          {admin && this.adminDisplay()}
-          {(manager || admin) && this.managerDisplay()}
-          <UpdateEmployee updateEmployee={this.updateEmployee} authorized={admin} />
+          <s.CardContainer>
+            {admin && this.adminDisplay()}
+            {(manager || admin) && this.managerDisplay()}
+          </s.CardContainer>
+          <s.CardContainer>
+            <UpdateEmployee updateEmployee={this.updateEmployee} authorized={admin} />
+          </s.CardContainer>
           {membership && (
             // This one appears at the end of the list if the user has a membership
             <Billing membership={this.props.membership} unsubscribe={this.props.unsubscribe} />

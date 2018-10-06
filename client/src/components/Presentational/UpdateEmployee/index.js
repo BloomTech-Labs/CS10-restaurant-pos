@@ -15,7 +15,7 @@ import * as s from './styles';
 class UpdateEmployee extends React.Component {
   state = {
     revealed: false,
-    background: localStorage.getItem('themeColor') || '#E30E58',
+    background: localStorage.getItem('themeColor') || '#E30E58'
   };
 
   resetColor = () => {
@@ -83,9 +83,8 @@ class UpdateEmployee extends React.Component {
           }}
         >
           {({ errors, isSubmitting }) => (
-            <s.Container>
-              <h1>Update User Information</h1>
-              <StyledForm>
+            <StyledForm updateEmployee>
+              <div>
                 <s.Titles>Verify Identity</s.Titles>
                 <StyledField
                   type="text"
@@ -104,8 +103,10 @@ class UpdateEmployee extends React.Component {
                   maxLength="21"
                   placeholder="Password"
                 />
+              </div>
+              <div>
+                <StyledErrorMessage name="pass" component="div" />
                 <s.Titles>Edit Desired Fields</s.Titles>
-                <StyledErrorMessage name="oldPassword" component="div" />
                 <StyledField
                   type="password"
                   name="newPass"
@@ -113,7 +114,7 @@ class UpdateEmployee extends React.Component {
                   maxLength="21"
                   placeholder="New Password"
                 />
-                <StyledErrorMessage name="newPassword" component="div" />
+                <StyledErrorMessage name="newPass" component="div" />
                 <StyledField
                   type="password"
                   name="confirmNew"
@@ -145,8 +146,8 @@ class UpdateEmployee extends React.Component {
                 <Button primary dark type="submit" inactive={isSubmitting}>
                   Submit
                 </Button>
-              </StyledForm>
-            </s.Container>
+              </div>
+            </StyledForm>
           )}
         </StyledFormik>
       </React.Fragment>
