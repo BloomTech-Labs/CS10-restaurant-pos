@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 
-import { containerMixin, card, flexCenterMixin } from '../../../global-styles/mixins';
+import { containerMixin, flexCenterMixin } from '../../../global-styles/mixins';
 
 export const Container = styled.div`
   ${flexCenterMixin};
   ${containerMixin};
-  ${card};
   flex-direction: column;
-  justify-content: space-evenly;
   height: 100px;
   width: 100%;
   margin:
@@ -18,4 +16,6 @@ export const Container = styled.div`
   border-radius:
     ${(props) => props.theme.cardBorderRadius}px
     ${(props) => props.theme.cardBorderRadius}px 0 0;
+  box-shadow: 0 2px 16px 1px rgba(0, 0, 0, 0.7);
+  background: ${(props) => props.theme.appTertiary};
 `;

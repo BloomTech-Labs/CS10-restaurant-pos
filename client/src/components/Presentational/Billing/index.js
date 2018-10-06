@@ -41,7 +41,7 @@ class Billing extends React.Component {
       <s.Container>
         {/* // TODO: add support for multiple subscription term options */}
         {membership ? (
-          <Button type="button" onClick={unsubscribe}>
+          <Button dark type="button" onClick={unsubscribe}>
             Unsubscribe
           </Button>
         ) : (
