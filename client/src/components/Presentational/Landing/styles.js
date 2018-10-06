@@ -60,6 +60,10 @@ export const Tagline = styled.div`
   font-weight: 300;
   margin-bottom: 80px;
   color: ${(props) => props.theme.appPrimary};
+
+  @media (max-width: 1500px) {
+    margin-bottom: 50px;
+  }
 `;
 
 export const Buttons = styled.div`
@@ -70,6 +74,10 @@ export const Buttons = styled.div`
 
 export const Video = styled.video`
   box-shadow: ${(props) => props.theme.boxShadow};
+
+  @media (max-width: 1500px) {
+    margin-top: 50px;
+  }
 
   @media (max-width: 650px) {
     width: 100%;
