@@ -6,7 +6,7 @@ export default (ComposedComponent) => {
     const jwt = localStorage.getItem('jwt');
     return (
       <React.Fragment>
-        {!jwt ? <ComposedComponent {...props} /> : <Redirect to="/" />}
+        {!jwt ? <ComposedComponent {...props} /> : <Redirect to="/tables" />}
       </React.Fragment>
     );
   }

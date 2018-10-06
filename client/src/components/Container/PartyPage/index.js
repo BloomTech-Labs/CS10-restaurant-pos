@@ -217,7 +217,6 @@ PartyPage.defaultProps = {
   openSplitModal: () => {},
   updateParty: () => {},
   saveOrder: () => {},
-  // saveSplitOrder: () => {},
   toggleSplitCheckItem: () => {},
   sendPayment: () => {},
   getItems: () => {},

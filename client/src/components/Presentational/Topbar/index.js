@@ -13,8 +13,10 @@ export default function Topbar(props) {
   if (landing && !loggedIn) {
     return (
       <s.Topbar alignEnd>
-        <s.StyledLink to="/login">(Login)</s.StyledLink>
-        <s.StyledLink to="/register">(Register)</s.StyledLink>
+        <s.Tab>
+          <s.StyledLink to="/login">Login</s.StyledLink>
+          <s.StyledLink to="/register">Register</s.StyledLink>
+        </s.Tab>
       </s.Topbar>
     );
   }
@@ -22,7 +24,9 @@ export default function Topbar(props) {
   if (landing && loggedIn) {
     return (
       <s.Topbar alignEnd>
-        <s.StyledLink to="/tables">Proceed To Restaurant</s.StyledLink>
+        <s.Tab>
+          <s.StyledLink to="/tables">Proceed To Restaurant</s.StyledLink>
+        </s.Tab>
       </s.Topbar>
     );
   }
