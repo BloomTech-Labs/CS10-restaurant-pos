@@ -1035,17 +1035,15 @@ Request body should look like this:
 
 ```
 {
-  "order": {
-    "table": "5b983e0726d91bbaec2fea1b",
-    "server": "5b993879366d2671bcba0e02",
-    "food": [
-      "5b956483ed2e4d86346d6c82",
-      "5b9564a0ed2e4d86346d6c83"
-    ],
-    "firstName": "First",
-    "lastName": "Last",
-    "last4": "1234"
-  }
+  "party": "5bb91b06d5461a87502efc84",
+  "table": "5bb91ad8d5461a87502efc83",
+  "server": "5bb7d3ceb2786a2c785eee1c",
+  "food": [
+  	{
+  	"id": "5bb925e9d5461a87502efc86",
+  	"uniqueId": "thisIsTheUniqueId"
+  	}
+  ]
 }
 ```
 
@@ -1053,7 +1051,7 @@ Request body should look like this:
 
 `server`: Employee ObjectId, required
 
-`food`: Should be an array of Item ObjectIds, required
+`food`: Should be an array of Item Objects with ObjectIds, and a custom generated uniqueId, required
 
 `firstName`: String, optional
 
@@ -1065,18 +1063,21 @@ Response:
 
 ```
 {
-  "food": [
-      "5b956483ed2e4d86346d6c82",
-      "5b9564a0ed2e4d86346d6c83"
-  ],
-  "_id": "5b9945ad15c2eab76ccc78b1",
-  "table": "5b983e0726d91bbaec2fea1b",
-  "server": "5b993879366d2671bcba0e02",
-  "lastName": "Last Name",
-  "firstName": "first name",
-  "last4": "1234",
-  "date": "2018-09-12T16:58:21.473Z",
-  "__v": 0
+  "order": {
+    "_id": "5bb92b6fd5461a87502efc90",
+    "party": "5bb91b06d5461a87502efc84",
+    "server": "5bb7d3ceb2786a2c785eee1c",
+    "food": [
+       {
+        "_id": "5bb92b6fd5461a87502efc91",
+        "id": "5bb925e9d5461a87502efc86",
+        "uniqueId": "thisIsTheUniqueId"
+        }
+      ],
+      "restaurant": "5bb7d501d333ca2760d1d334",
+      "date": "2018-10-06T21:38:55.771Z",
+      "__v": 0
+   }
 }
 ```
 
