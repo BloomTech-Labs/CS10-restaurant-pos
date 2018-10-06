@@ -28,9 +28,17 @@ export const Title = styled.h1`
 `;
 
 export const StyledLink = styled(Link)`
+  ${flexCenterMixin};
   color: ${(props) => props.theme.primaryText};
   text-decoration: none;
   left: 10px;
+  height: 100%;
+  flex-grow: 1;
+  padding: 0 25px;
+
+  &:nth-child(2) {
+    padding: 0 30px 0 0;
+  }
 `;
 
 export const TimeDisplay = styled.div`
@@ -45,7 +53,6 @@ export const Tab = styled.div`
   display: flex;
   align-items: center;
   margin-right: -50px;
-  padding: 0 20px;
   background: ${(props) => props.theme.appPrimary};
   border-radius: 30px 0 0 30px;
   height: 50%;
