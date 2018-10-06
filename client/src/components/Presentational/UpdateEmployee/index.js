@@ -84,8 +84,11 @@ class UpdateEmployee extends React.Component {
         >
           {({ errors, isSubmitting }) => (
             <StyledForm updateEmployee>
-              <div>
+              <s.CardHalf left>
                 <s.Titles>Verify Identity</s.Titles>
+                <s.TextBox>
+                  Before making any changes to your account, we need to be extra sure!
+                </s.TextBox>
                 <StyledField
                   type="text"
                   name="pin"
@@ -103,8 +106,8 @@ class UpdateEmployee extends React.Component {
                   maxLength="21"
                   placeholder="Password"
                 />
-              </div>
-              <div>
+              </s.CardHalf>
+              <s.CardHalf right>
                 <StyledErrorMessage name="pass" component="div" />
                 <s.Titles>Edit Desired Fields</s.Titles>
                 <StyledField
@@ -128,7 +131,7 @@ class UpdateEmployee extends React.Component {
                 <StyledField type="email" name="email" placeholder="New Email" />
                 <StyledErrorMessage name="email" component="div" />
                 {authorized && (
-                  <div>
+                  <s.ColorPickerButtons>
                     <Button type="button" onClick={this.toggleColorPicker}>
                       {revealed ? 'Save Color' : 'Pick Color'}
                     </Button>
@@ -136,17 +139,19 @@ class UpdateEmployee extends React.Component {
                       Reset Color
                     </Button>
                     {revealed ? (
-                      <ChromePicker
-                        color={background}
-                        onChangeComplete={this.handleChangeComplete}
-                      />
+                      <s.ColorPickerBox>
+                        <ChromePicker
+                          color={background}
+                          onChangeComplete={this.handleChangeComplete}
+                        />
+                      </s.ColorPickerBox>
                     ) : null}
-                  </div>
+                  </s.ColorPickerButtons>
                 )}
                 <Button primary dark type="submit" inactive={isSubmitting}>
                   Submit
                 </Button>
-              </div>
+              </s.CardHalf>
             </StyledForm>
           )}
         </StyledFormik>

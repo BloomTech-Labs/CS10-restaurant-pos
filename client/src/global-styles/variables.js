@@ -36,10 +36,10 @@ export const theme = {
   sideBarWidth: 265,
   topBarHeight: 100,
   menuItemSize: 200,
-  settingCardHeight: 450,
+  settingCardHeight: 500,
   settingCardMaxWidth: 450,
   settingCardPadding: '0 70px',
-  settingCardMargin: '50px',
+  settingCardMargin: '20px 50px 50px 50px',
 
   // * Card Styles -----------------------------
   cardBorderRadius: 18,

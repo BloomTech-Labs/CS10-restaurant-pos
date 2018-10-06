@@ -4,8 +4,8 @@ import { containerMixin, flexCenterMixin } from '../../../global-styles/mixins';
 
 export const Container = styled.div`
   ${containerMixin};
+  ${flexCenterMixin};
   flex-direction: column;
-  border: 3px solid blue;
 `;
 
 export const Form = styled.form`

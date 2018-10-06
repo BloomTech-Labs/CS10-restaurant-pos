@@ -124,17 +124,20 @@ export const StyledForm = styled(Form)`
   ${flexCenterMixin};
   ${card};
   flex-direction: column;
+  align-items: center;
   justify-content: space-evenly;
-  height: ${(props) => props.theme.settingCardHeight}px;
+  width: 100%;
   max-width: ${(props) => props.theme.settingCardMaxWidth}px;
+  height: ${(props) => props.theme.settingCardHeight}px;
   padding: ${(props) => props.theme.settingCardPadding};
   margin: ${(props) => props.theme.settingCardMargin};
 
   /* editing updateEmployee */
-  border: 3px solid red;
   ${props => props.updateEmployee && 'width: 100%'};
-
-  /* editing updateEmployee */
+  ${props => props.updateEmployee && `max-width: calc(2 * ${props.theme.settingCardMaxWidth}px)`};
+  ${props => props.updateEmployee && 'flex-direction: row'};
+  ${props => props.updateEmployee && 'padding: 0'};
+  ${props => props.updateEmployee && 'align-items: flex-start'};
 `;
 
 export const StyledField = styled(Field)`

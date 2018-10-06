@@ -12,7 +12,6 @@ export const Container = styled(MainContainer)`
 `;
 
 export const CardContainer = styled.div`
-  border: 3px solid green;
   display: flex;
   justify-content: center;
   width: 100%;
