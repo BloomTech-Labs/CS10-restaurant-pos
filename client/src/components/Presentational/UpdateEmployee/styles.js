@@ -1,3 +1,4 @@
+/* ts-styled-plugin disable */
 import styled from 'styled-components';
 
 import { containerMixin, flexCenterMixin } from '../../../global-styles/mixins';
@@ -20,15 +21,14 @@ export const CardHalf = styled.div`
   justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
-  height: 100%;
   width: 100%;
   max-width: ${(props) => props.theme.settingCardMaxWidth}px;
   padding: ${(props) => props.theme.settingCardPadding};
   padding-top: 50px;
   position: relative;
 
-  /* applies only to the left half */
-  ${(props) => props.left && `height: calc(${props.theme.settingCardHeight}px / 2)`};
+  /* applies only to the left half, else it's 100% */
+  height: ${(props) => (props.left ? `calc(${props.theme.settingCardHeight}px / 2)` : '100%')};
 
   /* applies only to the right half */
   ${(props) => props.right && 'border-left: 1.5px solid grey'};

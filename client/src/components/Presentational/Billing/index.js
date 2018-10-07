@@ -38,7 +38,7 @@ class Billing extends React.Component {
   render() {
     const { membership, unsubscribe, openModal } = this.props;
     return (
-      <s.Container>
+      <s.Container membership={membership}>
         {/* // TODO: add support for multiple subscription term options */}
         {membership ? (
           <Button dark type="button" onClick={unsubscribe}>
@@ -61,7 +61,7 @@ class Billing extends React.Component {
               </Button>
             </StripeCheckout> */
           <div>
-            <Button type="submit" onClick={openModal}>
+            <Button dark primary type="submit" onClick={openModal}>
               Subscribe
             </Button>
           </div>
