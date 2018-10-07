@@ -13,6 +13,7 @@ import UpdateEmployee from '../../Presentational/UpdateEmployee';
 import CreateItem from '../../Presentational/CreateItem';
 import Modal from '../../HOC/Modal';
 import StripeRegisterForm from '../../StripeRegisterForm';
+import Logo from '../../Presentational/Logo';
 
 import * as s from './styles';
 
@@ -51,6 +52,7 @@ class SettingsPage extends React.Component {
     return (
       <React.Fragment>
         <Modal isOpen={modalIsOpen}>
+          <Logo width="150" />
           <div>Hey, pay for the sub!</div>
           <div>The sub costs 100 bucks</div>
           <Elements>
