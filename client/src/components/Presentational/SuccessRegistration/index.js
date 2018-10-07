@@ -31,10 +31,11 @@ class SuccessRegistration extends React.PureComponent {
           <s.PinContainer onClick={this.copyToClipboard}>{pin}</s.PinContainer>
           <s.Text>You will need it to login!</s.Text>
           {!restaurant.length && (
-            <s.Text>
-              <Link to="/login">
-                Click here to sign into the service and create your restaurant.
-              </Link>
+            <s.Text uponLogin>
+              To sign into the service and create your restaurant:
+              <s.LinkDiv>
+                <Link to="/login">Click Here</Link>
+              </s.LinkDiv>
             </s.Text>
           )}
           <textarea style={{ position: 'fixed', left: '10000px' }} ref={this.pin} value={pin} />
