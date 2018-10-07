@@ -1,3 +1,6 @@
+# Restaurant POS
+[![Build Status](https://travis-ci.com/Lambda-School-Labs/CS10-restaurant-pos.svg?branch=master)](https://travis-ci.com/Lambda-School-Labs/CS10-restaurant-pos)
+
 # Table of Contents
 
 - [Table of Contents](#table-of-contents)
