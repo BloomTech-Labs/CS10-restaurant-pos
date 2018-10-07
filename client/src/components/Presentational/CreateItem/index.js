@@ -89,7 +89,7 @@ class CreateItem extends React.Component {
                 <StyledField type="number" name="price" maxLength="100" placeholder="5.99" />
                 <StyledErrorMessage name="price" component="div" />
                 <Button type="button" onClick={this.openUploadModal}>
-                  Upload Menu Item Image
+                  Upload Image
                 </Button>
                 <Button primary dark type="submit" inactive={isSubmitting}>
                   Submit

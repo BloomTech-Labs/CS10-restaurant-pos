@@ -3,7 +3,6 @@
 import styled from 'styled-components';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-
 import { flexCenterMixin, card } from './mixins';
 
 export const MainContainer = styled.div`
@@ -11,7 +10,9 @@ export const MainContainer = styled.div`
   border-radius: 50px 0 0 0;
   flex-grow: 2;
   width: 100%;
-  padding: 60px 100px;
+  padding:
+    ${(props) => props.theme.mainContainerPaddingTopBottom}
+    ${(props) => props.theme.mainContainerPaddingRightLeft};
   overflow: hidden;
 `;
 
@@ -58,10 +59,11 @@ export const Button = styled.button`
 
   /* stylelint-disable comment-empty-line-before */
   &:hover {
-    ${(props) => !props.inactive && (`
+    ${(props) => !props.inactive
+      && `
       cursor: pointer;
       transform: translatey(-1px);
-    `)}
+    `};
   }
   /* stylelint-enable comment-empty-line-before */
 
@@ -73,7 +75,7 @@ export const Button = styled.button`
   &::before {
     position: absolute;
     z-index: 10;
-    content: "";
+    content: '';
     background: rgba(0, 0, 0, 0.4);
     width: ${(props) => props.theme.btnWidth + 5}px;
     height: ${(props) => props.theme.btnHeight + 5}px;
@@ -86,7 +88,7 @@ export const Button = styled.button`
     border-radius: ${(props) => props.theme.btnBorderRadius}px;
     width: ${(props) => props.theme.btnWidth - 4}px;
     height: ${(props) => props.theme.btnHeight - 4}px;
-    content: "";
+    content: '';
     background: ${(props) => {
     if (props.primary && props.dark) {
       return props.theme.btnDarkPrimaryBgColor;
@@ -115,18 +117,27 @@ export const Button = styled.button`
 `;
 
 export const StyledFormik = styled(Formik)`
-  /* styles */
+  /* no styles */
 `;
 
 export const StyledForm = styled(Form)`
   ${flexCenterMixin};
   ${card};
   flex-direction: column;
+  align-items: center;
   justify-content: space-evenly;
-  height: ${(props) => props.theme.settingCardHeight}px;
+  width: 100%;
   max-width: ${(props) => props.theme.settingCardMaxWidth}px;
+  height: ${(props) => props.theme.settingCardHeight}px;
   padding: ${(props) => props.theme.settingCardPadding};
   margin: ${(props) => props.theme.settingCardMargin};
+
+  /* editing updateEmployee */
+  ${props => props.updateEmployee && 'width: 100%'};
+  ${props => props.updateEmployee && `max-width: calc(2 * ${props.theme.settingCardMaxWidth}px)`};
+  ${props => props.updateEmployee && 'flex-direction: row'};
+  ${props => props.updateEmployee && 'padding: 0'};
+  ${props => props.updateEmployee && 'align-items: flex-start'};
 `;
 
 export const StyledField = styled(Field)`

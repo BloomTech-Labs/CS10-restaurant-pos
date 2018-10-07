@@ -9,11 +9,11 @@ import { addItem, getItems } from '../../../redux/actions/items';
 import { openModal } from '../../../redux/actions/modal';
 import RestaurantInfo from '../../Presentational/RestaurantInfo';
 import Billing from '../../Presentational/Billing';
-import CreateEmployeeCard from '../../Presentational/CreateEmployeeCard';
 import UpdateEmployee from '../../Presentational/UpdateEmployee';
 import CreateItem from '../../Presentational/CreateItem';
 import Modal from '../../HOC/Modal';
 import StripeRegisterForm from '../../StripeRegisterForm';
+import Logo from '../../Presentational/Logo';
 
 import * as s from './styles';
 
@@ -43,7 +43,6 @@ class SettingsPage extends React.Component {
   managerDisplay = () => (
     <React.Fragment>
       <CreateItem addItem={this.props.addItem} itemCategories={this.props.itemCategories} />
-      <CreateEmployeeCard />
     </React.Fragment>
   );
 
@@ -53,6 +52,7 @@ class SettingsPage extends React.Component {
     return (
       <React.Fragment>
         <Modal isOpen={modalIsOpen}>
+          <Logo width="150" />
           <div>Hey, pay for the sub!</div>
           <div>The sub costs 100 bucks</div>
           <Elements>
@@ -60,9 +60,13 @@ class SettingsPage extends React.Component {
           </Elements>
         </Modal>
         <s.Container modalOpen={modalIsOpen}>
-          {admin && this.adminDisplay()}
-          {(manager || admin) && this.managerDisplay()}
-          <UpdateEmployee updateEmployee={this.updateEmployee} authorized={admin} />
+          <s.CardContainer>
+            {admin && this.adminDisplay()}
+            {(manager || admin) && this.managerDisplay()}
+          </s.CardContainer>
+          <s.CardContainer>
+            <UpdateEmployee updateEmployee={this.updateEmployee} authorized={admin} />
+          </s.CardContainer>
           {membership && (
             // This one appears at the end of the list if the user has a membership
             <Billing membership={this.props.membership} unsubscribe={this.props.unsubscribe} />
