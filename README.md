@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.com/Lambda-School-Labs/CS10-restaurant-pos.svg?branch=master)](https://travis-ci.com/Lambda-School-Labs/CS10-restaurant-pos)
+# Restaurant POS
+This is a fantastic POS system for any restaurant.
+
 # Table of Contents
 
 - [Table of Contents](#table-of-contents)
@@ -1287,7 +1291,7 @@ MongoDB is an object-oriented, simple, dynamic, and scalable NoSQL database. Due
 
 ### Mongoose
 
-Provides a straight-forward, schema-based solution to model application data with MongoDB. It also offers out of the box perks such as validation. | [View Dependency](https://mongoosejs.com/) 
+Provides a straight-forward, schema-based solution to model application data with MongoDB. It also offers out of the box perks such as validation. | [View Dependency](https://mongoosejs.com/)
 
 ### Helmet
 
@@ -1372,27 +1376,27 @@ Has a thriving community and offers the ability to directly style multiple compo
 
 ### Axios
 
-A lightweight, promise-based HTTP client with an intuitive API that makes interfacing with a REST API simple. | [View Dependency](https://www.npmjs.com/package/react-axios) 
+A lightweight, promise-based HTTP client with an intuitive API that makes interfacing with a REST API simple. | [View Dependency](https://www.npmjs.com/package/react-axios)
 
 ### Connected React Router
 
-Allows for the ability to synchronize state with redux store through uni-directional data flow, time traveling, and dispatching of history methods. This makes for an incredibly useful tool when dealing with various stages of state and subsequent routing for a seamless and intuitive UI. | [View Dependency](https://www.npmjs.com/package/connected-react-router) 
+Allows for the ability to synchronize state with redux store through uni-directional data flow, time traveling, and dispatching of history methods. This makes for an incredibly useful tool when dealing with various stages of state and subsequent routing for a seamless and intuitive UI. | [View Dependency](https://www.npmjs.com/package/connected-react-router)
 
 ### Date FNS
 
-A lightweight option for formatting JavaScript dates. | [View Dependency](https://date-fns.org/) 
+A lightweight option for formatting JavaScript dates. | [View Dependency](https://date-fns.org/)
 
 ### Formik
 
-This library utilizes essential React form functionality under the hood which makes implementing it feel very intuitive and not magical. It keeps track of values, errors, and submissions, which reduces the time needed to implement forms and makes for a more enjoyable experience. | [View Dependency](https://jaredpalmer.com/formik) 
+This library utilizes essential React form functionality under the hood which makes implementing it feel very intuitive and not magical. It keeps track of values, errors, and submissions, which reduces the time needed to implement forms and makes for a more enjoyable experience. | [View Dependency](https://jaredpalmer.com/formik)
 
 ### JWT Decode
 
-Used to decode JWTs on the front-end to retrieve user data. | [View Dependency](https://github.com/auth0/jwt-decode) 
+Used to decode JWTs on the front-end to retrieve user data. | [View Dependency](https://github.com/auth0/jwt-decode)
 
 ### PixiJS
 
-An open source, cross browser JavaScript 2D WebGL graphics library with canvas fallback used to build core floor-plan functionality on the app. | [View Dependency](http://www.pixijs.com/) 
+An open source, cross browser JavaScript 2D WebGL graphics library with canvas fallback used to build core floor-plan functionality on the app. | [View Dependency](http://www.pixijs.com/)
 
 ## Front-End Dependencies ```(Development)```
 
@@ -1402,4 +1406,4 @@ An open source, cross browser JavaScript 2D WebGL graphics library with canvas f
 
 ### Stylelint
 
-Used to enforce project conventions in styling to keep code consistent. | [View Dependency](https://stylelint.io/) 
+Used to enforce project conventions in styling to keep code consistent. | [View Dependency](https://stylelint.io/)

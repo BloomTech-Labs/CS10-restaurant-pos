@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 
-// import * as s from './styles';
+import * as s from './styles';
 
 class NotFound extends Component {
   render() {
-    return (
-      <div>
-        404
-      </div>
-    );
+    return <s.Container>404 Not Found</s.Container>;
   }
 }
 
