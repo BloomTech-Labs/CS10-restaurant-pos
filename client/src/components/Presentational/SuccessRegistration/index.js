@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 
@@ -22,19 +23,21 @@ class SuccessRegistration extends React.PureComponent {
   };
 
   render() {
+    const { pin, restaurant } = this.props;
     return (
       <s.Container>
         <s.SubContainer>
           <s.Text>Remember this PIN</s.Text>
-          <s.PinContainer onClick={this.copyToClipboard}>
-            {this.props.pin}
-          </s.PinContainer>
+          <s.PinContainer onClick={this.copyToClipboard}>{pin}</s.PinContainer>
           <s.Text>You will need it to login!</s.Text>
-          <textarea
-            style={{ position: 'fixed', left: '10000px' }}
-            ref={this.pin}
-            value={this.props.pin}
-          />
+          {!restaurant.length && (
+            <s.Text>
+              <Link to="/login">
+                Click here to sign into the service and create your restaurant.
+              </Link>
+            </s.Text>
+          )}
+          <textarea style={{ position: 'fixed', left: '10000px' }} ref={this.pin} value={pin} />
         </s.SubContainer>
       </s.Container>
     );
@@ -43,14 +46,17 @@ class SuccessRegistration extends React.PureComponent {
 
 SuccessRegistration.propTypes = {
   pin: PropTypes.string,
+  restaurant: PropTypes.string
 };
 
 SuccessRegistration.defaultProps = {
   pin: '',
+  restaurant: ''
 };
 
 const mapStateToProps = (state) => ({
   pin: state.auth.pin,
+  restaurant: state.auth.restaurant
 });
 
 export default connect(mapStateToProps)(SuccessRegistration);
