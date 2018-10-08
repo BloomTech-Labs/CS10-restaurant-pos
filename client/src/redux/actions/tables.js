@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { push } from 'connected-react-router';
 import { toast } from 'react-toastify';
 
 // URIs
