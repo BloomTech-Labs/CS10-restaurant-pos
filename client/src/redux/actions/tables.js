@@ -124,7 +124,7 @@ export const toggleEdit = () => ({
 });
 
 export const clearServerTables = () => (dispatch) => {
-  dispatch(push('/tables'));
+  // dispatch(push('/tables'));
   dispatch({
     type: CLEAR_SERVER_TABLES
   });
