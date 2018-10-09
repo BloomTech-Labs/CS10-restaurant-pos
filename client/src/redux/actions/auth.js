@@ -54,18 +54,30 @@ export const login = ({ email, pass }) => (dispatch, getState) => {
     });
 };
 
-export const register = ({ name, email, pass, confirmPass }) => dispatch => {
+export const register = ({ name, email, pass, confirmPass, images }) => dispatch => {
   if (pass !== confirmPass) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
   }
+
   dispatch({ type: PASSWORD_MATCH_SUCCESS });
   dispatch({ type: AUTH_LOADING });
+
+  const randomNum = Math.round(Math.random() * 1000 + 10);
+  if (!Object.keys(images).length) {
+    images = {
+      thumbnail: `https://picsum.photos/10/10?image=${randomNum}`,
+      small: `https://picsum.photos/55/55?image=${randomNum}`,
+      medium: `https://picsum.photos/110/110?image=${randomNum}`
+    };
+  }
+
   return axios
     .post(`${serverURI}/api/employees/admin/register`, {
       name,
       email,
-      pass
+      pass,
+      images
     })
     .then(res => {
       dispatch({ type: REGISTRATION_SUCCESS, payload: res.data.pin });
@@ -165,9 +177,8 @@ export const addEmployee = employee => dispatch => {
   dispatch({ type: PASSWORD_MATCH_SUCCESS });
   dispatch({ type: AUTH_LOADING });
 
-  const randomNum = Math.round(Math.random() * 1000 + 10);
-
   let { images } = employee;
+  const randomNum = Math.round(Math.random() * 1000 + 10);
   if (!Object.keys(employee.images).length) {
     images = {
       thumbnail: `https://picsum.photos/10/10?image=${randomNum}`,

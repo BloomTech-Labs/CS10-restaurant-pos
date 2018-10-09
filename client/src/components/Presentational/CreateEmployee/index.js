@@ -116,11 +116,11 @@ class CreateEmployee extends React.Component {
 }
 
 CreateEmployee.propTypes = {
-  addEmployee: PropTypes.func,
+  addEmployee: PropTypes.func
 };
 
 CreateEmployee.defaultProps = {
-  addEmployee: () => {},
+  addEmployee: () => {}
 };
 
 export default CreateEmployee;

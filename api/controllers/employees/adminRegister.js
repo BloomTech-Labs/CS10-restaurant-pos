@@ -16,7 +16,9 @@ const Employee = require('../../models/Employee');
 // @desc    Adds an administrator to the DB
 // @access  Public
 const adminRegister = (req, res) => {
-  const { name, pass, email } = req.body;
+  const {
+    name, pass, email, images
+  } = req.body;
 
   // Validate Fields
   const missingFields = verifyFields(['name', 'pass'], req.body, res);
@@ -37,13 +39,14 @@ const adminRegister = (req, res) => {
     password: pass,
     email,
     pin,
-    role
+    role,
+    images
   });
 
   // Save the new administrator
   newAdministrator
     .save()
-    .then(adminInfo => {
+    .then((adminInfo) => {
       // Send a confirmation email
       const confirmationEmail = {
         to: email,
@@ -86,7 +89,7 @@ const adminRegister = (req, res) => {
       sgMail.send(confirmationEmail);
       res.status(200).json({ pin: adminInfo.pin });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({
         err,
         msg: 'Error saving the administrator to the DB.'
