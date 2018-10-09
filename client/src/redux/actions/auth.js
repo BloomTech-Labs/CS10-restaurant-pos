@@ -164,12 +164,16 @@ export const addEmployee = employee => dispatch => {
   dispatch({ type: PASSWORD_MATCH_SUCCESS });
   dispatch({ type: AUTH_LOADING });
 
-  const randomNum = Math.random() * 1000 + 10;
-  const images = employee.images || {
-    thumbnail: `https://picsum.photos/50/50?image=${randomNum}`,
-    small: `https://picsum.photos/100/100?image=${randomNum}`,
-    medium: `https://picsum.photos/200/200?image=${randomNum}`
-  };
+  const randomNum = Math.round(Math.random() * 1000 + 10);
+
+  let { images } = employee;
+  if (!Object.keys(employee.images).length) {
+    images = {
+      thumbnail: `https://picsum.photos/10/10?image=${randomNum}`,
+      small: `https://picsum.photos/55/55?image=${randomNum}`,
+      medium: `https://picsum.photos/110/110?image=${randomNum}`
+    };
+  }
 
   return axios
     .post(`${serverURI}/api/employees/register`, {

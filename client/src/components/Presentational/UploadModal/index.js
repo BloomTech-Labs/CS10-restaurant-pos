@@ -59,8 +59,8 @@ class UploadModal extends React.Component {
               use: 'filter',
               robot: '/image/resize',
               resize_strategy: 'fit',
-              width: 50,
-              height: 50,
+              width: 10,
+              height: 10,
               imagemagick_stack: 'v2.0.3',
               progressive: true
             },
@@ -68,8 +68,8 @@ class UploadModal extends React.Component {
               use: 'filter',
               robot: '/image/resize',
               resize_strategy: 'fit',
-              width: 100,
-              height: 100,
+              width: 55,
+              height: 55,
               imagemagick_stack: 'v2.0.3',
               progressive: true
             },
@@ -77,8 +77,8 @@ class UploadModal extends React.Component {
               use: 'filter',
               robot: '/image/resize',
               resize_strategy: 'fit',
-              width: 200,
-              height: 200,
+              width: 110,
+              height: 110,
               imagemagick_stack: 'v2.0.3',
               progressive: true
             },

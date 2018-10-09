@@ -25,7 +25,7 @@ class Server extends React.Component {
     const { server, push } = this.props;
     const imageToDisplay = server.images
       ? server.images.medium
-      : 'https://images.unsplash.com/photo-1500649297466-74794c70acfc?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ce5cca94a31b3b2c59c9ff1002079ed9&auto=format&fit=crop&w=300&q=60';
+      : 'https://storage.googleapis.com/main-course-images/man-303792_640.png';
 
     return (
       <React.Fragment>
@@ -34,7 +34,7 @@ class Server extends React.Component {
           noHover={this.state.showDropdown}
         >
           <s.ProfilePic>
-            <img src={imageToDisplay} alt="user profile" />
+            <img src={imageToDisplay} alt="user profile" width="110px" height="110px" />
           </s.ProfilePic>
           <div>{server.name}</div>
           <div>{getRoleString(server.role, true)}</div>
@@ -66,7 +66,7 @@ Server.propTypes = {
     )
   }),
   push: PropTypes.func,
-  update: PropTypes.func,
+  // update: PropTypes.func,
 };
 
 Server.defaultProps = {
@@ -95,7 +95,7 @@ Server.defaultProps = {
     ]
   },
   push: () => {},
-  update: () => {},
+  // update: () => {},
 };
 
 export default Server;
