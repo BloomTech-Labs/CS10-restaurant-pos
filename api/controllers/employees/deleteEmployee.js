@@ -28,7 +28,6 @@ const deleteEmployee = (req, res) => {
           return res.status(404).json({ msg: 'The employee with the specified ID does not exist.' });
         }
         res.status(202).json({
-          removedEmployee,
           msg: 'The employee was removed from the database.',
         });
       })

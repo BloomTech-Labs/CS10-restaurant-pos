@@ -19,6 +19,8 @@ This is a fantastic POS system for any restaurant.
     - [Login Employee](#login-employee)
     - [Get All Employees](#get-all-employees)
     - [Update Employee](#update-employee)
+    - [Change Role](#change-role)
+    - [Delete Employee](#delete-employee)
     - [Employee Logout](#employee-logout)
   - [Item Routes](#item-routes)
     - [Add Item](#add-item)
@@ -305,8 +307,6 @@ Response:
 }
 ```
 
-
-
 ### Update Employee
 
 PUT `/api/employees/update/:pin`
@@ -341,6 +341,55 @@ Response:
 ```
 {
   "msg": "Succesfully updated the user."
+}
+```
+
+### Change Role
+
+PUT `/api/employees/promote/:id`
+
+**Requires:** Authorization
+
+Changes the role of the employee with the given ID.
+
+Request body should look like this:
+
+```
+{
+  "role": {
+    "admin": false,
+    "manager": true
+  }
+}
+```
+
+`role`: An object containing admin and manager flags
+
+Response will be a success message.
+
+Response:
+
+```
+{
+  msg: 'Employee successfully updated.' }
+}
+```
+
+### Delete Employee
+
+DELETE `/api/employees/delete/:id`
+
+**Requires:** Authorization
+
+Deletes an employee from the database. Only admins can do this.
+
+Response includes a success message.
+
+Response:
+
+```
+{
+  "msg": "The employee was removed from the database."
 }
 ```
 
