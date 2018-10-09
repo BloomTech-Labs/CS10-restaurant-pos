@@ -4,6 +4,7 @@ This is a fantastic POS system for any restaurant.
 
 # Table of Contents
 
+- [Restaurant POS](#restaurant-pos)
 - [Table of Contents](#table-of-contents)
 - [Scripts](#scripts)
   - [Linting](#linting)
@@ -20,29 +21,24 @@ This is a fantastic POS system for any restaurant.
     - [Update Employee](#update-employee)
     - [Employee Logout](#employee-logout)
   - [Item Routes](#item-routes)
+    - [Add Item](#add-item)
     - [Get All Items](#get-all-items)
     - [Get A Specific Item](#get-a-specific-item)
-    - [Add Item](#add-item)
     - [Update Item](#update-item)
     - [Delete Item](#delete-item)
   - [Party Routes](#party-routes)
+    - [Add a New Party](#add-a-new-party)
     - [Get All Parties](#get-all-parties)
     - [Get a Specific Party](#get-a-specific-party)
-    - [Add a New Party](#add-a-new-party)
     - [Update a Party](#update-a-party)
     - [Delete a Party](#delete-a-party)
   - [Table Routes](#table-routes)
+    - [Add Table](#add-table)
     - [Get All Tables](#get-all-tables)
     - [Get A Specific Table](#get-a-specific-table)
-    - [Add Table](#add-table)
     - [Update Tables](#update-tables)
     - [Deactivate Table](#deactivate-table)
     - [Delete Table](#delete-table)
-  - [Order Routes](#order-routes)
-    - [Add a New Order](#add-a-new-order)
-    - [Get All Orders](#get-all-orders)
-    - [Get a Specific Order](#get-a-specific-order)
-    - [Update Order](#update-order)
     - [Restaurant Routes](#restaurant-routes)
 - [Tech-Stack](#tech-stack)
   - [Back-End Dependencies ```(Production)```](#back-end-dependencies-production)
@@ -177,9 +173,7 @@ Response:
 
 POST `/api/employees/register`
 
-**Requires Authentication**
-
-**Admin/Manager only**
+**Requires:** Authentication, an admin must create a restaurant first, must be an admin or a manager.
 
 Registers a new employee. The `restaurant` field for the Employee will automatically be pulled from the JWT.
 
@@ -276,7 +270,7 @@ Response:
 
 GET `/api/employees/all`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Retrieves a list of employees from the database. Admins can see all employees in the restaurant, managers can see only servers.
 
@@ -286,40 +280,38 @@ Response:
 {
   "employees": [
     {
-      "role": {
-        "admin": true,
-        "manager": false
-      },
-      "_id": "5ba6c050df4d147ee8cf9003",
-      "name": "Admin User",
-      "password": "(hashed password. should be changed)",
-      "email": "admin@user.com",
-      "pin": "0000",
-      "__v": 0,
-      "restaurant": "5ba6c19f0c6f7f7f7e859dc4"
+      "_id": "5bb7d8e50f5a084e70e84bd4",
+      "name": "server 1",
+      "images": null,
+      "parties": [
+        {
+          "tables": [],
+          "food": []
+        }
+      ]
     },
     {
-      "role": {
-        "admin": false,
-        "manager": false
-      },
-      "_id": "5ba6c30a0c6f7f7f7e859dc5",
-      "name": "First Server",
-      "password": "(hashed password. should be changed)",
-      "pin": "7350",
-      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-      "__v": 0
+      "_id": "5bb7d3ceb2786a2c785eee1c",
+      "name": "employee name",
+      "images": null,
+      "parties": [
+        {
+          "tables": [],
+          "food": []
+        }
+      ]
     }
   ]
 }
 ```
 
 
+
 ### Update Employee
 
 PUT `/api/employees/update/:pin`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Changes the name, email or password for the user. The pin in the params must match the pin of the current user.
 
@@ -360,11 +352,67 @@ Response will be a new token with all the user information fields replaced with 
 
 ## Item Routes
 
+### Add Item
+
+POST `/api/items/add`
+
+**Requires:** Authorization
+
+Adds a new food item to the database. Only managers and admins can do this.
+
+Request body should look like this:
+
+```
+{
+  "name": "Sweet Potato Roll",
+  "price": "7.99",
+  "category": "sushi",
+  "description": "Sweet and also amazing"
+}
+```
+
+
+`name`: String, required, must be unique
+
+`description`: String
+
+`price`: Number, required
+
+`category`: String, optional
+
+`images`: String, optional
+
+Response includes the added item's:
+
+- name
+- price
+- description
+- category
+- restaurant ID (taken from req.user)
+
+Response:
+
+```
+{
+  "items": [
+    {
+      "_id": "5bb7eec30f5a084e70e84bd7",
+      "name": "Sweet Potato Roll",
+      "price": 4.99,
+      "description": "Sweet and also amazing",
+      "category": "sushi",
+      "restaurant": "5bb7d501d333ca2760d1d334",
+      "__v": 0
+    }
+  ]
+}
+```
+
 ### Get All Items
 
 GET `/api/items/all`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Retrieves all of the food items from the database.
 
@@ -406,7 +454,7 @@ Response:
 
 GET `/api/items/:id`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Retrieves the food by the id specified in the parameters.
 
@@ -433,65 +481,15 @@ Response:
 }
 ```
 
-### Add Item
-
-POST `/api/items/add`
-
-**Requires Authorization**
-
-Adds a new food item to the database. Only managers and admins can do this.
-
-Request body should look like this:
-
-```
-{
-  "name": "Spaghetti",
-  "price": "7.99",
-  "category": "entrees",
-  "description": "Noodles and red stuff"
-}
-```
-
-`name`: String, required, must be unique
-
-`description`: String
-
-`price`: Number, required
-
-`category`: String, optional
-
-Response includes the added item's:
-
-- name
-- price
-- category
-- description
-
-Response:
-
-```
-{
-  "item": {
-    "_id": "5ba6c9f8914dc082011a1657",
-    "name": "Spaghetti",
-    "price": 7.99,
-    "description": "Noodles and red stuff",
-    "category": "entrees",
-    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-    "__v": 0
-  }
-}
-```
-
 ### Update Item
 
 PUT `/api/items/update/:id`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Updates information for an existing food item. Only managers and admins can do this.
 
-Request body should look like this:
+If only updating the price, the request body should look like this:
 
 ```
 {
@@ -536,7 +534,7 @@ Response:
 
 DELETE `/api/items/delete/:id`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Deletes an item from the database. Only managers and admins can do this.
 
@@ -566,11 +564,68 @@ Response:
 
 ## Party Routes
 
+### Add a New Party
+
+POST `/api/party/add`
+
+**Requires:** Authorization
+
+Adds a new party to the database
+
+Request body should look like this:
+
+```
+{
+  "tables": ["5ba6c6860c6f7f7f7e859dc6"],
+  "server": "5ba6c30a0c6f7f7f7e859dc5"
+}
+```
+
+`tables`: Should be an array of Table ObjectIds.
+
+`server`: Employee ObjectId, optional
+
+`tables` is an array so that if tables are combined, all tables are represented in the array. In most cases there will be only one table id.
+
+Response includes the party's:
+
+- Items list (name, price)
+- tables list
+- server name
+
+Response:
+
+```
+{
+  "party": {
+    "food": [],
+    "tables": [
+      {
+        "active": true,
+        "_id": "5ba6c6860c6f7f7f7e859dc6",
+        "x": 400,
+        "y": 100,
+        "number": 1,
+        "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+        "__v": 0
+      }
+    ],
+    "_id": "5ba6c8070c6f7f7f7e859dc8",
+    "server": {
+      "_id": "5ba6c30a0c6f7f7f7e859dc5",
+      "name": "First Server"
+    },
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 0
+  }
+}
+```
+
 ### Get All Parties
 
 GET `/api/party/all`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Retrieves all parties from the database.
 
@@ -631,7 +686,7 @@ Response:
 
 GET `/api/party/:id`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Retrieves a specific party from the database by its id.
 
@@ -668,68 +723,11 @@ Response:
 }
 ```
 
-### Add a New Party
-
-POST `/api/party/add`
-
-**Requires Authorization**
-
-Adds a new party to the database
-
-Request body should look like this:
-
-```
-{
-  "tables": ["5ba6c6860c6f7f7f7e859dc6"],
-  "server": "5ba6c30a0c6f7f7f7e859dc5"
-}
-```
-
-`tables`: Should be an array of Table ObjectIds.
-
-`server`: Employee ObjectId, optional
-
-`tables` is an array so that if tables are combined, all tables are represented in the array. In most cases there will be only one table id.
-
-Response includes the party's:
-
-- Items list (name, price)
-- tables list
-- server name
-
-Response:
-
-```
-{
-  "party": {
-    "food": [],
-    "tables": [
-      {
-        "active": true,
-        "_id": "5ba6c6860c6f7f7f7e859dc6",
-        "x": 400,
-        "y": 100,
-        "number": 1,
-        "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-        "__v": 0
-      }
-    ],
-    "_id": "5ba6c8070c6f7f7f7e859dc8",
-    "server": {
-      "_id": "5ba6c30a0c6f7f7f7e859dc5",
-      "name": "First Server"
-    },
-    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-    "__v": 0
-  }
-}
-```
-
 ### Update a Party
 
 PUT `/api/party/update/:id`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Updates the party information
 
@@ -776,7 +774,7 @@ Response:
 
 DELETE `/api/party/delete/:id`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Deletes a party from the database.
 
@@ -801,70 +799,11 @@ Response:
 
 ## Table Routes
 
-### Get All Tables
-
-GET`/api/tables/all`
-
-**Requires Authorization**
-
-Get all tables.
-
-Response:
-
-```
-{
-  "tables": [
-    {
-      "active": false,
-      "_id": "5ba6c6860c6f7f7f7e859dc6",
-      "x": 100,
-      "y": 250,
-      "number": 1,
-      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-      "__v": 0
-    },
-    {
-      "active": false,
-      "_id": "5ba6c6b00c6f7f7f7e859dc7",
-      "x": 250,
-      "y": 300,
-      "number": 2,
-      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-      "__v": 0
-    }
-  ]
-}
-```
-
-### Get A Specific Table
-
-GET`/api/tables/:id`
-
-**Requires Authorization**
-
-Get a table by it's ID. The ID will be pulled off of the request parameters.
-
-Response:
-
-```
-{
-  "table": {
-    "active": false,
-    "_id": "5ba6c6860c6f7f7f7e859dc6",
-    "x": 100,
-    "y": 250,
-    "number": 1,
-    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-    "__v": 0
-  }
-}
-```
-
 ### Add Table
 
 POST `/api/tables/add`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Adds a new table to the database with the given coordinates.
 
@@ -907,11 +846,70 @@ Response:
 }
 ```
 
+### Get All Tables
+
+GET`/api/tables/all`
+
+**Requires:** Authorization
+
+Get all tables.
+
+Response:
+
+```
+{
+  "tables": [
+    {
+      "active": false,
+      "_id": "5ba6c6860c6f7f7f7e859dc6",
+      "x": 100,
+      "y": 250,
+      "number": 1,
+      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+      "__v": 0
+    },
+    {
+      "active": false,
+      "_id": "5ba6c6b00c6f7f7f7e859dc7",
+      "x": 250,
+      "y": 300,
+      "number": 2,
+      "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+      "__v": 0
+    }
+  ]
+}
+```
+
+### Get A Specific Table
+
+GET`/api/tables/:id`
+
+**Requires:** Authorization
+
+Get a table by it's ID. The ID will be pulled off of the request parameters.
+
+Response:
+
+```
+{
+  "table": {
+    "active": false,
+    "_id": "5ba6c6860c6f7f7f7e859dc6",
+    "x": 100,
+    "y": 250,
+    "number": 1,
+    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "__v": 0
+  }
+}
+```
+
 ### Update Tables
 
 POST `api/tables/update`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Updates all the tables in array in the request body.
 
@@ -919,18 +917,13 @@ Request body should look like this:
 
 ```
 {
-	"updatedTables": [
-    {
-      "_id": "5ba6c6860c6f7f7f7e859dc6",
-      "x": 400,
-      "y": 100
-    },
-    {
-      "_id": "5ba6c6b00c6f7f7f7e859dc7",
-      "x": 100,
-      "y": 250
-    }
-  ]
+"tables": [
+	  {
+	    "_id": "5bb91ad8d5461a87502efc83",
+	    "x": 2,
+	    "y": 2
+	  }
+	]
 }
 ```
 
@@ -945,33 +938,26 @@ Response includes the added item's:
 Response:
 
 ```
-[
-  {
-    "active": false,
-    "_id": "5ba6c6860c6f7f7f7e859dc6",
-    "x": 400,
-    "y": 100,
-    "number": 1,
-    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-    "__v": 0
-  },
-  {
-    "active": false,
-    "_id": "5ba6c6b00c6f7f7f7e859dc7",
-    "x": 100,
-    "y": 250,
-    "number": 2,
-    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
-    "__v": 0
-  }
-]
+{
+  "updatedTables": [
+     {
+      "active": false,
+      "_id": "5bb91ad8d5461a87502efc83",
+      "x": 2,
+      "y": 2,
+      "number": 1,
+      "restaurant": "5bb7d501d333ca2760d1d334",
+      "__v": 0
+    }
+  ]
+}
 ```
 
 ### Deactivate Table
 
 PUT `api/tables/deactivate/:id`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Deactivates a table by its ID and removes the table from any connected party.
 
@@ -984,27 +970,25 @@ Response:
 
 ```
 {
-  "populatedParty": {
-    "food": [],
-    "tables": [
-      "5ba6c6b00c6f7f7f7e859dc7"
-    ],
-    "_id": "5ba6c8070c6f7f7f7e859dc8",
+  "updatedParty": {
+    "tables": [],
+    "_id": "5bb922f8d5461a87502efc85",
     "server": {
-      "_id": "5ba6c30a0c6f7f7f7e859dc5",
-      "name": "First Server"
+        "_id": "5bb7d3ceb2786a2c785eee1c",
+        "name": "Milo Pup"
     },
-    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "restaurant": "5bb7d501d333ca2760d1d334",
+    "food": [],
     "__v": 1
   },
   "msg": "Table has been deactivated and removed from the party.",
   "updatedTable": {
     "active": true,
-    "_id": "5ba6c6860c6f7f7f7e859dc6",
-    "x": 400,
-    "y": 100,
+    "_id": "5bb91ad8d5461a87502efc83",
+    "x": 2,
+    "y": 2,
     "number": 1,
-    "restaurant": "5ba6c19f0c6f7f7f7e859dc4",
+    "restaurant": "5bb7d501d333ca2760d1d334",
     "__v": 0
   }
 }
@@ -1014,7 +998,7 @@ Response:
 
 Delete `api/tables/delete/:id`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Deletes a table by its ID. The ID will be pulled off of the request parameters. No request body is required for this route. Only managers and admins can do this.
 
@@ -1037,201 +1021,11 @@ Response:
 }
 ```
 
-## Order Routes
-
-### Add a New Order
-
-POST `/api/orders/add`
-
-**Requires Authorization**
-
-Adds a new order to the selected table.
-
-Request body should look like this:
-
-```
-{
-  "order": {
-    "table": "5b983e0726d91bbaec2fea1b",
-    "server": "5b993879366d2671bcba0e02",
-    "food": [
-      "5b956483ed2e4d86346d6c82",
-      "5b9564a0ed2e4d86346d6c83"
-    ],
-    "firstName": "First",
-    "lastName": "Last",
-    "last4": "1234"
-  }
-}
-```
-
-`table`: Table ObjectId, required
-
-`server`: Employee ObjectId, required
-
-`food`: Should be an array of Item ObjectIds, required
-
-`firstName`: String, optional
-
-`lastName`: String, optional
-
-`last4`: String, optional
-
-Response:
-
-```
-{
-  "food": [
-      "5b956483ed2e4d86346d6c82",
-      "5b9564a0ed2e4d86346d6c83"
-  ],
-  "_id": "5b9945ad15c2eab76ccc78b1",
-  "table": "5b983e0726d91bbaec2fea1b",
-  "server": "5b993879366d2671bcba0e02",
-  "lastName": "Last Name",
-  "firstName": "first name",
-  "last4": "1234",
-  "date": "2018-09-12T16:58:21.473Z",
-  "__v": 0
-}
-```
-
-### Get All Orders
-
-GET `/api/orders/all`
-
-**Requires Authorization**
-
-Retrieves all of the orders from the database.
-
-Response:
-
-```
-{
-  "orders": [
-    {
-      "food": [
-        {
-          "_id": "5b956483ed2e4d86346d6c82",
-          "name": "Shrimp Tempura",
-          "price": 5.99
-        },
-        {
-          "_id": "5b9564a0ed2e4d86346d6c83",
-          "name": "Sweet Potato Roll",
-          "price": 4.99
-        }
-      ],
-      "_id": "5b9945ad15c2eab76ccc78b1",
-      "table": "5b983e0726d91bbaec2fea1b",
-      "server": {
-        "_id": "5b993879366d2671bcba0e02",
-        "name": "Rigby Bird"
-      },
-      "lastName": "Last Name",
-      "firstName": "first name",
-      "last4": "1234",
-      "date": "2018-09-12T16:58:21.473Z",
-      "__v": 0
-    }
-  ]
-}
-```
-
-### Get a Specific Order
-
-GET `/api/orders/:id`
-
-**Requires Authorization**
-
-Retrieves a specific order from the database by the id provided.
-
-Response:
-
-```
-{
-  "order": {
-    "food": [
-      {
-        "_id": "5b956483ed2e4d86346d6c82",
-        "name": "Shrimp Tempura",
-        "price": 5.99
-      },
-      {
-        "_id": "5b9564a0ed2e4d86346d6c83",
-        "name": "Sweet Potato Roll",
-        "price": 4.99
-      }
-    ],
-    "_id": "5b9945ad15c2eab76ccc78b1",
-    "table": "5b983e0726d91bbaec2fea1b",
-    "server": {
-      "_id": "5b993879366d2671bcba0e02",
-      "name": "Rigby Bird"
-    },
-    "lastName": "Last Name",
-    "firstName": "first name",
-    "last4": "1234",
-    "date": "2018-09-12T16:58:21.473Z",
-    "__v": 0
-  }
-}
-```
-
-### Update Order
-
-PUT `/api/orders/:id`
-
-**Requires Authorization**
-
-Updates an existing order.
-
-Request body should look like this:
-
-```
-{
-  "food": ["5b956483ed2e4d86346d6c82", "5b9564a0ed2e4d86346d6c83"],
-  "table
-}
-```
-
-Response:
-
-```
-{
-  "updatedOrder": {
-    "food": [
-      {
-        "_id": "5b956483ed2e4d86346d6c82",
-        "name": "Shrimp Tempura",
-        "price": 5.99
-      },
-      {
-        "_id": "5b9564a0ed2e4d86346d6c83",
-        "name": "Sweet Potato Roll",
-        "price": 4.99
-      }
-    ],
-    "_id": "5b9945ad15c2eab76ccc78b1",
-    "party": "5b983e0726d91bbaec2fea1b",
-    "server": {
-      "_id": "5b993879366d2671bcba0e02",
-      "name": "Rigby Bird"
-    },
-    "lastName": "Last Name",
-    "firstName": "first name",
-    "last4": "1234",
-    "date": "2018-09-12T16:58:21.473Z",
-    "__v": 0
-  }
-}
-```
-
 ### Restaurant Routes
 
 POST `/api/restaurants/register`
 
-**Requires Authorization**
+**Requires:** Authorization
 
 Adds a new restaurant to the signed-in admin's account.
 
@@ -1265,6 +1059,7 @@ Response:
   "msg": "Successfully created"
 }
 ```
+
 # Tech-Stack
 
 ## Back-End Dependencies ```(Production)```
