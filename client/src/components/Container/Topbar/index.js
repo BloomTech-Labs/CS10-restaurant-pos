@@ -3,18 +3,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { logoutEmployee } from '../../../redux/actions/auth';
+import { getRoleString } from '../../../redux/helpers/misc';
 import Topbar from '../../Presentational/Topbar';
 
 function TopbarContainer(props) {
   const { blur, name, roleBooleans, loggedIn, pathname, image } = props;
-  let role = '';
-  if (roleBooleans.admin) {
-    role = 'Admin';
-  } else if (roleBooleans.manager) {
-    role = 'Manager';
-  } else if (loggedIn) {
-    role = 'Server';
-  }
+  const role = getRoleString(roleBooleans, loggedIn);
 
   return (
     <Topbar

@@ -34,7 +34,7 @@ export const login = ({ email, pass }) => (dispatch, getState) => {
   dispatch({ type: AUTH_LOADING });
   return axios
     .post(`${serverURI}/api/employees/admin/login`, { email, pass })
-    .then((res) => {
+    .then(res => {
       dispatch({ type: LOGIN_SUCCESS, payload: res.data.token });
 
       localStorage.setItem('jwt', res.data.token);
@@ -45,13 +45,13 @@ export const login = ({ email, pass }) => (dispatch, getState) => {
         dispatch(push('/new-restaurant'));
       }
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch({ type: LOGIN_FAILURE, payload: err });
       errorHandler(err);
     });
 };
 
-export const register = ({ name, email, pass, confirmPass }) => (dispatch) => {
+export const register = ({ name, email, pass, confirmPass }) => dispatch => {
   if (pass !== confirmPass) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
@@ -64,19 +64,26 @@ export const register = ({ name, email, pass, confirmPass }) => (dispatch) => {
       email,
       pass
     })
-    .then((res) => {
+    .then(res => {
       dispatch({ type: REGISTRATION_SUCCESS, payload: res.data.pin });
       dispatch(push('/registration-success'));
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch({ type: REGISTRATION_FAILURE, payload: err });
       errorHandler(err);
     });
 };
 
-export const updateEmployee = ({ pin, pass, newPass, confirmNew, email, name, themeColor }) => (
-  dispatch
-) => {
+export const updateEmployee = ({
+  pin,
+  pass,
+  newPass,
+  confirmNew,
+  email,
+  name,
+  role,
+  themeColor
+}) => dispatch => {
   if (newPass !== confirmNew) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
@@ -89,6 +96,7 @@ export const updateEmployee = ({ pin, pass, newPass, confirmNew, email, name, th
       newPass,
       name,
       email,
+      role,
       themeColor
     })
     .then(() => {
@@ -96,17 +104,17 @@ export const updateEmployee = ({ pin, pass, newPass, confirmNew, email, name, th
       toast('Successfully updated the account.');
       if (themeColor) window.location.reload();
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch({ type: UPDATE_EMPLOYEE_ERROR, payload: err });
       errorHandler(err);
     });
 };
 
-export const loginEmployee = ({ pin, pass }) => (dispatch) => {
+export const loginEmployee = ({ pin, pass }) => dispatch => {
   dispatch({ type: AUTH_LOADING });
   return axios
     .post(`${serverURI}/api/employees/login`, { pin, pass })
-    .then((res) => {
+    .then(res => {
       const { role } = jwtDecode(res.data.token);
 
       dispatch({
@@ -122,17 +130,17 @@ export const loginEmployee = ({ pin, pass }) => (dispatch) => {
         dispatch(push('/tables'));
       }
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch({ type: EMPLOYEE_LOGIN_FAILURE, payload: err });
       errorHandler(err);
     });
 };
 
-export const logoutEmployee = () => (dispatch) => {
+export const logoutEmployee = () => dispatch => {
   dispatch({ type: AUTH_LOADING });
   axios
     .get(`${serverURI}/api/employees/logout`)
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: EMPLOYEE_LOGOUT_SUCCESS,
         payload: res.data.token
@@ -141,30 +149,39 @@ export const logoutEmployee = () => (dispatch) => {
 
       localStorage.setItem('jwt', res.data.token);
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch({ type: EMPLOYEE_LOGOUT_FAILURE, payload: err });
       errorHandler(err);
     });
 };
 
-export const addEmployee = (employee) => (dispatch) => {
+export const addEmployee = employee => dispatch => {
   if (employee.pass !== employee.confirmPass) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
   }
+
   dispatch({ type: PASSWORD_MATCH_SUCCESS });
   dispatch({ type: AUTH_LOADING });
+
+  const randomNum = Math.random() * 1000 + 10;
+  const images = employee.images || {
+    thumbnail: `https://picsum.photos/50/50?image=${randomNum}`,
+    small: `https://picsum.photos/100/100?image=${randomNum}`,
+    medium: `https://picsum.photos/200/200?image=${randomNum}`
+  };
+
   return axios
     .post(`${serverURI}/api/employees/register`, {
       name: employee.name,
       pass: employee.pass,
-      images: employee.images
+      images
     })
-    .then((res) => {
+    .then(res => {
       dispatch({ type: EMPLOYEE_REGISTER_SUCCESS, payload: res.data.pin });
       dispatch(push('/registration-success'));
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch({ type: EMPLOYEE_REGISTER_FAILURE, payload: err });
       errorHandler(err);
     });

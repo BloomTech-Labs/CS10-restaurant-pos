@@ -24,7 +24,9 @@ const getAllServers = (req, res) => {
         $project: {
           _id: 1,
           name: 1,
+          role: 1,
           images: 1,
+          pin: 1,
         },
       },
       {
@@ -61,7 +63,9 @@ const getAllServers = (req, res) => {
         $group: {
           _id: '$_id',
           name: { $first: '$name' },
+          role: { $first: '$role' },
           images: { $first: '$images' },
+          pin: { $first: '$pin' },
           parties: {
             $push: {
               _id: '$parties._id',

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { getRoleString } from '../../../redux/helpers/misc';
+
 import * as s from './styles';
 
 class Server extends React.Component {
@@ -14,6 +16,10 @@ class Server extends React.Component {
       showDropdown: !prev.showDropdown
     }));
   };
+
+  promoteEmployee = () => {
+    // this.props.update(pin{ role: { manager: true, admin: false } });
+  }
 
   render() {
     const { server, push } = this.props;
@@ -31,13 +37,14 @@ class Server extends React.Component {
             <img src={imageToDisplay} alt="user profile" />
           </s.ProfilePic>
           <div>{server.name}</div>
+          <div>{getRoleString(server.role, true)}</div>
           <s.DropDownDotsThing onClick={this.toggleDropDown}>
             <div />
             <div />
             <div />
           </s.DropDownDotsThing>
           <s.DropdownThingy show={this.state.showDropdown}>
-            <s.Option>
+            <s.Option onClick={this.promoteEmployee}>
               Promote to Manager
             </s.Option>
           </s.DropdownThingy>
@@ -58,7 +65,8 @@ Server.propTypes = {
       })
     )
   }),
-  push: PropTypes.func
+  push: PropTypes.func,
+  update: PropTypes.func,
 };
 
 Server.defaultProps = {
@@ -86,7 +94,8 @@ Server.defaultProps = {
       }
     ]
   },
-  push: () => {}
+  push: () => {},
+  update: () => {},
 };
 
 export default Server;
