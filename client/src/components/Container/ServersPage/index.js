@@ -51,7 +51,7 @@ ServersPage.defaultProps = {
 
 const mapStateToProps = state => ({
   serverList: state.servers.serverList,
-  loading: state.servers.loading
+  loading: state.servers.loading,
 });
 
 export default connect(
