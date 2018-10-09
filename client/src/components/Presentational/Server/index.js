@@ -10,17 +10,18 @@ class Server extends React.Component {
     showDropdown: false
   };
 
-  toggleDropDown = e => {
+  toggleDropDown = (e) => {
     if (e) e.stopPropagation();
 
-    this.setState(prev => ({
+    this.setState((prev) => ({
       showDropdown: !prev.showDropdown
     }));
   };
 
   promoteEmployee = (e) => {
     e.stopPropagation();
-    this.props.update(this.props.server._id, { admin: false, manager: true })
+    this.props
+      .update(this.props.server._id, { admin: false, manager: true })
       .then(() => {
         this.props.getServers();
       })
@@ -41,7 +42,7 @@ class Server extends React.Component {
           noHover={this.state.showDropdown}
         >
           <s.ProfilePic>
-            <img src={imageToDisplay} alt="user profile" width="110px" height="110px" />
+            <img src={imageToDisplay} alt="user profile" width="125px" />
           </s.ProfilePic>
           <div>{server.name}</div>
           <div>{getRoleString(server.role, true)}</div>
@@ -51,7 +52,9 @@ class Server extends React.Component {
             <div />
           </s.DropDownDotsThing>
           <s.DropdownThingy show={this.state.showDropdown}>
-            <s.Option onClick={this.promoteEmployee}>Promote to Manager</s.Option>
+            {server.role.admin ? null : (
+              <s.Option onClick={this.promoteEmployee}>Promote to Manager</s.Option>
+            )}
           </s.DropdownThingy>
         </s.ServerBox>
         <s.Overlay onClick={this.toggleDropDown} show={this.state.showDropdown} />
@@ -62,23 +65,26 @@ class Server extends React.Component {
 
 Server.propTypes = {
   server: PropTypes.shape({
-    name: PropTypes.string,
     _id: PropTypes.string,
-    parties: PropTypes.arrayOf(PropTypes.shape(PropTypes.object))
+    name: PropTypes.string,
+    parties: PropTypes.arrayOf(PropTypes.shape(PropTypes.object)),
+    role: PropTypes.object
   }),
   push: PropTypes.func,
   update: PropTypes.func,
-  getServers: PropTypes.func,
+  getServers: PropTypes.func
 };
 
 Server.defaultProps = {
   server: {
+    _id: '',
     name: 'RandyCarlFace',
-    parties: [{}]
+    parties: [{}],
+    role: {}
   },
   push: () => {},
   update: () => {},
-  getServers: () => {},
+  getServers: () => {}
 };
 
 export default Server;

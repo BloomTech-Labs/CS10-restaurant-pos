@@ -9,13 +9,13 @@ const keys = require('../../../config/keys');
 // @desc    Registers a new restaurant under the current admin account
 // @access  Private
 const registerRestaurant = (req, res) => {
-  // requires admin id, name, location, billing.address
+  // requires admin id, name, location
 
   const restaurantInfo = req.body;
   restaurantInfo.admin = req.user._id;
 
   // verify the required fields
-  verifyFields(['name', 'location', 'billing'], req.body, res);
+  verifyFields(['name', 'location'], req.body, res);
 
   const newRestaurant = new Restaurant(req.body);
 

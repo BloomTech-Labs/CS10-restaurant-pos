@@ -54,13 +54,13 @@ class UploadModal extends React.Component {
               // eslint-disable-next-line no-template-curly-in-string
               accepts: [['${file.mime}', 'regex', 'image']],
               error_on_decline: true
-            },
+            }, // TODO: Other resize strageties to accomodate different
             thumbnail: {
               use: 'filter',
               robot: '/image/resize',
               resize_strategy: 'fit',
-              width: 10,
-              height: 10,
+              width: 11,
+              height: 11,
               imagemagick_stack: 'v2.0.3',
               progressive: true
             },
@@ -68,8 +68,8 @@ class UploadModal extends React.Component {
               use: 'filter',
               robot: '/image/resize',
               resize_strategy: 'fit',
-              width: 55,
-              height: 55,
+              width: 61,
+              height: 61,
               imagemagick_stack: 'v2.0.3',
               progressive: true
             },
@@ -77,8 +77,8 @@ class UploadModal extends React.Component {
               use: 'filter',
               robot: '/image/resize',
               resize_strategy: 'fit',
-              width: 110,
-              height: 110,
+              width: 121,
+              height: 121,
               imagemagick_stack: 'v2.0.3',
               progressive: true
             },

@@ -17,14 +17,6 @@ const RestaurantSchema = new Schema({
     type: String,
     required: true,
   },
-  billing: {
-    address: {
-      type: String,
-      required: true,
-    },
-    firstName: String,
-    lastName: String,
-  },
   subscription: String,
   membership: {
     type: Boolean,

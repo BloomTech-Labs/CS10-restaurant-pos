@@ -100,6 +100,9 @@ class Register extends React.Component {
                   placeholder="********"
                 />
                 <StyledErrorMessage name="confirmPass" component="div" />
+                <Button type="button" onClick={this.openUploadModal}>
+                  Upload Profile Image
+                </Button>
                 <Button primary dark type="submit" inactive={isSubmitting}>
                   Submit
                 </Button>
