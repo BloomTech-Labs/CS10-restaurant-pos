@@ -11,15 +11,22 @@ class Server extends React.Component {
   };
 
   toggleDropDown = e => {
-    e.stopPropagation();
+    if (e) e.stopPropagation();
+
     this.setState(prev => ({
       showDropdown: !prev.showDropdown
     }));
   };
 
-  promoteEmployee = () => {
-    // this.props.update(pin{ role: { manager: true, admin: false } });
-  }
+  promoteEmployee = (e) => {
+    e.stopPropagation();
+    this.props.update(this.props.server._id, { admin: false, manager: true })
+      .then(() => {
+        this.props.getServers();
+      })
+      .catch((err) => console.error(err));
+    this.toggleDropDown();
+  };
 
   render() {
     const { server, push } = this.props;
@@ -44,9 +51,7 @@ class Server extends React.Component {
             <div />
           </s.DropDownDotsThing>
           <s.DropdownThingy show={this.state.showDropdown}>
-            <s.Option onClick={this.promoteEmployee}>
-              Promote to Manager
-            </s.Option>
+            <s.Option onClick={this.promoteEmployee}>Promote to Manager</s.Option>
           </s.DropdownThingy>
         </s.ServerBox>
         <s.Overlay onClick={this.toggleDropDown} show={this.state.showDropdown} />
@@ -58,44 +63,22 @@ class Server extends React.Component {
 Server.propTypes = {
   server: PropTypes.shape({
     name: PropTypes.string,
-    parties: PropTypes.arrayOf(
-      PropTypes.shape({
-        food: PropTypes.array,
-        tables: PropTypes.arrayOf(PropTypes.object)
-      })
-    )
+    _id: PropTypes.string,
+    parties: PropTypes.arrayOf(PropTypes.shape(PropTypes.object))
   }),
   push: PropTypes.func,
-  // update: PropTypes.func,
+  update: PropTypes.func,
+  getServers: PropTypes.func,
 };
 
 Server.defaultProps = {
   server: {
     name: 'RandyCarlFace',
-    parties: [
-      {
-        food: [],
-        tables: [
-          {
-            number: 1
-          },
-          {
-            number: 3
-          }
-        ]
-      },
-      {
-        food: [],
-        tables: [
-          {
-            number: 2
-          }
-        ]
-      }
-    ]
+    parties: [{}]
   },
   push: () => {},
-  // update: () => {},
+  update: () => {},
+  getServers: () => {},
 };
 
 export default Server;

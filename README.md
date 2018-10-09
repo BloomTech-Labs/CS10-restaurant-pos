@@ -346,7 +346,7 @@ Response:
 
 ### Change Role
 
-PUT `/api/employees/promote/:id`
+PUT `/api/employees/update/role/:id`
 
 **Requires:** Authorization
 

@@ -10,7 +10,13 @@ export default function ServerList(props) {
   return (
     <s.Container>
       {serverList.map(server => (
-        <Server key={server._id} server={server} push={push} update={update} />
+        <Server
+          key={server._id}
+          server={server}
+          push={push}
+          update={update}
+          getServers={props.getServers}
+        />
       ))}
     </s.Container>
   );
@@ -19,11 +25,13 @@ export default function ServerList(props) {
 ServerList.propTypes = {
   serverList: PropTypes.arrayOf(PropTypes.object),
   push: PropTypes.func,
-  update: PropTypes.func
+  update: PropTypes.func,
+  getServers: PropTypes.func
 };
 
 ServerList.defaultProps = {
   serverList: [{}],
   push: () => {},
-  update: () => {}
+  update: () => {},
+  getServers: () => {}
 };
