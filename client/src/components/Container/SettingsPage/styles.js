@@ -8,14 +8,13 @@ export const Container = styled(MainContainer)`
   flex-direction: column;
   overflow-y: auto;
   ${(props) => props.modalOpen && modalBlur};
-  height: 100%;
 `;
 
 export const CardContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 100%;
   flex-direction: row;
   flex-wrap: wrap;
+  flex-shrink: 0;
 `;

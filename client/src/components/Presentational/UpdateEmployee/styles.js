@@ -8,6 +8,7 @@ export const Container = styled.div`
   ${flexCenterMixin};
   flex-direction: column;
   width: 100%;
+  flex-shrink: 0;
 `;
 
 export const Titles = styled.div`

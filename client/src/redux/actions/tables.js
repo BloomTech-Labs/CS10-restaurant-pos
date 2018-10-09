@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { push } from 'connected-react-router';
 import { toast } from 'react-toastify';
 
 // URIs
@@ -124,7 +123,7 @@ export const toggleEdit = () => ({
 });
 
 export const clearServerTables = () => (dispatch) => {
-  dispatch(push('/tables'));
+  // dispatch(push('/tables'));
   dispatch({
     type: CLEAR_SERVER_TABLES
   });
