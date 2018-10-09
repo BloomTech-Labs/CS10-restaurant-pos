@@ -21,33 +21,32 @@ class Billing extends React.Component {
     this.props.openModal();
   };
 
-  handleChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
+  // TODO: Clean all this up
+  // handleChange = (event) => {
+  //   this.setState({ [event.target.name]: event.target.value });
+  // };
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    // this.props.addRestaurant(this.state);
-  };
+  // handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   // this.props.addRestaurant(this.state);
+  // };
 
-  subscribe = (token) => {
-    this.props.subscribe(token);
-  };
+  // subscribe = (token) => {
+  //   this.props.subscribe(token);
+  // };
 
   render() {
     const { membership, unsubscribe, openModal } = this.props;
     return (
-      <s.Container>
-        <div>Billing</div>
+      <s.Container membership={membership}>
         {/* // TODO: add support for multiple subscription term options */}
-        <s.ButtonContainer>
-          {membership ? (
-            <Button type="button" onClick={unsubscribe}>
-              Unsubscribe
-            </Button>
-          ) : (
-          // TODO: Clean all this up
-            /* <StripeCheckout
+        {membership ? (
+          <Button dark type="button" onClick={unsubscribe}>
+            Unsubscribe
+          </Button>
+        ) : (
+        // TODO: Clean all this up
+          /* <StripeCheckout
               name="POS Checkout"
               description="Subscribe"
               ComponentClass="div"
@@ -61,29 +60,29 @@ class Billing extends React.Component {
                 Subscribe
               </Button>
             </StripeCheckout> */
-            <div>
-              <Button type="submit" onClick={openModal}>
-                Subscribe
-              </Button>
-            </div>
-          )}
-        </s.ButtonContainer>
+          <div>
+            <Button dark primary type="submit" onClick={openModal}>
+              Subscribe
+            </Button>
+          </div>
+        )}
       </s.Container>
     );
   }
 }
 
+// TODO: Clean all this up
 Billing.propTypes = {
   membership: PropTypes.bool,
   openModal: PropTypes.func,
-  subscribe: PropTypes.func,
+  // subscribe: PropTypes.func,
   unsubscribe: PropTypes.func
 };
 
 Billing.defaultProps = {
   membership: false,
   openModal: () => {},
-  subscribe: () => {},
+  // subscribe: () => {},
   unsubscribe: () => {}
 };
 

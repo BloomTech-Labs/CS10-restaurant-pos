@@ -1,7 +1,13 @@
-import { goBack } from 'connected-react-router';
+import { goBack, push } from 'connected-react-router';
 
 export const navigateBack = () => (
   (dispatch) => {
     dispatch(goBack());
+  }
+);
+
+export const pushTo = (page) => (
+  (dispatch) => {
+    dispatch(push(page));
   }
 );

@@ -15,7 +15,7 @@ import * as s from './styles';
 class UpdateEmployee extends React.Component {
   state = {
     revealed: false,
-    background: localStorage.getItem('themeColor') || '#E30E58',
+    background: localStorage.getItem('themeColor') || '#E30E58'
   };
 
   resetColor = () => {
@@ -83,10 +83,12 @@ class UpdateEmployee extends React.Component {
           }}
         >
           {({ errors, isSubmitting }) => (
-            <s.Container>
-              <h1>Update User Information</h1>
-              <StyledForm>
+            <StyledForm updateEmployee>
+              <s.CardHalf left>
                 <s.Titles>Verify Identity</s.Titles>
+                <s.TextBox>
+                  Before making any changes to your account, we need to be extra sure!
+                </s.TextBox>
                 <StyledField
                   type="text"
                   name="pin"
@@ -104,8 +106,10 @@ class UpdateEmployee extends React.Component {
                   maxLength="21"
                   placeholder="Password"
                 />
+              </s.CardHalf>
+              <s.CardHalf right>
+                <StyledErrorMessage name="pass" component="div" />
                 <s.Titles>Edit Desired Fields</s.Titles>
-                <StyledErrorMessage name="oldPassword" component="div" />
                 <StyledField
                   type="password"
                   name="newPass"
@@ -113,7 +117,7 @@ class UpdateEmployee extends React.Component {
                   maxLength="21"
                   placeholder="New Password"
                 />
-                <StyledErrorMessage name="newPassword" component="div" />
+                <StyledErrorMessage name="newPass" component="div" />
                 <StyledField
                   type="password"
                   name="confirmNew"
@@ -127,7 +131,7 @@ class UpdateEmployee extends React.Component {
                 <StyledField type="email" name="email" placeholder="New Email" />
                 <StyledErrorMessage name="email" component="div" />
                 {authorized && (
-                  <div>
+                  <s.ColorPickerButtons>
                     <Button type="button" onClick={this.toggleColorPicker}>
                       {revealed ? 'Save Color' : 'Pick Color'}
                     </Button>
@@ -135,18 +139,20 @@ class UpdateEmployee extends React.Component {
                       Reset Color
                     </Button>
                     {revealed ? (
-                      <ChromePicker
-                        color={background}
-                        onChangeComplete={this.handleChangeComplete}
-                      />
+                      <s.ColorPickerBox>
+                        <ChromePicker
+                          color={background}
+                          onChangeComplete={this.handleChangeComplete}
+                        />
+                      </s.ColorPickerBox>
                     ) : null}
-                  </div>
+                  </s.ColorPickerButtons>
                 )}
                 <Button primary dark type="submit" inactive={isSubmitting}>
                   Submit
                 </Button>
-              </StyledForm>
-            </s.Container>
+              </s.CardHalf>
+            </StyledForm>
           )}
         </StyledFormik>
       </React.Fragment>

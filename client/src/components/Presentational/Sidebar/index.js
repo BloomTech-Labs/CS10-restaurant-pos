@@ -18,6 +18,7 @@ export default function Sidebar(props) {
         <TableControls push={push} visible={pathname === '/tables'} />
       </s.LinkGroup>
       <s.LinkGroup>
+        {(role.admin || role.manager) && <s.StyledLink to="/new-employee">New Employee</s.StyledLink>}
         <s.StyledLink to="/settings">Settings</s.StyledLink>
         {(role.admin || role.manager) && <s.StyledLink to="/logout">Logout</s.StyledLink>}
         <s.StyledLink to="/help">Help</s.StyledLink>

@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import { logout } from '../../redux/actions/auth';
 
+import * as s from './styles';
+
 const LogoutPage = (props) => {
   props.logout();
 
@@ -11,7 +13,7 @@ const LogoutPage = (props) => {
 
   setTimeout(logoutRedirect, 3000);
 
-  return <div>You have logged out! :D</div>;
+  return <s.Container>You have logged out!</s.Container>;
 };
 
 LogoutPage.propTypes = {

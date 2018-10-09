@@ -29,18 +29,17 @@ export const theme = {
   boxShadow: '0 2px 16px 1px rgba(0, 0, 0, 0.15)',
   catMenuBorderRadius: 25,
   categoryBorderRadius: 15,
-  selectedTable: eden,
-  navTabColor: limedSpruce,
-  deleteColor: cosmic,
 
   // * Default Dimensions ----------------------
+  mainContainerPaddingTopBottom: '60px',
+  mainContainerPaddingRightLeft: '100px',
   sideBarWidth: 265,
   topBarHeight: 100,
   menuItemSize: 200,
-  settingCardHeight: 450,
+  settingCardHeight: 500,
   settingCardMaxWidth: 450,
   settingCardPadding: '0 70px',
-  settingCardMargin: '50px',
+  settingCardMargin: '20px 50px 50px 50px',
 
   // * Card Styles -----------------------------
   cardBorderRadius: 18,
@@ -83,6 +82,9 @@ export const theme = {
   textColorDark: white,
   inputError: wispPink,
   menuBg: porcelain,
+  selectedTable: eden,
+  navTabColor: limedSpruce,
+  deleteColor: cosmic,
   // Top Bar
   topBarLink: comet,
   // Side Bar

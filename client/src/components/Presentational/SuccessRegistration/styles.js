@@ -22,7 +22,9 @@ export const SubContainer = styled.div`
 
 export const Text = styled.div`
   font-size: ${(props) => props.theme.h1}rem;
-  color: ${(props) => props.theme.primaryText}rem;
+  color: ${(props) => props.theme.primaryText};
+  margin-top: ${(props) => props.uponLogin && '45px'};
+  text-align: ${(props) => props.uponLogin && 'center'};
 `;
 
 export const PinContainer = styled.div`
@@ -46,4 +48,8 @@ export const PinContainer = styled.div`
   &:hover {
     cursor: pointer;
   }
+`;
+
+export const LinkDiv = styled.div`
+  margin-top: 20px;
 `;
