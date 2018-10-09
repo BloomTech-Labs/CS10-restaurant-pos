@@ -62,7 +62,7 @@ class App extends Component {
   }
 
   render() {
-    const { modalIsOpen, role, location, history } = this.props;
+    const { modalIsOpen, role, loggedIn, location, history } = this.props;
     return (
       <StripeProvider stripe={this.state.stripe}>
         <s.Container>
@@ -86,7 +86,10 @@ class App extends Component {
             <Sidebar
               blur={modalIsOpen}
               role={role}
-              visible={!sidebar.includes(location.pathname)}
+              visible={
+                (location.pathname === '/registration-success' && loggedIn)
+                || !sidebar.includes(location.pathname)
+              }
               pathname={location.pathname}
               push={history.push}
             />
@@ -104,11 +107,11 @@ class App extends Component {
               <Route path="/servers" component={AuthedServers} />
               <Route
                 path="/party/:id"
-                render={(props) => <AuthedPartyPage {...props} modalIsOpen={modalIsOpen} />}
+                render={props => <AuthedPartyPage {...props} modalIsOpen={modalIsOpen} />}
               />
               <Route
                 path="/settings"
-                render={(props) => <AuthedSettings {...props} modalIsOpen={modalIsOpen} />}
+                render={props => <AuthedSettings {...props} modalIsOpen={modalIsOpen} />}
               />
               <Route path="/help" component={AuthedHelp} />
               <Route path="/404" component={NotFound} exact />
@@ -136,9 +139,10 @@ App.defaultProps = {
   setInitialAuth: () => {}
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   modalIsOpen: state.modal.isOpen,
-  role: state.auth.role
+  role: state.auth.role,
+  loggedIn: state.auth.jwt
 });
 
 export default connect(
