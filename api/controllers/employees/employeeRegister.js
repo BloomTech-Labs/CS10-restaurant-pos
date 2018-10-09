@@ -14,9 +14,9 @@ const sgMail = require('@sendgrid/mail'); // eslint-disable-line
 
 sgMail.setApiKey(sendGridKey);
 
-// @route   POST api/employees/add
+// @route   POST api/employees/register
 // @desc    Adds a new user to the DB
-// @access  Public
+// @access  Private
 const employeeRegister = (req, res) => {
   const {
     pass: password, role, name, images, email

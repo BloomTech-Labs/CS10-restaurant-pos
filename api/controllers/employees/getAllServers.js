@@ -1,6 +1,9 @@
 const Employee = require('../../models/Employee');
 const verifyRole = require('../../validation/verifyRole');
 
+// @route   GET api/employees/all
+// @desc    Gets all employees
+// @access  Private
 const getAllServers = (req, res) => {
   // if the logged in user isn't an admin or manager, they're not authed
   // Verify roles
