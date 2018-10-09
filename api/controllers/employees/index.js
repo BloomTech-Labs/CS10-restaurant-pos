@@ -7,6 +7,7 @@ const { employeeLogout } = require('./employeeLogout');
 const { getCurrentUser } = require('./getCurrentUser');
 const { getAllServers } = require('./getAllServers');
 const { changeRole } = require('./changeRole');
+const { deleteEmployee } = require('./deleteEmployee');
 
 module.exports = {
   adminRegister,
@@ -17,5 +18,6 @@ module.exports = {
   employeeLogout,
   getCurrentUser,
   getAllServers,
-  changeRole
+  changeRole,
+  deleteEmployee
 };

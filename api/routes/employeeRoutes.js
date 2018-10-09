@@ -7,7 +7,8 @@ const {
   employeeLogout,
   getCurrentUser,
   getAllServers,
-  changeRole
+  changeRole,
+  deleteEmployee
 } = require('../controllers/employees');
 
 module.exports = (server, validation) => {
@@ -20,4 +21,5 @@ module.exports = (server, validation) => {
   server.route('/api/employees/logout').get(employeeLogout);
   server.route('/api/employees/current').get(validation, getCurrentUser);
   server.route('/api/employees/all').get(validation, getAllServers);
+  server.route('/api/employees/delete/:id').delete(validation, deleteEmployee);
 };
