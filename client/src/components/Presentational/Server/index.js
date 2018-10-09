@@ -36,7 +36,11 @@ class Server extends React.Component {
             <div />
             <div />
           </s.DropDownDotsThing>
-          <s.DropdownThingy show={this.state.showDropdown} />
+          <s.DropdownThingy show={this.state.showDropdown}>
+            <s.Option>
+              Promote to Manager
+            </s.Option>
+          </s.DropdownThingy>
         </s.ServerBox>
         <s.Overlay onClick={this.toggleDropDown} show={this.state.showDropdown} />
       </React.Fragment>

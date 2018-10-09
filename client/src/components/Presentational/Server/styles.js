@@ -31,8 +31,8 @@ export const DropDownDotsThing = styled.div`
   flex-shrink: 0;
   height: 50px;
   width: 30px;
-  bottom: 30px;
-  right: 30px;
+  top: 0;
+  right: 5px;
 
   * {
     border-radius: 50%;
@@ -52,14 +52,20 @@ export const DropDownDotsThing = styled.div`
 export const DropdownThingy = styled.div`
   position: absolute;
   z-index: 10;
-  bottom: -50px;
-  right: -50px;
-  height: 100px;
-  width: 100px;
+  top: 0;
+  left: 0;
+  margin-left: 95%;
+  overflow: hidden;
   background: ${(props) => props.theme.appPrimary};
   box-shadow: ${(props) => props.theme.boxShadow};
   border-radius: ${(props) => props.theme.btnBorderRadius}px;
-  display: ${(props) => !props.show && 'none'};
+  visibility: ${(props) => !props.show && 'hidden'};
+  opacity: ${(props) => (props.show ? '1' : '0')};
+  transition: opacity 0.2s ease-in-out;
+
+  &:hover {
+    cursor: default;
+  }
 `;
 
 export const Overlay = styled.div`
@@ -69,4 +75,15 @@ export const Overlay = styled.div`
   height: 100%;
   width: 100%;
   display: ${(props) => !props.show && 'none'};
+`;
+
+export const Option = styled.div`
+  ${flexCenterMixin};
+  padding: 10px;
+  width: 200px;
+
+  &:hover {
+    cursor: pointer;
+    background: ${(props) => props.theme.lightText};
+  }
 `;
