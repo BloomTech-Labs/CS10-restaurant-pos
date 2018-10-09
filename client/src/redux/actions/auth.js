@@ -114,7 +114,7 @@ export const updateEmployee = ({
 export const loginEmployee = ({ pin, pass }) => dispatch => {
   dispatch({ type: AUTH_LOADING });
   return axios
-    .post(`${serverURI}/api/employees/login`, { pin, pass })
+    .post(`${serverURI}/api/employees/login`, { pin: pin.toString().padStart(4, '0'), pass })
     .then(res => {
       const { role } = jwtDecode(res.data.token);
 

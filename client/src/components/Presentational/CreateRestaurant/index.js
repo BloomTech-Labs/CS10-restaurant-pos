@@ -14,18 +14,13 @@ import * as s from './styles';
 const CreateRestaurant = props => (
   <React.Fragment>
     <StyledFormik
-      initialValues={{ name: '', location: '', billingAddress: '' }}
+      initialValues={{ name: '', location: '' }}
       validate={values => {
         const errors = {};
         if (!values.name) {
           errors.name = 'Required';
         }
-        if (!values.location) {
-          errors.location = 'Required';
-        }
-        if (!values.billingAddress) {
-          errors.billingAddress = 'Required';
-        }
+
         return errors;
       }}
       onSubmit={async (values, { setSubmitting }) => {
@@ -49,17 +44,12 @@ const CreateRestaurant = props => (
             />
             <StyledErrorMessage name="name" component="div" />
             <StyledField
-              placeholder="location"
-              type="text"
+              type="number"
               name="location"
+              placeholder="Zipcode"
+              error={errors.location}
             />
             <StyledErrorMessage name="location" component="div" />
-            <StyledField
-              placeholder="billing address"
-              type="text"
-              name="billingAddress"
-            />
-            <StyledErrorMessage name="billingAddress" component="div" />
             <Button primary dark type="submit" inactive={isSubmitting}>
               Submit
             </Button>
@@ -71,12 +61,11 @@ const CreateRestaurant = props => (
 );
 
 CreateRestaurant.propTypes = {
-  addRestaurant: PropTypes.func,
+  addRestaurant: PropTypes.func
 };
 
 CreateRestaurant.defaultProps = {
-  addRestaurant: () => {},
+  addRestaurant: () => {}
 };
-
 
 export default CreateRestaurant;

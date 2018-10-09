@@ -63,6 +63,8 @@ class App extends Component {
 
   render() {
     const { modalIsOpen, role, loggedIn, location, history } = this.props;
+
+    console.log(process.env);
     return (
       <StripeProvider stripe={this.state.stripe}>
         <s.Container>
