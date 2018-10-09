@@ -8,7 +8,7 @@ const Employee = require('../../models/Employee');
 const updateEmployee = (req, res) => {
   // Pull off the pin, oldPassword, and newPassword from the request
   const {
-    pass, newPass, name, email, role, themeColor
+    pass, newPass, name, email, themeColor
   } = req.body;
 
   const { pin } = req.params;
@@ -43,7 +43,6 @@ const updateEmployee = (req, res) => {
             employee.email = email || employee.email;
             employee.name = name || employee.name;
             employee.password = newPass || employee.password;
-            employee.role = role || employee.role;
             if (themeColor) {
               employee.themeColor = themeColor;
             }

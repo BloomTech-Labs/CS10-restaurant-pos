@@ -38,7 +38,7 @@ class SuccessRegistration extends React.PureComponent {
               </s.LinkDiv>
             </s.Text>
           )}
-          <textarea style={{ position: 'fixed', left: '10000px' }} ref={this.pin} value={pin} />
+          <textarea style={{ position: 'fixed', left: '10000px' }} ref={this.pin} value={pin} readOnly />
         </s.SubContainer>
       </s.Container>
     );

@@ -81,7 +81,6 @@ export const updateEmployee = ({
   confirmNew,
   email,
   name,
-  role,
   themeColor
 }) => dispatch => {
   if (newPass !== confirmNew) {
@@ -96,7 +95,6 @@ export const updateEmployee = ({
       newPass,
       name,
       email,
-      role,
       themeColor
     })
     .then(() => {
@@ -179,6 +177,7 @@ export const addEmployee = employee => dispatch => {
     .post(`${serverURI}/api/employees/register`, {
       name: employee.name,
       pass: employee.pass,
+      email: employee.email,
       images
     })
     .then(res => {
