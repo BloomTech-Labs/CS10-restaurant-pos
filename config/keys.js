@@ -5,5 +5,7 @@ module.exports = {
   secretOrKey: process.env.SECRET_OR_KEY,
   stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
   stripeSecretKey: process.env.STRIPE_SECRET_KEY,
-  sendGrid: process.env.SENDGRID_API_KEY
+  sendGrid: process.env.SENDGRID_API_KEY,
+  avalaraLicense: process.env.AVALARA_LICENSE,
+  avalaraAccountId: process.env.AVALARA_ACCOUNT_ID
 };

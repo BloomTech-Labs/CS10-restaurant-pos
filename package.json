@@ -33,6 +33,7 @@
     "mjml": "^4.2.0",
     "mongoose": "^5.2.14",
     "mongoose-types": "^1.0.3",
+    "node-fetch": "^2.2.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "stripe": "^6.11.0"

@@ -15,11 +15,10 @@ export const RESTAURANT_AUTH = 'RESTAURANT_AUTH';
 export const addRestaurant = ({
   name,
   location,
-  billingAddress: address
 }) => dispatch => {
   dispatch({ type: ADDING_RESTAURANT });
   return axios
-    .post(`${serverURI}/api/restaurants/register`, { name, location, billing: { address } })
+    .post(`${serverURI}/api/restaurants/register`, { name, location: location.toString().padStart(5, '0') })
     .then(res => {
       const { restaurant } = jwtDecode(res.data.token);
 
