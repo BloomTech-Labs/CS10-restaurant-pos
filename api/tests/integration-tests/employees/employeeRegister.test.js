@@ -32,6 +32,7 @@ describe('employeeRegister', () => {
       .set('Authorization', `${token}`)
       .send({
         name: 'Fred Fredson',
+        email: 'FredFredson@gmail.com',
         pass: 'password'
       });
     expect(res.status).toBe(201);
