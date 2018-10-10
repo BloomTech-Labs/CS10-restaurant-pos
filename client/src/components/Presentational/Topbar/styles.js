@@ -57,3 +57,21 @@ export const Tab = styled.div`
   border-radius: 30px 0 0 30px;
   height: 50%;
 `;
+
+export const SwitchUser = styled.div`
+  text-decoration: underline;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const SubContainer = styled.div`
+  ${flexCenterMixin};
+  display: flex;
+  visibility: ${(props) => !props.visible && 'hidden'};
+
+  * {
+    margin-left: 20px;
+  }
+`;

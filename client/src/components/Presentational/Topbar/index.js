@@ -40,7 +40,10 @@ export default function Topbar(props) {
       <s.Title>
         <s.StyledLink to="/"> &mdash; Main Course &mdash; </s.StyledLink>
       </s.Title>
-      {loggedIn && <CurrentUser name={name} role={role} image={image} action={logoutEmployee} />}
+      <s.SubContainer visible={loggedIn}>
+        <s.SwitchUser onClick={logoutEmployee}>Switch User</s.SwitchUser>
+        <CurrentUser name={name} role={role} image={image} />
+      </s.SubContainer>
     </s.Topbar>
   );
 }
