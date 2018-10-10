@@ -66,7 +66,7 @@ class Landing extends React.Component {
               </div>
               <div>
                 <ListBullet /> Quickly manage your employees, view their tables and the orders
-                theyve taken
+                they&apos;ve taken
               </div>
               <s.PriceAd>
                 <s.Price>50</s.Price>
