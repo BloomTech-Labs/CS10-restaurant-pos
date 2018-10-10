@@ -1,5 +1,5 @@
 const { registerRestaurant } = require('./registerRestaurant');
-const { getCurrentRestaurantTaxRate } = require('./getCurrentRestaurantTaxrate');
+const { getCurrentRestaurantTaxRate } = require('./getCurrentRestaurantTaxRate');
 
 module.exports = {
   registerRestaurant,

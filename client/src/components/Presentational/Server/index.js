@@ -67,7 +67,7 @@ Server.propTypes = {
   server: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
-    parties: PropTypes.arrayOf(PropTypes.shape(PropTypes.object)),
+    parties: PropTypes.arrayOf(PropTypes.object),
     role: PropTypes.object
   }),
   push: PropTypes.func,

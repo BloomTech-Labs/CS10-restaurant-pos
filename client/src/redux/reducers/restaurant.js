@@ -23,7 +23,7 @@ const RestaurantReducer = (state = initialState, action) => {
       return { ...state, loading: true };
 
     case GET_TAXRATE_SUCCESS:
-    return { ...state, loading: false, taxRate: action.payload };
+      return { ...state, loading: false, taxRate: action.payload };
 
     default:
       return state;

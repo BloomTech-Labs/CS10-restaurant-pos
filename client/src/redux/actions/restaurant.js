@@ -42,11 +42,10 @@ export const getTaxRate = () => dispatch => {
 
   return axios.get(`${serverURI}/api/restaurants/taxrate`)
     .then(res => {
-      console.log(res);
       dispatch({ type: GET_TAXRATE_SUCCESS, payload: res.data.taxRate });
     })
     .catch(err => {
       dispatch({ type: GET_TAXRATE_ERROR, payload: err });
       errorHandler(err);
-    })
+    });
 };
