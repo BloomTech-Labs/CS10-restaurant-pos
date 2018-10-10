@@ -8,6 +8,7 @@ export const Container = styled.div`
   ${flexCenterMixin};
   ${containerMixin};
   flex-direction: column;
+  flex-shrink: 0;
   box-shadow: 0 2px 16px 1px rgba(0, 0, 0, 0.7);
   background: ${(props) => props.theme.appTertiary};
   height: ${(props) => (props.membership ? '100px' : '150px')};
