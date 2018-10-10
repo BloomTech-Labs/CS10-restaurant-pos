@@ -1,47 +1,14 @@
 [![Build Status](https://travis-ci.com/Lambda-School-Labs/CS10-restaurant-pos.svg?branch=master)](https://travis-ci.com/Lambda-School-Labs/CS10-restaurant-pos)
 # Restaurant POS
-This is a fantastic POS system for any restaurant.
+This is a fantastic POS system for any restaurant.- [Restaurant POS](#restaurant-pos)
 
 # Table of Contents
-
 - [Restaurant POS](#restaurant-pos)
 - [Table of Contents](#table-of-contents)
 - [Scripts](#scripts)
   - [Linting](#linting)
   - [Running](#running)
 - [Environment Variables](#environment-variables)
-- [Auth Token Payload](#auth-token-payload)
-- [Backend Endpoints](#backend-endpoints)
-  - [Employee Routes](#employee-routes)
-    - [Register Admin](#register-admin)
-    - [Register Employee](#register-employee)
-    - [Login Admin](#login-admin)
-    - [Login Employee](#login-employee)
-    - [Get All Employees](#get-all-employees)
-    - [Update Employee](#update-employee)
-    - [Change Role](#change-role)
-    - [Delete Employee](#delete-employee)
-    - [Employee Logout](#employee-logout)
-  - [Item Routes](#item-routes)
-    - [Add Item](#add-item)
-    - [Get All Items](#get-all-items)
-    - [Get A Specific Item](#get-a-specific-item)
-    - [Update Item](#update-item)
-    - [Delete Item](#delete-item)
-  - [Party Routes](#party-routes)
-    - [Add a New Party](#add-a-new-party)
-    - [Get All Parties](#get-all-parties)
-    - [Get a Specific Party](#get-a-specific-party)
-    - [Update a Party](#update-a-party)
-    - [Delete a Party](#delete-a-party)
-  - [Table Routes](#table-routes)
-    - [Add Table](#add-table)
-    - [Get All Tables](#get-all-tables)
-    - [Get A Specific Table](#get-a-specific-table)
-    - [Update Tables](#update-tables)
-    - [Deactivate Table](#deactivate-table)
-    - [Delete Table](#delete-table)
-  - [Restaurant Routes](#restaurant-routes)
 - [Tech-Stack](#tech-stack)
   - [Back-End Dependencies ```(Production)```](#back-end-dependencies-production)
     - [Send Grid](#send-grid)
@@ -67,7 +34,6 @@ This is a fantastic POS system for any restaurant.
     - [React](#react)
     - [Redux](#redux)
     - [Redux Thunk](#redux-thunk)
-    - [Sales Tax](#sales-tax)
     - [ShortID](#shortid)
     - [Styled Components](#styled-components)
     - [Uppy](#uppy)
@@ -80,6 +46,46 @@ This is a fantastic POS system for any restaurant.
   - [Front-End Dependencies ```(Development)```](#front-end-dependencies-development)
     - [Eslint](#eslint-1)
     - [Stylelint](#stylelint)
+- [API Documentation](#api-documentation)
+  - [Third-Party APIs](#third-party-apis)
+    - [Send Grid](#send-grid-1)
+    - [Avalara](#avalara)
+    - [Lorem Picsum](#lorem-picsum)
+    - [Transloadit](#transloadit)
+    - [Stripe](#stripe-1)
+    - [Google Cloud Storage](#google-cloud-storage)
+  - [Backend API](#backend-api)
+    - [Auth Token Payload](#auth-token-payload)
+    - [Employee Routes](#employee-routes)
+      - [Register Admin](#register-admin)
+      - [Register Employee](#register-employee)
+      - [Login Admin](#login-admin)
+      - [Login Employee](#login-employee)
+      - [Get All Employees](#get-all-employees)
+      - [Update Employee](#update-employee)
+      - [Change Role](#change-role)
+      - [Delete Employee](#delete-employee)
+      - [Employee Logout](#employee-logout)
+    - [Item Routes](#item-routes)
+      - [Add Item](#add-item)
+      - [Get All Items](#get-all-items)
+      - [Get A Specific Item](#get-a-specific-item)
+      - [Update Item](#update-item)
+      - [Delete Item](#delete-item)
+    - [Party Routes](#party-routes)
+      - [Add a New Party](#add-a-new-party)
+      - [Get All Parties](#get-all-parties)
+      - [Get a Specific Party](#get-a-specific-party)
+      - [Update a Party](#update-a-party)
+      - [Delete a Party](#delete-a-party)
+    - [Table Routes](#table-routes)
+      - [Add Table](#add-table)
+      - [Get All Tables](#get-all-tables)
+      - [Get A Specific Table](#get-a-specific-table)
+      - [Update Tables](#update-tables)
+      - [Deactivate Table](#deactivate-table)
+      - [Delete Table](#delete-table)
+    - [Restaurant Routes](#restaurant-routes)
 
 # Scripts
 
@@ -250,6 +256,8 @@ Used to enforce project conventions in styling to keep code consistent. | [View 
 
 # API Documentation
 
+## Third-Party APIs
+
 ### Send Grid
 
 Used for user confirmation Emails (Required by employer). | [View API](https://sendgrid.com/docs/)
@@ -274,7 +282,9 @@ A powerful, simple, and seamless payment commerce solution (Required by employer
 
 Used for storing the app's image and video files for high availability in all regions. | [View API](https://cloud.google.com/storage/docs/)
 
-# Auth Token Payload
+## Backend API
+
+### Auth Token Payload
 
 The JWT payload will look like this:
 
@@ -300,11 +310,10 @@ If the restaurant field is not defined, that means that the admin has not create
 
 When an employee logs in to the POS system through the employee login, the id, pin and role fields will be populated with the employee's data.
 
-# Backend Endpoints
 
-## Employee Routes
+### Employee Routes
 
-### Register Admin
+#### Register Admin
 
 POST `/api/employees/admin/register`
 
@@ -336,7 +345,7 @@ Response:
 }
 ```
 
-### Register Employee
+#### Register Employee
 
 POST `/api/employees/register`
 
@@ -375,7 +384,7 @@ Response:
 }
 ```
 
-### Login Admin
+#### Login Admin
 
 POST `/api/employees/admin/login`
 
@@ -404,7 +413,7 @@ Response:
 }
 ```
 
-### Login Employee
+#### Login Employee
 
 POST `/api/employees/login`
 
@@ -433,7 +442,7 @@ Response:
 }
 ```
 
-### Get All Employees
+#### Get All Employees
 
 GET `/api/employees/all`
 
@@ -472,7 +481,7 @@ Response:
 }
 ```
 
-### Update Employee
+#### Update Employee
 
 PUT `/api/employees/update/:pin`
 
@@ -509,7 +518,7 @@ Response:
 }
 ```
 
-### Change Role
+#### Change Role
 
 PUT `/api/employees/update/role/:id`
 
@@ -540,7 +549,7 @@ Response:
 }
 ```
 
-### Delete Employee
+#### Delete Employee
 
 DELETE `/api/employees/delete/:id`
 
@@ -558,15 +567,15 @@ Response:
 }
 ```
 
-### Employee Logout
+#### Employee Logout
 
 GET `/api/employees/logout`
 
 Response will be a new token with all the user information fields replaced with `null`. It will still have the restaurant information.
 
-## Item Routes
+### Item Routes
 
-### Add Item
+#### Add Item
 
 POST `/api/items/add`
 
@@ -622,7 +631,7 @@ Response:
 }
 ```
 
-### Get All Items
+#### Get All Items
 
 GET `/api/items/all`
 
@@ -664,7 +673,7 @@ Response:
 }
 ```
 
-### Get A Specific Item
+#### Get A Specific Item
 
 GET `/api/items/:id`
 
@@ -695,7 +704,7 @@ Response:
 }
 ```
 
-### Update Item
+#### Update Item
 
 PUT `/api/items/update/:id`
 
@@ -744,7 +753,7 @@ Response:
 }
 ```
 
-### Delete Item
+#### Delete Item
 
 DELETE `/api/items/delete/:id`
 
@@ -776,9 +785,9 @@ Response:
 }
 ```
 
-## Party Routes
+### Party Routes
 
-### Add a New Party
+#### Add a New Party
 
 POST `/api/party/add`
 
@@ -835,7 +844,7 @@ Response:
 }
 ```
 
-### Get All Parties
+#### Get All Parties
 
 GET `/api/party/all`
 
@@ -896,7 +905,7 @@ Response:
 }
 ```
 
-### Get a Specific Party
+#### Get a Specific Party
 
 GET `/api/party/:id`
 
@@ -937,7 +946,7 @@ Response:
 }
 ```
 
-### Update a Party
+#### Update a Party
 
 PUT `/api/party/update/:id`
 
@@ -984,7 +993,7 @@ Response:
 }
 ```
 
-### Delete a Party
+#### Delete a Party
 
 DELETE `/api/party/delete/:id`
 
@@ -1011,9 +1020,9 @@ Response:
 }
 ```
 
-## Table Routes
+### Table Routes
 
-### Add Table
+#### Add Table
 
 POST `/api/tables/add`
 
@@ -1060,7 +1069,7 @@ Response:
 }
 ```
 
-### Get All Tables
+#### Get All Tables
 
 GET`/api/tables/all`
 
@@ -1095,7 +1104,7 @@ Response:
 }
 ```
 
-### Get A Specific Table
+#### Get A Specific Table
 
 GET`/api/tables/:id`
 
@@ -1119,7 +1128,7 @@ Response:
 }
 ```
 
-### Update Tables
+#### Update Tables
 
 POST `api/tables/update`
 
@@ -1167,7 +1176,7 @@ Response:
 }
 ```
 
-### Deactivate Table
+#### Deactivate Table
 
 PUT `api/tables/deactivate/:id`
 
@@ -1208,7 +1217,7 @@ Response:
 }
 ```
 
-### Delete Table
+#### Delete Table
 
 Delete `api/tables/delete/:id`
 
@@ -1235,7 +1244,7 @@ Response:
 }
 ```
 
-## Restaurant Routes
+### Restaurant Routes
 
 POST `/api/restaurants/register`
 
