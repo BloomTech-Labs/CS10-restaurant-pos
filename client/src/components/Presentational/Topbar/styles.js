@@ -75,3 +75,23 @@ export const SubContainer = styled.div`
     margin-left: 20px;
   }
 `;
+
+
+export const LandingTitle = styled.h1`
+  display: flex;
+  align-items: center;
+  font-size: 3.3rem;
+  color: ${(props) => props.theme.appPrimary};
+
+  * {
+    margin-right: 10px;
+  }
+
+  @media (max-width: 550px) {
+    font-size: 2.4rem;
+
+    * {
+      margin-right: 7px;
+    }
+  }
+`;

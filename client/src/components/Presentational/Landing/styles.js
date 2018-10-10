@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 
-// import { flexCenterMixin } from '../../../global-styles/mixins';
+import { Boxes } from '../../../global-styles/styledComponents';
+import { flexCenterMixin } from '../../../global-styles/mixins';
+
+export const Container = styled.div`
+  position: relative;
+  width: 100%;
+`;
 
 export const LandingContainer = styled.div`
   flex-grow: 2;
@@ -20,29 +26,6 @@ export const SubContainer = styled.div`
 
   @media (max-width: 700px) {
     padding: 100px 20px 20px 20px;
-  }
-`;
-
-export const Title = styled.h1`
-  display: flex;
-  align-items: center;
-  position: fixed;
-  top: 40px;
-  left: 50px;
-  font-size: 3.3rem;
-  color: ${(props) => props.theme.appPrimary};
-
-  * {
-    margin-right: 10px;
-  }
-
-  @media (max-width: 550px) {
-    font-size: 2.4rem;
-    left: 20px;
-
-    * {
-      margin-right: 7px;
-    }
   }
 `;
 
@@ -86,4 +69,62 @@ export const Video = styled.video`
 
 export const Info = styled.div`
   min-width: 350px;
+`;
+
+export const Scroll = styled.div`
+  ${flexCenterMixin};
+  height: 1000px;
+  width: 100%;
+`;
+
+export const LearnMoreTarget = styled.div`
+  height: 1px;
+`;
+
+export const Block = styled(Boxes)`
+  ${flexCenterMixin};
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 50%;
+  height: 400px;
+  padding: 50px;
+
+  &:hover {
+    transform: none;
+  }
+
+  * {
+    ${flexCenterMixin};
+    margin-right: 8px;
+  }
+`;
+
+export const PriceAd = styled.div`
+  ${flexCenterMixin};
+  flex-direction: column;
+  padding: 5px;
+  height: 150px;
+  width: 150px;
+  border: 1px solid grey;
+  border-radius: 18px;
+  align-self: center;
+`;
+
+export const Price = styled.div`
+  ${flexCenterMixin};
+  margin: 0;
+  font-size: 4.5rem;
+
+  &::before {
+    content: '$';
+  }
+
+  &::after {
+    content: '.00';
+  }
+
+  &::before,
+  &::after {
+    font-size: 2.5rem;
+  }
 `;
