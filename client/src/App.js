@@ -6,6 +6,7 @@ import { StripeProvider } from 'react-stripe-elements';
 import { ToastContainer } from 'react-toastify';
 
 import { setInitialAuth } from './redux/actions/auth';
+import { getTaxRate } from './redux/actions/restaurant';
 import * as s from './styles';
 import Landing from './components/Presentational/Landing';
 import Help from './components/Presentational/Help';
@@ -50,6 +51,7 @@ class App extends Component {
 
   componentDidMount() {
     this.props.setInitialAuth();
+    this.props.getTaxRate();
 
     if (window.Stripe) {
       this.setState({ stripe: window.Stripe(stripePK) });
@@ -64,7 +66,6 @@ class App extends Component {
   render() {
     const { modalIsOpen, role, loggedIn, location, history } = this.props;
 
-    console.log(process.env);
     return (
       <StripeProvider stripe={this.state.stripe}>
         <s.Container>
@@ -149,5 +150,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setInitialAuth }
+  { setInitialAuth, getTaxRate }
 )(App);
