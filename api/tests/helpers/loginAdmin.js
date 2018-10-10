@@ -28,10 +28,7 @@ const loginAdmin = async (server) => (
             .set('Authorization', `${token}`)
             .send({
               name: 'Testaurant',
-              location: 'supertest',
-              billing: {
-                address: 'null',
-              },
+              location: '28711',
             })
             .then((restaurantRes) => {
               // set new token with restaurant info
