@@ -63,11 +63,12 @@ export const register = ({ name, email, pass, confirmPass, images }) => (dispatc
   dispatch({ type: PASSWORD_MATCH_SUCCESS });
   dispatch({ type: AUTH_LOADING });
 
+  const randomNum = Math.round(Math.random() * 1000 + 10);
   if (!Object.keys(images).length) {
     images = {
-      thumbnail: 'https://picsum.photos/10/10?random',
-      small: 'https://picsum.photos/55/55?random',
-      medium: 'https://picsum.photos/110/110?random'
+      thumbnail: `https://picsum.photos/10/10?image=${randomNum}`,
+      small: `https://picsum.photos/55/55?image=${randomNum}`,
+      medium: `https://picsum.photos/110/110?image=${randomNum}`
     };
   }
 
@@ -171,11 +172,12 @@ export const addEmployee = (employee) => (dispatch) => {
   dispatch({ type: AUTH_LOADING });
 
   let { images } = employee;
-  if (!Object.keys(employee.images).length) {
+  const randomNum = Math.round(Math.random() * 1000 + 10);
+  if (!Object.keys(images).length) {
     images = {
-      thumbnail: 'https://picsum.photos/10/10?random',
-      small: 'https://picsum.photos/55/55?random',
-      medium: 'https://picsum.photos/110/110?random'
+      thumbnail: `https://picsum.photos/10/10?image=${randomNum}`,
+      small: `https://picsum.photos/55/55?image=${randomNum}`,
+      medium: `https://picsum.photos/110/110?image=${randomNum}`
     };
   }
 
