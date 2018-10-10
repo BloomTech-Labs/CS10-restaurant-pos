@@ -19,14 +19,14 @@ export default function CheckoutModalSplit(props) {
     splitModalIsOpen,
     showStripe,
     checkoutSplitOrder,
-    location
+    taxRate,
   } = props;
 
   return (
     <Modal closeSplitModal={closeSplitModal} isSplitOpen={splitModalIsOpen}>
       <OrderList order={splitOrder} />
       <s.Checkout>
-        <OrderTotal order={splitOrder} location={location} />
+        <OrderTotal order={splitOrder} taxRate={taxRate} />
       </s.Checkout>
       <s.OrderButtons>
         {showStripe ? (
@@ -53,17 +53,12 @@ export default function CheckoutModalSplit(props) {
   );
 }
 
-const locationType = PropTypes.shape({
-  country: PropTypes.string,
-  state: PropTypes.string
-});
-
 CheckoutModalSplit.propTypes = {
   closeSplitModal: PropTypes.func,
   sendPayment: PropTypes.func,
   splitModalIsOpen: PropTypes.bool,
   partyId: PropTypes.string,
-  location: locationType,
+  taxRate: PropTypes.number,
   splitOrder: PropTypes.arrayOf(PropTypes.object),
   showStripe: PropTypes.bool,
   checkoutSplitOrder: PropTypes.func
@@ -74,7 +69,7 @@ CheckoutModalSplit.defaultProps = {
   sendPayment: () => {},
   splitModalIsOpen: false,
   partyId: 'defaultpartyid',
-  location: { country: 'US', state: 'CA' },
+  taxRate: 0,
   splitOrder: [{}],
   showStripe: false,
   checkoutSplitOrder: () => {}
