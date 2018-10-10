@@ -41,7 +41,7 @@ This is a fantastic POS system for any restaurant.
     - [Update Tables](#update-tables)
     - [Deactivate Table](#deactivate-table)
     - [Delete Table](#delete-table)
-    - [Restaurant Routes](#restaurant-routes)
+  - [Restaurant Routes](#restaurant-routes)
 - [Tech-Stack](#tech-stack)
   - [Back-End Dependencies ```(Production)```](#back-end-dependencies-production)
     - [Send Grid](#send-grid)
