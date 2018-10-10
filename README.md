@@ -1070,7 +1070,7 @@ Response:
 }
 ```
 
-### Restaurant Routes
+## Restaurant Routes
 
 POST `/api/restaurants/register`
 
@@ -1083,20 +1083,14 @@ Request body should look like this:
 ```
 {
   "name": "Rigby's Tacos",
-  "location": "Saint Paul, MN",
-  "billing": {
-    "address": "123 Main St"
-  }
+  "location": "28711",
 }
 ```
 
 `name`: String, required, the name of the restaurant
 
-`location`: String, required
+`location`: String, required, the zip code of the restaurant
 
-`billing`: Object, some fields required:
-
-- `address`: String? required
 
 Response contains a success messages and a new bearer token. The token will contain the restaurant id.
 
