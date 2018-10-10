@@ -17,7 +17,7 @@ const LoginEmployee = props => (
       initialValues={{ pin: '', pass: '' }}
       validate={values => {
         const errors = {};
-        if (!values.pin) {
+        if (!values.pin.toString().length) {
           errors.pin = 'Required';
         }
         return errors;
@@ -36,7 +36,7 @@ const LoginEmployee = props => (
           <h1>Employee Login</h1>
           <StyledForm>
             <StyledField
-              type="text"
+              type="number"
               name="pin"
               placeholder="1234"
               error={errors.pin}

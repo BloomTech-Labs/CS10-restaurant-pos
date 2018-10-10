@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Logo from '../Logo';
 import Clock from '../Clock';
 import Date from '../Date';
 import CurrentUser from '../CurrentUser';
@@ -12,7 +13,8 @@ export default function Topbar(props) {
 
   if (landing && !loggedIn) {
     return (
-      <s.Topbar alignEnd>
+      <s.Topbar>
+        <s.LandingTitle><Logo width="45" />Main Course</s.LandingTitle>
         <s.Tab>
           <s.StyledLink to="/login">Login</s.StyledLink>
           <s.StyledLink to="/register">Register</s.StyledLink>
@@ -23,7 +25,8 @@ export default function Topbar(props) {
 
   if (landing && loggedIn) {
     return (
-      <s.Topbar alignEnd>
+      <s.Topbar>
+        <s.LandingTitle><Logo width="45" />Main Course</s.LandingTitle>
         <s.Tab>
           <s.StyledLink to="/tables">Proceed To Restaurant</s.StyledLink>
         </s.Tab>
@@ -40,7 +43,10 @@ export default function Topbar(props) {
       <s.Title>
         <s.StyledLink to="/"> &mdash; Main Course &mdash; </s.StyledLink>
       </s.Title>
-      {loggedIn && <CurrentUser name={name} role={role} image={image} action={logoutEmployee} />}
+      <s.SubContainer visible={loggedIn}>
+        <s.SwitchUser onClick={logoutEmployee}>Switch User</s.SwitchUser>
+        <CurrentUser name={name} role={role} image={image} />
+      </s.SubContainer>
     </s.Topbar>
   );
 }

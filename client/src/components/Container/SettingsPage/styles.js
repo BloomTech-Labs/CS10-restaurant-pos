@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { MainContainer } from '../../../global-styles/styledComponents';
-import { containerMixin, modalBlur } from '../../../global-styles/mixins';
+import { containerMixin, flexCenterMixin, modalBlur } from '../../../global-styles/mixins';
 
 export const Container = styled(MainContainer)`
   ${containerMixin};
@@ -17,4 +17,23 @@ export const CardContainer = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   flex-shrink: 0;
+`;
+
+export const Price = styled.div`
+  ${flexCenterMixin};
+  margin: 0;
+  font-size: 4.5rem;
+
+  &::before {
+    content: '$';
+  }
+
+  &::after {
+    content: '.00';
+  }
+
+  &::before,
+  &::after {
+    font-size: 2.5rem;
+  }
 `;

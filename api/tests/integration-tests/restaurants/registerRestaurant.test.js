@@ -51,10 +51,7 @@ describe('registerRestaurant', () => {
       .set('Authorization', `${token}`)
       .send({
         name: 'Testaurant',
-        location: 'supertest',
-        billing: {
-          address: 'null',
-        },
+        location: '28711',
       });
 
     expect(res.status).toBe(201);
@@ -66,10 +63,7 @@ describe('registerRestaurant', () => {
       .post('/api/restaurants/register')
       .send({
         name: 'Testaurant',
-        location: 'supertest',
-        billing: {
-          address: 'null',
-        },
+        location: '28711',
       });
 
     expect(res.status).toBe(401);

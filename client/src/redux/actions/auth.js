@@ -25,6 +25,9 @@ export const EMPLOYEE_LOGOUT_FAILURE = 'EMPLOYEE_LOGOUT_FAILURE';
 export const EMPLOYEE_LOGOUT_SUCCESS = 'EMPLOYEE_LOGOUT_SUCCESS';
 export const EMPLOYEE_REGISTER_SUCCESS = 'EMPLOYEE_REGISTER_SUCCESS';
 export const EMPLOYEE_REGISTER_FAILURE = 'EMPLOYEE_REGISTER_FAILURE';
+export const CHANGING_EMPLOYEE_ROLE = 'CHANGING_EMPLOYEE_ROLE';
+export const CHANGE_EMPLOYEE_ROLE_SUCCESS = 'CHANGE_EMPLOYEE_ROLE_SUCCESS';
+export const CHANGE_EMPLOYEE_ROLE_FAILURE = 'CHANGE_EMPLOYEE_ROLE_FAILURE';
 
 export const setInitialAuth = () => ({ type: SET_INITIAL_AUTH });
 
@@ -51,18 +54,30 @@ export const login = ({ email, pass }) => (dispatch, getState) => {
     });
 };
 
-export const register = ({ name, email, pass, confirmPass }) => (dispatch) => {
+export const register = ({ name, email, pass, confirmPass, images }) => (dispatch) => {
   if (pass !== confirmPass) {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
   }
+
   dispatch({ type: PASSWORD_MATCH_SUCCESS });
   dispatch({ type: AUTH_LOADING });
+
+  const randomNum = Math.round(Math.random() * 1000 + 10);
+  if (!Object.keys(images).length) {
+    images = {
+      thumbnail: `https://picsum.photos/10/10?image=${randomNum}`,
+      small: `https://picsum.photos/55/55?image=${randomNum}`,
+      medium: `https://picsum.photos/110/110?image=${randomNum}`
+    };
+  }
+
   return axios
     .post(`${serverURI}/api/employees/admin/register`, {
       name,
       email,
-      pass
+      pass,
+      images
     })
     .then((res) => {
       dispatch({ type: REGISTRATION_SUCCESS, payload: res.data.pin });
@@ -105,7 +120,7 @@ export const updateEmployee = ({ pin, pass, newPass, confirmNew, email, name, th
 export const loginEmployee = ({ pin, pass }) => (dispatch) => {
   dispatch({ type: AUTH_LOADING });
   return axios
-    .post(`${serverURI}/api/employees/login`, { pin, pass })
+    .post(`${serverURI}/api/employees/login`, { pin: pin.toString().padStart(4, '0'), pass })
     .then((res) => {
       const { role } = jwtDecode(res.data.token);
 
@@ -152,13 +167,26 @@ export const addEmployee = (employee) => (dispatch) => {
     dispatch({ type: PASSWORD_MATCH_ERROR, payload: 'Passwords must match' });
     return;
   }
+
   dispatch({ type: PASSWORD_MATCH_SUCCESS });
   dispatch({ type: AUTH_LOADING });
+
+  let { images } = employee;
+  const randomNum = Math.round(Math.random() * 1000 + 10);
+  if (!Object.keys(images).length) {
+    images = {
+      thumbnail: `https://picsum.photos/10/10?image=${randomNum}`,
+      small: `https://picsum.photos/55/55?image=${randomNum}`,
+      medium: `https://picsum.photos/110/110?image=${randomNum}`
+    };
+  }
+
   return axios
     .post(`${serverURI}/api/employees/register`, {
       name: employee.name,
       pass: employee.pass,
-      images: employee.images
+      email: employee.email,
+      images
     })
     .then((res) => {
       dispatch({ type: EMPLOYEE_REGISTER_SUCCESS, payload: res.data.pin });
@@ -166,6 +194,20 @@ export const addEmployee = (employee) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: EMPLOYEE_REGISTER_FAILURE, payload: err });
+      errorHandler(err);
+    });
+};
+
+export const changeEmployeeRole = (id, role) => (dispatch) => {
+  dispatch({ type: CHANGING_EMPLOYEE_ROLE });
+  return axios
+    .put(`${serverURI}/api/employees/update/role/${id}`, { role })
+    .then(() => {
+      dispatch({ type: CHANGE_EMPLOYEE_ROLE_SUCCESS });
+      toast('Successfully Updated Employees Role');
+    })
+    .catch((err) => {
+      dispatch({ type: CHANGE_EMPLOYEE_ROLE_FAILURE, payload: err });
       errorHandler(err);
     });
 };

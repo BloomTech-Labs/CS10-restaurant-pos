@@ -33,7 +33,7 @@ class CheckoutModal extends React.Component {
     const {
       modalIsOpen,
       tables,
-      location,
+      taxRate,
       setTotal,
       sendPayment,
       partyId,
@@ -60,8 +60,8 @@ class CheckoutModal extends React.Component {
           order={order}
           splitOrder={splitOrder}
           tables={tables}
-          location={location}
           server={server}
+          taxRate={taxRate}
         />
         <CheckoutModalSplit
           checkoutSplitOrder={this.checkoutSplitOrder}
@@ -70,18 +70,13 @@ class CheckoutModal extends React.Component {
           sendPayment={sendPayment}
           splitModalIsOpen={splitModalIsOpen}
           partyId={partyId}
-          location={location}
           splitOrder={splitOrder}
+          taxRate={taxRate}
         />
       </React.Fragment>
     );
   }
 }
-
-const locationType = PropTypes.shape({
-  country: PropTypes.string,
-  state: PropTypes.string
-});
 
 CheckoutModal.propTypes = {
   openSplitModal: PropTypes.func,
@@ -96,7 +91,7 @@ CheckoutModal.propTypes = {
   splitOrder: PropTypes.arrayOf(PropTypes.object),
   tables: PropTypes.arrayOf(PropTypes.object),
   server: PropTypes.string,
-  location: locationType,
+  taxRate: PropTypes.number,
 };
 
 CheckoutModal.defaultProps = {
@@ -112,7 +107,7 @@ CheckoutModal.defaultProps = {
   splitOrder: [{}],
   tables: [{}],
   server: 'Server Name',
-  location: { country: 'US', state: 'CA' },
+  taxRate: 0,
 };
 
 export default CheckoutModal;

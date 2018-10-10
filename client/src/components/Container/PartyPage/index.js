@@ -22,6 +22,7 @@ import {
   closeSplitModal
 } from '../../../redux/actions/modal';
 import { sendPayment } from '../../../redux/actions/payments';
+import { getTaxRate } from '../../../redux/actions/restaurant';
 
 import * as s from './styles';
 
@@ -39,18 +40,18 @@ class PartyPage extends React.Component {
   };
 
   componentDidMount() {
-    this.props
-      .getParties()
+    const until = [this.props.getTaxRate(), this.props.getParties()];
+
+    // eslint-disable-next-line compat/compat
+    Promise.all(until)
       .then(() => {
         const foundParty = this.props.partyList.find(
           (party) => party._id === this.props.match.params.id
         );
 
         if (!foundParty) {
-          console.log('notfound');
           this.props.history.push('/tables');
         } else {
-          console.log(foundParty);
           this.setState({
             order: foundParty.food,
             tables: foundParty.tables,
@@ -124,7 +125,7 @@ class PartyPage extends React.Component {
     const {
       modalIsOpen,
       splitModalIsOpen,
-      location,
+      taxRate,
       match,
       items,
       loading,
@@ -147,11 +148,11 @@ class PartyPage extends React.Component {
           modalIsOpen={modalIsOpen}
           splitModalIsOpen={splitModalIsOpen}
           splitOrder={splitOrder}
-          location={location}
           subTotal={subTotal}
           tables={tables}
           partyId={match.params.id}
           server={server}
+          taxRate={taxRate}
         />
         <s.Container modalOpen={modalIsOpen}>
           <ItemSelector
@@ -168,8 +169,8 @@ class PartyPage extends React.Component {
             subTotal={subTotal}
             setTotal={this.setTotal}
             removeItemFromOrder={this.removeItemFromOrder}
-            location={location}
             openModal={this.openModal}
+            taxRate={taxRate}
           />
         </s.Container>
       </React.Fragment>
@@ -177,17 +178,13 @@ class PartyPage extends React.Component {
   }
 }
 
-const locationType = PropTypes.shape({
-  country: PropTypes.string,
-  state: PropTypes.string
-});
-
 PartyPage.propTypes = {
   openModal: PropTypes.func,
   closeModal: PropTypes.func,
   openSplitModal: PropTypes.func,
   updateParty: PropTypes.func,
   saveOrder: PropTypes.func,
+  getTaxRate: PropTypes.func,
   // saveSplitOrder: PropTypes.func,
   toggleSplitCheckItem: PropTypes.func,
   sendPayment: PropTypes.func,
@@ -205,10 +202,10 @@ PartyPage.propTypes = {
     params: PropTypes.object
   }),
   partyList: PropTypes.arrayOf(PropTypes.object),
-  location: locationType,
   history: PropTypes.shape({
     push: PropTypes.func
-  })
+  }),
+  taxRate: PropTypes.number,
 };
 
 PartyPage.defaultProps = {
@@ -217,6 +214,7 @@ PartyPage.defaultProps = {
   openSplitModal: () => {},
   updateParty: () => {},
   saveOrder: () => {},
+  getTaxRate: () => {},
   toggleSplitCheckItem: () => {},
   sendPayment: () => {},
   getItems: () => {},
@@ -232,7 +230,7 @@ PartyPage.defaultProps = {
   itemCategories: ['All'],
   partyList: [{ _id: 'defaultpartyid' }],
   match: { params: {} },
-  location: { country: 'US', state: 'CA' }
+  taxRate: 0,
 };
 
 const mapStateToProps = (state) => ({
@@ -252,7 +250,8 @@ const mapStateToProps = (state) => ({
       return acc;
     },
     ['All']
-  )
+  ),
+  taxRate: state.restaurant.taxRate,
 });
 
 export default connect(
@@ -268,6 +267,7 @@ export default connect(
     openSplitModal,
     closeSplitModal,
     sendPayment,
-    getParties
+    getParties,
+    getTaxRate
   }
 )(PartyPage);

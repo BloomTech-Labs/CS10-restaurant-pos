@@ -1,5 +1,4 @@
 import React from 'react';
-import salesTax from 'sales-tax';
 import PropTypes from 'prop-types';
 
 import * as s from './styles';
@@ -22,31 +21,28 @@ class OrderTotal extends React.Component {
   }
 
   initialize = () => {
-    this.setState({
-      subTotal: this.props.order.reduce((acc, foodItem) => acc + foodItem.price, 0),
-    }, () => {
-      this.updateTaxes();
-    });
-  }
+    this.setState(
+      {
+        subTotal: this.props.order.reduce((acc, foodItem) => acc + foodItem.price, 0)
+      },
+      () => {
+        this.updateTaxes();
+      }
+    );
+  };
 
   updateTaxes = () => {
-    const { location } = this.props;
-    salesTax
-      .getAmountWithSalesTax(location.country, location.state, this.state.subTotal)
-      .then((price) => {
-        this.setState(
-          {
-            tax: price.total - price.price,
-            total: price.total
-          },
-          () => {
-            this.props.setTotal(this.state.total);
-          }
-        );
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    const { taxRate } = this.props;
+    console.log(taxRate);
+    this.setState(
+      prev => ({
+        tax: prev.subTotal * taxRate,
+        total: prev.subTotal + (prev.subTotal * taxRate)
+      }),
+      () => {
+        this.props.setTotal(this.state.total);
+      }
+    );
   };
 
   render() {
@@ -67,20 +63,15 @@ class OrderTotal extends React.Component {
   }
 }
 
-const locationType = PropTypes.shape({
-  country: PropTypes.string,
-  state: PropTypes.string
-});
-
 OrderTotal.propTypes = {
-  location: locationType,
   order: PropTypes.arrayOf(PropTypes.object),
+  taxRate: PropTypes.number,
   setTotal: PropTypes.func
 };
 
 OrderTotal.defaultProps = {
   order: [{}],
-  location: { country: 'US', state: 'OR' },
+  taxRate: 0,
   setTotal: () => {}
 };
 

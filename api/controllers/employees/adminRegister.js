@@ -1,3 +1,5 @@
+const mjml2html = require('mjml').default;
+
 const keys = require('../../../config/keys');
 
 const sendGridKey = keys.sendGrid;
@@ -10,12 +12,13 @@ sgMail.setApiKey(sendGridKey);
 const verifyFields = require('../../validation/verifyFields');
 const Employee = require('../../models/Employee');
 
-
 // @route   POST api/employees/admin/register
 // @desc    Adds an administrator to the DB
 // @access  Public
 const adminRegister = (req, res) => {
-  const { name, pass, email } = req.body;
+  const {
+    name, pass, email, images
+  } = req.body;
 
   // Validate Fields
   const missingFields = verifyFields(['name', 'pass'], req.body, res);
@@ -36,26 +39,55 @@ const adminRegister = (req, res) => {
     password: pass,
     email,
     pin,
-    role
+    role,
+    images
   });
-
 
   // Save the new administrator
   newAdministrator
     .save()
     .then((adminInfo) => {
-      res.status(200).json({ pin: adminInfo.pin });
-
       // Send a confirmation email
       const confirmationEmail = {
         to: email,
         from: 'support@maincourse.app',
         subject: 'Welcome to Main Course!',
-        text: 'Here is some cool information to make us look awesome, also, l33t',
-        html: '<strong>Some WOW stuff with some WHOA thrown in...</strong>',
+        text: 'Thank you for signing up for Main Course',
+        html: mjml2html(`<mjml>
+      <mj-head>
+      <mj-font name="Nunito" href="https://fonts.googleapis.com/css?family=Nunito" />
+    </mj-head>
+  <mj-body>
+    <mj-section>
+
+      <mj-column background-color="#E30E58">
+
+        <mj-text align="center" color="#fff" font-size="40px" font-family="Nunito">Main Course POS</mj-text>
+
+      </mj-column>
+
+    </mj-section>
+    <mj-section>
+
+      <mj-column>
+        <mj-text align="center" font-size="20px" font-family="Nunito">Thank you for signing up!</mj-text>
+      </mj-column>
+
+    </mj-section>
+    <mj-section>
+      <mj-column>
+        <mj-text align="center" font-size="18px" font-family="Nunito">Here is your PIN you can use to log in</mj-text>
+        <mj-text align="center" font-size="18px" font-weight="bold" font-family="Nunito">${
+  adminInfo.pin
+}</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>`).html
       };
 
       sgMail.send(confirmationEmail);
+      res.status(200).json({ pin: adminInfo.pin });
     })
     .catch((err) => {
       res.status(500).json({

@@ -57,3 +57,41 @@ export const Tab = styled.div`
   border-radius: 30px 0 0 30px;
   height: 50%;
 `;
+
+export const SwitchUser = styled.div`
+  text-decoration: underline;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const SubContainer = styled.div`
+  ${flexCenterMixin};
+  display: flex;
+  visibility: ${(props) => !props.visible && 'hidden'};
+
+  * {
+    margin-left: 20px;
+  }
+`;
+
+
+export const LandingTitle = styled.h1`
+  display: flex;
+  align-items: center;
+  font-size: 3.3rem;
+  color: ${(props) => props.theme.appPrimary};
+
+  * {
+    margin-right: 10px;
+  }
+
+  @media (max-width: 550px) {
+    font-size: 2.4rem;
+
+    * {
+      margin-right: 7px;
+    }
+  }
+`;

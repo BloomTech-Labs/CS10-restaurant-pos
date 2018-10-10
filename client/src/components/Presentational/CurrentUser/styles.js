@@ -7,10 +7,6 @@ export const Container = styled.div`
   height: 60px;
   justify-content: center;
   align-items: center;
-
-  &:hover {
-    cursor: pointer;
-  }
 `;
 
 export const ProfilePic = styled.div`

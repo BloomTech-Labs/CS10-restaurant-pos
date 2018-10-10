@@ -1,4 +1,5 @@
 import React from 'react';
+import shortid from 'shortid';
 import PropTypes from 'prop-types';
 
 import * as s from './styles';
@@ -10,14 +11,18 @@ class CheckBox extends React.Component {
 
   render() {
     const { checked } = this.props;
+    const id = shortid.generate();
     return (
-      <s.CheckBox
-        type="checkbox"
-        id="check"
-        onClick={this.toggleCheck}
-        checked={checked}
-        readOnly
-      />
+      <s.CheckBox>
+        <input
+          type="checkbox"
+          id={id}
+          onClick={this.toggleCheck}
+          checked={checked}
+          readOnly
+        />
+        <label htmlFor={id} />
+      </s.CheckBox>
     );
   }
 }

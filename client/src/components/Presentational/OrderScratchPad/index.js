@@ -14,7 +14,7 @@ export default function OrderScratchPad(props) {
     tables,
     order,
     removeItemFromOrder,
-    location,
+    taxRate,
     subTotal,
     setTotal,
     saveParty,
@@ -26,7 +26,7 @@ export default function OrderScratchPad(props) {
       <PartyTablesTitle tables={tables} />
       <OrderList order={order} ItemButton={DeleteButton} itemAction={removeItemFromOrder} />
       <s.Checkout>
-        <OrderTotal location={location} order={order} subTotal={subTotal} setTotal={setTotal} />
+        <OrderTotal taxRate={taxRate} order={order} subTotal={subTotal} setTotal={setTotal} />
         <s.ButtonContainer>
           <Button primary dark type="button" onClick={saveParty}>
             Save
@@ -40,17 +40,12 @@ export default function OrderScratchPad(props) {
   );
 }
 
-const locationType = PropTypes.shape({
-  country: PropTypes.string,
-  state: PropTypes.string
-});
-
 OrderScratchPad.propTypes = {
   tables: PropTypes.arrayOf(PropTypes.object),
   order: PropTypes.arrayOf(PropTypes.object),
   removeItemFromOrder: PropTypes.func,
-  location: locationType,
   subTotal: PropTypes.number,
+  taxRate: PropTypes.number,
   setTotal: PropTypes.func,
   openModal: PropTypes.func,
   saveParty: PropTypes.func
@@ -60,7 +55,7 @@ OrderScratchPad.defaultProps = {
   tables: [{}],
   order: [{}],
   subTotal: 0,
-  location: { country: 'US', state: 'OR' },
+  taxRate: 0,
   removeItemFromOrder: () => {},
   setTotal: () => {},
   openModal: () => {},

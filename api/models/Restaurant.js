@@ -7,28 +7,24 @@ const RestaurantSchema = new Schema({
   admin: {
     type: ObjectId,
     ref: 'Employee',
-    required: true,
+    required: true
   },
   name: {
     type: String,
-    required: true,
+    required: true
   },
   location: {
     type: String,
-    required: true,
-  },
-  billing: {
-    address: {
-      type: String,
-      required: true,
-    },
-    firstName: String,
-    lastName: String,
+    required: true
   },
   subscription: String,
+  taxRate: {
+    type: String,
+    required: true
+  },
   membership: {
     type: Boolean,
-    default: false,
+    default: false
   },
   width: Number,
   height: Number,

@@ -1,47 +1,14 @@
 [![Build Status](https://travis-ci.com/Lambda-School-Labs/CS10-restaurant-pos.svg?branch=master)](https://travis-ci.com/Lambda-School-Labs/CS10-restaurant-pos)
 # Restaurant POS
-This is a fantastic POS system for any restaurant.
+This is a fantastic POS system for any restaurant.- [Restaurant POS](#restaurant-pos)
 
 # Table of Contents
-
 - [Restaurant POS](#restaurant-pos)
 - [Table of Contents](#table-of-contents)
 - [Scripts](#scripts)
   - [Linting](#linting)
   - [Running](#running)
 - [Environment Variables](#environment-variables)
-- [Auth Token Payload](#auth-token-payload)
-- [Backend Endpoints](#backend-endpoints)
-  - [Employee Routes](#employee-routes)
-    - [Register Admin](#register-admin)
-    - [Register Employee](#register-employee)
-    - [Login Admin](#login-admin)
-    - [Login Employee](#login-employee)
-    - [Get All Employees](#get-all-employees)
-    - [Update Employee](#update-employee)
-    - [Change Role](#change-role)
-    - [Delete Employee](#delete-employee)
-    - [Employee Logout](#employee-logout)
-  - [Item Routes](#item-routes)
-    - [Add Item](#add-item)
-    - [Get All Items](#get-all-items)
-    - [Get A Specific Item](#get-a-specific-item)
-    - [Update Item](#update-item)
-    - [Delete Item](#delete-item)
-  - [Party Routes](#party-routes)
-    - [Add a New Party](#add-a-new-party)
-    - [Get All Parties](#get-all-parties)
-    - [Get a Specific Party](#get-a-specific-party)
-    - [Update a Party](#update-a-party)
-    - [Delete a Party](#delete-a-party)
-  - [Table Routes](#table-routes)
-    - [Add Table](#add-table)
-    - [Get All Tables](#get-all-tables)
-    - [Get A Specific Table](#get-a-specific-table)
-    - [Update Tables](#update-tables)
-    - [Deactivate Table](#deactivate-table)
-    - [Delete Table](#delete-table)
-    - [Restaurant Routes](#restaurant-routes)
 - [Tech-Stack](#tech-stack)
   - [Back-End Dependencies ```(Production)```](#back-end-dependencies-production)
     - [Send Grid](#send-grid)
@@ -67,7 +34,6 @@ This is a fantastic POS system for any restaurant.
     - [React](#react)
     - [Redux](#redux)
     - [Redux Thunk](#redux-thunk)
-    - [Sales Tax](#sales-tax)
     - [ShortID](#shortid)
     - [Styled Components](#styled-components)
     - [Uppy](#uppy)
@@ -80,6 +46,46 @@ This is a fantastic POS system for any restaurant.
   - [Front-End Dependencies ```(Development)```](#front-end-dependencies-development)
     - [Eslint](#eslint-1)
     - [Stylelint](#stylelint)
+- [API Documentation](#api-documentation)
+  - [Third-Party APIs](#third-party-apis)
+    - [Send Grid](#send-grid-1)
+    - [Avalara](#avalara)
+    - [Lorem Picsum](#lorem-picsum)
+    - [Transloadit](#transloadit)
+    - [Stripe](#stripe-1)
+    - [Google Cloud Storage](#google-cloud-storage)
+  - [Backend API](#backend-api)
+    - [Auth Token Payload](#auth-token-payload)
+    - [Employee Routes](#employee-routes)
+      - [Register Admin](#register-admin)
+      - [Register Employee](#register-employee)
+      - [Login Admin](#login-admin)
+      - [Login Employee](#login-employee)
+      - [Get All Employees](#get-all-employees)
+      - [Update Employee](#update-employee)
+      - [Change Role](#change-role)
+      - [Delete Employee](#delete-employee)
+      - [Employee Logout](#employee-logout)
+    - [Item Routes](#item-routes)
+      - [Add Item](#add-item)
+      - [Get All Items](#get-all-items)
+      - [Get A Specific Item](#get-a-specific-item)
+      - [Update Item](#update-item)
+      - [Delete Item](#delete-item)
+    - [Party Routes](#party-routes)
+      - [Add a New Party](#add-a-new-party)
+      - [Get All Parties](#get-all-parties)
+      - [Get a Specific Party](#get-a-specific-party)
+      - [Update a Party](#update-a-party)
+      - [Delete a Party](#delete-a-party)
+    - [Table Routes](#table-routes)
+      - [Add Table](#add-table)
+      - [Get All Tables](#get-all-tables)
+      - [Get A Specific Table](#get-a-specific-table)
+      - [Update Tables](#update-tables)
+      - [Deactivate Table](#deactivate-table)
+      - [Delete Table](#delete-table)
+    - [Restaurant Routes](#restaurant-routes)
 
 # Scripts
 
@@ -109,7 +115,176 @@ When committing, `npm run lint-all` will automatically be run.
 
 `SECRET_OR_KEY`: secret key for bcryptjs
 
-# Auth Token Payload
+# Tech-Stack
+
+## Back-End Dependencies ```(Production)```
+
+### Send Grid
+
+Used for user confirmation Emails (Required by employer). | [View Dependency](https://sendgrid.com/docs/)
+
+### BcryptJS
+
+Bcrypt is an adaptive hash function which adjusts the cost of hashing, which means that in the future as computers become more powerful, simply increasing the salt rounds will suffice at keeping Main Course secure due to the amount of processing time that would be required to generate all possible password combinations. | [View Dependency](https://www.npmjs.com/package/bcryptjs)
+
+### Cors
+
+Used to configure API security. This was used to allow for secure communication between the front-end and back-end servers. | [View Dependency](https://github.com/expressjs/cors)
+
+### ExpressJS
+
+A prebuilt NodeJS framework that makes creating server side applications simple, fast, and flexible. NodeJS is powered by Google's V8 Engine which means it's powerful and can handle a large number of requests without lapsing in dependability. Also, this means that this is a highly scalable choice when you consider the Event Loop which manages all asynchronous operations allowing the program to continue to run as expected without stops. | [View Dependency](http://expressjs.com/)
+
+### MongoDB
+
+MongoDB is an object-oriented, simple, dynamic, and scalable NoSQL database. Due to the minimal about of data relationships we felt this was a good choice for Main Course. | [View Dependency](https://docs.mongodb.com/)
+
+### Mongoose
+
+Provides a straight-forward, schema-based solution to model application data with MongoDB. It also offers out of the box perks such as validation. | [View Dependency](https://mongoosejs.com/)
+
+### Helmet
+
+A collection of nine smaller middleware functions that set security-related HTTP headers appropriatley. This protects Main Course from numerous well known vulnerablilites. | [View Dependency](https://helmetjs.github.io/)
+
+### JSON Web Token
+
+Realizing that there is not inherent benefit to using tokens over sessions, we chose to implement jwts due to the added benefit of storing the session on the client side as opposed to being in-memory. Main Course is built with the active server in mind and the potential to have the application be accessed from various devices in different locations. With this, instead of running the risk of having a session be interrupted due to data roaming, connection issues, or server side problems, we chose to store the session information on the client side. We also found this to be more efficient for our needs, as jwts eliminate the need to fetch additional information from the DB to validate the user. | [View Dependency](https://www.npmjs.com/package/jsonwebtoken)
+
+### Passport
+
+Passport is a flexible and fully customizable NodeJS middleware that comes with various out of the box authentication strategies for Facebook, Twitter, etcetera. This was an obvious choice for us because it makes future authentication features readily accessible. | [View Dependency](http://www.passportjs.org/)
+
+### Stripe
+
+A powerful, simple, and seamless payment commerce solution (Required by employer). | [View Dependency](https://stripe.com/docs/)
+
+
+## Back-End Dependencies ```(Development)```
+
+### Concurrently
+
+This provides the ability to conveniently run both the back-end and front-end servers simultaneously on one terminal, which makes keeping track of errors easy during development as well as cutting back on time switching between terminals. | [View Dependency](https://www.npmjs.com/package/concurrently)
+
+### Crossenv
+
+Due to the variance of operating systems on the development team, Crossenv allows us to universally set environment variables. | [View Dependency](https://www.npmjs.com/package/cross-env)
+
+### Eslint
+
+Eslint is the dominant linting tool for NodeJS and it makes it possible to establish a clear coding convention for a team or project, as well as aiding in catching various bugs such as variables improperly scoped. | [View Dependency](https://eslint.org/)
+
+### Husky
+
+Used to prevent possible bad git commits or pushes due to running pre-commit linting hooks. | [View Dependency](https://github.com/typicode/husky)
+
+### Jest
+
+Chosen for its out of the box readiness. Jest comes with inbuilt mocking, the ability to run tests in parallel, it works with both the front-end and back-end, has promise support, and is a one stop shop for most testing needs within the scope of this project. | [View Dependency](https://jestjs.io/)
+
+### Morgan
+
+An HTTP request logging middleware used for production to easily identify bugs in routes. | [View Dependency](https://github.com/expressjs/morgan)
+
+### Nodemon
+
+Automatically restarts the server on save making production more efficient. | [View Dependency](https://nodemon.io/)
+
+### Supertest
+
+Using supertest with jest for integration testing makes things easy to implement and easy to read. | [View Dependency](https://www.npmjs.com/package/supertest)
+
+## Front-End Dependencies ```(Production)```
+
+### React
+
+React is the current industry standard that offers a lot of out of the box benefits. It is fast, efficient, and scalable. Due to the large community, finding solutions to potential problems and reference material is much easier, even for a potential dev without a lot of experience who would like to contribute to Main Course. | [View Dependency](https://reactjs.org/docs/getting-started.html)
+
+### Redux
+
+A state management tool making it possible to store the entire state of the application in a single store. This means a unidirectional data flow, and as the application scales we have predictable state updates which subsequently make things easier to test and introduce new features. Redux also has solid documentation and an active community, meaning that as new devs become introduced to the project it's likely that any problems they face would have already been encountered by someone else, thus making solutions easy to find. | [View Dependency](https://redux.js.org/)
+
+### Redux Thunk
+
+A middleware that allows you to write action creators that return a function instead of an action. The thunk can be used to delay the dispatch of an action, or to dispatch only if a certain condition is met. This functionality makes it easier to scale and implement features given diverse needs in a growing project. | [View Dependency](https://github.com/reduxjs/redux-thunk)
+
+### ShortID
+
+Used to fill a specific need in assigning items unique IDs for sorting on the front-end. | [View Dependency](https://www.npmjs.com/package/shortid)
+
+### Styled Components
+
+Has a thriving community and offers the ability to directly style multiple components within a file. The syntax used is familiar to JavaScript and improves code cleanliness and makes it easy to get up and going for those without a lot of css experience. Styled components are also very efficient, improving load time for users. | [View Dependency](https://www.styled-components.com/docs/)
+
+### Uppy
+
+"Sleek, modular file uploader that integrates seamlessly with any framework. It fetches files from local disk, Google Drive, Dropbox, Instagram, remote URLs, cameras and other exciting locations, and then uploads them to the final destination. It’s fast, easy to use and let's you worry about more important problems than building a file uploader." | [View Dependency](https://uppy.io/docs/)
+
+### Axios
+
+A lightweight, promise-based HTTP client with an intuitive API that makes interfacing with a REST API simple. | [View Dependency](https://www.npmjs.com/package/react-axios)
+
+### Connected React Router
+
+Allows for the ability to synchronize state with redux store through uni-directional data flow, time traveling, and dispatching of history methods. This makes for an incredibly useful tool when dealing with various stages of state and subsequent routing for a seamless and intuitive UI. | [View Dependency](https://www.npmjs.com/package/connected-react-router)
+
+### Date FNS
+
+A lightweight option for formatting JavaScript dates. | [View Dependency](https://date-fns.org/)
+
+### Formik
+
+This library utilizes essential React form functionality under the hood which makes implementing it feel very intuitive and not magical. It keeps track of values, errors, and submissions, which reduces the time needed to implement forms and makes for a more enjoyable experience. | [View Dependency](https://jaredpalmer.com/formik)
+
+### JWT Decode
+
+Used to decode JWTs on the front-end to retrieve user data. | [View Dependency](https://github.com/auth0/jwt-decode)
+
+### PixiJS
+
+An open source, cross browser JavaScript 2D WebGL graphics library with canvas fallback used to build core floor-plan functionality on the app. | [View Dependency](http://www.pixijs.com/)
+
+## Front-End Dependencies ```(Development)```
+
+### Eslint
+
+[See Above Explanation](#eslint)
+
+### Stylelint
+
+Used to enforce project conventions in styling to keep code consistent. | [View Dependency](https://stylelint.io/)
+
+# API Documentation
+
+## Third-Party APIs
+
+### Send Grid
+
+Used for user confirmation Emails (Required by employer). | [View API](https://sendgrid.com/docs/)
+
+### Avalara
+
+Used for retrieving local sales tax rates for restaurant location. | [View API](https://developer.avalara.com/api-reference/avatax/rest/v2/)
+
+### Lorem Picsum
+
+Used for generating random profile images when users choose not to upload their own image. | [View API](https://picsum.photos/images/)
+
+### Transloadit
+
+Used for uploading and processing images to Google Cloud Storage. | [View API](https://transloadit.com/docs/)
+
+### Stripe
+
+A powerful, simple, and seamless payment commerce solution (Required by employer). | [View API](https://stripe.com/docs/)
+
+### Google Cloud Storage
+
+Used for storing the app's image and video files for high availability in all regions. | [View API](https://cloud.google.com/storage/docs/)
+
+## Backend API
+
+### Auth Token Payload
 
 The JWT payload will look like this:
 
@@ -135,11 +310,10 @@ If the restaurant field is not defined, that means that the admin has not create
 
 When an employee logs in to the POS system through the employee login, the id, pin and role fields will be populated with the employee's data.
 
-# Backend Endpoints
 
-## Employee Routes
+### Employee Routes
 
-### Register Admin
+#### Register Admin
 
 POST `/api/employees/admin/register`
 
@@ -171,7 +345,7 @@ Response:
 }
 ```
 
-### Register Employee
+#### Register Employee
 
 POST `/api/employees/register`
 
@@ -210,7 +384,7 @@ Response:
 }
 ```
 
-### Login Admin
+#### Login Admin
 
 POST `/api/employees/admin/login`
 
@@ -239,7 +413,7 @@ Response:
 }
 ```
 
-### Login Employee
+#### Login Employee
 
 POST `/api/employees/login`
 
@@ -268,7 +442,7 @@ Response:
 }
 ```
 
-### Get All Employees
+#### Get All Employees
 
 GET `/api/employees/all`
 
@@ -307,7 +481,7 @@ Response:
 }
 ```
 
-### Update Employee
+#### Update Employee
 
 PUT `/api/employees/update/:pin`
 
@@ -344,9 +518,9 @@ Response:
 }
 ```
 
-### Change Role
+#### Change Role
 
-PUT `/api/employees/promote/:id`
+PUT `/api/employees/update/role/:id`
 
 **Requires:** Authorization
 
@@ -375,7 +549,7 @@ Response:
 }
 ```
 
-### Delete Employee
+#### Delete Employee
 
 DELETE `/api/employees/delete/:id`
 
@@ -393,15 +567,15 @@ Response:
 }
 ```
 
-### Employee Logout
+#### Employee Logout
 
 GET `/api/employees/logout`
 
 Response will be a new token with all the user information fields replaced with `null`. It will still have the restaurant information.
 
-## Item Routes
+### Item Routes
 
-### Add Item
+#### Add Item
 
 POST `/api/items/add`
 
@@ -457,7 +631,7 @@ Response:
 }
 ```
 
-### Get All Items
+#### Get All Items
 
 GET `/api/items/all`
 
@@ -499,7 +673,7 @@ Response:
 }
 ```
 
-### Get A Specific Item
+#### Get A Specific Item
 
 GET `/api/items/:id`
 
@@ -530,7 +704,7 @@ Response:
 }
 ```
 
-### Update Item
+#### Update Item
 
 PUT `/api/items/update/:id`
 
@@ -579,7 +753,7 @@ Response:
 }
 ```
 
-### Delete Item
+#### Delete Item
 
 DELETE `/api/items/delete/:id`
 
@@ -611,9 +785,9 @@ Response:
 }
 ```
 
-## Party Routes
+### Party Routes
 
-### Add a New Party
+#### Add a New Party
 
 POST `/api/party/add`
 
@@ -670,7 +844,7 @@ Response:
 }
 ```
 
-### Get All Parties
+#### Get All Parties
 
 GET `/api/party/all`
 
@@ -731,7 +905,7 @@ Response:
 }
 ```
 
-### Get a Specific Party
+#### Get a Specific Party
 
 GET `/api/party/:id`
 
@@ -772,7 +946,7 @@ Response:
 }
 ```
 
-### Update a Party
+#### Update a Party
 
 PUT `/api/party/update/:id`
 
@@ -819,7 +993,7 @@ Response:
 }
 ```
 
-### Delete a Party
+#### Delete a Party
 
 DELETE `/api/party/delete/:id`
 
@@ -846,9 +1020,9 @@ Response:
 }
 ```
 
-## Table Routes
+### Table Routes
 
-### Add Table
+#### Add Table
 
 POST `/api/tables/add`
 
@@ -895,7 +1069,7 @@ Response:
 }
 ```
 
-### Get All Tables
+#### Get All Tables
 
 GET`/api/tables/all`
 
@@ -930,7 +1104,7 @@ Response:
 }
 ```
 
-### Get A Specific Table
+#### Get A Specific Table
 
 GET`/api/tables/:id`
 
@@ -954,7 +1128,7 @@ Response:
 }
 ```
 
-### Update Tables
+#### Update Tables
 
 POST `api/tables/update`
 
@@ -1002,7 +1176,7 @@ Response:
 }
 ```
 
-### Deactivate Table
+#### Deactivate Table
 
 PUT `api/tables/deactivate/:id`
 
@@ -1043,7 +1217,7 @@ Response:
 }
 ```
 
-### Delete Table
+#### Delete Table
 
 Delete `api/tables/delete/:id`
 
@@ -1083,20 +1257,14 @@ Request body should look like this:
 ```
 {
   "name": "Rigby's Tacos",
-  "location": "Saint Paul, MN",
-  "billing": {
-    "address": "123 Main St"
-  }
+  "location": "28711",
 }
 ```
 
 `name`: String, required, the name of the restaurant
 
-`location`: String, required
+`location`: String, required, the zip code of the restaurant
 
-`billing`: Object, some fields required:
-
-- `address`: String? required
 
 Response contains a success messages and a new bearer token. The token will contain the restaurant id.
 
@@ -1108,146 +1276,3 @@ Response:
   "msg": "Successfully created"
 }
 ```
-
-# Tech-Stack
-
-## Back-End Dependencies ```(Production)```
-
-### Send Grid
-
-Used for user confirmation Emails (Required by employer). | [View Dependency](https://sendgrid.com/docs/)
-
-### BcryptJS
-
-Bcrypt is an adaptive hash function which adjusts the cost of hashing, which means that in the future as computers become more powerful, simply increasing the salt rounds will suffice at keeping Main Course secure due to the amount of processing time that would be required to generate all possible password combinations. | [View Dependency](https://www.npmjs.com/package/bcryptjs)
-
-### Cors
-
-Used to configure API security. This was used to allow for secure communication between the front-end and back-end servers. | [View Dependency](https://github.com/expressjs/cors)
-
-### ExpressJS
-
-A prebuilt NodeJS framework that makes creating server side applications simple, fast, and flexible. NodeJS is powered by Google's V8 Engine which means it's powerful and can handle a large number of requests without lapsing in dependability. Also, this means that this is a highly scalable choice when you consider the Event Loop which manages all asynchronous operations allowing the program to continue to run as expected without stops. | [View Dependency](http://expressjs.com/)
-
-### MongoDB
-
-MongoDB is an object-oriented, simple, dynamic, and scalable NoSQL database. Due to the minimal about of data relationships we felt this was a good choice for Main Course. | [View Dependency](https://docs.mongodb.com/)
-
-### Mongoose
-
-Provides a straight-forward, schema-based solution to model application data with MongoDB. It also offers out of the box perks such as validation. | [View Dependency](https://mongoosejs.com/)
-
-### Helmet
-
-A collection of nine smaller middleware functions that set security-related HTTP headers appropriatley. This protects Main Course from numerous well known vulnerablilites. | [View Dependency](https://helmetjs.github.io/)
-
-### JSON Web Token
-
-Realizing that there is not inherent benefit to using tokens over sessions, we chose to implement jwts due to the added benefit of storing the session on the client side as opposed to being in-memory. Main Course is built with the active server in mind and the potential to have the application be accessed from various devices in different locations. With this, instead of running the risk of having a session be interrupted due to data roaming, connection issues, or server side problems, we chose to store the session information on the client side. We also found this to be more efficient for our needs, as jwts eliminate the need to fetch additional information from the DB to validate the user. | [View Dependency](https://www.npmjs.com/package/jsonwebtoken)
-
-### Passport
-
-Passport is a flexible and fully customizable NodeJS middleware that comes with various out of the box authentication strategies for Facebook, Twitter, etcetera. This was an obvious choice for us because it makes future authentication features readily accessible. | [View Dependency](http://www.passportjs.org/)
-
-### Stripe
-
-A powerful, simple, and seamless payment commerce solution (Required by employer). | [View Dependency](https://stripe.com/)
-
-
-## Back-End Dependencies ```(Development)```
-
-### Concurrently
-
-This provides the ability to conveniently run both the back-end and front-end servers simultaneously on one terminal, which makes keeping track of errors easy during development as well as cutting back on time switching between terminals. | [View Dependency](https://www.npmjs.com/package/concurrently)
-
-### Crossenv
-
-Due to the variance of operating systems on the development team, Crossenv allows us to universally set environment variables. | [View Dependency](https://www.npmjs.com/package/cross-env)
-
-### Eslint
-
-Eslint is the dominant linting tool for NodeJS and it makes it possible to establish a clear coding convention for a team or project, as well as aiding in catching various bugs such as variables improperly scoped. | [View Dependency](https://eslint.org/)
-
-### Husky
-
-Used to prevent possible bad git commits or pushes due to running pre-commit linting hooks. | [View Dependency](https://github.com/typicode/husky)
-
-### Jest
-
-Chosen for its out of the box readiness. Jest comes with inbuilt mocking, the ability to run tests in parallel, it works with both the front-end and back-end, has promise support, and is a one stop shop for most testing needs within the scope of this project. | [View Dependency](https://jestjs.io/)
-
-### Morgan
-
-An HTTP request logging middleware used for production to easily identify bugs in routes. | [View Dependency](https://github.com/expressjs/morgan)
-
-### Nodemon
-
-Automatically restarts the server on save making production more efficient. | [View Dependency](https://nodemon.io/)
-
-### Supertest
-
-Using supertest with jest for integration testing makes things easy to implement and easy to read. | [View Dependency](https://www.npmjs.com/package/supertest)
-
-## Front-End Dependencies ```(Production)```
-
-### React
-
-React is the current industry standard that offers a lot of out of the box benefits. It is fast, efficient, and scalable. Due to the large community, finding solutions to potential problems and reference material is much easier, even for a potential dev without a lot of experience who would like to contribute to Main Course. | [View Dependency](https://reactjs.org/docs/getting-started.html)
-
-### Redux
-
-A state management tool making it possible to store the entire state of the application in a single store. This means a unidirectional data flow, and as the application scales we have predictable state updates which subsequently make things easier to test and introduce new features. Redux also has solid documentation and an active community, meaning that as new devs become introduced to the project it's likely that any problems they face would have already been encountered by someone else, thus making solutions easy to find. | [View Dependency](https://redux.js.org/)
-
-### Redux Thunk
-
-A middleware that allows you to write action creators that return a function instead of an action. The thunk can be used to delay the dispatch of an action, or to dispatch only if a certain condition is met. This functionality makes it easier to scale and implement features given diverse needs in a growing project. | [View Dependency](https://github.com/reduxjs/redux-thunk)
-
-### Sales Tax
-
-International sales tax calculator for Node (offline, but provides optional online VAT number fraud check). Tax rates are kept up-to-date. | [View Dependency](https://www.npmjs.com/package/sales-tax)
-
-### ShortID
-
-Used to fill a specific need in assigning items unique IDs for sorting on the front-end. | [View Dependency](https://www.npmjs.com/package/shortid)
-
-### Styled Components
-
-Has a thriving community and offers the ability to directly style multiple components within a file. The syntax used is familiar to JavaScript and improves code cleanliness and makes it easy to get up and going for those without a lot of css experience. Styled components are also very efficient, improving load time for users. | [View Dependency](https://www.styled-components.com/docs/)
-
-### Uppy
-
-"Sleek, modular file uploader that integrates seamlessly with any framework. It fetches files from local disk, Google Drive, Dropbox, Instagram, remote URLs, cameras and other exciting locations, and then uploads them to the final destination. It’s fast, easy to use and let's you worry about more important problems than building a file uploader." | [View Dependency](https://uppy.io/docs/)
-
-### Axios
-
-A lightweight, promise-based HTTP client with an intuitive API that makes interfacing with a REST API simple. | [View Dependency](https://www.npmjs.com/package/react-axios)
-
-### Connected React Router
-
-Allows for the ability to synchronize state with redux store through uni-directional data flow, time traveling, and dispatching of history methods. This makes for an incredibly useful tool when dealing with various stages of state and subsequent routing for a seamless and intuitive UI. | [View Dependency](https://www.npmjs.com/package/connected-react-router)
-
-### Date FNS
-
-A lightweight option for formatting JavaScript dates. | [View Dependency](https://date-fns.org/)
-
-### Formik
-
-This library utilizes essential React form functionality under the hood which makes implementing it feel very intuitive and not magical. It keeps track of values, errors, and submissions, which reduces the time needed to implement forms and makes for a more enjoyable experience. | [View Dependency](https://jaredpalmer.com/formik)
-
-### JWT Decode
-
-Used to decode JWTs on the front-end to retrieve user data. | [View Dependency](https://github.com/auth0/jwt-decode)
-
-### PixiJS
-
-An open source, cross browser JavaScript 2D WebGL graphics library with canvas fallback used to build core floor-plan functionality on the app. | [View Dependency](http://www.pixijs.com/)
-
-## Front-End Dependencies ```(Development)```
-
-### Eslint
-
-[See Above Explanation](#eslint)
-
-### Stylelint
-
-Used to enforce project conventions in styling to keep code consistent. | [View Dependency](https://stylelint.io/)

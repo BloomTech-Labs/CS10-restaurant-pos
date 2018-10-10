@@ -53,8 +53,10 @@ class SettingsPage extends React.Component {
       <React.Fragment>
         <Modal isOpen={modalIsOpen}>
           <Logo width="150" />
-          <div>Hey, pay for the sub!</div>
-          <div>The sub costs 100 bucks</div>
+          <div>Welcome to Main Course Complete!</div>
+          <div>
+            The monthly subscription is <s.Price>50</s.Price>. Unlock all of the key features now!
+          </div>
           <Elements>
             <StripeRegisterForm subscribe={this.props.subscribe} />
           </Elements>

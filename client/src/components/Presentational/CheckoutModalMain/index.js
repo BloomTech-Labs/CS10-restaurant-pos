@@ -16,7 +16,7 @@ export default function CheckoutModalMain(props) {
   const {
     modalIsOpen,
     tables,
-    location,
+    taxRate,
     setTotal,
     sendPayment,
     partyId,
@@ -44,7 +44,7 @@ export default function CheckoutModalMain(props) {
         itemAction={toggleSplitCheckItem}
       />
       <s.Checkout>
-        <OrderTotal order={order} location={location} setTotal={setTotal} />
+        <OrderTotal order={order} taxRate={taxRate} setTotal={setTotal} />
       </s.Checkout>
       <s.OrderButtons>
         {showStripe ? (
@@ -78,11 +78,6 @@ export default function CheckoutModalMain(props) {
   );
 }
 
-const locationType = PropTypes.shape({
-  country: PropTypes.string,
-  state: PropTypes.string
-});
-
 CheckoutModalMain.propTypes = {
   openSplitModal: PropTypes.func,
   setTotal: PropTypes.func,
@@ -93,7 +88,7 @@ CheckoutModalMain.propTypes = {
   order: PropTypes.arrayOf(PropTypes.object),
   splitOrder: PropTypes.arrayOf(PropTypes.object),
   tables: PropTypes.arrayOf(PropTypes.object),
-  location: locationType,
+  taxRate: PropTypes.number,
   toggleCheckout: PropTypes.func,
   showStripe: PropTypes.bool,
   server: PropTypes.string
@@ -109,7 +104,7 @@ CheckoutModalMain.defaultProps = {
   order: [{}],
   splitOrder: [{}],
   tables: [{}],
-  location: { country: 'US', state: 'CA' },
+  taxRate: 0,
   toggleCheckout: () => {},
   showStripe: false,
   server: 'Server Name'

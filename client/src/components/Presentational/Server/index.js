@@ -1,61 +1,90 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { getRoleString } from '../../../redux/helpers/misc';
+
 import * as s from './styles';
 
-export default function Server(props) {
-  const { server, push } = props;
-  const imageToDisplay = server.images
-    ? server.images.medium
-    : 'https://images.unsplash.com/photo-1500649297466-74794c70acfc?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ce5cca94a31b3b2c59c9ff1002079ed9&auto=format&fit=crop&w=150&q=60';
+class Server extends React.Component {
+  state = {
+    showDropdown: false
+  };
 
-  return (
-    <s.ServerBox onClick={() => push(`/tables/${server.name.replace(/\s/, '_')}/${server._id}`)}>
-      <div>{server.name}</div>
-      <s.ProfilePic>
-        <img src={imageToDisplay} alt="user profile" />
-      </s.ProfilePic>
-    </s.ServerBox>
-  );
+  toggleDropDown = (e) => {
+    if (e) e.stopPropagation();
+
+    this.setState((prev) => ({
+      showDropdown: !prev.showDropdown
+    }));
+  };
+
+  promoteEmployee = (e) => {
+    e.stopPropagation();
+    this.props
+      .update(this.props.server._id, { admin: false, manager: true })
+      .then(() => {
+        this.props.getServers();
+      })
+      .catch((err) => console.error(err));
+    this.toggleDropDown();
+  };
+
+  render() {
+    const { server, push } = this.props;
+    const imageToDisplay = server.images
+      ? server.images.medium
+      : 'https://storage.googleapis.com/main-course-images/man-303792_640.png';
+
+    return (
+      <React.Fragment>
+        <s.ServerBox
+          onClick={() => push(`/tables/${server.name.replace(/\s/, '_')}/${server._id}`)}
+          noHover={this.state.showDropdown}
+        >
+          <s.ProfilePic>
+            <img src={imageToDisplay} alt="user profile" width="125px" />
+          </s.ProfilePic>
+          <div>{server.name}</div>
+          <div>{getRoleString(server.role, true)}</div>
+          <s.DropDownDotsThing onClick={this.toggleDropDown}>
+            <div />
+            <div />
+            <div />
+          </s.DropDownDotsThing>
+          <s.DropdownThingy show={this.state.showDropdown}>
+            {server.role.admin ? null : (
+              <s.Option onClick={this.promoteEmployee}>Promote to Manager</s.Option>
+            )}
+          </s.DropdownThingy>
+        </s.ServerBox>
+        <s.Overlay onClick={this.toggleDropDown} show={this.state.showDropdown} />
+      </React.Fragment>
+    );
+  }
 }
 
 Server.propTypes = {
   server: PropTypes.shape({
+    _id: PropTypes.string,
     name: PropTypes.string,
-    parties: PropTypes.arrayOf(
-      PropTypes.shape({
-        food: PropTypes.array,
-        tables: PropTypes.arrayOf(PropTypes.object)
-      })
-    )
+    parties: PropTypes.arrayOf(PropTypes.object),
+    role: PropTypes.object
   }),
-  push: PropTypes.func
+  push: PropTypes.func,
+  update: PropTypes.func,
+  getServers: PropTypes.func
 };
 
 Server.defaultProps = {
   server: {
+    _id: '',
     name: 'RandyCarlFace',
-    parties: [
-      {
-        food: [],
-        tables: [
-          {
-            number: 1
-          },
-          {
-            number: 3
-          }
-        ]
-      },
-      {
-        food: [],
-        tables: [
-          {
-            number: 2
-          }
-        ]
-      }
-    ]
+    parties: [{}],
+    role: {}
   },
-  push: () => {}
+  push: () => {},
+  update: () => {},
+  getServers: () => {}
 };
+
+export default Server;
