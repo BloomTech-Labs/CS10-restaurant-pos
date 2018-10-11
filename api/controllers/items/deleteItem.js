@@ -18,7 +18,7 @@ const deleteItem = (req, res) => {
       if (!removedItem) {
         return res.status(404).json({ msg: 'Item was not found.' });
       }
-      res.status(200).json({ removedItem, msg: 'Item deleted from the database.' });
+      res.status(200).json({ removedItem, msg: `${removedItem.name} was deleted from the database.` });
     })
     .catch((err) => {
       res.status(500).json({ err, msg: 'Error communicating with the database.' });

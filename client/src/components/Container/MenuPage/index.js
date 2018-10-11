@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getItems } from '../../../redux/actions/items';
+import { getItems, deleteItem } from '../../../redux/actions/items';
 import Loading from '../../Presentational/Loading';
 import ItemSelector from '../ItemSelector';
 
@@ -14,7 +14,7 @@ class MenuPage extends React.Component {
   }
 
   render() {
-    const { items, categories, loading } = this.props;
+    const { authed, items, categories, loading, history } = this.props;
 
     if (loading) {
       return <Loading />;
@@ -22,27 +22,41 @@ class MenuPage extends React.Component {
 
     return (
       <s.Container>
-        <ItemSelector categories={categories} items={items} getItems={this.props.getItems} />
+        <ItemSelector
+          authed={authed}
+          categories={categories}
+          items={items}
+          getItems={this.props.getItems}
+          deleteItem={this.props.deleteItem}
+          menuPath={history.location.pathname === '/menu'}
+        />
       </s.Container>
     );
   }
 }
 
 MenuPage.propTypes = {
+  authed: PropTypes.bool,
   loading: PropTypes.bool,
+  history: PropTypes.shape(PropTypes.obj),
   items: PropTypes.arrayOf(PropTypes.object),
   categories: PropTypes.arrayOf(PropTypes.string),
-  getItems: PropTypes.func
+  getItems: PropTypes.func,
+  deleteItem: PropTypes.func
 };
 
 MenuPage.defaultProps = {
+  authed: false,
   loading: false,
+  history: { location: {} },
   items: [{}],
   categories: ['All'],
-  getItems: () => {}
+  getItems: () => {},
+  deleteItem: () => {}
 };
 
 const mapStateToProps = (state) => ({
+  authed: state.auth.role.admin || state.auth.role.manager,
   loading: state.items.loading,
   items: state.items.itemList,
   categories: state.items.itemList.reduce(
@@ -58,5 +72,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { getItems }
+  { getItems, deleteItem }
 )(MenuPage);

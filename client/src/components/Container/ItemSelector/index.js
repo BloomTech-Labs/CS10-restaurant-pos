@@ -37,7 +37,7 @@ class ItemSelector extends React.Component {
   };
 
   render() {
-    const { partyId, categories } = this.props;
+    const { authed, partyId, categories, deleteItem, getItems, menuPath } = this.props;
     return (
       <s.Container style={{ position: 'relative' }}>
         <div style={{ position: 'relative' }}>
@@ -50,7 +50,15 @@ class ItemSelector extends React.Component {
         </div>
         <s.Items>
           {this.state.filtered.map((item) => (
-            <Item key={item._id} addItemToOrder={this.addItemToOrder} item={item} />
+            <Item
+              key={item._id}
+              authed={authed}
+              addItemToOrder={this.addItemToOrder}
+              deleteItem={deleteItem}
+              getItems={getItems}
+              item={item}
+              menu={menuPath}
+            />
           ))}
         </s.Items>
         {partyId && <DeletePartyButton partyId={partyId} />}
@@ -60,17 +68,25 @@ class ItemSelector extends React.Component {
 }
 
 ItemSelector.propTypes = {
+  authed: PropTypes.bool,
+  menuPath: PropTypes.string,
   partyId: PropTypes.string,
   items: PropTypes.arrayOf(PropTypes.object),
   categories: PropTypes.arrayOf(PropTypes.string),
   addItemToOrder: PropTypes.func,
+  getItems: PropTypes.func,
+  deleteItem: PropTypes.func
 };
 
 ItemSelector.defaultProps = {
+  authed: false,
+  menuPath: '',
   partyId: '',
   items: [{}],
   categories: ['All'],
   addItemToOrder: () => {},
+  getItems: () => {},
+  deleteItem: () => {}
 };
 
 export default ItemSelector;
