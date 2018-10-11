@@ -69,7 +69,7 @@ class ItemSelector extends React.Component {
 
 ItemSelector.propTypes = {
   authed: PropTypes.bool,
-  menuPath: PropTypes.string,
+  menuPath: PropTypes.bool,
   partyId: PropTypes.string,
   items: PropTypes.arrayOf(PropTypes.object),
   categories: PropTypes.arrayOf(PropTypes.string),
@@ -80,7 +80,7 @@ ItemSelector.propTypes = {
 
 ItemSelector.defaultProps = {
   authed: false,
-  menuPath: '',
+  menuPath: false,
   partyId: '',
   items: [{}],
   categories: ['All'],
