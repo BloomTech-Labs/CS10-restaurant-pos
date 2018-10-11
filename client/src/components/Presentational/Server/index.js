@@ -29,10 +29,21 @@ class Server extends React.Component {
     this.toggleDropDown();
   };
 
+  deleteEmployee = (e) => {
+    e.stopPropagation();
+    this.props
+      .deleteEmployee(this.props.server._id)
+      .then(() => {
+        this.props.getServers();
+      })
+      .catch((err) => console.error(err));
+    this.toggleDropDown();
+  };
+
   render() {
     const { server, push } = this.props;
     const imageToDisplay = server.images
-      ? server.images.medium
+      ? server.images.small
       : 'https://storage.googleapis.com/main-course-images/man-303792_640.png';
 
     return (
@@ -53,7 +64,10 @@ class Server extends React.Component {
           </s.DropDownDotsThing>
           <s.DropdownThingy show={this.state.showDropdown}>
             {server.role.admin ? null : (
-              <s.Option onClick={this.promoteEmployee}>Promote to Manager</s.Option>
+              <React.Fragment>
+                <s.Option onClick={this.promoteEmployee}>Promote to Manager</s.Option>
+                <s.Option onClick={this.deleteEmployee}>Remove Employee</s.Option>
+              </React.Fragment>
             )}
           </s.DropdownThingy>
         </s.ServerBox>
@@ -72,6 +86,7 @@ Server.propTypes = {
   }),
   push: PropTypes.func,
   update: PropTypes.func,
+  deleteEmployee: PropTypes.func,
   getServers: PropTypes.func
 };
 
@@ -84,6 +99,7 @@ Server.defaultProps = {
   },
   push: () => {},
   update: () => {},
+  deleteEmployee: () => {},
   getServers: () => {}
 };
 

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { getServers } from '../../../redux/actions/servers';
-import { changeEmployeeRole } from '../../../redux/actions/auth';
+import { changeEmployeeRole, deleteEmployee } from '../../../redux/actions/auth';
 import ServerList from '../../Presentational/ServerList';
 import Loading from '../../Presentational/Loading';
 
@@ -25,6 +25,7 @@ class ServersPage extends React.Component {
           serverList={serverList}
           push={history.push}
           update={this.props.changeEmployeeRole}
+          deleteEmployee={this.props.deleteEmployee}
           getServers={this.props.getServers}
         />
       </React.Fragment>
@@ -35,6 +36,7 @@ class ServersPage extends React.Component {
 ServersPage.propTypes = {
   getServers: PropTypes.func,
   changeEmployeeRole: PropTypes.func,
+  deleteEmployee: PropTypes.func,
   serverList: PropTypes.arrayOf(PropTypes.object),
   loading: PropTypes.bool,
   history: PropTypes.shape({
@@ -45,17 +47,18 @@ ServersPage.propTypes = {
 ServersPage.defaultProps = {
   getServers: () => {},
   changeEmployeeRole: () => {},
+  deleteEmployee: () => {},
   serverList: [{}],
   loading: true,
   history: { push: () => {} }
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   serverList: state.servers.serverList,
-  loading: state.servers.loading,
+  loading: state.servers.loading
 });
 
 export default connect(
   mapStateToProps,
-  { getServers, changeEmployeeRole }
+  { getServers, changeEmployeeRole, deleteEmployee }
 )(ServersPage);
