@@ -40,7 +40,7 @@ class PartyPage extends React.Component {
   };
 
   componentDidMount() {
-    const until = [this.props.getTaxRate(), this.props.getParties()];
+    const until = [this.props.getTaxRate(), this.props.getParties(), this.props.getItems()];
 
     // eslint-disable-next-line compat/compat
     Promise.all(until)
