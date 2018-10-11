@@ -67,7 +67,7 @@ const subscribe = (req, res) => {
 
                     // send back the new token so the client can use premium features
                     res.status(200).json({
-                      token: `Bearer ${jwt.sign(payload, keys.secretOrKey, { expiresIn: '24h' })}`,
+                      token: `Bearer ${jwt.sign(payload, keys.secretOrKey)}`,
                       msg: 'Successfully Subscribed',
                     });
                   }
