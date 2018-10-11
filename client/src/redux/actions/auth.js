@@ -66,9 +66,9 @@ export const register = ({ name, email, pass, confirmPass, images }) => (dispatc
   const randomNum = Math.round(Math.random() * 1000 + 10);
   if (!Object.keys(images).length) {
     images = {
-      thumbnail: `https://picsum.photos/10/10?image=${randomNum}`,
-      small: `https://picsum.photos/55/55?image=${randomNum}`,
-      medium: `https://picsum.photos/110/110?image=${randomNum}`
+      thumbnail: `https://picsum.photos/55/55?image=${randomNum}`,
+      small: `https://picsum.photos/110/110?image=${randomNum}`,
+      medium: `https://picsum.photos/200/200?image=${randomNum}`
     };
   }
 
@@ -175,9 +175,9 @@ export const addEmployee = (employee) => (dispatch) => {
   const randomNum = Math.round(Math.random() * 1000 + 10);
   if (!Object.keys(images).length) {
     images = {
-      thumbnail: `https://picsum.photos/10/10?image=${randomNum}`,
-      small: `https://picsum.photos/55/55?image=${randomNum}`,
-      medium: `https://picsum.photos/110/110?image=${randomNum}`
+      thumbnail: `https://picsum.photos/55/55?image=${randomNum}`,
+      small: `https://picsum.photos/110/110?image=${randomNum}`,
+      medium: `https://picsum.photos/200/200?image=${randomNum}`
     };
   }
 

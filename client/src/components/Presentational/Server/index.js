@@ -32,7 +32,7 @@ class Server extends React.Component {
   render() {
     const { server, push } = this.props;
     const imageToDisplay = server.images
-      ? server.images.medium
+      ? server.images.small
       : 'https://storage.googleapis.com/main-course-images/man-303792_640.png';
 
     return (
