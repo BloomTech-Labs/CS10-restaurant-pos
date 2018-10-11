@@ -57,19 +57,19 @@ class Server extends React.Component {
           </s.ProfilePic>
           <div>{server.name}</div>
           <div>{getRoleString(server.role, true)}</div>
-          <s.DropDownDotsThing onClick={this.toggleDropDown}>
+          <s.DropDownDots onClick={this.toggleDropDown}>
             <div />
             <div />
             <div />
-          </s.DropDownDotsThing>
-          <s.DropdownThingy show={this.state.showDropdown}>
+          </s.DropDownDots>
+          <s.DropDownDisplay show={this.state.showDropdown}>
             {server.role.admin ? null : (
               <React.Fragment>
                 <s.Option onClick={this.promoteEmployee}>Promote to Manager</s.Option>
                 <s.Option onClick={this.deleteEmployee}>Remove Employee</s.Option>
               </React.Fragment>
             )}
-          </s.DropdownThingy>
+          </s.DropDownDisplay>
         </s.ServerBox>
         <s.Overlay onClick={this.toggleDropDown} show={this.state.showDropdown} />
       </React.Fragment>

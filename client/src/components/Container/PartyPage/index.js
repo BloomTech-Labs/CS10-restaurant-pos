@@ -40,7 +40,7 @@ class PartyPage extends React.Component {
   };
 
   componentDidMount() {
-    const until = [this.props.getTaxRate(), this.props.getParties()];
+    const until = [this.props.getTaxRate(), this.props.getParties(), this.props.getItems()];
 
     // eslint-disable-next-line compat/compat
     Promise.all(until)
@@ -120,10 +120,11 @@ class PartyPage extends React.Component {
 
   render() {
     const { order, subTotal, tables, server } = this.state;
-    const { splitOrder } = this.props;
 
     const {
+      history,
       modalIsOpen,
+      splitOrder,
       splitModalIsOpen,
       taxRate,
       match,
@@ -135,6 +136,7 @@ class PartyPage extends React.Component {
     if (loading) {
       return <Loading />;
     }
+
     return (
       <React.Fragment>
         <CheckoutModal
@@ -161,6 +163,7 @@ class PartyPage extends React.Component {
             addItemToOrder={this.addItemToOrder}
             getItems={this.props.getItems}
             partyId={match.params.id}
+            menuPath={history.location.pathname === '/menu'}
           />
           <OrderScratchPad
             tables={tables}
@@ -185,7 +188,6 @@ PartyPage.propTypes = {
   updateParty: PropTypes.func,
   saveOrder: PropTypes.func,
   getTaxRate: PropTypes.func,
-  // saveSplitOrder: PropTypes.func,
   toggleSplitCheckItem: PropTypes.func,
   sendPayment: PropTypes.func,
   getItems: PropTypes.func,
@@ -203,9 +205,10 @@ PartyPage.propTypes = {
   }),
   partyList: PropTypes.arrayOf(PropTypes.object),
   history: PropTypes.shape({
-    push: PropTypes.func
+    push: PropTypes.func,
+    location: PropTypes.object
   }),
-  taxRate: PropTypes.number,
+  taxRate: PropTypes.number
 };
 
 PartyPage.defaultProps = {
@@ -218,7 +221,7 @@ PartyPage.defaultProps = {
   toggleSplitCheckItem: () => {},
   sendPayment: () => {},
   getItems: () => {},
-  history: { push: () => {} },
+  history: { push: () => {}, location: {} },
   getParties: () => {},
   closeSplitModal: () => {},
   modalIsOpen: false,
@@ -230,7 +233,7 @@ PartyPage.defaultProps = {
   itemCategories: ['All'],
   partyList: [{ _id: 'defaultpartyid' }],
   match: { params: {} },
-  taxRate: 0,
+  taxRate: 0
 };
 
 const mapStateToProps = (state) => ({
@@ -251,7 +254,7 @@ const mapStateToProps = (state) => ({
     },
     ['All']
   ),
-  taxRate: state.restaurant.taxRate,
+  taxRate: state.restaurant.taxRate
 });
 
 export default connect(

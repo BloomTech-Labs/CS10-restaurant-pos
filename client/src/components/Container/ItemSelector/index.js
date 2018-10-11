@@ -15,10 +15,7 @@ class ItemSelector extends React.Component {
   };
 
   componentDidMount() {
-    this.props
-      .getItems()
-      .then(() => this.filter('All'))
-      .catch((err) => console.error(err));
+    this.filter('All');
   }
 
   addItemToOrder = (item) => {
@@ -27,7 +24,6 @@ class ItemSelector extends React.Component {
 
   filter = (category) => {
     if (category === 'All') {
-      console.log('sjd');
       this.setState({
         filtered: this.props.items,
         category
@@ -41,7 +37,7 @@ class ItemSelector extends React.Component {
   };
 
   render() {
-    const { partyId, categories } = this.props;
+    const { authed, partyId, categories, deleteItem, getItems, menuPath } = this.props;
     return (
       <s.Container style={{ position: 'relative' }}>
         <div style={{ position: 'relative' }}>
@@ -54,29 +50,43 @@ class ItemSelector extends React.Component {
         </div>
         <s.Items>
           {this.state.filtered.map((item) => (
-            <Item key={item._id} addItemToOrder={this.addItemToOrder} item={item} />
+            <Item
+              key={item._id}
+              authed={authed}
+              addItemToOrder={this.addItemToOrder}
+              deleteItem={deleteItem}
+              getItems={getItems}
+              item={item}
+              menu={menuPath}
+            />
           ))}
         </s.Items>
-        <DeletePartyButton partyId={partyId} />
+        {partyId && <DeletePartyButton partyId={partyId} />}
       </s.Container>
     );
   }
 }
 
 ItemSelector.propTypes = {
+  authed: PropTypes.bool,
+  menuPath: PropTypes.bool,
   partyId: PropTypes.string,
   items: PropTypes.arrayOf(PropTypes.object),
   categories: PropTypes.arrayOf(PropTypes.string),
   addItemToOrder: PropTypes.func,
-  getItems: PropTypes.func
+  getItems: PropTypes.func,
+  deleteItem: PropTypes.func
 };
 
 ItemSelector.defaultProps = {
+  authed: false,
+  menuPath: false,
   partyId: '',
   items: [{}],
   categories: ['All'],
   addItemToOrder: () => {},
-  getItems: () => {}
+  getItems: () => {},
+  deleteItem: () => {}
 };
 
 export default ItemSelector;
