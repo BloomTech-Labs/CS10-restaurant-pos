@@ -56,7 +56,7 @@ const registerRestaurant = (req, res) => {
           };
 
           // sign a new token with the restaurant id
-          const token = `Bearer ${jwt.sign(payload, keys.secretOrKey)}`;
+          const token = `Bearer ${jwt.sign(payload, keys.secretOrKey, { expiresIn: '24h' })}`;
 
           // send back the token with a success message
           res.status(201).json({ token, msg: 'Successfully created' });
