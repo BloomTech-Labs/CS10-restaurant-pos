@@ -16,6 +16,10 @@ export const ProfilePic = styled.div`
   height: 55px;
   width: 55px;
   overflow: hidden;
+
+  > img {
+    margin: 0;
+  }
 `;
 
 export const Info = styled.div`
