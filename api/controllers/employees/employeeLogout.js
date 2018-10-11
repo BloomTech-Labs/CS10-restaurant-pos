@@ -22,7 +22,7 @@ const employeeLogout = (req, res) => {
   };
 
   // sign a new token with the new payload
-  const token = `Bearer ${jwt.sign(payload, keys.secretOrKey)}`;
+  const token = `Bearer ${jwt.sign(payload, keys.secretOrKey, { expiresIn: '24h' })}`;
 
   // send back the token
   res.status(200).json({ token });
