@@ -28,6 +28,9 @@ export const EMPLOYEE_REGISTER_FAILURE = 'EMPLOYEE_REGISTER_FAILURE';
 export const CHANGING_EMPLOYEE_ROLE = 'CHANGING_EMPLOYEE_ROLE';
 export const CHANGE_EMPLOYEE_ROLE_SUCCESS = 'CHANGE_EMPLOYEE_ROLE_SUCCESS';
 export const CHANGE_EMPLOYEE_ROLE_FAILURE = 'CHANGE_EMPLOYEE_ROLE_FAILURE';
+export const DELETING_EMPLOYEE = 'DELETING_EMPLOYEE';
+export const DELETING_EMPLOYEE_SUCCESS = 'DELETING_EMPLOYEE_SUCCESS';
+export const DELETING_EMPLOYEE_FAILURE = 'DELETING_EMPLOYEE_FAILURE';
 
 export const setInitialAuth = () => ({ type: SET_INITIAL_AUTH });
 
@@ -208,6 +211,20 @@ export const changeEmployeeRole = (id, role) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: CHANGE_EMPLOYEE_ROLE_FAILURE, payload: err });
+      errorHandler(err);
+    });
+};
+
+export const deleteEmployee = (id) => (dispatch) => {
+  dispatch({ type: DELETING_EMPLOYEE });
+  return axios
+    .delete(`${serverURI}/api/employees/delete/${id}`)
+    .then((res) => {
+      dispatch({ type: DELETING_EMPLOYEE_SUCCESS });
+      toast(res.data.msg);
+    })
+    .catch((err) => {
+      dispatch({ type: DELETING_EMPLOYEE_FAILURE, payload: err });
       errorHandler(err);
     });
 };
