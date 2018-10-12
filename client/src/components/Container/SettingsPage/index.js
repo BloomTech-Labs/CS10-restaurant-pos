@@ -5,6 +5,7 @@ import { Elements } from 'react-stripe-elements';
 
 import { subscribe, unsubscribe } from '../../../redux/actions/payments';
 import { updateEmployee } from '../../../redux/actions/auth';
+import { updateRestaurant } from '../../../redux/actions/restaurant';
 import { addItem, getItems } from '../../../redux/actions/items';
 import { openModal } from '../../../redux/actions/modal';
 import RestaurantInfo from '../../Presentational/RestaurantInfo';
@@ -36,7 +37,7 @@ class SettingsPage extends React.Component {
           openModal={this.props.openModal}
         />
       )}
-      <RestaurantInfo />
+      <RestaurantInfo updateRestaurant={this.props.updateRestaurant} />
     </React.Fragment>
   );
 
@@ -92,7 +93,8 @@ SettingsPage.propTypes = {
   getItems: PropTypes.func,
   subscribe: PropTypes.func,
   unsubscribe: PropTypes.func,
-  updateEmployee: PropTypes.func
+  updateEmployee: PropTypes.func,
+  updateRestaurant: PropTypes.func,
 };
 
 SettingsPage.defaultProps = {
@@ -108,7 +110,8 @@ SettingsPage.defaultProps = {
   getItems: () => {},
   subscribe: () => {},
   unsubscribe: () => {},
-  updateEmployee: () => {}
+  updateEmployee: () => {},
+  updateRestaurant: () => {},
 };
 
 const mapStateToProps = (state) => ({
@@ -124,5 +127,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { openModal, addItem, getItems, subscribe, unsubscribe, updateEmployee }
+  { openModal, addItem, getItems, subscribe, unsubscribe, updateEmployee, updateRestaurant }
 )(SettingsPage);
