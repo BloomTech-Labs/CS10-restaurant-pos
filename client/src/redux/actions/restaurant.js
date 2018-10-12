@@ -60,9 +60,9 @@ export const updateRestaurant = ({ name, location }) => (dispatch, getState) => 
   const id = getState().auth.restaurant;
 
   return axios.put(`${serverURI}/api/restaurants/update/${id}`, { name, location })
-    .then(() => {
+    .then(res => {
       dispatch({ type: UPDATE_RESTAURANT_SUCCESS });
-      toast('Successfully updated your restaurant info');
+      toast(res.data.msg);
     })
     .catch(err => {
       dispatch({ type: UPDATE_RESTAURANT_ERROR, payload: err });
