@@ -24,11 +24,12 @@ export const Item = styled.div`
 
 export const ItemPic = styled.div`
   ${flexCenterMixin};
-  background: grey;
+  background: ${(props) => props.theme.lightText};
   height: 120px;
   width: 100%;
   overflow: hidden;
   border-radius: ${(props) => `${props.theme.cardBorderRadius}px ${props.theme.cardBorderRadius}px 0 0`};
+  padding-top: ${(props) => (props.defaultImage ? '40px' : '0px')};
 `;
 
 export const ItemTitle = styled.div`
@@ -59,9 +60,11 @@ export const DropDownDots = styled.div`
   justify-content: center;
   flex-shrink: 0;
   height: 50px;
-  width: 30px;
+  width: 40px;
   top: 0;
-  right: 5px;
+  right: 0;
+  background: white;
+  border-radius: 0 ${(props) => props.theme.cardBorderRadius}px 0 ${(props) => props.theme.cardBorderRadius}px;
 
   * {
     border-radius: 50%;

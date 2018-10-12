@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import * as logo from '../../../assets/transparent_logo.png';
+
 import * as s from './styles';
 
 class Item extends React.Component {
@@ -31,7 +33,7 @@ class Item extends React.Component {
     const { authed, item, menu } = this.props;
     const imageToDisplay = item.images
       ? item.images.medium
-      : 'https://minimalistbaker.com/wp-content/uploads/2016/05/AMAZING-EASY-Quinoa-Taco-22Meat22-thats-crispy-flavorful-and-protein-packed-9-ingredients-SO-EASY-healthy-vegan-glutenfree-quinoa-tacos-mexican-recipe-768x1128.jpg';
+      : logo;
 
     return (
       <React.Fragment>
@@ -40,7 +42,7 @@ class Item extends React.Component {
           onClick={() => this.props.addItemToOrder(item)}
           noHover={this.state.showDropdown}
         >
-          <s.ItemPic>
+          <s.ItemPic defaultImage={!item.images}>
             <img src={imageToDisplay} alt="menu item" />
           </s.ItemPic>
           <s.Item>

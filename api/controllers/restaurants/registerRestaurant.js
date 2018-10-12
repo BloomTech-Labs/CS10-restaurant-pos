@@ -29,7 +29,6 @@ const registerRestaurant = (req, res) => {
   )
     .then((response) => response.json())
     .then((json) => {
-      console.log('testing one: ', json);
       const newRestaurant = new Restaurant({ ...req.body, taxRate: json.totalRate });
 
       newRestaurant
