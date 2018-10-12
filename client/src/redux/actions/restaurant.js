@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { push } from 'connected-react-router';
 import jwtDecode from 'jwt-decode';
+import { toast } from 'react-toastify';
 
 // URIs
 import serverURI from '../../config/URI';
@@ -14,6 +15,9 @@ export const RESTAURANT_AUTH = 'RESTAURANT_AUTH';
 export const GETTING_TAXRATE = 'GETTING_TAXRATE';
 export const GET_TAXRATE_SUCCESS = 'GET_TAXRATE_SUCCESS';
 export const GET_TAXRATE_ERROR = 'GET_TAXRATE_ERROR';
+export const UPDATING_RESTAURANT = 'UPDATING_RESTAURANT';
+export const UPDATE_RESTAURANT_SUCCESS = 'UPDATE_RESTAURANT_SUCCESS';
+export const UPDATE_RESTAURANT_ERROR = 'UPDATE_RESTAURANT_ERROR';
 
 export const addRestaurant = ({
   name,
@@ -46,6 +50,22 @@ export const getTaxRate = () => dispatch => {
     })
     .catch(err => {
       dispatch({ type: GET_TAXRATE_ERROR, payload: err });
+      errorHandler(err);
+    });
+};
+
+export const updateRestaurant = ({ name, location }) => (dispatch, getState) => {
+  dispatch({ type: UPDATING_RESTAURANT });
+
+  const id = getState().auth.restaurant;
+
+  return axios.put(`${serverURI}/api/restaurants/update/${id}`, { name, location })
+    .then(res => {
+      dispatch({ type: UPDATE_RESTAURANT_SUCCESS });
+      toast(res.data.msg);
+    })
+    .catch(err => {
+      dispatch({ type: UPDATE_RESTAURANT_ERROR, payload: err });
       errorHandler(err);
     });
 };

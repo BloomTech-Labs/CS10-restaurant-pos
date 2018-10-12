@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
 import {
   Button,
   StyledFormik,
@@ -17,29 +16,21 @@ import * as s from './styles';
 const RestaurantInfo = props => (
   <React.Fragment>
     <StyledFormik
-      initialValues={{ name: '', email: '', address: '', billing: '' }}
+      initialValues={{ name: '', location: '' }}
       validate={values => {
         const errors = {};
         if (!values.name) {
           errors.name = 'Required';
         }
-        if (!values.email) {
-          errors.email = 'Required';
-        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-          errors.email = 'Invalid email address';
-        }
-        if (!values.address) {
-          errors.address = 'Required';
-        }
-        if (!values.billing) {
-          errors.billing = 'Required';
+        if (!values.location) {
+          errors.location = 'Required';
         }
 
         return errors;
       }}
       onSubmit={async (values, { setSubmitting }) => {
         try {
-          await props.changeRestaurantInfo(values);
+          await props.updateRestaurant(values);
           setSubmitting(false);
         } catch (err) {
           setSubmitting(false);
@@ -60,30 +51,13 @@ const RestaurantInfo = props => (
             />
             <StyledErrorMessage name="name" component="div" />
             <StyledField
-              type="email"
-              name="email"
-              placeholder="delish@nutrish.com"
-              error={errors.email}
-              maxLength="30"
-              autoComplete="username"
+              type="number"
+              name="location"
+              placeholder="zipcode"
+              error={errors.location}
+              maxLength="5"
             />
-            <StyledErrorMessage name="email" component="div" />
-            <StyledField
-              type="text"
-              name="address"
-              autoComplete="address"
-              maxLength="100"
-              placeholder="Address"
-            />
-            <StyledErrorMessage name="address" component="div" />
-            <StyledField
-              type="text"
-              name="billing"
-              autoComplete="billing"
-              maxLength="100"
-              placeholder="Billing Address"
-            />
-            <StyledErrorMessage name="billing" component="div" />
+            <StyledErrorMessage name="location" component="div" />
             <Button primary dark type="submit" inactive={isSubmitting}>
               Submit
             </Button>
@@ -95,11 +69,11 @@ const RestaurantInfo = props => (
 );
 
 RestaurantInfo.propTypes = {
-  changeRestaurantInfo: PropTypes.func,
+  updateRestaurant: PropTypes.func,
 };
 
 RestaurantInfo.defaultProps = {
-  changeRestaurantInfo: () => {},
+  updateRestaurant: () => {},
 };
 
 export default RestaurantInfo;
