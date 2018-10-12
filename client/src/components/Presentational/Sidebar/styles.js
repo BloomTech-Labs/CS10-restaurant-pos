@@ -14,6 +14,7 @@ export const Sidebar = styled.nav`
   max-width: ${props => props.theme.sideBarWidth}px;
   background: ${props => props.theme.appPrimary};
   ${(props) => props.modalIsOpen && modalBlur};
+  overflow-y: auto;
 `;
 
 const activeClassName = 'nav-item-active';
@@ -29,6 +30,7 @@ export const StyledLink = styled(NavLink).attrs({ activeClassName })`
   align-items: center;
   padding-left: 25px;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+  flex-shrink: 0;
 
   &:hover {
     color: ${(props) => props.theme.medTextLight};
@@ -52,4 +54,5 @@ export const LinkGroup = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  flex-shrink: 0;
 `;
