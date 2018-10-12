@@ -44,16 +44,17 @@ const RestaurantInfo = props => (
             <StyledField
               type="text"
               name="name"
-              placeholder="John Smith"
+              placeholder="Jimmy's Pizza Joint"
               error={errors.name}
               maxLength="50"
               autoComplete="name"
+              minLength="1"
             />
             <StyledErrorMessage name="name" component="div" />
             <StyledField
               type="number"
               name="location"
-              placeholder="zipcode"
+              placeholder="Zipcode"
               error={errors.location}
               maxLength="5"
             />

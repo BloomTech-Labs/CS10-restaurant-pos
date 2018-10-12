@@ -1,4 +1,7 @@
+const nodeFetch = require('node-fetch');
+
 const Restaurant = require('../../models/Restaurant');
+const keys = require('../../../config/keys');
 
 // @route   PUT api/restaurants/update/:id
 // @desc    Updates the food item in the database
@@ -12,13 +15,34 @@ const updateRestaurant = (req, res) => {
     return res.status(401).json({ msg: 'You are not authorized to do this.' });
   }
 
-  // updates the item and sends back the updated document
-  Restaurant.findOneAndUpdate({ _id: id }, restaurantToUpdate, { new: true })
-    .then((updatedRestaurant) => {
-      res.status(200).json({ updatedRestaurant });
+  const encodedHeader = Buffer.from(`${keys.avalaraAccountId}:${keys.avalaraLicense}`).toString('base64');
+  nodeFetch(
+    `https://rest.avatax.com/api/v2/taxrates/bypostalcode?country=US&postalCode=${
+      req.body.location
+    }`,
+    {
+      headers: { Authorization: `Basic ${encodedHeader}` }
+    }
+  )
+    .then(response => response.json())
+    .then(json => {
+      // updates the item and sends back the updated document
+      Restaurant.findOneAndUpdate(
+        { _id: id },
+        { ...restaurantToUpdate, taxRate: json.totalRate },
+        { new: true }
+      )
+        .then((updatedRestaurant) => {
+          res.status(200).json({ updatedRestaurant });
+        })
+        .catch((err) => {
+          res.status(500).json({ err, msg: 'Error communicating with the database.' });
+        });
     })
     .catch((err) => {
-      res.status(500).json({ err, msg: 'Error communicating with the database.' });
+      res
+        .status(500)
+        .json({ err, msg: 'There was an error fetching the tax rate for your location.' });
     });
 };
 
