@@ -22,7 +22,7 @@ export const ProfilePic = styled.div`
   overflow: hidden;
 `;
 
-export const DropDownDotsThing = styled.div`
+export const DropDownDots = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -49,7 +49,7 @@ export const DropDownDotsThing = styled.div`
   }
 `;
 
-export const DropdownThingy = styled.div`
+export const DropDownDisplay = styled.div`
   position: absolute;
   z-index: 10;
   top: 0;

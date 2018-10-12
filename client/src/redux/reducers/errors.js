@@ -14,7 +14,9 @@ import {
   EMPLOYEE_REGISTER_FAILURE,
   EMPLOYEE_REGISTER_SUCCESS,
   CHANGE_EMPLOYEE_ROLE_FAILURE,
-  CHANGE_EMPLOYEE_ROLE_SUCCESS
+  CHANGE_EMPLOYEE_ROLE_SUCCESS,
+  DELETING_EMPLOYEE_FAILURE,
+  DELETING_EMPLOYEE_SUCCESS
 } from '../actions/auth';
 import {
   LOADING_TABLES_ERROR,
@@ -66,6 +68,7 @@ const initialState = {
   employeeLogoutError: false,
   registrationError: false,
   employeeRoleChangingError: false,
+  employeeDeletingError: false,
   passMatchError: false,
   updateEmployeeError: false,
   loadingTablesError: false,
@@ -120,6 +123,10 @@ const ErrorReducer = (errors = initialState, action) => {
       return { ...errors, employeeRoleChangingError: action.payload };
     case CHANGE_EMPLOYEE_ROLE_SUCCESS:
       return { ...errors, employeeRoleChangingError: false };
+    case DELETING_EMPLOYEE_FAILURE:
+      return { ...errors, employeeDeletingError: action.payload };
+    case DELETING_EMPLOYEE_SUCCESS:
+      return { ...errors, employeeDeletingError: false };
 
     case LOADING_TABLES_ERROR:
       return { ...errors, loadingTablesError: action.payload };

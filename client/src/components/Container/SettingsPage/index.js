@@ -56,7 +56,7 @@ class SettingsPage extends React.Component {
           <Logo width="150" />
           <div>Welcome to Main Course Complete!</div>
           <div>
-            The monthly subscription is <s.Price>50</s.Price>. Unlock all of the key features now!
+            The monthly subscription is:<s.Price>50</s.Price>Unlock all of the key features now!
           </div>
           <Elements>
             <StripeRegisterForm subscribe={this.props.subscribe} />

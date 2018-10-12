@@ -16,6 +16,7 @@ import SuccessRegistration from './components/Presentational/SuccessRegistration
 import LoginEmployee from './components/Container/LoginEmployeePage';
 import CreateEmployee from './components/Container/CreateEmployeePage';
 import Servers from './components/Container/ServersPage';
+import Menu from './components/Container/MenuPage';
 import TablesPage from './components/Container/TablesPage';
 import NotFound from './components/Presentational/NotFound';
 import Topbar from './components/Container/Topbar';
@@ -35,6 +36,7 @@ const AuthedNewRestaurant = RequireAuth(NewRestaurant, true);
 const AuthedCreateEmployee = RequireAuth(CreateEmployee);
 const AuthedTablesPage = RequireAuth(TablesPage);
 const AuthedServers = RequireAuth(Servers);
+const AuthedMenu = RequireAuth(Menu);
 const AuthedSettings = RequireAuth(Settings);
 const AuthedHelp = RequireAuth(Help);
 
@@ -106,6 +108,7 @@ class App extends Component {
               <Route path="/tables/:name/:id" component={AuthedTablesPage} />
               <Route path="/tables" component={AuthedTablesPage} />
               <Route path="/servers" component={AuthedServers} />
+              <Route path="/menu" component={AuthedMenu} />
               <Route
                 path="/party/:id"
                 render={props => <AuthedPartyPage {...props} modalIsOpen={modalIsOpen} />}

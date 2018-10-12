@@ -58,27 +58,27 @@ class UploadModal extends React.Component {
             thumbnail: {
               use: 'filter',
               robot: '/image/resize',
-              resize_strategy: 'fit',
-              width: 11,
-              height: 11,
+              resize_strategy: 'fillcrop',
+              width: 55,
+              height: 55,
               imagemagick_stack: 'v2.0.3',
               progressive: true
             },
             small: {
               use: 'filter',
               robot: '/image/resize',
-              resize_strategy: 'fit',
-              width: 61,
-              height: 61,
+              resize_strategy: 'fillcrop',
+              width: 110,
+              height: 110,
               imagemagick_stack: 'v2.0.3',
               progressive: true
             },
             medium: {
               use: 'filter',
               robot: '/image/resize',
-              resize_strategy: 'fit',
-              width: 121,
-              height: 121,
+              resize_strategy: 'fillcrop',
+              width: 200,
+              height: 200,
               imagemagick_stack: 'v2.0.3',
               progressive: true
             },

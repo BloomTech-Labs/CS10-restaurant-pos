@@ -52,7 +52,7 @@ const adminLogin = (req, res) => {
             };
 
             // sign a new token with the restaurant id
-            const token = `Bearer ${jwt.sign(payload, keys.secretOrKey)}`;
+            const token = `Bearer ${jwt.sign(payload, keys.secretOrKey, { expiresIn: '24h' })}`;
 
             // send back the token
             res.status(200).json({ token });
