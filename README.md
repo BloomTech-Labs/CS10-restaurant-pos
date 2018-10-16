@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.com/Lambda-School-Labs/CS10-restaurant-pos.svg?branch=master)](https://travis-ci.com/Lambda-School-Labs/CS10-restaurant-pos)
 # Restaurant POS
-This is a fantastic POS system for any restaurant.- [Restaurant POS](#restaurant-pos)
+This is a fantastic POS system for any restaurant. [Main Course](https://www.maincourse.app/)
+
+[![Main Course App](https://storage.googleapis.com/main-course-images/Screen%20Shot%202018-10-16%20at%202.50.22%20PM.png)](https://www.youtube.com/watch?v=wPkpSewq568)
 
 # Table of Contents
 - [Restaurant POS](#restaurant-pos)
