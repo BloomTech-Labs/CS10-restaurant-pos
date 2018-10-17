@@ -5,7 +5,7 @@ Click [here](https://www.maincourse.app/) to visit the app, or click on the imag
 
 [![Main Course App](https://storage.googleapis.com/main-course-images/Screen%20Shot%202018-10-16%20at%202.50.22%20PM.png)](https://www.youtube.com/watch?v=wPkpSewq568)
 
-# Team
+## Team
 |   [**Ronnie Miksch**](https://github.com/myxozoa)  |   [**Dani Tacheny**](https://github.com/danitacheny)   |    [**Eric Hech**](https://github.com/EricHech)    |   [**Chris Beards**](https://github.com/ChristopherBeards)  |
 |:----------------:|:----------------:|:---------------:|:---------------:|
 | [<img src="https://avatars1.githubusercontent.com/u/32121076?s=80" width="80">](https://github.com/myxozoa) | [<img src="https://avatars0.githubusercontent.com/u/34424414?s=80" width="80">](https://github.com/danitacheny)  | [<img src="https://avatars3.githubusercontent.com/u/34724684?s=80" width="80">](https://github.com/EricHech) | [<img src="https://avatars2.githubusercontent.com/u/34330944?s=80" width="80">](https://github.com/ChristopherBeards) |
@@ -15,6 +15,7 @@ Click [here](https://www.maincourse.app/) to visit the app, or click on the imag
 
 # Table of Contents
 - [Restaurant POS](#restaurant-pos)
+- [Team](#team)
 - [Table of Contents](#table-of-contents)
 - [Scripts](#scripts)
   - [Linting](#linting)
