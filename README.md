@@ -6,6 +6,15 @@ Click [here](https://www.maincourse.app/) to visit the app, or click on the imag
 
 [![Main Course App](https://storage.googleapis.com/main-course-images/Screen%20Shot%202018-10-16%20at%202.50.22%20PM.png)](https://www.youtube.com/watch?v=wPkpSewq568)
 
+___
+
+|                               |                                  |
+|-------------------------------|----------------------------------|
+| Ronnie Miksch [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/myxozoa) [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com/in/ronnie-miksch/) | Eric Hechavarria [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/EricHech) [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com/in/erichech/) |
+| Chris Beards [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/ChristopherBeards) [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com/in/christopher-beards-1292b529/) | Dani Tacheny [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/danitacheny) [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com/in/dani-tacheny-647403173/) |
+
+___
+
 # Table of Contents
 - [Restaurant POS](#restaurant-pos)
 - [Table of Contents](#table-of-contents)
