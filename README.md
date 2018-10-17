@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.com/Lambda-School-Labs/CS10-restaurant-pos.svg?branch=master)](https://travis-ci.com/Lambda-School-Labs/CS10-restaurant-pos)
-# Restaurant POS
+# Restaurant POS [![Build Status](https://travis-ci.com/Lambda-School-Labs/CS10-restaurant-pos.svg?branch=master)](https://travis-ci.com/Lambda-School-Labs/CS10-restaurant-pos)
 Welcome to our Restaurant Point-of-Sale System.
 
 Click [here](https://www.maincourse.app/) to visit the app, or click on the image below to view our video demo and tutorial:
@@ -7,7 +6,7 @@ Click [here](https://www.maincourse.app/) to visit the app, or click on the imag
 [![Main Course App](https://storage.googleapis.com/main-course-images/Screen%20Shot%202018-10-16%20at%202.50.22%20PM.png)](https://www.youtube.com/watch?v=wPkpSewq568)
 
 | Created By                    |                                  |
-|-------------------------------|----------------------------------|
+|:------------------------------|:---------------------------------|
 | <img src="https://avatars1.githubusercontent.com/u/32121076?s=32" width="32"> **Ronnie Miksch** [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/myxozoa) [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com/in/ronnie-miksch/) |  <img src="https://avatars3.githubusercontent.com/u/34724684?s=32" width="32"> **Eric Hechavarria** [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/EricHech) [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com/in/erichech/) |
 | <img src="https://avatars2.githubusercontent.com/u/34330944?s=32" width="32"> **Chris Beards** [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/ChristopherBeards) [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com/in/christopher-beards-1292b529/) | <img src="https://avatars0.githubusercontent.com/u/34424414?s=32" width="32"> **Dani Tacheny** [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/danitacheny) [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com/in/dani-tacheny-647403173/) |
 
