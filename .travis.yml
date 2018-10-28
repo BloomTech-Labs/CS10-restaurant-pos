@@ -1,6 +1,11 @@
 language: node_js
 node_js:
   - "node"
+cache: npm
+install:
+  - npm ci
+script:
+  - travis_wait npm test
 
 services:
   - mongodb
