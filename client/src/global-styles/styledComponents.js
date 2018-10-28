@@ -124,7 +124,7 @@ export const StyledField = styled(Field)`
   border-radius: ${props => props.theme.btnBorderRadius}px;
   height: ${props => props.theme.btnHeight}px;
   font-size: ${props => props.theme.btnFontSize}rem;
-  padding: 20px;
+  padding: 0 0 0 20px;
   width: 250px;
 
   &::placeholder {
