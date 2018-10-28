@@ -25,7 +25,7 @@ const employeeRegister = (req, res) => {
   console.log(email);
 
   // Validate Fields
-  const missingFields = verifyFields(['pass', 'name'], req.body, res);
+  const missingFields = verifyFields(['pass', 'name', 'email'], req.body, res);
 
   if (missingFields.length > 0) {
     return res.status(422).json({ msg: `Fields missing: ${missingFields.join(', ')}` });

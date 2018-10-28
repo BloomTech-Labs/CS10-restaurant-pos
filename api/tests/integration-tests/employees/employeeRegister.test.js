@@ -56,6 +56,7 @@ describe('employeeRegister', () => {
       .post('/api/employees/register')
       .send({
         name: 'Fred Fredson',
+        email: 'fred@fredson.biz',
         pass: 'password'
       });
     expect(res.status).toBe(401);

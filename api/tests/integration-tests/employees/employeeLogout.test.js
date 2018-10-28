@@ -19,6 +19,7 @@ describe('employeeLogout', () => {
           .set('Authorization', token)
           .send({
             name: 'Fred Fredson',
+            email: 'fred@fredson.biz',
             pass: 'password'
           })
           .then(response => {

@@ -20,6 +20,7 @@ describe('getAllServers', () => {
           .set('Authorization', token)
           .send({
             name: 'Fred Fredson',
+            email: 'fred@fredson.biz',
             pass: 'password',
           })
           .then((pinRes) => {
@@ -29,6 +30,7 @@ describe('getAllServers', () => {
               .set('Authorization', token)
               .send({
                 name: 'Andy Anderson',
+                email: 'andy@anderson.biz',
                 pass: 'password',
                 role: {
                   manager: true,
