@@ -57,6 +57,9 @@ export const Buttons = styled.div`
 
 export const Video = styled.video`
   box-shadow: ${(props) => props.theme.boxShadow};
+  width: 600px;
+  height: 382px;
+  background: #fdfdfd;
 
   @media (max-width: 1500px) {
     margin-top: 50px;
@@ -64,6 +67,7 @@ export const Video = styled.video`
 
   @media (max-width: 650px) {
     width: 100%;
+    height: auto;
   }
 `;
 
