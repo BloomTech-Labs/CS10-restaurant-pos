@@ -101,6 +101,15 @@ export const Block = styled(Boxes)`
     ${flexCenterMixin};
     margin-right: 8px;
   }
+
+  @media (max-width: 1200px) {
+    height: 500px;
+  }
+
+  @media (max-width: 800px) {
+    width: 90%;
+    padding: 50px 20px;
+  }
 `;
 
 export const PriceAd = styled.div`
