@@ -5,7 +5,7 @@ cache: npm
 install:
   - npm ci
 script:
-  - travis_wait npm test
+  - npm test
 
 services:
   - mongodb
