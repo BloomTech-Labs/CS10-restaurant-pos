@@ -5,6 +5,7 @@ cache: npm
 install:
   - npm ci
 script:
+  - npm run reset-test
   - npm test
 
 services:
