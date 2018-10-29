@@ -7,7 +7,7 @@ const { loginAdmin } = require('../../helpers/loginAdmin');
 let token;
 let orderId;
 
-jest.setTimeout(100000);
+// jest.setTimeout(100000);
 
 describe('updateOrder', () => {
   beforeAll((done) => {

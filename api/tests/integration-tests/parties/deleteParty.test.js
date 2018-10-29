@@ -8,7 +8,7 @@ let token;
 let tableId;
 let partyId;
 
-jest.setTimeout(100000);
+// jest.setTimeout(100000);
 
 // First a table must be created in order to delete a party
 describe('deleteParty', () => {

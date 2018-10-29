@@ -7,7 +7,7 @@ const { loginAdmin } = require('../../helpers/loginAdmin');
 let token;
 let tableId;
 
-jest.setTimeout(100000);
+// jest.setTimeout(100000);
 
 describe('deactivateTable', () => {
   beforeAll((done) => {

@@ -8,7 +8,7 @@ let token;
 let employeePin;
 let managerPin;
 
-jest.setTimeout(100000);
+// jest.setTimeout(100000);
 
 describe('getAllServers', () => {
   beforeAll((done) => {

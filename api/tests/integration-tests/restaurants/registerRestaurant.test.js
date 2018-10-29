@@ -5,7 +5,7 @@ const server = require('../../../../server');
 
 let token;
 
-jest.setTimeout(100000);
+// jest.setTimeout(100000);
 
 describe('registerRestaurant', () => {
   beforeAll((done) => {
