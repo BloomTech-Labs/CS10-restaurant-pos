@@ -10,9 +10,9 @@ let itemId;
 jest.setTimeout(100000);
 
 describe('updateItem', () => {
-  beforeAll(async (done) => {
+  beforeAll((done) => {
     // register the admin
-    await loginAdmin(server)
+    loginAdmin(server)
       .then((loginRes) => {
         token = loginRes;
 

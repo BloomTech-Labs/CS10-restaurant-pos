@@ -12,9 +12,9 @@ let pin;
 jest.setTimeout(100000);
 
 describe('updateEmployee', () => {
-  beforeAll(async (done) => {
+  beforeAll((done) => {
     loginAdmin(server)
-      .then(async resToken => {
+      .then(resToken => {
         adminToken = resToken;
         request(server)
           .post('/api/employees/register')

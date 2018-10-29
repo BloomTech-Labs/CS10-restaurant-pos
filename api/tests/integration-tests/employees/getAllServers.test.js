@@ -11,9 +11,9 @@ let managerPin;
 jest.setTimeout(100000);
 
 describe('getAllServers', () => {
-  beforeAll(async (done) => {
-    await loginAdmin(server)
-      .then(async (resToken) => {
+  beforeAll((done) => {
+    loginAdmin(server)
+      .then((resToken) => {
         token = resToken;
         request(server)
           .post('/api/employees/register')

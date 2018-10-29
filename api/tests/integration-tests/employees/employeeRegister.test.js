@@ -9,8 +9,8 @@ let token;
 jest.setTimeout(100000);
 
 describe('employeeRegister', () => {
-  beforeAll(async (done) => {
-    await loginAdmin(server)
+  beforeAll((done) => {
+    loginAdmin(server)
       .then(res => {
         token = res;
         done();

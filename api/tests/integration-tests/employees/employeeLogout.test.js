@@ -10,9 +10,9 @@ let pin;
 jest.setTimeout(100000);
 
 describe('employeeLogout', () => {
-  beforeAll(async (done) => {
+  beforeAll((done) => {
     loginAdmin(server)
-      .then(async resToken => {
+      .then(resToken => {
         token = resToken;
         request(server)
           .post('/api/employees/register')

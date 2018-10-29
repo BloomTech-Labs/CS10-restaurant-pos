@@ -10,9 +10,9 @@ let tableId;
 jest.setTimeout(100000);
 
 describe('deactivateTable', () => {
-  beforeAll(async (done) => {
+  beforeAll((done) => {
     // register the admin
-    await loginAdmin(server)
+    loginAdmin(server)
       .then((loginRes) => {
         token = loginRes;
 

@@ -10,9 +10,9 @@ let orderId;
 jest.setTimeout(60000);
 
 describe('deleteOrder', () => {
-  beforeAll(async (done) => {
+  beforeAll((done) => {
     // register the admin
-    await loginAdmin(server)
+    loginAdmin(server)
       .then((loginRes) => {
         token = loginRes;
 

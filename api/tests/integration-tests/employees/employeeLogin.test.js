@@ -10,8 +10,8 @@ let pin;
 jest.setTimeout(100000);
 
 describe('employeeLogin', () => {
-  beforeAll(async (done) => {
-    await loginAdmin(server)
+  beforeAll((done) => {
+    loginAdmin(server)
       .then(async resToken => {
         token = resToken;
         const response = await request(server)
