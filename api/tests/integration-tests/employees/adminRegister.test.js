@@ -3,7 +3,7 @@ const request = require('supertest');
 
 const server = require('../../../../server');
 
-jest.setTimeout(100000);
+// jest.setTimeout(100000);
 
 describe('adminRegister', () => {
   afterAll((done) => {

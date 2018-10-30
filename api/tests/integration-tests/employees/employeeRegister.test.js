@@ -6,11 +6,11 @@ const { loginAdmin } = require('../../helpers/loginAdmin');
 
 let token;
 
-jest.setTimeout(100000);
+// jest.setTimeout(100000);
 
 describe('employeeRegister', () => {
-  beforeAll(async (done) => {
-    await loginAdmin(server)
+  beforeAll((done) => {
+    loginAdmin(server)
       .then(res => {
         token = res;
         done();
@@ -56,6 +56,7 @@ describe('employeeRegister', () => {
       .post('/api/employees/register')
       .send({
         name: 'Fred Fredson',
+        email: 'fred@fredson.biz',
         pass: 'password'
       });
     expect(res.status).toBe(401);

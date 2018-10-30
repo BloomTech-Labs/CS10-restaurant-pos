@@ -1,6 +1,6 @@
 const verifyFields = require('../../validation/verifyFields');
 
-jest.setTimeout(100000);
+// jest.setTimeout(100000);
 
 describe('verifyFields', () => {
   // [Valid] Testing with no missing fields

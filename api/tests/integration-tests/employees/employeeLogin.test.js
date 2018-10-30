@@ -7,11 +7,11 @@ const { loginAdmin } = require('../../helpers/loginAdmin');
 let token;
 let pin;
 
-jest.setTimeout(100000);
+// jest.setTimeout(100000);
 
 describe('employeeLogin', () => {
-  beforeAll(async (done) => {
-    await loginAdmin(server)
+  beforeAll((done) => {
+    loginAdmin(server)
       .then(async resToken => {
         token = resToken;
         const response = await request(server)
@@ -19,6 +19,7 @@ describe('employeeLogin', () => {
           .set('Authorization', token)
           .send({
             name: 'Fred Fredson',
+            email: 'fred@fredson.biz',
             pass: 'password'
           });
 

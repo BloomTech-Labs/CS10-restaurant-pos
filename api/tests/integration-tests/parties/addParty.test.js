@@ -7,13 +7,13 @@ const { loginAdmin } = require('../../helpers/loginAdmin');
 let token;
 let tableId;
 
-jest.setTimeout(100000);
+// jest.setTimeout(100000);
 
 // First a table must be created in order to add a party
 describe('addParty', () => {
-  beforeAll(async (done) => {
+  beforeAll((done) => {
     // register the admin
-    await loginAdmin(server)
+    loginAdmin(server)
       .then((loginRes) => {
         token = loginRes;
 

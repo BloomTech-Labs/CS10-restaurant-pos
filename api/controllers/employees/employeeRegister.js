@@ -25,7 +25,7 @@ const employeeRegister = (req, res) => {
   console.log(email);
 
   // Validate Fields
-  const missingFields = verifyFields(['pass', 'name'], req.body, res);
+  const missingFields = verifyFields(['pass', 'name', 'email'], req.body, res);
 
   if (missingFields.length > 0) {
     return res.status(422).json({ msg: `Fields missing: ${missingFields.join(', ')}` });
@@ -77,45 +77,47 @@ const employeeRegister = (req, res) => {
     .save()
     .then(employeeInfo => {
       // Send the employees pin number
-      const confirmationEmail = {
-        to: email,
-        from: 'support@maincourse.app',
-        subject: 'Welcome to Main Course!',
-        text: 'Thank you for signing up for Main Course',
-        html: mjml2html(`<mjml>
-      <mj-head>
-      <mj-font name="Nunito" href="https://fonts.googleapis.com/css?family=Nunito" />
-    </mj-head>
-  <mj-body>
-    <mj-section>
+      if (process.env.NODE_ENV !== 'test') {
+        const confirmationEmail = {
+          to: email,
+          from: 'support@maincourse.app',
+          subject: 'Welcome to Main Course!',
+          text: 'Thank you for signing up for Main Course',
+          html: mjml2html(`<mjml>
+        <mj-head>
+        <mj-font name="Nunito" href="https://fonts.googleapis.com/css?family=Nunito" />
+      </mj-head>
+    <mj-body>
+      <mj-section>
 
-      <mj-column background-color="#E30E58">
+        <mj-column background-color="#E30E58">
 
         <mj-text align="center" color="#fff" font-size="40px" font-family="Nunito">Main Course POS</mj-text>
 
-      </mj-column>
+        </mj-column>
 
-    </mj-section>
-    <mj-section>
+      </mj-section>
+      <mj-section>
 
-      <mj-column>
-        <mj-text align="center" font-size="20px" font-family="Nunito">Thank you for signing up!</mj-text>
-      </mj-column>
+        <mj-column>
+          <mj-text align="center" font-size="20px" font-family="Nunito">Thank you for signing up!</mj-text>
+        </mj-column>
 
-    </mj-section>
-    <mj-section>
-      <mj-column>
-        <mj-text align="center" font-size="18px" font-family="Nunito">Here is your PIN you can use to log in</mj-text>
-        <mj-text align="center" font-size="18px" font-weight="bold" font-family="Nunito">${
+      </mj-section>
+      <mj-section>
+        <mj-column>
+          <mj-text align="center" font-size="18px" font-family="Nunito">Here is your PIN you can use to log in</mj-text>
+          <mj-text align="center" font-size="18px" font-weight="bold" font-family="Nunito">${
   employeeInfo.pin
 }</mj-text>
-      </mj-column>
-    </mj-section>
-  </mj-body>
-</mjml>`).html
-      };
+        </mj-column>
+      </mj-section>
+    </mj-body>
+  </mjml>`).html
+        };
 
-      sgMail.send(confirmationEmail);
+        sgMail.send(confirmationEmail);
+      }
       res.status(201).json({ pin: employeeInfo.pin });
     })
     .catch(err => {

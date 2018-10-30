@@ -6,13 +6,12 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { flexCenterMixin, card } from './mixins';
 
 export const MainContainer = styled.div`
-  background: ${(props) => props.theme.contentBackground};
+  background: ${props => props.theme.contentBackground};
   border-radius: 50px 0 0 0;
   flex-grow: 2;
   width: 100%;
-  padding:
-    ${(props) => props.theme.mainContainerPaddingTopBottom}
-    ${(props) => props.theme.mainContainerPaddingRightLeft};
+  padding: ${props => props.theme.mainContainerPaddingTopBottom}
+    ${props => props.theme.mainContainerPaddingRightLeft};
   overflow: hidden;
 `;
 
@@ -22,8 +21,8 @@ export const Boxes = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  height: ${(props) => props.theme.menuItemSize}px;
-  width: ${(props) => props.theme.menuItemSize}px;
+  height: ${props => props.theme.menuItemSize}px;
+  width: ${props => props.theme.menuItemSize}px;
   margin: 10px;
   padding: 25px 0 0 0;
   transition: transform 0.1s ease-in-out;
@@ -42,54 +41,20 @@ export const Button = styled.button`
   font-weight: 600;
   flex-shrink: 0;
   z-index: 1;
-  color: ${(props) => {
+  color: ${props => {
     if (!props.primary && !props.dark) {
       return props.theme.btnPrimaryBgColor;
     }
     return props.theme.btnTextColor;
   }};
-  font-size: ${(props) => props.theme.btnFontSize}rem;
-  width: ${(props) => props.theme.btnWidth}px;
-  height: ${(props) => props.theme.btnHeight}px;
-  border-radius: ${(props) => props.theme.btnBorderRadius}px;
+  font-size: ${props => props.theme.btnFontSize}rem;
+  width: ${props => props.theme.btnWidth}px;
+  height: ${props => props.theme.btnHeight}px;
+  border-radius: ${props => props.theme.btnBorderRadius}px;
   overflow: hidden;
-  background: none;
   border: 0;
   transition: transform 0.1s ease-in-out;
-
-  /* stylelint-disable comment-empty-line-before */
-  &:hover {
-    ${(props) => !props.inactive
-      && `
-      cursor: pointer;
-      transform: translatey(-1px);
-    `};
-  }
-  /* stylelint-enable comment-empty-line-before */
-
-  &:active {
-    transform: translate(0, 0);
-    box-shadow: 0;
-  }
-
-  &::before {
-    position: absolute;
-    z-index: 10;
-    content: '';
-    background: rgba(0, 0, 0, 0.4);
-    width: ${(props) => props.theme.btnWidth + 5}px;
-    height: ${(props) => props.theme.btnHeight + 5}px;
-    display: ${(props) => !props.inactive && 'none'};
-  }
-
-  &::after {
-    position: absolute;
-    z-index: -1;
-    border-radius: ${(props) => props.theme.btnBorderRadius}px;
-    width: ${(props) => props.theme.btnWidth - 4}px;
-    height: ${(props) => props.theme.btnHeight - 4}px;
-    content: '';
-    background: ${(props) => {
+  background: ${props => {
     if (props.primary && props.dark) {
       return props.theme.btnDarkPrimaryBgColor;
     }
@@ -98,7 +63,7 @@ export const Button = styled.button`
     }
     return props.theme.btnBgColor;
   }};
-    ${(props) => {
+  ${props => {
     let color = '';
     if (props.inactive) {
       return 'border: 0';
@@ -113,6 +78,19 @@ export const Button = styled.button`
     }
     return `border: 2px solid ${color}`;
   }};
+  /* stylelint-disable comment-empty-line-before */
+  &:hover {
+    ${props => !props.inactive
+      && `
+      cursor: pointer;
+      transform: translatey(-1px);
+    `};
+  }
+  /* stylelint-enable comment-empty-line-before */
+
+  &:active {
+    transform: translate(0, 0);
+    box-shadow: 0;
   }
 `;
 
@@ -127,10 +105,10 @@ export const StyledForm = styled(Form)`
   align-items: center;
   justify-content: space-evenly;
   width: 100%;
-  max-width: ${(props) => props.theme.settingCardMaxWidth}px;
-  height: ${(props) => props.theme.settingCardHeight}px;
-  padding: ${(props) => props.theme.settingCardPadding};
-  margin: ${(props) => props.theme.settingCardMargin};
+  max-width: ${props => props.theme.settingCardMaxWidth}px;
+  height: ${props => props.theme.settingCardHeight}px;
+  padding: ${props => props.theme.settingCardPadding};
+  margin: ${props => props.theme.settingCardMargin};
 
   /* editing updateEmployee */
   ${props => props.updateEmployee && 'width: 100%'};
@@ -141,16 +119,16 @@ export const StyledForm = styled(Form)`
 `;
 
 export const StyledField = styled(Field)`
-  background: ${(props) => (props.error ? props.theme.inputError : props.theme.contentBackground)};
+  background: ${props => (props.error ? props.theme.inputError : props.theme.contentBackground)};
   border: 0;
-  border-radius: ${(props) => props.theme.btnBorderRadius}px;
-  height: ${(props) => props.theme.btnHeight}px;
-  font-size: ${(props) => props.theme.btnFontSize}rem;
-  padding: 20px;
+  border-radius: ${props => props.theme.btnBorderRadius}px;
+  height: ${props => props.theme.btnHeight}px;
+  font-size: ${props => props.theme.btnFontSize}rem;
+  padding: 0 0 0 20px;
   width: 250px;
 
   &::placeholder {
-    color: ${(props) => props.theme.placeholderColor};
+    color: ${props => props.theme.placeholderColor};
   }
 
   &[type='number'] {
@@ -164,6 +142,6 @@ export const StyledField = styled(Field)`
 `;
 
 export const StyledErrorMessage = styled(ErrorMessage)`
-  color: ${(props) => props.theme.appSecondary};
+  color: ${props => props.theme.appSecondary};
   position: relative;
 `;

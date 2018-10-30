@@ -6,12 +6,12 @@ const { loginAdmin } = require('../../helpers/loginAdmin');
 
 let token;
 
-jest.setTimeout(100000);
+// jest.setTimeout(100000);
 
 describe('addTable', () => {
-  beforeAll(async (done) => {
+  beforeAll((done) => {
     // register the admin
-    await loginAdmin(server)
+    loginAdmin(server)
       .then((loginRes) => {
         token = loginRes;
         done();

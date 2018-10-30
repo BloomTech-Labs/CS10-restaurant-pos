@@ -2,7 +2,7 @@ const request = require('supertest');
 
 let token;
 
-const loginAdmin = async (server) => (
+const loginAdmin = (server) => (
   // implicitly return the result of this request
   request(server)
     .post('/api/employees/admin/register')

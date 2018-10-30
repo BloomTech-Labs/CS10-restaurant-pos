@@ -12,7 +12,8 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "cross-env NPM_CONFIG_PRODUCTION=true npm i --prefix client && npm run build --prefix client",
     "lint": "eslint api/",
-    "test": "jest --runInBand --verbose",
+    "test": "jest --ci --forceExit --detectOpenHandles --runInBand --verbose --logHeapUsage",
+    "reset-test": "jest --clearCache",
     "lint-all": "concurrently \"npm run lint\" \"cd client && npm run lint\"",
     "precommit": "npm run lint-all"
   },
