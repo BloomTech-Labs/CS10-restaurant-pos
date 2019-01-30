@@ -73,7 +73,8 @@ const getJWTInfo = (jwt) => {
       /* eslint-enable */
     }
   }
-  return { jwt, role, restaurant, membership, name, email, id, pin, images };
+  // Returned membership true as the default value to bypass verfication (Stripe Account is down)
+  return { jwt, role, restaurant, membership: true, name, email, id, pin, images };
 };
 
 const AuthReducer = (auth = initialState, action) => {
