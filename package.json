@@ -25,7 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "@sendgrid/mail": "^6.3.1",
-    "@uppy/companion": "^0.14.4",
+    "@uppy/companion": "^0.16.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.4",
     "express": "^4.16.3",
@@ -53,7 +53,7 @@
     "eslint-plugin-react": "^7.11.1",
     "husky": "^0.14.3",
     "jest": "^23.6.0",
-    "morgan": "^1.9.0",
+    "morgan": "^1.9.1",
     "nodemon": "^1.18.9",
     "supertest": "^3.3.0"
   }
