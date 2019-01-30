@@ -73,7 +73,7 @@ const getJWTInfo = (jwt) => {
       /* eslint-enable */
     }
   }
-  // This now returns membership as true as the default value in order to bypass verfication (Stripe Account is down)
+  // Returns membership=true as the default value to bypass verfication (Stripe Account is down)
   return { jwt, role, restaurant, membership: true, name, email, id, pin, images };
 };
 
